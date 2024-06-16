@@ -9,7 +9,7 @@
 */.settings or */.settings/**
 .settings
 target/*
-
+Servers/*
 ### Eclipse ###
 .metadata
 bin/
