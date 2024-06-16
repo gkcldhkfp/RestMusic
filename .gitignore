@@ -10,6 +10,8 @@
 .settings
 target/*
 Servers/*
+*/target/**
+*/build/**
 ### Eclipse ###
 .metadata
 bin/
