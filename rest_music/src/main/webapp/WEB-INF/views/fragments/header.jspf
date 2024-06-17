@@ -1,0 +1,55 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+	<div class="container-fluid">
+		<a class="navbar-brand mx-2" href="#">Rest</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+			data-bs-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item dropdown mx-2"><a
+					class="nav-link dropdown-toggle" href="#" role="button"
+					data-bs-toggle="dropdown" aria-expanded="false">REST 차트</a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" href="#">TOP 30</a></li>
+						<li><a class="dropdown-item" href="#">장르별 차트</a></li>
+						<li><a class="dropdown-item" href="#">뮤직비디오 차트</a></li>
+					</ul>
+				</li>
+
+				<li class="nav-item mx-2"><a class="nav-link active"
+					aria-current="page" href="#">최신 음악</a></li>
+
+				<li class="nav-item dropdown  mx-2"><a
+					class="nav-link dropdown-toggle" href="#" role="button"
+					data-bs-toggle="dropdown" aria-expanded="false">장르별 음악</a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" href="#">장르 1</a></li>
+						<li><a class="dropdown-item" href="#">장르 2</a></li>
+						<li><a class="dropdown-item" href="#">장르 3</a></li>
+						<li><a class="dropdown-item" href="#">장르 4</a></li>
+						<li><a class="dropdown-item" href="#">장르 5</a></li>
+						<li><a class="dropdown-item" href="#">장르 6</a></li>
+						<li><a class="dropdown-item" href="#">장르 7</a></li>
+						<li><a class="dropdown-item" href="#">장르 8</a></li>
+					</ul></li>
+				<li>
+					<form class="d-flex" role="search">
+						<input class="form-control mx-2" type="search"
+							placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Search</button>
+					</form>
+				</li>
+			</ul>
+			
+			<a style="font-size: 0.75rem" class="me-2" href="#">로그인</a>
+			<a style="font-size: 0.75rem" class="me-2" href="#">회원가입</a>
+		</div>
+	</div>
+</nav>
