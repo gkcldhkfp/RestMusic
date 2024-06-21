@@ -14,9 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 public class SongController {
 	
 	@GetMapping("/detail")
-	public String songDetail(@RequestParam(name = "songId")int id, Model model ) {
+	public String songDetail(@RequestParam(name = "songid")int id, Model model ) {
 		log.debug("id={}",id);
-		model.addAttribute("songId",id);
+		model.addAttribute("songid",id);
 		
 		return "song/songDetail";
 	}
