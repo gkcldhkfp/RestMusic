@@ -1,5 +1,12 @@
 package com.itwill.rest.service;
 
-public class ChartService {
+import org.springframework.stereotype.Service;
 
+import com.itwill.rest.repository.ChartDao;
+
+@Service
+public class ChartService {
+	    private ChartDao chartDao;
+	    
+	    
 }

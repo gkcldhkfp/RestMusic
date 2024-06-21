@@ -12,30 +12,16 @@
     </select>
 
     <!-- 좋아요 추가 -->
-    <insert id="insertLike">
+    <insert id="insertLikes">
         insert into likes (song_id, id)
         values (#{songId}, #{id})
     </insert>
 
     <!-- 좋아요 삭제 -->
-    <delete id="deleteLike">
+    <delete id="deleteLikes">
         delete from likes
         where song_id = #{songId} and id = #{id}
     </delete>
-
-    <!-- 좋아요 개수 증가 -->
-    <update id="incrementLikesCount">
-        update songs
-        set likes_count = likes_count + #{likesCount}
-        where song_id = #{songId} 
-    </update>
-
-    <!-- 좋아요 개수 감소 -->
-    <update id="decrementLikesCount">
-        update songs
-        set likes_count = likes_count - #{likesCount}
-        where song_id = #{songId}
-    </update>
 
 </mapper>
 
