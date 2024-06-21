@@ -1,5 +1,5 @@
 package com.itwill.rest.web;
 
-public class ChartController {
+public class LikesController {
 
 }
