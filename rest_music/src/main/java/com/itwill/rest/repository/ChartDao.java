@@ -1,6 +1,5 @@
 package com.itwill.rest.repository;
 
-public class Chart {
-	
+public interface ChartDao {
 
 }
