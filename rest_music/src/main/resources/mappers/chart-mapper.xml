@@ -5,36 +5,36 @@
 <mapper namespace="com.itwill.rest.repository.ChartDao">
     
     <!-- 좋아요 개수 확인 -->
-    <select id="countLikes" parameterType="map" resultType="int">
-        SELECT COUNT(*)
-        FROM likes
-        WHERE song_id = #{songId} AND id = #{userId}
+    <select id="countLikes" resultType="Integer">
+        select count(*)
+        from likes
+        where song_id = #{songId} and id = #{id}
     </select>
 
     <!-- 좋아요 추가 -->
-    <insert id="insertLike" parameterType="map">
-        INSERT INTO likes (song_id, id)
-        VALUES (#{songId}, #{userId})
+    <insert id="insertLike">
+        insert into likes (song_id, id)
+        values (#{songId}, #{id})
     </insert>
 
     <!-- 좋아요 삭제 -->
-    <delete id="deleteLike" parameterType="map">
-        DELETE FROM likes
-        WHERE song_id = #{songId} AND id = #{userId}
+    <delete id="deleteLike">
+        delete from likes
+        where song_id = #{songId} and id = #{id}
     </delete>
 
     <!-- 좋아요 개수 증가 -->
-    <update id="incrementLikesCount" parameterType="int">
-        UPDATE songs
-        SET likes_count = likes_count + 1
-        WHERE song_id = #{songId}
+    <update id="incrementLikesCount">
+        update songs
+        set likes_count = likes_count + #{likesCount}
+        where song_id = #{songId} 
     </update>
 
     <!-- 좋아요 개수 감소 -->
-    <update id="decrementLikesCount" parameterType="int">
-        UPDATE songs
-        SET likes_count = likes_count - 1
-        WHERE song_id = #{songId}
+    <update id="decrementLikesCount">
+        update songs
+        set likes_count = likes_count - #{likesCount}
+        where song_id = #{songId}
     </update>
 
 </mapper>

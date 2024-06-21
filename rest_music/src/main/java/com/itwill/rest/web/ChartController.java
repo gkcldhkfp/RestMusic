@@ -1,5 +1,5 @@
 package com.itwill.rest.web;
 
-public class CharController {
+public class ChartController {
 
 }
