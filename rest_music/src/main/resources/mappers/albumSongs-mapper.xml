@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.itwill.rest.repository.AlbumSongsDao">
+    <select id="selectByAlbumId" resultType="AlbumSongs">
+      select a.album_id, a.album_name,
+        s.song_id, s.title, s.genre, 
+        singers.singer_name,
+        title_songs.song_id as title_song
+      from albums a
+          left join songs s on #{albumId} = s.album_id
+          left join singers on singers.song_id = s.song_id
+          left join title_songs on title_songs.song_id= s.song_id
+      union
+      select a.album_id, a.album_name,
+              s.song_id, s.title, s.genre, 
+              singers.singer_name,
+              title_songs.song_id as title_song
+      from albums a
+          left join songs s on #{albumId} = s.album_id
+          left join singers on singers.song_id = s.song_id
+          left join title_songs on title_songs.song_id= s.song_id
+    </select>
+
+    <select id="selectAlbumByAlbumId" resultType="AlbumSongs">
+      select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
+        singers.singer_name,
+        s.song_id, s.title, s.genre,
+        title_songs.song_id
+      from albums a
+          join songs s on #{albumId} = s.album_id
+          join singers on singers.song_id = s.song_id
+          join title_songs on title_songs.song_id= s.song_id
+          order by s.title
+    </select>
+
+
+  </mapper>
