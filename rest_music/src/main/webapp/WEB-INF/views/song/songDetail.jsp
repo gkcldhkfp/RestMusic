@@ -49,8 +49,8 @@
                 <p> <span class="mt-3 fw-bold">편곡</span><span class="ms-3">${data.arrangers}</span></p>
             </div>
             
-            <div class="mt-3">
-                <p id="lyrics" style="white-space: pre-line;">
+            <div class="mt-3 p-2">
+                <p id="lyrics" >
                         <c:catch var="error">
                         <%-- 파일 읽기를 시도하고 에러가 발생할 경우 처리 --%>
                          <c:set var="filePath" value="${data.lyrics}" />
@@ -112,8 +112,35 @@
                         </div>
                     </div>
                     
+                    
                     <!-- 포스트에 달려 있는 댓글 목록을 보여줄 영역 -->
                     <div class="my-2" id="comments"></div>
+                    
+                    
+                   <!-- 댓글 업데이트 모달(다이얼로그) -->
+                    <div id="commentModal" class="modal" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">댓글 업데이트</h5>
+                                    <button type="button" class="btn-close"
+                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- 수정할 댓글 아이디(번호) -->
+                                    <input class="d-none" id="modalCommentId" />
+                                    <!-- 수정할 댓글 내용 -->
+                                    <textarea class="form-control" id="modalCommentText"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary"
+                                        data-bs-dismiss="modal">취소</button>
+                                    <button type="button" class="btn btn-outline-primary"
+                                        id="btnUpdateComment">저장</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -129,5 +156,7 @@
     
     <c:url var="commentsJS" value="/js/comments.js" />
     <script src="${commentsJS}"></script>
+    <c:url var="detailJS" value="/js/detail.js" />
+    <script src="${detailJS}"></script>
 </body>
 </html>
