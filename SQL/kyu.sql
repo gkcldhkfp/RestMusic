@@ -95,3 +95,8 @@ commit;
 
 insert into title_songs (album_id, song_id)
 values (1, 1);
+
+-- 앨범의 수록곡 개수를 가져오는 쿼리
+select count(*)
+from albums a
+left join songs s on a.album_id = s.album_id;
