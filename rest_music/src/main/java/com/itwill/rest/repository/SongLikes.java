@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Likes {
+public class SongLikes {
 	private Integer songId; // 음악 번호
 	private Integer id; // 회원 번호
 

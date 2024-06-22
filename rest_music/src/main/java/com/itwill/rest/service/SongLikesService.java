@@ -2,8 +2,8 @@ package com.itwill.rest.service;
 
 import org.springframework.stereotype.Service;
 
-import com.itwill.rest.repository.Likes;
-import com.itwill.rest.repository.LikesDao;
+import com.itwill.rest.repository.SongLikes;
+import com.itwill.rest.repository.SongLikesDao;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class LikesService {
-	private final LikesDao likesDao;
+public class SongLikesService {
+	private final SongLikesDao likesDao;
 
 	public int countLikes(Integer songId, Integer id) {
 		return likesDao.countLikes(songId, id);
@@ -20,7 +20,7 @@ public class LikesService {
 	}
 
 	public boolean insertLike(Integer songId, Integer id) {
-		Likes like = Likes.builder().songId(songId).id(id).build();
+		SongLikes like = SongLikes.builder().songId(songId).id(id).build();
 		int result = likesDao.insertLikes(like);
 		return result > 0;
 
