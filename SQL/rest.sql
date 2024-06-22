@@ -90,6 +90,11 @@ create table likes ( -- 좋아요 (컬럼 2개)
 
 );
 
+create table album_likes(
+    album_id                                number(5), -- 앨범 번호 (5자리)
+    id                                      number(4) -- 회원 번호 (4자리)
+);
+
 create table comments ( -- 댓글 (컬럼 6개)
         c_id number(5)                      generated as identity, -- 댓글 번호 (5자리, 자동 생성)
         song_id                             number(5), -- 음악 번호 (5자리)
