@@ -16,13 +16,21 @@ import lombok.extern.slf4j.Slf4j;
 public class AlbumSongsService {
 	private final AlbumSongsDao albumSongsDao;
 
+	// 앨범의 수록곡 정보를 가져오는 리스트
 	public List<AlbumSongs> selectByAlbumId(Integer albumId) {
 		log.debug("selectByAlbumId(albumId = {})", albumId);
 		return albumSongsDao.selectByAlbumId(albumId);
 	}
 
+	// 앨범 객체(타이틀곡 포함)를 리턴하는 메서드
 	public AlbumSongs selectAlbumByAlbumId(Integer albumId) {
 		log.debug("selectAlbumByAlbumId(albumId = {})", albumId);
 		return albumSongsDao.selectAlbumByAlbumId(albumId);
+	}
+
+	// 앨범의 수록곡 개수를 가져오는 서비스메서드
+	public Integer selectAlbumSongsCount(Integer albumId) {
+		log.debug("selectAlbumSongsCount(albumId={})", albumId);
+		return albumSongsDao.selectAlbumSongsCount(albumId);
 	}
 }

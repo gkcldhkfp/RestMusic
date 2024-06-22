@@ -6,4 +6,6 @@ public interface AlbumSongsDao {
 	List<AlbumSongs> selectByAlbumId(Integer albumId);
 
 	AlbumSongs selectAlbumByAlbumId(Integer albumId);
+
+	Integer selectAlbumSongsCount(Integer albumId);
 }

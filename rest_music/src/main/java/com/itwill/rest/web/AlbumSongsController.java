@@ -14,8 +14,6 @@ import com.itwill.rest.service.AlbumSongsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-
-
 @RequiredArgsConstructor
 @Controller
 @Slf4j
@@ -25,17 +23,24 @@ public class AlbumSongsController {
 
 	@GetMapping("/detail")
 	public void detail(
-		@RequestParam(name = "albumId") String albumId,
-		Model model
-		) {
+			@RequestParam(name = "albumId") String albumId,
+			Model model) {
 		log.debug("detail({})", albumId);
 		Integer albumIdInteger = Integer.parseInt(albumId);
 		List<AlbumSongs> list = albumSongsService.selectByAlbumId(albumIdInteger);
+		log.debug("list = {}", list);
+		// 앨범의 수록곡 리스트를 뷰에 전달
 		model.addAttribute("albumSongs", list);
+
 		AlbumSongs album = albumSongsService.selectAlbumByAlbumId(albumIdInteger);
 		log.debug("album = {}", album);
+		// 앨범의 정보를 뷰의 전달
 		model.addAttribute("album", album);
+
+		Integer songsCount = albumSongsService.selectAlbumSongsCount(albumIdInteger);
+		log.debug("songsCount = {}", songsCount);
+		// 앨범의 수록곡 개수를 뷰에 전달
+		model.addAttribute("songsCount", songsCount);
 	}
-	
 
 }
