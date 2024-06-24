@@ -1,7 +1,10 @@
 package com.itwill.rest.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.itwill.rest.service.SongLikesService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +17,17 @@ public class SongLikesController {
 	// localhost:8080/song/popular => top30
 	// localhost:8080/song/genre => 장르별 차트
 	// localhost:8080/song/video => 뮤직비디오 차트
+	
+	private final SongLikesService songLikesService;
+	
+	// @GetMapping("/popular")
+	
+	
+	// @GetMapping("/genre")
+	
+	
+	// @GetMapping("/video")
+	
 	
 	
 }

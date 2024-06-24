@@ -14,8 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 public class SongLikesService {
 	private final SongLikesDao songLikesDao;
 
-	public int countLikes(Integer songId, Integer id) {
-		return songLikesDao.countSongLikes(songId, id);
+	public int countLikes(Integer songId) {
+		return songLikesDao.countSongLikes(songId);
 
 	}
 
@@ -26,8 +26,8 @@ public class SongLikesService {
 
 	}
 
-	public boolean deleteLike(Integer songId, Integer id) {
-		int result = songLikesDao.deleteSongLikes(songId, id);
+	public boolean deleteLike(Integer songId) {
+		int result = songLikesDao.deleteSongLikes(songId);
 		return result > 0;
 
 	}
