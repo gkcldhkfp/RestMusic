@@ -1,5 +1,8 @@
 package com.itwill.rest.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itwill.rest.repository.SongLikes;
@@ -12,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Service
 public class SongLikesService {
+	
+	@Autowired
 	private final SongLikesDao songLikesDao;
 
 	public int countLikes(Integer songId, Integer id) {
@@ -29,6 +34,11 @@ public class SongLikesService {
 	public boolean deleteLike(Integer songId, Integer id) {
 		int result = songLikesDao.deleteSongLikes(songId, id);
 		return result > 0;
+	}
+		
+		   public List<SongLikes> getTop30Songs() {
+
+		        return songLikesDao.findTop30ByOrderByLikesCountDesc();
 
 	}
 
