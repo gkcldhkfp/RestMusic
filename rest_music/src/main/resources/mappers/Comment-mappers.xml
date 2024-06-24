@@ -28,7 +28,7 @@
     </select>
     
     <update id="update">
-        update comments set c_text = #{cText} where c_id = #{cId} 
+        update comments set c_text = #{cText}, modified_time = systimestamp where c_id = #{cId} 
     </update>
     
     
