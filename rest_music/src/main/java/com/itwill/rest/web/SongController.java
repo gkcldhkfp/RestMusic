@@ -47,15 +47,6 @@ public class SongController {
 		return result;
 	}
 	
-	@PostMapping("/addPlayList")
-	@ResponseBody
-	public int addPlayList(@RequestBody AddPlayListDto dto) {
-		log.debug("addPlayList({})",dto);
-		
-		int result = songService.addPlayList(dto);
-		log.debug("result={}",result);
-		
-		return result;
-	}
+	
 
 }

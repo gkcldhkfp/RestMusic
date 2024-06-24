@@ -12,5 +12,6 @@
         <typeAlias type="com.itwill.rest.dto.song.SongDetailDto" alias="SongDetail" />
         <typeAlias type="com.itwill.rest.dto.comment.CommentItemDto" alias="CommentItemDto" />
         <typeAlias type="com.itwill.rest.repository.Comment" alias="Comment" />
+        <typeAlias type="com.itwill.rest.repository.PlayList" alias="PlayList" />
     </typeAliases>
   </configuration>

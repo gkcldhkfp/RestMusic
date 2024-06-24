@@ -38,10 +38,5 @@ public class SongService {
 		
 	}
 	
-	public int addPlayList(AddPlayListDto dto) {
-		
-		
-		return 0;
-	}
-
+	
 }
