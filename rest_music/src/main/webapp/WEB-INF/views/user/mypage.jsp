@@ -25,12 +25,12 @@
             <h2 style="font-weight: bold;">마이페이지</h2><hr>
             <div class="d-flex align-items-center">
                 <div class="p-3">
-                    <c:url var="profileImg" value="/Images/profile.jpg"></c:url>
-                    <img alt="profileImg" src="${profileImg}"
+                    <c:url var="profileImg" value="/images/profile.jpg"></c:url>
+                    <img alt="profileImg" src="${empty user.userProfile ? profileImg : user.userProfile}"
                         width="200px" height="200px">
                 </div>
                 <div class="p-3">
-                    <h3 style="font-weight: bold; font-size: 1.2rem;">닉네임: 사용자닉네임</h3>
+                    <h3 style="font-weight: bold; font-size: 1.2rem;">닉네임: ${user.nickName}</h3>
                     <button class="btn btn-outline-primary">ID/PW 변경 (내정보 관리)</button>
                 </div>
             </div>
@@ -53,28 +53,25 @@
             <!-- 추가할 박스 (카드) -->
             <div class="card">
                 <div class="card-body">
-                    <p class="card-text">좋아요2</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" tabindex="-1" id="test">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="btn-close"
-                        data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save
-                        changes</button>
+                    <table class="table table-striped" style="border: 1px solid #ddd;">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center; vertical-align: middle;">커버</th>
+                                <th style="text-align: center; vertical-align: middle;">노래 제목</th>
+                                <th style="text-align: center; vertical-align: middle;">아티스트</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${like}" var="l">
+                                <tr>
+                                    <td style="text-align: center; vertical-align: middle;"><img alt="songImg" src="${l.albumImage}"
+                                        width="100px" height="100px"></td>
+                                    <td style="text-align: center; vertical-align: middle;"><a href="">${l.title}</a></td>
+                                    <td style="text-align: center; vertical-align: middle;">${l.singerName}</td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
