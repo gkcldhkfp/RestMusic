@@ -25,11 +25,12 @@
             <h2 style="font-weight: bold;">마이페이지</h2><hr>
             <div class="d-flex align-items-center">
                 <div class="p-3">
-                    <c:url var="profileImg" value="/images/profile.jpg"></c:url>
+                    <c:url var="profileImg" value="/images/profileimage/profile.jpg"></c:url>
                     <img alt="profileImg" src="${empty user.userProfile ? profileImg : user.userProfile}"
                         width="200px" height="200px">
                 </div>
                 <div class="p-3">
+                    <h3 id="userId" class="d-none">${user.id}</h3>
                     <h3 style="font-weight: bold; font-size: 1.2rem;">닉네임: ${user.nickName}</h3>
                     <button class="btn btn-outline-primary">ID/PW 변경 (내정보 관리)</button>
                 </div>
@@ -94,33 +95,20 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" onclick="addPlaylist()">확인</button>
+                    <button type="button" class="btn btn-success" id="btnAddPlaylist">확인</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>
     </div>
     
-    <script>
-        function addPlaylist() {
-            var playlistName = document.getElementById('playlistName').value;
-            console.log('추가할 플레이 리스트 제목:', playlistName);
-            var modal = document.getElementById('addPlaylistModal');
-            var bootstrapModal = new bootstrap.Modal(modal);
-            bootstrapModal.hide();
-        }
-
-        var cancelButton = document.querySelector('#addPlaylistModal .btn-secondary');
-        cancelButton.addEventListener('click', function() {
-            var modal = document.getElementById('addPlaylistModal');
-            var bootstrapModal = new bootstrap.Modal(modal);
-            bootstrapModal.hide();
-        });
-    </script>
-
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+        
+    <!-- JS 파일 지정 -->
+    <c:url var="playlistsJS" value="/js/playlists.js" />
+    <script src="${playlistsJS}"></script>
 </body>
 </html>

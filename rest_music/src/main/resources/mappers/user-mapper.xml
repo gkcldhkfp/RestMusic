@@ -20,7 +20,6 @@
         a.album_name,
         a.album_image,
         a.album_type,
-        a.album_release_date,
         sg.singer_name
         FROM
         users u
