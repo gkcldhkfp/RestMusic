@@ -10,7 +10,11 @@
     <!-- 매퍼 XML 파일에서 resultType 속성을 설정할 때 간단히 하기 위해서-->
     <typeAliases>
       <!-- TODO <typeAlias type="com.itwill.rest.repository.Post" alias="Post" /> -->
-      <typeAlias type="com.itwill.rest.repository.User" alias="User" />
-      <typeAlias type="com.itwill.rest.dto.user.UserLikeDto" alias="UserLike" />
+        <typeAlias type="com.itwill.rest.repository.User" alias="User" />
+        <typeAlias type="com.itwill.rest.dto.user.UserLikeDto" alias="UserLike" />
+        <typeAlias type="com.itwill.rest.dto.song.SongDetailDto" alias="SongDetail" />
+        <typeAlias type="com.itwill.rest.dto.comment.CommentItemDto" alias="CommentItemDto" />
+        <typeAlias type="com.itwill.rest.repository.Comment" alias="Comment" />
+        <typeAlias type="com.itwill.rest.repository.PlayList" alias="PlayList" />
     </typeAliases>
   </configuration>
