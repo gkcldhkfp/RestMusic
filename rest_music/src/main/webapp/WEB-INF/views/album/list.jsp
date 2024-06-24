@@ -39,34 +39,39 @@
                 <c:if test="${counter % 3 == 0 && counter != 0}">
                     </div><div class="row mt-1">
                 </c:if>
-                <div class="col-md-4 mb-4">
-                    <div class="card border-0">
-                        <div class="row g-0">
-                            <div class="col-md-6">
-                                <img src="../data/${a.albumImage}.png" class="img-fluid rounded-start" alt="${a.albumName}">
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card-body">
-                                    <h5 class="card-title mb-1" >${a.albumName}</h5>
-                                    <p class="card-text mb-1" >${a.albumId}</p>
-                                    <p class="card-text mb-1" >${a.albumType}</p>
-                                    <p class="card-text" >${a.albumReleaseDate}</p>
-                                    
-                                    <img src="../data/addToPlayList.png" class="btn-img" alt="재생 목록 담기"
-                                        onmouseover="showPopup(this, '재생 목록 담기')"
-                                        onmouseout="hidePopup()"
-                                        onclick="addToPlaylist(${a.albumId})">
-                                    
-                                    <img src="../data/addToMyList.png" class="btn-img" alt="내 리스트 담기"
-                                        onmouseover="showPopup(this, '내 리스트 담기')"
-                                        onmouseout="hidePopup()"
-                                        onclick="addToMyList(${a.albumId})">
-                                    
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-0">
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <a href="albumDetail.jsp?albumId=${a.albumId}">
+                                        <img src="../data/${a.albumImage}.png" class="img-fluid rounded-start" alt="${a.albumName}">
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <a href="albumDetail.jsp?albumId=${a.albumId}">
+                                            <h5 class="card-title mb-1">${a.albumName}</h5>
+                                        </a>
+                                        <p class="card-text mb-1">${a.albumId}</p>
+                                        <p class="card-text mb-1">${a.albumType}</p>
+                                        <p class="card-text">${a.albumReleaseDate}</p>
+                                        
+                                        <img src="../data/addToPlayList.png" class="btn-img" alt="재생 목록 담기"
+                                            onmouseover="showPopup(this, '재생 목록 담기')"
+                                            onmouseout="hidePopup()"
+                                            onclick="addToPlaylist(${a.albumId})">
+                                        
+                                        <img src="../data/addToMyList.png" class="btn-img" alt="내 리스트 담기"
+                                            onmouseover="showPopup(this, '내 리스트 담기')"
+                                            onmouseout="hidePopup()"
+                                            onclick="addToMyList(${a.albumId})">
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+
                 <c:set var="counter" value="${counter + 1}" />
             </c:forEach>
         </div>
@@ -79,6 +84,21 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous">
     </script>
+    
+    
+    <style>
+    /* 링크의 기본 스타일 수정 */
+    a {
+        text-decoration: none; /* 밑줄 제거 */
+        color: #555555; /* 링크 색상 변경 (연한 검정) */
+    }
+
+    /* 링크에 마우스를 올렸을 때의 스타일 */
+    a:hover {
+        color: #000000; /* 마우스를 올렸을 때 색상 변경 (진한 검정)*/
+    }
+    </style>
+    
     
     <script>
         function addToPlaylist(albumId) {
