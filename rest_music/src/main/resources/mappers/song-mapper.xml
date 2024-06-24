@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwill.rest.repository.SongDao">  
+    <!-- 좋아요 개수별 순위 
+    <select id="rankSongLikes" resultType="Song">
+        select
+        s.title,
+        count(l.song_id) as "좋아요",
+        rank() over (order by count(l.song_id) desc) as rank
+        from songs s
+        join likes l on s.song_id = l.song_id
+        group by s.title
+        order by rank
+    </select>
+    -->
+
+</mapper>
+
+
