@@ -14,5 +14,8 @@ public interface SongLikesDao {
 	int deleteSongLikes(Integer songId);
 	
 	List<SongLikes> popularSongs();
+
+	int deleteSongLikes(Integer songId, Integer userId);
+
 }
 
