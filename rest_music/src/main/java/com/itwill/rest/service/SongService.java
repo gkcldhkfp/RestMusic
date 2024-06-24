@@ -37,6 +37,18 @@ public class SongService {
 			}
 		
 	}
+
+	public boolean isLikes(SongLikeDto dto) {
+		
+		int result = songDao.isLikes(dto);
+		
+		if (result == 0) {
+			return true; // 좋아요가 없을경우 생성 후 true 반환
+		} else {
+			return false; // 좋아요가 있을경우 삭제 후 false 반환
+		}
+		
+	}
 	
 	
 }

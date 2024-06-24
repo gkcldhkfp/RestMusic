@@ -3,6 +3,8 @@
  */
 document.addEventListener('DOMContentLoaded', ()=>{
     
+    
+    
     const btnAddPlayList = document.querySelector('button#btnAddPlayList');
     
     const btnLike = document.querySelector('button#btnLike');
@@ -10,20 +12,38 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const playListModal = new bootstrap.Modal('div#selectPlayList', {backdrop: true});
     btnAddPlayList.addEventListener('click', getPlayLists);
     
+    const data = {songId,id};
+    
+    axios
+        .post('./like', data)
+        .then((response) => {
+                console.log(response.data); 
+                if(response.data){
+                    btnLike.textContent = '♡';
+                } else {
+                    btnLike.textContent = '♥';
+                }
+            }
+        )
+        .catch((error) => {
+            console.log(error);
+        });
+        
+        
+    
    btnLike.addEventListener('click', () => {
     
         console.log(id);
         console.log(songId);
         
-        const data = {songId,id};
+        
         
         console.log(data);
         
-         // POST 방식의 Ajax 요청을 보냄. 응답 성공/실패 콜백을 등록.
         axios
-        .post('./like', data)
+        .put('./like', data)
         .then((response) => {
-                console.log(response.data); // RestController에서 보낸 응답 데이터
+                console.log(response.data); 
                 if(response.data){
                     btnLike.textContent = '♥';
                 } else {
@@ -84,7 +104,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         
         const data = {plistId, songId};
         axios
-        .post('../addPlayList', data)
+        .post('../addSongToPlayList', data)
         .then((response) => {
                console.log(response.data);
                alert(`추가 성공`);
