@@ -27,4 +27,20 @@
         GROUP BY s.title, a.album_name, a.album_image, s.genre, si.singer_name, s.lyrics
     </select>
   
+    <select id="isLikes" resultType="integer">
+        select count(*) from likes where song_id = #{songId} and id = #{id}
+    </select>
+    
+    <insert id="addLike">
+        insert into likes (song_id, id) values (#{songId}, #{id})
+    </insert>
+    
+    <delete id="removeLike">
+        delete from likes where song_id = #{songId} and id = #{id}
+    </delete>
+    
+    <insert id="addPlayList">
+        insert into playlist_songs (p_list_id, song_id) values (#{pListId}, #{songId})
+    </insert>
+    
   </mapper>

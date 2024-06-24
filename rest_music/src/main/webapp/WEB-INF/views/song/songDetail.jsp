@@ -34,9 +34,9 @@
                         <p class="mt-2">앨범<span class="ms-3">${data.albumName}</span></p>
                         <p class="mt-2">장르<span class="ms-3">${data.genre}</span></p>
                         <div class="mt-3">
-                            <button class="btn btn-success" >좋아요</button>
+                            <button id="btnLike" class="btn btn-success" >좋아요</button>
                             <button class="btn btn-success" >재생목록추가</button>
-                            <button class="btn btn-success" >플리추가</button>
+                            <button id="btnAddPlayList"class="btn btn-success" >플리추가</button>
                         </div>
                     </div>
                 </div>            
@@ -103,7 +103,7 @@
                                 <textarea class="form-control" rows="3"
                                     id="ctext" placeholder="댓글 내용"></textarea>
                                 <!-- 댓글 작성자 아이디를 로그인한 사용자의 아이디로 설정 -->
-                                <input class="d-none" id="username" value="${signedInUser}" />
+                                <input class="" id="username" value="${signedInUser}" />
                             </div>
                             <div class="col-2">
                                 <button class="btn btn-outline-success" 
@@ -145,14 +145,41 @@
             </div>
         </section>
         </div>
+        
+        <div id="selectPlayList" class="modal" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">추가할 플레이리스트</h5>
+                                    <button type="button" class="btn-close"
+                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div id="playLists"class="modal-body">
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary"
+                                        data-bs-dismiss="modal">취소</button>
+                                    <button type="button" class="btn btn-outline-primary"
+                                        id="btnUpdateComment">저장</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
     </div>
+    
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
     crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
+    <script>
+    const id = 1 //userid
+    const songId = ${songId}
+    </script>
     
     <c:url var="commentsJS" value="/js/comments.js" />
     <script src="${commentsJS}"></script>

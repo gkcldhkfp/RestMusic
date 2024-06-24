@@ -38,15 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
     /*-------------------------------------------------*/
     
     // 댓글 등록 이벤트 리스너 콜백(함수):
-    function registerComment() {
-        // 댓글이 달릴 포스트 번호를 찾음.
-        const postId = document.querySelector('input#id').value;
+    function registerComment() { 
         
         // 댓글 내용을 찾음.
         const ctext = document.querySelector('textarea#ctext').value;
         
         // 댓글 작성자 아이디를 찾음.
-        const username = document.querySelector('input#username').value;
         
         // 댓글 내용, 댓글 작성자가 비어 있는 지 체크
         if (ctext === '' || username === '') {
@@ -54,16 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return; // 이벤트 리스너를 종료
         }
         
-        // Ajax 요청에서 보낼 데이터 객체를 생성.
-        /* const data = {
-            postId: postId,
-            ctext: ctext,
-            username: username
-        }; */
-        const data = {postId, ctext, username};
+        const data = {songId, ctext, id};
         console.log(data);
         
-        // POST 방식의 Ajax 요청을 보냄. 응답 성공/실패 콜백을 등록.
         axios
         .post('../api/comment', data)
         .then((response) => {
@@ -84,11 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 포스트에 달려 있는 모든 댓글 목록 가져오기
     function getAllComments() {
-        // 댓글 목록을 요청하기 위한 포스트 번호
-        const postId = document.querySelector('input#id').value;
         
         // 댓글 목록을 요청하기 위한 REST API URI
-        const uri = `../api/comment/all/${postId}`;
+        const uri = `../api/comment/all/${songId}`;
         
         // Ajax 요청을 보냄.
         axios
@@ -117,22 +105,20 @@ document.addEventListener('DOMContentLoaded', () => {
             htmlStr += `
             <div class="card card-body my-1">
                 <div style="font-size: 0.825rem;">
-                    <span>${comment.id}</span>
-                    <span class="fw-bold">${comment.username}</span>
+                    <span>${comment.cid}</span>
+                    <span class="fw-bold">${comment.nickname}</span>
                     <span class="text-secondary">${modifiedTime}</span>
                 </div>
                 <div>${comment.ctext}</div>`;
             
-            // 댓글 작성자와 로그인 사용자 아이디가 같은 경우에만 삭제/수정 버튼을 추가.
-            if (comment.username === signedInUser) {    
                 htmlStr += `
                 <div>
                     <button class="btnDeleteComment btn btn-outline-danger btn-sm"
-                        data-id="${comment.id}">삭제</button>
+                        data-id="${comment.cid}">삭제</button>
                     <button class="btnModifyComment btn btn-outline-primary btn-sm"
-                        data-id="${comment.id}">수정</button>
+                        data-id="${comment.cid}">수정</button>
                 </div>`;
-            }
+            
             
             htmlStr += '</div>'; // <div class="card card-body my-1">의 종료 태그!!
         }
@@ -186,10 +172,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 댓글 수정 버튼의 클릭 이벤트 리스너
     function showCommentModal(event) {
         // 이벤트 타겟(수정 버튼)의 data-id 속성 값을 읽음.
-        const id = event.target.getAttribute('data-id');
+        const cid = event.target.getAttribute('data-id');
         
         // Ajax 요청을 보내서 댓글 아이디로 검색.
-        const uri = `../api/comment/${id}`;
+        const uri = `../api/comment/${cid}`;
         axios
         .get(uri)
         .then((response) => {
@@ -198,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // console.log(response.data.id);
             
             // 모달의 input(댓글 번호), textarea(댓글 내용)의 value를 채움.
-            document.querySelector('input#modalCommentId').value = id;
+            document.querySelector('input#modalCommentId').value = cid;
             document.querySelector('textarea#modalCommentText').value = response.data.ctext;
             
             // 모달을 보여줌.
