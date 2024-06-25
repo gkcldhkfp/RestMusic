@@ -34,7 +34,7 @@
                         <p class="mt-2">앨범<span class="ms-3">${data.albumName}</span></p>
                         <p class="mt-2">장르<span class="ms-3">${data.genre}</span></p>
                         <div class="mt-3">
-                            <button id="btnLike" class="btn btn-success" >좋아요</button>
+                            <button id="btnLike" class="btn btn-success" ></button>
                             <button class="btn btn-success" >재생목록추가</button>
                             <button id="btnAddPlayList"class="btn btn-success" >플리추가</button>
                         </div>

@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 댓글 내용을 찾음.
         const ctext = document.querySelector('textarea#ctext').value;
         
-        // 댓글 작성자 아이디를 찾음.
+        // 댓글 작성자 아이디를 찾음.TODO
         
         // 댓글 내용, 댓글 작성자가 비어 있는 지 체크
         if (ctext === '' || username === '') {

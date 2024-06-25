@@ -17,8 +17,10 @@ public class SongService {
 	private final SongDao songDao;
 	
 	public SongDetailDto readDetail(int songId) {
+		log.debug("id={}",songId);
 		
 		SongDetailDto dto = songDao.detailBySongId(songId);
+		log.debug("dto={}",dto);
 		
 		return dto;
 	}
@@ -35,6 +37,18 @@ public class SongService {
 			songDao.removeLike(dto);
 			return false; // 좋아요가 있을경우 삭제 후 false 반환
 			}
+		
+	}
+
+	public boolean isLikes(SongLikeDto dto) {
+		
+		int result = songDao.isLikes(dto);
+		
+		if (result == 0) {
+			return true; // 좋아요가 없을경우 생성 후 true 반환
+		} else {
+			return false; // 좋아요가 있을경우 삭제 후 false 반환
+		}
 		
 	}
 	

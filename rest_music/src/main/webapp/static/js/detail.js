@@ -3,6 +3,8 @@
  */
 document.addEventListener('DOMContentLoaded', ()=>{
     
+    
+    
     const btnAddPlayList = document.querySelector('button#btnAddPlayList');
     
     const btnLike = document.querySelector('button#btnLike');
@@ -10,20 +12,38 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const playListModal = new bootstrap.Modal('div#selectPlayList', {backdrop: true});
     btnAddPlayList.addEventListener('click', getPlayLists);
     
+    const data = {songId,id};
+    
+    axios
+        .post('./like', data)
+        .then((response) => {
+                console.log(response.data); 
+                if(response.data){
+                    btnLike.textContent = '♡';
+                } else {
+                    btnLike.textContent = '♥';
+                }
+            }
+        )
+        .catch((error) => {
+            console.log(error);
+        });
+        
+        
+    
    btnLike.addEventListener('click', () => {
     
         console.log(id);
         console.log(songId);
         
-        const data = {songId,id};
+        
         
         console.log(data);
         
-         // POST 방식의 Ajax 요청을 보냄. 응답 성공/실패 콜백을 등록.
         axios
-        .post('./like', data)
+        .put('./like', data)
         .then((response) => {
-                console.log(response.data); // RestController에서 보낸 응답 데이터
+                console.log(response.data); 
                 if(response.data){
                     btnLike.textContent = '♥';
                 } else {
@@ -55,23 +75,38 @@ document.addEventListener('DOMContentLoaded', ()=>{
    
      function makePlayListElements(data) {
         // 플리 목록 HTML이 삽입될 div
-        const divComments = document.querySelector('div#playLists');
+        const divPlayLists = document.querySelector('div#playLists');
         
         // 플리 목록 HTML 코드
         let htmlStr = '';
         for (let playlist of data) {
+             // 기본 이미지 URL 정의
+            const defaultImage = '../images/default.png';
+    
+            // ${playlist.albumImage}가 null이면 기본 이미지 사용
+            const albumImageSrc = playlist.albumImage ? `..${playlist.albumImage}` : defaultImage;
+
+         
             console.log(playlist);
             htmlStr += `
-            <button class="playList btn btn-outline-success form-control" data-id="${playlist.plistId}">${playlist.plistName}</button>
-           `;
+            <a class="playList btn btn-outline-success form-control mt-2" data-id="${playlist.plistId}" >
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                    <img src="${albumImageSrc}" alt="..." width="50px" height="50px">
+                  </div>
+                    <div class="flex-grow-1 ms-3">
+                    ${playlist.plistName}
+                  </div>
+                </div>
+            </a>`;
         }
         
         // 작성된 HTML 코드를 div 영역에 삽입.
-        divComments.innerHTML = htmlStr;
+        divPlayLists.innerHTML = htmlStr;
         
-        const btnPlayLists = document.querySelectorAll('button.playList');
-        for (let btn of btnPlayLists) {
-            btn.addEventListener('click', addSongPlayList);
+        const aPlayLists = document.querySelectorAll('a.playList');
+        for (let a of aPlayLists) {
+            a.addEventListener('click', addSongPlayList);
         }
         
         
@@ -79,8 +114,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
     
     function addSongPlayList (event) {
         
-        const plistId = event.target.getAttribute('data-id');
-        console.log(id);
+        const plistId = event.currentTarget.getAttribute('data-id');
+        console.log('userid = ' + id);
+        console.log('plistId = ' + plistId);
         
         const data = {plistId, songId};
         axios

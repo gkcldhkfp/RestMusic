@@ -8,12 +8,11 @@ import lombok.Data;
 public class AddPlayListDto {
 	private Integer id;
 	private String pListName;
-	
+
 	public PlayList toEntity() {
 		return PlayList.builder()
 				.id(id)
 				.pListName(pListName)
 				.build();
 	}
-
 }
