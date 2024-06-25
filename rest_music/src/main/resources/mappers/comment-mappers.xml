@@ -9,6 +9,7 @@
         FROM comments c
         JOIN users u ON c.ID = u.ID
         WHERE c.SONG_ID = #{songId}
+        ORDER BY c.MODIFIED_TIME DESC
     </select>
     
     <insert id="insert">

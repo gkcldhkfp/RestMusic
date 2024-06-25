@@ -2,7 +2,7 @@ package com.itwill.rest.service;
 
 import org.springframework.stereotype.Service;
 
-import com.itwill.rest.dto.playlists.AddPlayListDto;
+import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
 import com.itwill.rest.dto.song.SongDetailDto;
 import com.itwill.rest.dto.song.SongLikeDto;
 import com.itwill.rest.repository.SongDao;
@@ -17,8 +17,10 @@ public class SongService {
 	private final SongDao songDao;
 	
 	public SongDetailDto readDetail(int songId) {
+		log.debug("id={}",songId);
 		
 		SongDetailDto dto = songDao.detailBySongId(songId);
+		log.debug("dto={}",dto);
 		
 		return dto;
 	}

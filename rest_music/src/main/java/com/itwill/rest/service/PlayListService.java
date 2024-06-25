@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.itwill.rest.dto.playlists.AddPlayListDto;
+import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
 import com.itwill.rest.repository.PlayList;
 import com.itwill.rest.repository.PlayListDao;
 
@@ -28,10 +28,10 @@ public class PlayListService {
 	}
 
 
-	public int songAddToPlayList(AddPlayListDto dto) {
+	public int songAddToPlayList(AddSongToPlayListDto dto) {
 		log.debug("service{}",dto);
 		
-		int result = playListDao.addPlayList(dto);
+		int result = playListDao.AddSongToPlayListDto(dto);
 		
 		return result;
 	}
