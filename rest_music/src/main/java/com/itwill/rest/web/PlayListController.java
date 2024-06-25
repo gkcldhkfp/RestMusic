@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwill.rest.dto.playlists.AddPlayListDto;
+import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
 import com.itwill.rest.repository.PlayList;
 import com.itwill.rest.service.PlayListService;
 
@@ -34,13 +35,23 @@ public class PlayListController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@PostMapping("/addPlayList")
+	@PostMapping("/addSongToPlayList")
 	@ResponseBody
-	public ResponseEntity<Integer> addPlayList(@RequestBody AddPlayListDto dto) {
+	public ResponseEntity<Integer> addSongToPlayList(@RequestBody AddSongToPlayListDto dto) {
 		log.debug("addPlayList({})",dto);
 		
 		int result = playListService.songAddToPlayList(dto);
 		
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping("/addPlayList")
+	@ResponseBody
+	public ResponseEntity<Integer> addPlayList(@RequestBody AddPlayListDto dto) {
+		log.debug("addPlayList({})", dto);
+		
+		int result = playListService.addPlayList(dto);
 		
 		return ResponseEntity.ok(result);
 	}

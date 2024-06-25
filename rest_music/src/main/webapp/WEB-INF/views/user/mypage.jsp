@@ -39,8 +39,8 @@
             <h2 style="font-size: 1.2rem; text-align : center;">플레이리스트</h2><hr>
             <!-- 추가할 박스 (카드) -->
             <div class="card">
-                <div class="card-body">
-                    <p class="card-text">플리추가예정2</p>
+                <div class="card-body" id="playLists">
+                
                 </div>
             </div>
             <div class="my-2">
@@ -65,7 +65,8 @@
                         <tbody>
                             <c:forEach items="${like}" var="l">
                                 <tr>
-                                    <td style="text-align: center; vertical-align: middle;"><img alt="songImg" src="${l.albumImage}"
+                                <c:url var="albumImage" value="${l.albumImage}"></c:url>
+                                    <td style="text-align: center; vertical-align: middle;"><img alt="songImg" src="${albumImage}"
                                         width="100px" height="100px"></td>
                                     <td style="text-align: center; vertical-align: middle;"><a href="">${l.title}</a></td>
                                     <td style="text-align: center; vertical-align: middle;">${l.singerName}</td>
@@ -106,6 +107,8 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+        
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         
     <!-- JS 파일 지정 -->
     <c:url var="playlistsJS" value="/js/playlists.js" />

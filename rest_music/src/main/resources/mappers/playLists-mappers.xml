@@ -8,8 +8,12 @@
         select * from playlists where id = #{id}
     </select>
     
-    <insert id="addPlayList">
+    <insert id="addSongToPlayList">
         insert into playlist_songs (p_list_id, song_id) values ( #{pListId}, #{songId} ) 
+    </insert>
+    
+    <insert id="addPlayList">
+        insert into playlists (id, p_list_name) values (#{id}, #{pListName})
     </insert>
   
   </mapper>

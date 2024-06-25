@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         
         const data = {plistId, songId};
         axios
-        .post('../addPlayList', data)
+        .post('../addSongToPlayList', data)
         .then((response) => {
                console.log(response.data);
                alert(`추가 성공`);

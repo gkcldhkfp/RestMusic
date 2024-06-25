@@ -39,8 +39,4 @@
         delete from likes where song_id = #{songId} and id = #{id}
     </delete>
     
-    <insert id="addPlayList">
-        insert into playlist_songs (p_list_id, song_id) values (#{pListId}, #{songId})
-    </insert>
-    
   </mapper>

@@ -1,6 +1,6 @@
 package com.itwill.rest.repository;
 
-import com.itwill.rest.dto.playlists.AddPlayListDto;
+import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
 import com.itwill.rest.dto.song.SongDetailDto;
 import com.itwill.rest.dto.song.SongLikeDto;
 
@@ -14,5 +14,5 @@ public interface SongDao {
 	
 	int removeLike(SongLikeDto dto);
 	
-	int addPlayList(AddPlayListDto dto);
+	int addPlayList(AddSongToPlayListDto dto);
 }
