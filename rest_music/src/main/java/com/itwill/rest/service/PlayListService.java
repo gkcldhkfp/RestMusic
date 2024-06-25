@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwill.rest.dto.playlists.AddPlayListDto;
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
+import com.itwill.rest.dto.playlists.PlaylistFirstAlbumImgDto;
 import com.itwill.rest.repository.PlayList;
 import com.itwill.rest.repository.PlayListDao;
 
@@ -20,10 +21,10 @@ public class PlayListService {
 	private final PlayListDao playListDao;
 	
 	
-	public List<PlayList> getPlayListByUserId(int id) {
+	public List<PlaylistFirstAlbumImgDto> getPlayListByUserId(int id) {
 		log.debug("getPlayListByUserId({})",id);
 		
-		List<PlayList> result = playListDao.AllPlayListsByUserId(id);
+		List<PlaylistFirstAlbumImgDto> result = playListDao.allPlayListsByUserId(id);
 		
 		return result;
 	}
@@ -32,7 +33,7 @@ public class PlayListService {
 	public int songAddToPlayList(AddSongToPlayListDto dto) {
 		log.debug("service{}",dto);
 		
-		int result = playListDao.addSongToPlayList(dto);
+	int result = playListDao.addSongToPlayListDto(dto);
 		
 		return result;
 	}

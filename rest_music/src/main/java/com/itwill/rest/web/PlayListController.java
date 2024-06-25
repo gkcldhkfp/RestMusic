@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwill.rest.dto.playlists.AddPlayListDto;
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
+import com.itwill.rest.dto.playlists.PlaylistFirstAlbumImgDto;
 import com.itwill.rest.repository.PlayList;
 import com.itwill.rest.service.PlayListService;
 
@@ -27,10 +28,10 @@ public class PlayListController {
 	
 	@GetMapping("/getPlayList/{id}")
 	@ResponseBody
-	public ResponseEntity<List<PlayList>> getPlayList(@PathVariable int id) {
+	public ResponseEntity<List<PlaylistFirstAlbumImgDto>> getPlayList(@PathVariable int id) {
 		log.debug("getPlayList({})",id);
 		
-		List<PlayList> result = playListService.getPlayListByUserId(id);
+		List<PlaylistFirstAlbumImgDto> result = playListService.getPlayListByUserId(id);
 		
 		return ResponseEntity.ok(result);
 	}
