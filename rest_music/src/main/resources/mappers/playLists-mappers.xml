@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.itwill.rest.repository.PlayListDao">
   
-    <select id="AllPlayListsByUserId" resultType="PlayList">
+    <select id="allPlayListsByUserId" resultType="PlaylistFirstAlbumImgDto">
      SELECT
     playlists.p_list_id,
     playlists.p_list_name,
@@ -36,7 +36,7 @@
             playlists.p_list_id
     </select>
     
-    <insert id="AddSongToPlayListDto">
+    <insert id="addSongToPlayListDto">
         insert into playlist_songs (p_list_id, song_id) values ( #{pListId}, #{songId} ) 
     </insert>
   
