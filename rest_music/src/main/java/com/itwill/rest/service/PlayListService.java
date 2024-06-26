@@ -45,6 +45,16 @@ public class PlayListService {
 		
 		return result;
 	}
-
+	
+	public int deleteByListId(Integer pListId) {
+		log.debug("deleteByListId(ListId={})");
+		
+		int rows = playListDao.deleteListSongsByListId(pListId);
+		log.debug("삭제된 리스트 음악 개수 = {}", rows);
+		
+		int result = playListDao.deleteByListId(pListId);
+		
+		return result;
+	}
 
 }

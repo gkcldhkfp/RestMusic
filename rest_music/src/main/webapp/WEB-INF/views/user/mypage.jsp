@@ -111,7 +111,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         
     <!-- JS 파일 지정 -->
-    <c:url var="playlistsJS" value="/js/playlists.js" />
-    <script src="${playlistsJS}"></script>
+    <c:url var="mypageJS" value="/js/mypage.js" />
+    <script src="${mypageJS}"></script>
 </body>
 </html>

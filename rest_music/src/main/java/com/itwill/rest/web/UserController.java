@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/user")
-public class MyPageController {
+public class UserController {
 	
 	private final UserService userService;
 	
@@ -32,6 +32,15 @@ public class MyPageController {
 		
 		model.addAttribute("user", user);
 		model.addAttribute("like", list);
+	}
+	
+	@GetMapping("/playlists")
+	public void playlist(@RequestParam(name = "userId") String userId, Model model) {
+		log.debug("userId={}", userId);
+		
+		User user = userService.readInfo(userId); // 플레이리스트를 불러오기 위한 유저 정보(userId) 불러오기
+		
+		model.addAttribute("user", user);
 	}
 
 }

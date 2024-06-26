@@ -47,5 +47,13 @@
     <insert id="addPlayList">
         insert into playlists (id, p_list_name) values (#{id}, #{pListName})
     </insert>
+    
+    <delete id="deleteByListId">
+        delete from playlists where p_list_id = #{pListId}
+    </delete>
+    
+    <delete id="deleteListSongsByListId">
+        delete from playlist_songs where p_list_id = #{pListId}
+    </delete>
   
   </mapper>
