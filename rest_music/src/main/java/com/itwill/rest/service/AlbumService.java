@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.itwill.rest.repository.Album;
 import com.itwill.rest.repository.AlbumDao;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,5 +27,12 @@ public class AlbumService {
 		log.debug("list = {}", list);
 		return list;
 	}
+	
+	public void incrementLikes(Integer albumId) {
+        log.debug("incrementLikes({})", albumId);
+        albumDao.incrementLikes(albumId);
+    }
+	
+	
 
 }

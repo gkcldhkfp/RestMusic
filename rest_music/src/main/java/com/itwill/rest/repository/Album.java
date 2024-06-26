@@ -17,4 +17,5 @@ public class Album {
 	private String albumImage;
 	private String albumType;
 	private LocalDateTime albumReleaseDate;
+	private int likes; // 좋아요 개수 필드 추가.
 }

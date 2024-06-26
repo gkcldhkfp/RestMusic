@@ -14,5 +14,11 @@
         select * from album where id = #{id}
     </select>
     
+    <!-- 좋아요 -->
+    <update id="incrementLikes" parameterType="int">
+        update album
+        SET likes = likes + 1
+        where album_id = #{albumId}
+    </update>
 
 </mapper>
