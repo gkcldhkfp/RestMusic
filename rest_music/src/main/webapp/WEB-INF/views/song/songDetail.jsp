@@ -20,7 +20,7 @@
 <body>
     <%@ include file="../fragments/header.jspf"%>
     
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-left: 100px; margin-top:100px">
     
         <div class="m-5 " >
             <div class="p-3">
