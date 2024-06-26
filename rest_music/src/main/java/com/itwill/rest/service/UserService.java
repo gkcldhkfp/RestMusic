@@ -1,11 +1,15 @@
- package com.itwill.rest.service;
+package com.itwill.rest.service;
+
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.itwill.rest.dto.user.UserCreateDto;
+import com.itwill.rest.dto.user.UserLikeDto;
 import com.itwill.rest.dto.user.UserSignInDto;
 import com.itwill.rest.repository.User;
 import com.itwill.rest.repository.UserDao;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,9 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Service
 public class UserService {
-    
-    private final UserDao userDao;
-    
+	
+	private final UserDao userDao;
+	
     // 아이디 중복 체크: true - 중복되지 않은 아이디(사용 가능한 아이디), false - 중복된 아이디.
     public boolean checkUserId(String userId) {
         log.debug("checkUserId(userId={})", userId);
@@ -43,4 +47,15 @@ public class UserService {
         log.debug("read({})", dto);
         return userDao.selectByUserIdAndPassword(dto);
     }
+    
+	public User readInfo(String userId) {
+        return userDao.selectByUserid(userId);
+	}
+	
+	public List<UserLikeDto> selectLikesByUserid(String userId) {
+		List<UserLikeDto> list = userDao.selectLikesByUserid(userId);
+		
+		return list;
+	}
+
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -24,6 +24,36 @@
     <select id="selectByUserIdAndPassword" resultType="com.itwill.rest.repository.User">
         select * from users
         where user_id = #{userId} and password = #{password}
+    </select>
+
+    <select id="selectByUserid" resultType="User">
+        select * from users where user_id = #{userid}
+    </select>
+
+    <select id="selectLikesByUserid" resultType="UserLike">
+        SELECT
+        u.user_name,
+        u.user_id,
+        s.song_id,
+        s.title,
+        s.song_path,
+        s.genre,
+        a.album_name,
+        a.album_image,
+        a.album_type,
+        sg.singer_name
+        FROM
+        users u
+        JOIN
+        likes l ON u.id = l.id
+        JOIN
+        songs s ON l.song_id = s.song_id
+        JOIN
+        albums a ON s.album_id = a.album_id
+        LEFT JOIN 
+        singers sg ON s.song_id = sg.song_id
+        WHERE
+        u.user_id = #{userid}
     </select>
 
 </mapper>

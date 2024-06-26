@@ -1,11 +1,12 @@
-
 package com.itwill.rest.web;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwill.rest.dto.user.UserCreateDto;
+import com.itwill.rest.dto.user.UserLikeDto;
 import com.itwill.rest.dto.user.UserSignInDto;
 import com.itwill.rest.repository.User;
 import com.itwill.rest.service.UserService;
@@ -26,9 +28,29 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    
-    private final UserService userService;
-    
+	
+	private final UserService userService;
+	
+	@GetMapping("/mypage")
+	public void myPage(@RequestParam(name = "userId") String userId, Model model) {
+		log.debug("userId={}", userId);
+		
+		User user = userService.readInfo(userId); // 유저 정보 불러오기(프로필 사진, 닉네임 출력)
+		List<UserLikeDto> list = userService.selectLikesByUserid(userId); // 유저가 좋아요 누른 곡 출력
+		
+		model.addAttribute("user", user);
+		model.addAttribute("like", list);
+	}
+	
+	@GetMapping("/playlists")
+	public void playlist(@RequestParam(name = "userId") String userId, Model model) {
+		log.debug("userId={}", userId);
+		
+		User user = userService.readInfo(userId); // 플레이리스트를 불러오기 위한 유저 정보(userId) 불러오기
+		
+		model.addAttribute("user", user);
+	}
+	
     @GetMapping("/signup") // GET 방식의 /user/signup 요청을 처리하는 컨트롤러 메서드 
     public void signUp() {
         log.debug("GET signUp()");

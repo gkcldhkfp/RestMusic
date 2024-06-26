@@ -19,7 +19,7 @@ public class UserCreateDto {
                 .userId(userId)
                 .password(password)
                 .email(email)
-                .nickname(nickname)
+                .nickName(nickname)
                 .userProfile(userProfile)
                 .hintQuestion(hintQuestion)
                 .hintAnswer(hintAnswer)
