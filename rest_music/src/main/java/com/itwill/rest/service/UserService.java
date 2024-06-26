@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.itwill.rest.dto.user.UserCreateDto;
 import com.itwill.rest.dto.user.UserLikeDto;
+import com.itwill.rest.dto.user.UserSignInDto;
 import com.itwill.rest.repository.User;
 import com.itwill.rest.repository.UserDao;
 
@@ -18,6 +20,34 @@ public class UserService {
 	
 	private final UserDao userDao;
 	
+    // 아이디 중복 체크: true - 중복되지 않은 아이디(사용 가능한 아이디), false - 중복된 아이디.
+    public boolean checkUserId(String userId) {
+        log.debug("checkUserId(userId={})", userId);
+        
+        User user = userDao.selectByUserId(userId);
+        return user == null;
+    }
+    
+    // 이메일 중복 체크: true - 중복되지 않은 이메일(사용 가능한 이메일), false - 중복된 이메일.
+    public boolean checkEmail(String email) {
+        log.debug("checkEmail(email={})", email);
+        
+        User user = userDao.selectByEmail(email);
+        return user == null;
+    }
+
+    // 회원 가입 서비스
+    public int create(UserCreateDto dto) {
+        log.debug("create({})", dto);
+        return userDao.insert(dto.toEntity());
+    }
+    
+    // 로그인 서비스
+    public User read(UserSignInDto dto) {
+        log.debug("read({})", dto);
+        return userDao.selectByUserIdAndPassword(dto);
+    }
+    
 	public User readInfo(String userId) {
         return userDao.selectByUserid(userId);
 	}
