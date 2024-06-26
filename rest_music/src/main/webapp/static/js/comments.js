@@ -1,7 +1,3 @@
-/**
- * /post/details.jsp에 포함.
- */
-
 document.addEventListener('DOMContentLoaded', () => {
     let allComments = []; // 불러온 댓글들 담을 배열
     let currentPage = 1; // 페이징 기본 페이지
@@ -39,30 +35,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnUpdateComment = document.querySelector('button#btnUpdateComment');
     btnUpdateComment.addEventListener('click', updateComment);
 
+    // 페이징 엘리먼트를 한번만 설정하도록 수정
+    const paginationElement = document.getElementById('pagination2');
+    paginationElement.addEventListener('click', (event) => {
+        if (event.target.tagName === 'A') {
+            event.preventDefault(); // 기본 동작 방지
+            const page = parseInt(event.target.textContent);
+            gotoPage(page);
+        }
+    });
+
     /*-------------------------------------------------*/
 
     // 댓글 등록 이벤트 리스너 콜백(함수):
     function registerComment() {
-
         // 댓글 내용을 찾음.
         const ctext = document.querySelector('textarea#ctext').value;
 
-        // 댓글 작성자 아이디를 찾음.TODO
-
         // 댓글 내용, 댓글 작성자가 비어 있는 지 체크
-        if (ctext === '' || username === '') {
-            alert('댓글 내용과 작성자는 반드시 입력하세요.');
+        if (ctext === '') {
+            alert('댓글 내용을 입력하세요.');
             return; // 이벤트 리스너를 종료
         }
 
         const data = { songId, ctext, id };
-        console.log(data);
+        // console.log(data);
 
         axios
             .post('../api/comment', data)
             .then((response) => {
                 // console.log(response);
-                console.log(response.data); // RestController에서 보낸 응답 데이터
+                // console.log(response.data); // RestController에서 보낸 응답 데이터
                 if (response.data === 1) {
                     alert('댓글 1개 등록 성공');
                     document.querySelector('textarea#ctext').value = '';
@@ -78,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 포스트에 달려 있는 모든 댓글 목록 가져오기
     function getAllComments() {
-
         // 댓글 목록을 요청하기 위한 REST API URI
         const uri = `../api/comment/all/${songId}`;
 
@@ -86,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         axios
             .get(uri)
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 allComments = response.data;
                 initPagination(); // 페이지 초기화 및 댓글 렌더링
             })
@@ -123,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         data-id="${comment.cid}">수정</button>
                 </div>`;
 
-
             htmlStr += '</div>'; // <div class="card card-body my-1">의 종료 태그!!
         }
 
@@ -146,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 댓글 삭제 버튼의 클릭 이벤트 리스너
     function deleteComment(event) {
         // 이벤트 리스너 콜백의 아규먼트 event 객체는 target 속성을 가지고 있음.
-        console.log(event.target); // 이벤트가 발생한 요소(타겟)
+        // console.log(event.target); // 이벤트가 발생한 요소(타겟)
         const id = event.target.getAttribute('data-id'); // HTML 요소의 속성 값 찾기
 
         // 삭제 여부 확인
@@ -162,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         axios
             .delete(uri)
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 if (response.data === 1) {
                     alert(`댓글(${id}) 삭제 성공`);
                     getAllComments(); // 댓글 목록 갱신
@@ -184,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .get(uri)
             .then((response) => {
                 // console.log(response);
-                console.log(response.data);
+                // console.log(response.data);
                 // console.log(response.data.id);
 
                 // 모달의 input(댓글 번호), textarea(댓글 내용)의 value를 채움.
@@ -216,14 +217,13 @@ document.addEventListener('DOMContentLoaded', () => {
         axios
             .put(uri, { ctext }) // { ctext } = {ctext: ctext}, {id, ctext} = {id: id, ctext: ctext}
             .then((response) => {
-                console.log(response);
+                // console.log(response);
 
                 getAllComments(); // 댓글 목록 갱신
                 commentModal.hide(); // 모달 숨김
             })
             .catch((error) => console.log(error));
     }
-
 
     function initPagination() {
         currentPage = 1;
@@ -249,31 +249,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = 1; i <= totalPages; i++) {
             paginationHtml += `
-                    <li class="page-item ${currentPage === i ? 'active' : ''}">
-                        <a class="mt-auto page-link" href="">${i}</a>
-                    </li>
-                `;
+                <li class="page-item ${currentPage === i ? 'active' : ''}">
+                    <a class="mt-auto page-link" href="#">${i}</a>
+                </li>`;
         }
 
         document.getElementById('pagination2').innerHTML = paginationHtml;
-        
-        const paginationElement = document.getElementById('pagination2');
-
-        paginationElement.addEventListener('click', (event) => {
-            if (event.target.tagName === 'A') {
-                event.preventDefault(); // 기본 동작 방지
-                const page = parseInt(event.target.textContent);
-                gotoPage(page);
-            }
-        });
     }
-
 
     // 페이지 이동 함수
     function gotoPage(page) {
         currentPage = page;
         renderComments();
     }
-
-
 });

@@ -3,14 +3,11 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
 
-    const btnAddcPList = document.querySelector('button#btnAddcPList');
-    btnAddcPList.addEventListener('click', addcPList);
-
     const btnAddPlayList = document.querySelector('button#btnAddPlayList');
 
     const btnLike = document.querySelector('button#btnLike');
 
-    const playListModal = new bootstrap.Modal('div#selectPlayList', { backdrop: true });
+     const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
     btnAddPlayList.addEventListener('click', getPlayLists);
 
     const data = { songId, id };
@@ -21,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     axios
         .post('./like', data)
         .then((response) => {
-            console.log(response.data);
             if (response.data) {
                 btnLike.textContent = '♡';
             } else {
@@ -37,12 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnLike.addEventListener('click', () => {
 
-        console.log(data);
-
         axios
             .put('./like', data)
             .then((response) => {
-                console.log(response.data);
                 if (response.data) {
                     btnLike.textContent = '♥';
                 } else {
@@ -61,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
         axios
             .get(uri)
             .then((response) => {
-                console.log(response.data);
                 
                 playlistsData = response.data;
                 
@@ -91,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const albumImageSrc = playlist.albumImage ? `..${playlist.albumImage}` : defaultImage;
 
 
-            console.log(playlist);
             htmlStr += `
             <a class="playList btn btn-outline-success form-control mt-2" data-id="${playlist.plistId}" >
             <div class="d-flex align-items-center">
@@ -119,8 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function addSongPlayList(event) {
 
         const plistId = event.currentTarget.getAttribute('data-id');
-        console.log('userid = ' + id);
-        console.log('plistId = ' + plistId);
 
         const data = { plistId, songId };
 
@@ -144,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
             axios
                 .post('../addSongToPlayList', data)
                 .then((response) => {
-                    console.log(response.data);
                     alert(`추가 성공`);
                     playListModal.hide();
                 })
@@ -154,10 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     }
-
-    function addcPList() {
-        console.log('cplist')
-    }
     
     function displayPlayLists(page) {
         const startIndex = (page - 1) * itemsPerPage;
@@ -166,11 +150,11 @@ document.addEventListener('DOMContentLoaded', () => {
         makePlayListElements(paginatedPlaylists);
     }
     
-      function setupPagination() {
+     function setupPagination() {
         const totalPages = Math.ceil(playlistsData.length / itemsPerPage);
         const paginationElement = document.getElementById('pagination');
         let paginationHtml = '';
-
+    
         for (let i = 1; i <= totalPages; i++) {
             if (i === currentPage) {
                 paginationHtml += `
@@ -181,31 +165,34 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 paginationHtml += `
                     <li class="page-item">
-                        <a class="page-link" href="#">${i}</a>
+                        <a class="page-link" href="#" data-page="${i}">${i}</a>
                     </li>
                 `;
             }
         }
-        
+    
         paginationElement.innerHTML = paginationHtml;
-        
-        paginationElement.addEventListener('click', (event) => {
-          if (event.target.tagName === 'A') {
-        event.preventDefault(); // 기본 동작 방지
-        const page = parseInt(event.target.textContent);
-        changePage(page);
+    
+        // 기존 이벤트 리스너 제거
+        paginationElement.removeEventListener('click', handlePaginationClick);
+    
+        // 이벤트 리스너 등록
+        paginationElement.addEventListener('click', handlePaginationClick);
     }
     
-});
+    function handlePaginationClick(event) {
+        event.preventDefault(); // 기본 동작 방지
+        if (event.target.tagName === 'A') {
+            const page = parseInt(event.target.getAttribute('data-page'));
+            changePage(page);
+        }
     }
-
+    
     function changePage(page) {
         currentPage = page;
         displayPlayLists(currentPage);
-        setupPagination();
+        setupPagination(); // 이 부분에서 이벤트 리스너를 다시 등록하지 않아도 됨
     }
-    
-    
 
 
 });
