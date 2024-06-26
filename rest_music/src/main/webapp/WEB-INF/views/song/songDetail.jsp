@@ -94,7 +94,7 @@
                 </div>
                 
                 <!-- 댓글 토글 버튼에 의해서 접기/펼치기를 할 영역 -->
-                <div class="card-body collapse" id="collapseComments" style="min-height:790px">
+                <div class="card-body collapse" id="collapseComments">
                     <!-- 댓글 등록 -->
                     <div class="mt-2 card card-body">
                         <div class="mt-2 row">
@@ -117,7 +117,7 @@
                     <div class="my-2" id="comments" ></div>
                     
                     <!-- 페이징 버튼들이 여기에 추가될 예정 -->
-                    <ul id="pagination2" class="pagination pagination-sm justify-content-center"></ul>   
+                    <ul id="pagination2" class="pagination pagination-sm justify-content-center "></ul>   
                       
                     
                    <!-- 댓글 업데이트 모달(다이얼로그) -->

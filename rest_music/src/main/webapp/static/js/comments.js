@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 1; i <= totalPages; i++) {
             paginationHtml += `
                     <li class="page-item ${currentPage === i ? 'active' : ''}">
-                        <a class="page-link" href="">${i}</a>
+                        <a class="mt-auto page-link" href="">${i}</a>
                     </li>
                 `;
         }
