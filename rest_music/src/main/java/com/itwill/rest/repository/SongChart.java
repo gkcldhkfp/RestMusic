@@ -10,9 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SongLikes {
+public class SongChart {
 	private Integer songId; // 음악 번호
 	private Integer id; // 회원 번호
+	private String genre; // 장르
 	private String albumImage; // 앨범 표지
 	private String title; // 노래 제목
 	private String singerName; // 가수 이름

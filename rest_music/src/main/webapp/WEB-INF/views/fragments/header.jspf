@@ -19,16 +19,16 @@
 					data-bs-toggle="dropdown" aria-expanded="false">REST 차트</a>
 					<ul class="dropdown-menu">
 						<li>
-                            <c:url var="song_chart" value="/chart/song_chart" />
-                            <a class="dropdown-item" href="${song_chart}">TOP 30</a>
+                            <c:url var="popularSongs" value="/song/popular" />
+                            <a class="dropdown-item" href="${popularSongs}">TOP 30</a>
                         </li>
 						<li>
-                            <c:url var="genre_chart" value="/chart/genre_chart" />
-                            <a class="dropdown-item" href="${genre_chart}">장르별 차트</a>
+                            <c:url var="songsByGenre" value="/song/songsByGenre" />
+                            <a class="dropdown-item" href="${songsByGenre}">장르별 차트</a>
                         </li>
 						<li>
-                            <c:url var="mv_chart" value="/chart/mv_chart" />
-                            <a class="dropdown-item" href="${mv_chart}">뮤직비디오 차트</a>
+                            <c:url var="songsByVideo" value="/song/songsByVideo" />
+                            <a class="dropdown-item" href="${songsByVideo}">뮤직비디오 차트</a>
                         </li>
 					</ul>
 				</li>

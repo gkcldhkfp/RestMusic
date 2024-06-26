@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwill.rest.repository.SongChartDao">
+    
+    <!-- 좋아요 개수 확인 -->
+    <select id="countSongLikes" resultType="Integer">
+        select count(*)
+        from likes
+        where song_id = #{songId}
+    </select>
+
+    <!-- 좋아요 추가 -->
+    <insert id="insertSongLike">
+        insert into likes (song_id, id)
+        values (#{songId}, #{id})
+    </insert>
+
+    <!-- 좋아요 삭제 -->
+    <delete id="deleteSongLike">
+        delete from likes
+        where song_id = #{songId} and id = #{id}
+    </delete>
+    
+    <!-- TOP30 -->
+    <select id="topSongs" resultType="SongChart">
+        select
+            so.song_id,
+            a.album_image,
+            so.title,
+            si.singer_name,
+            a.album_name,
+            count(l.song_id) as likes,
+            so.song_path,
+            so.video_link
+        from songs so
+        join albums a on so.album_id = a.album_id
+        join singers si on so.song_id = si.song_id
+        join likes l on so.song_id = l.song_id
+        group by
+            so.song_id, 
+            a.album_image, 
+            so.title, 
+            si.singer_name, 
+            a.album_name, 
+            so.song_path,
+            so.video_link
+        order by count(l.song_id) desc
+    </select>
+   
+    <!-- 
+    <select id="topSongs" resultType="SongChart">
+        select
+            a.album_image,
+            so.title,
+            si.singer_name,
+            a.album_name,
+            count(l.song_id) as likes,
+            so.song_path,
+            p.id,
+            so.video_link
+        from songs so
+        join albums a on so.album_id = a.album_id
+        join singers si on so.song_id = si.song_id
+        join likes l on so.song_id = l.song_id
+        join playlist_songs ps on so.song_id = ps.song_id
+        join playlists p on ps.p_list_id = p.p_list_id
+        group by 
+            a.album_image, 
+            so.title, 
+            si.singer_name, 
+            a.album_name, 
+            so.song_path,
+            p.id,
+            so.video_link
+        order by count(l.song_id) desc
+    </select>
+     -->
+    
+    <!-- 장르별 차트 -->
+    <select id="selectSongsByGenre" resultType="SongChart">
+        select
+            a.album_image,
+            so.title,
+            si.singer_name,
+            a.album_name,
+            count(l.song_id) as likes,
+            so.song_path,
+            so.video_link
+        from songs so
+        join albums a on so.album_id = a.album_id
+        join singers si on so.song_id = si.song_id
+        join likes l on so.song_id = l.song_id
+        where genre = #{genre}
+        group by 
+            a.album_image, 
+            so.title, 
+            si.singer_name, 
+            a.album_name, 
+            so.song_path,
+            so.video_link
+        order by count(l.song_id) desc
+    </select>
+    
+</mapper>
+
+

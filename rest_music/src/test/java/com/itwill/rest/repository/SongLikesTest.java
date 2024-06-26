@@ -18,28 +18,29 @@ import lombok.extern.slf4j.Slf4j;
 public class SongLikesTest {
 
 	@Autowired // 스프링 컨테이너가 생성/관리하는 빈을 주입받음.
-	private SongLikesDao songLikesDao;
+	private SongChartDao songLikesDao;
 
 	 @Test
 	public void testPopularSongs() {
-		List<SongLikes> ranking = songLikesDao.popularSongs();
+		List<SongChart> ranking = songLikesDao.topSongs();
 		Assertions.assertNotNull(ranking);
-		for (SongLikes rank : ranking) {
+		for (SongChart rank : ranking) {
 			log.debug(rank.toString());
 		}
 	}
 
 //	@Test
 	public void testInsert() {
-		SongLikes songLikes = SongLikes.builder().songId(1).id(1).build();
-		int result = songLikesDao.insertSongLikes(songLikes);
+		SongChart songLikes = SongChart.builder().songId(1).id(1).build();
+		int result = songLikesDao.insertSongLike(songLikes);
 		Assertions.assertEquals(1, result);
 
 	}
 
 //	@Test
 	public void testDelete() {
-		int result = songLikesDao.deleteSongLikes(1);
+		SongChart songLikes = SongChart.builder().songId(1).id(1).build();
+		int result = songLikesDao.deleteSongLike(songLikes);
 		Assertions.assertEquals(1, result);
 
 	}
