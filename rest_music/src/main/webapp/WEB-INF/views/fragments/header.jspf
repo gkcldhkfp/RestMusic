@@ -58,9 +58,11 @@
 					</form>
 				</li>
 			</ul>
-			
-			<a style="font-size: 0.75rem" class="me-2" href="/user/signin">로그인</a>
-			<a style="font-size: 0.75rem" class="me-2" href="/user/signup">회원가입</a>
+            
+			<c:url var="signInPage" value="/user/signin" />
+            <a style="font-size: 0.75rem" class="me-2" href="${signupPage}">로그인</a>
+            <c:url var="signupPage" value="/user/signup" />
+			<a style="font-size: 0.75rem" class="me-2" href="${signupPage}">회원가입</a>
 		</div>
 	</div>
 </nav>
