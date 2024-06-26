@@ -39,5 +39,9 @@
     <insert id="addSongToPlayListDto">
         insert into playlist_songs (p_list_id, song_id) values ( #{pListId}, #{songId} ) 
     </insert>
+    
+    <select id="checkSongInPlayList" resultType="Integer">
+        select count(*) from playlist_songs where p_list_id = #{pListId} and song_id = #{songId}
+    </select>
   
   </mapper>

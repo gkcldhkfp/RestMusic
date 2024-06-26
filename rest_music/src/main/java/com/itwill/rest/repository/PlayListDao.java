@@ -11,4 +11,6 @@ public interface PlayListDao {
 
 	int addSongToPlayListDto(AddSongToPlayListDto dto);
 
+	Integer checkSongInPlayList(AddSongToPlayListDto dto);
+
 }

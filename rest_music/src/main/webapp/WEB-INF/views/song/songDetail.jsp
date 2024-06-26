@@ -35,7 +35,7 @@
                         <p class="mt-2">장르<span class="ms-3">${data.genre}</span></p>
                         <div class="mt-3">
                             <button id="btnLike" class="btn btn-success" ></button>
-                            <button class="btn btn-success" >재생목록추가</button>
+                            <button id="btnAddcPList"class="btn btn-success" >재생목록추가</button>
                             <button id="btnAddPlayList"class="btn btn-success" >플리추가</button>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                 </div>
                 
                 <!-- 댓글 토글 버튼에 의해서 접기/펼치기를 할 영역 -->
-                <div class="card-body collapse" id="collapseComments">
+                <div class="card-body collapse" id="collapseComments" style="min-height:790px">
                     <!-- 댓글 등록 -->
                     <div class="mt-2 card card-body">
                         <div class="mt-2 row">
@@ -114,8 +114,11 @@
                     
                     
                     <!-- 포스트에 달려 있는 댓글 목록을 보여줄 영역 -->
-                    <div class="my-2" id="comments"></div>
+                    <div class="my-2" id="comments" ></div>
                     
+                    <!-- 페이징 버튼들이 여기에 추가될 예정 -->
+                    <ul id="pagination2" class="pagination pagination-sm justify-content-center"></ul>   
+                      
                     
                    <!-- 댓글 업데이트 모달(다이얼로그) -->
                     <div id="commentModal" class="modal" tabindex="-1">
@@ -155,13 +158,16 @@
                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div id="playLists"class="modal-body">
-                                    
+                                    <!--  플리가 추가 될 부분 -->
                                 </div>
+                                <nav aria-label="Playlist navigation">
+                                    <ul id="pagination" class="pagination pagination-sm justify-content-center">
+                                        <!-- 페이징이 추가될 부분 -->
+                                    </ul>
+                                </nav>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary"
                                         data-bs-dismiss="modal">취소</button>
-                                    <button type="button" class="btn btn-outline-primary"
-                                        id="btnUpdateComment">저장</button>
                                 </div>
                             </div>
                         </div>
