@@ -16,8 +16,8 @@
     
     <!-- 회원 가입 -->
     <insert id="insert" parameterType="com.itwill.rest.repository.User">
-        insert into users (user_id, password, email, nickname, user_profile, hint_question, hint_answer)
-        values (#{userId}, #{password}, #{email}, #{nickname}, #{userProfile}, #{hintQuestion}, #{hintAnswer})
+        insert into users (user_id, user_name, password, email, nickname, user_profile, hint_question, hint_answer)
+        values (#{userId}, #{userName}, #{password}, #{email}, #{nickname}, #{userProfile}, #{hintQuestion}, #{hintAnswer})
     </insert>
     
     <!-- 로그인 -->

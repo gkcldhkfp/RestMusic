@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     let useridChecked = false; // 사용자 아이디 중복 체크 결과. true: 사용할 수 있는 아이디.
+    let userNameChecked = false;    // 사용자 이름 작성 여부 체크.
     let passwordChecked = false; // 비밀번호 필드 작성 여부 체크.
     let confirmPasswordChecked = false; // 비밀번호 확인 필드 작성 여부 체크.
     let emailChecked = false; // 이메일 필드 작성 여부 체크.
@@ -8,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let hintAnswerChecked = false; // 힌트 답변 필드 작성 여부 체크.
     
     const inputUserid = document.querySelector('input#userid');
+    inputUserid.addEventListener('change', checkUserid);
+
     const btnCheckId = document.querySelector('button#checkIdBtn');
     btnCheckId.addEventListener('click', checkUserid);
     
@@ -19,6 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const inputEmail = document.querySelector('input#email');
     inputEmail.addEventListener('change', checkEmail);
+
+    const inputUserName = document.querySelector('input#username');
+    inputUserName.addEventListener('change', checkUserName);
     
     const inputNickname = document.querySelector('input#nickname');
     inputNickname.addEventListener('change', checkNickname);
@@ -28,6 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const inputHintAnswer = document.querySelector('input#hintAnswer');
     inputHintAnswer.addEventListener('change', checkHintAnswer);
+
+
+    // inputUserid 변경 감지
+    // 변경상태에서는 무조건 false
+    inputUserid.addEventListener('input', function(e) {
+        useridChecked = false;
+    });
+
     
     /* -------------------- 함수 선언 -------------------- */
     
@@ -49,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkUserid(event) {
         const userid = inputUserid.value; // inputUserid.value
         
-        const uri = `${pageContext.request.contextPath}/user/checkid?userid=${userid}`; // 아이디 중복 체크 REST API URI
+        const uri = `/Rest/user/checkid?userid=${userid}`; // 아이디 중복 체크 REST API URI
         axios
         .get(uri)
         .then((response) => {
@@ -107,11 +121,55 @@ document.addEventListener('DOMContentLoaded', () => {
     // 이메일 입력 필드의 change 이벤트 리스너
     // input#email 비어 있는 지를 체크
     function checkEmail(event) {
+        const email_pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+
         if (event.target.value === '') {
             emailChecked = false;
-        } else {
-            emailChecked = true;
         }
+        
+        const email = inputEmail.value;
+        
+        // 이메일 형식 체크
+        if(!email.match(email_pattern)) {
+            emailChecked = false;
+            checkEmailResult.innerHTML = '이메일 형식이 올바르지 않습니다.';
+            checkEmailResult.classList.add('text-danger');
+            checkEmailResult.classList.remove('text-success');
+            return;
+        }
+
+        const uri = `/Rest/user/checkemail?email=${email}`;
+
+        axios
+            .get(uri)
+            .then((response) => {
+            const checkEmailResult = document.querySelector('div#checkEmailResult');
+                console.log(response);
+
+                if(response.data === 'Y') {
+                    emailChecked = true;
+                    checkEmailResult.innerHTML = '사용 가능한 이메일입니다.';
+                    checkEmailResult.classList.add('text-success');
+                    checkEmailResult.classList.remove('text-danger');
+                } else {
+                    emailChecked = false;
+                    checkEmailResult.innerHTML = '사용할 수 없는 이메일입니다.';
+                    checkEmailResult.classList.add('text-danger');
+                    checkEmailResult.classList.remove('text-success');
+                }
+            });
+
+
+        changeButtonState(); // 버튼의 활성화/비활성화 상태를 변경
+    }
+
+    function checkUserName(event) {
+        if(event.target.value === '') {
+            userNameChecked = false;
+        } else {
+            userNameChecked = true;
+        }
+
         changeButtonState(); // 버튼의 활성화/비활성화 상태를 변경
     }
     

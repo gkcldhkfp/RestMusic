@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class UserCreateDto {
     private String userId;
+    private String userName;
     private String password;
     private String email;
     private String nickname;
@@ -17,6 +18,7 @@ public class UserCreateDto {
     public User toEntity() {
         return User.builder()
                 .userId(userId)
+                .userName(userName)
                 .password(password)
                 .email(email)
                 .nickName(nickname)
