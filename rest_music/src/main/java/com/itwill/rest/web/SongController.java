@@ -1,5 +1,7 @@
 package com.itwill.rest.web;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwill.rest.dto.song.SearchResultDto;
 import com.itwill.rest.dto.song.SongDetailDto;
 import com.itwill.rest.dto.song.SongLikeDto;
+import com.itwill.rest.dto.song.SongSearchDto;
 import com.itwill.rest.service.SongService;
 
 import lombok.RequiredArgsConstructor;
@@ -53,6 +57,18 @@ public class SongController {
 		boolean result = songService.isLikes(dto);
 		
 		return result;
+	}
+	
+	@GetMapping("/search")
+	public void songSearch(SongSearchDto dto, Model model) {
+		log.debug("dto={}",dto);
+		
+		List<SearchResultDto> result = songService.searchSongs(dto);
+		
+		log.debug("result={}",result);
+		
+		model.addAttribute("result", result);
+		
 	}
 	
 	

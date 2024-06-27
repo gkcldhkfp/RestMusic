@@ -1,55 +1,30 @@
 /**
- *  detail.jsp 포함
+ *  search.jsp에 포함
  */
 document.addEventListener('DOMContentLoaded', () => {
-
-    const btnAddPlayList = document.querySelector('button#btnAddPlayList');
-
-    const btnLike = document.querySelector('button#btnLike');
-
-     const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
-    btnAddPlayList.addEventListener('click', getPlayLists);
-
-    const data = { songId, id };
+    
+    const btnAddPlayLists = document.querySelectorAll('button.addPlayList');
+    
+    const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
+    
+    let songId;
+    
     let currentPage = 1;
     const itemsPerPage = 5;
     let playlistsData = [];
-
-    axios
-        .post('./like', data)
-        .then((response) => {
-            if (response.data) {
-                btnLike.textContent = '♡';
-            } else {
-                btnLike.textContent = '♥';
-            }
+    
+    for (let a of btnAddPlayLists) {
+            a.addEventListener('click', getPlayLists);
         }
-        )
-        .catch((error) => {
-            console.log(error);
-        });
 
-
-
-    btnLike.addEventListener('click', () => {
-
-        axios
-            .put('./like', data)
-            .then((response) => {
-                if (response.data) {
-                    btnLike.textContent = '♥';
-                } else {
-                    btnLike.textContent = '♡';
-                }
-            }
-            )
-            .catch((error) => {
-                console.log(error);
-            });
-
-    });
-
-    function getPlayLists() {
+    function getPlayLists(event) {
+        if(id===''){ // 유저아이디
+            alert('로그인이 필요함');
+            return;
+        }
+        event.stopPropagation();
+        songId = event.target.closest('tr').getAttribute('data-song-id');
+        
         const uri = `../getPlayList/${id}`;
         axios
             .get(uri)
@@ -110,7 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function addSongPlayList(event) {
 
         const plistId = event.currentTarget.getAttribute('data-id');
-
+        
+        
         const data = { plistId, songId };
 
         axios.post('../checkSongInPlayList', data)
@@ -193,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayPlayLists(currentPage);
         setupPagination(); // 이 부분에서 이벤트 리스너를 다시 등록하지 않아도 됨
     }
-
-
+    
+    
+    
 });
-

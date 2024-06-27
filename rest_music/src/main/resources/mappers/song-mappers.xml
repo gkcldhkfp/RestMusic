@@ -39,5 +39,29 @@
         delete from likes where song_id = #{songId} and id = #{id}
     </delete>
     
+    <select id="searchSongs" resultType="ResultDto">
+        <bind name="searchKeyword" value="'%' + keyword + '%'" />
+            select a.song_id, c.album_image, c.album_name, a.title, b.singer_name
+            from songs a
+            inner join singers b ON a.song_id = b.song_id
+            inner join albums c on a.album_id = c.album_id
+        <where>
+            <choose>
+                <when test='category.equals("t")'>
+                    upper(a.title) like upper(#{searchKeyword})
+                </when>
+                <when test='category.equals("s")'>
+                    upper(b.singer_name) like upper(#{searchKeyword})
+                </when>
+                <when test='category.equals("ts")'>
+                    upper(a.title) like upper(#{searchKeyword})
+                    or
+                    upper(b.singer_name) like upper(#{searchKeyword})
+                </when>
+             
+            </choose>
+        </where>
+    </select>
+    
     
   </mapper>

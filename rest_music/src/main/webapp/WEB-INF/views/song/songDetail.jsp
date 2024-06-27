@@ -25,7 +25,7 @@
         <div class="m-5 " >
             <div class="p-3">
                 <div class="" >
-                    <c:url var="albumCover" value="${data.albumImage}" ></c:url>
+                    <c:url var="albumCover" value="/images/${data.albumImage}" ></c:url>
                     <img alt="albumCover" src="${albumCover}" class="rounded " 
                     style="display: inline-block;  vertical-align: middle; left:400px; width: 220px; height: 220px;" >
                     <div class="ms-2" style="display: inline-block;  vertical-align: middle;">
@@ -53,7 +53,7 @@
                 <p id="lyrics" >
                         <c:catch var="error">
                         <%-- 파일 읽기를 시도하고 에러가 발생할 경우 처리 --%>
-                         <c:set var="filePath" value="${data.lyrics}" />
+                         <c:set var="filePath" value="/static/lyrics/${data.lyrics}" />
                         <%
                             ServletContext context = request.getServletContext();
                             String realPath = context.getRealPath((String) pageContext.getAttribute("filePath"));
