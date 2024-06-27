@@ -13,6 +13,11 @@
         crossorigin="anonymous" />
 </head>
 <body>
+    <header>
+        <div class="container-fluid">
+            <%@ include file="../fragments/header.jspf"%>
+        </div>
+    </header>
     <div class="container-fluid">
         <main>
             <div class="my-2 card">
@@ -26,22 +31,44 @@
                         </c:if>
                         <div class="my-2">
                             <input class="form-control" 
-                                type="text" name="userid" placeholder="아이디" required />
+                                type="text" name="userId" id="userId" placeholder="아이디" required />
                         </div>
                         <div class="my-2">
                             <input class="form-control" 
                                 type="password" name="password" placeholder="비밀번호" required />
                         </div>
+                        <div class="form-check my-2">
+                            <input class="form-check-input" type="checkbox" name="saveIdYn" id="saveIdYn" />
+                            <label class="form-check-label" for="saveIdYn">
+                                아이디 저장
+                            </label>
+                        </div>
+                        <input type="hidden" value="${param.target}"/>
                         <div class="my-2">
                             <input class="form-control btn btn-outline-success" 
                                 type="submit" value="로그인" />
+                        </div>
+                        <div class="my-2">
+                            <input class="form-control btn btn-outline-success"
+                                   type="button" value="회원가입" onClick="location.href='/Rest/user/signup'"/>
+                        </div>
+                        <div class="my-2">
+                            <input class="form-control btn btn-outline-success"
+                                   type="button" value="아이디 찾기" onClick="location.href='/Rest/user/findUserId'"/>
+                        </div>
+                        <div class="my-2">
+                            <input class="form-control btn btn-outline-success"
+                                   type="button" value="비밀번호 찾기" onClick="location.href='/Rest/user/findPassword'"/>
                         </div>
                     </form>
                 </div>
             </div>
         </main>
-    </div>    
-    
+    </div>
+
+    <c:url var="sign_in_js" value="/js/signin.js" />
+    <script src="${sign_in_js}"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
         crossorigin="anonymous"></script>

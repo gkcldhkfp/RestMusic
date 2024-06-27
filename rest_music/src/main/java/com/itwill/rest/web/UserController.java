@@ -103,13 +103,13 @@ public class UserController {
             @RequestParam(name = "target", defaultValue = "") String target,
             HttpSession session) throws IOException {
         log.debug("POST signIn({})", dto);
-        
+
         User user = userService.read(dto);
         String targetPage = "";
         if (user != null) { // 아이디와 비밀번호가 일치하는 사용자 있는 경우
             // 세션에 로그인 사용자 아이디를 저장
             session.setAttribute("SESSION_ATTR_USER", user.getUserId());
-            
+
             // 로그인 성공 후 이동할 타겟 페이지
             targetPage = (target.equals("")) ? "/" : target;
             
@@ -117,14 +117,14 @@ public class UserController {
             targetPage = "/user/signin?result=f&target="
                     + URLEncoder.encode(target, "UTF-8");
         }
-        
+
         return "redirect:" + targetPage;
     }
     
     @GetMapping("/signout")
     public String signOut(HttpSession session) {
         log.debug("singOut()");
-        
+
         session.removeAttribute("SESSION_ATTR_USER");
         session.invalidate();
         

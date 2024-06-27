@@ -1,14 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>회원가입</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous" />
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
@@ -51,19 +55,24 @@
 </head>
 <body>
     <header>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/user/signin">로그인</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/user/signup">회원가입</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <div class="container-fluid">
+<%--            <c:set var="pageTitle" value="Rest" scope="page" />--%>
+            <%@ include file="../fragments/header.jspf"%>
+        </div>
     </header>
+
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/user/signin">로그인</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/user/signup">회원가입</a>
+            </li>
+        </ul>
+    </div>
+
     <div class="container">
         <form class="form-signup" method="post" action="${pageContext.request.contextPath}/user/signup">
             <h2 class="form-signup-heading">회원가입</h2>
@@ -93,8 +102,17 @@
             <label for="nickname" class="sr-only">닉네임</label>
             <input type="text" id="nickname" name="nickname" class="form-control" placeholder="닉네임" required>
 
-            <label for="hintQuestion" class="sr-only">힌트 질문</label>
-            <input type="text" id="hintQuestion" name="hintQuestion" class="form-control" placeholder="힌트 질문" required>
+            <label for="userProfile" class="form-label">Default file input example</label>
+            <input class="form-control" type="file" id="userProfile" name="userProfile">
+
+            <input type="hidden" id="hintQuestion" name="hintQuestion" value="">
+            <label for="hintQuestionSelect" class="sr-only" style="color: #495057 !important;">힌트 질문</label>
+            <select class="form-control" id="hintQuestionSelect" name="hintQuestionSelect" required="required" style="height: 50px; border-radius: 0 !important; ">
+                <option value="" selected>힌트 질문</option>
+                <option value="1">좋아하는 색깔은?</option>
+                <option value="2">핸드폰번호 뒷자리는?</option>
+                <option value="3">내 성별은?</option>
+            </select>
 
             <label for="hintAnswer" class="sr-only">힌트 답변</label>
             <input type="text" id="hintAnswer" name="hintAnswer" class="form-control" placeholder="힌트 답변" required>

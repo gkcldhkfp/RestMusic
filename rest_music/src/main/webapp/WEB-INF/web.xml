@@ -53,5 +53,16 @@
         <servlet-name>dispatcherServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-    
+
+    <!-- 인증 필터 -->
+    <filter>
+        <filter-name>authFilter</filter-name>
+        <filter-class>com.itwill.rest.filter.AuthenticationFilter</filter-class>
+    </filter>
+    <!-- 필터 매핑 -->
+    <filter-mapping>
+        <filter-name>authFilter</filter-name>
+        <!-- 매핑 예시 -->
+        <url-pattern>/song/*</url-pattern>
+    </filter-mapping>
 </web-app>
