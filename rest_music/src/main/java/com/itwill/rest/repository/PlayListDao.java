@@ -3,6 +3,7 @@ package com.itwill.rest.repository;
 import java.util.List;
 
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
+import com.itwill.rest.dto.playlists.PlayListSongInfoDto;
 import com.itwill.rest.dto.playlists.PlaylistFirstAlbumImgDto;
 
 public interface PlayListDao {
@@ -16,5 +17,11 @@ public interface PlayListDao {
 	int deleteByListId(Integer pListId);
 	
 	int deleteListSongsByListId(Integer pListId);
+	
+	List<PlayListSongInfoDto> getSongsByPlistId(Integer pListId);
+	
+	PlayList getPlayListInfoByListId(Integer pListId);
+	
+	int deleteListSongBySongId(Integer pListId, Integer songId);
 
 }

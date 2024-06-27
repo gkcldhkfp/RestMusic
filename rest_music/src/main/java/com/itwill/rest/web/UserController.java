@@ -42,15 +42,6 @@ public class UserController {
 		model.addAttribute("like", list);
 	}
 	
-	@GetMapping("/playlists")
-	public void playlist(@RequestParam(name = "userId") String userId, Model model) {
-		log.debug("userId={}", userId);
-		
-		User user = userService.readInfo(userId); // 플레이리스트를 불러오기 위한 유저 정보(userId) 불러오기
-		
-		model.addAttribute("user", user);
-	}
-	
     @GetMapping("/signup") // GET 방식의 /user/signup 요청을 처리하는 컨트롤러 메서드 
     public void signUp() {
         log.debug("GET signUp()");

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwill.rest.dto.playlists.AddPlayListDto;
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
+import com.itwill.rest.dto.playlists.PlayListSongInfoDto;
 import com.itwill.rest.dto.playlists.PlaylistFirstAlbumImgDto;
 import com.itwill.rest.repository.PlayList;
 import com.itwill.rest.repository.PlayListDao;
@@ -28,7 +29,14 @@ public class PlayListService {
 		
 		return result;
 	}
-
+	
+	public List<PlayListSongInfoDto> getSongsByPlistId(int pListId) {
+		return playListDao.getSongsByPlistId(pListId);
+	}
+	
+	public PlayList getPlayListInfoByListId(int pListId) {
+		return playListDao.getPlayListInfoByListId(pListId);
+	}
 
 	public int songAddToPlayList(AddSongToPlayListDto dto) {
 		log.debug("service{}",dto);
@@ -53,6 +61,14 @@ public class PlayListService {
 		log.debug("삭제된 리스트 음악 개수 = {}", rows);
 		
 		int result = playListDao.deleteByListId(pListId);
+		
+		return result;
+	}
+	
+	public int deleteListSongsBySongId(Integer pListId, Integer songId) {
+		log.debug("deleteByListId(ListId={})");
+		log.debug("deleteByListId(songId={})");
+		int result = playListDao.deleteListSongBySongId(pListId, songId);
 		
 		return result;
 	}

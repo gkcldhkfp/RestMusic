@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(playlist);
             htmlStr += `
             <div class="d-flex align-items-center">
-            <a class="playList btn btn-outline-success form-control mt-2">
+            <a class="playList btn btn-outline-success form-control mt-2" data-id="${playlist.plistId}">
                 <div class="d-flex align-items-center">
                     <div class="flex-shrink-0">
                         <img src="${albumImageSrc}" alt="..." width="50px" height="50px">
@@ -114,7 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const aPlayLists = document.querySelectorAll('a.playList');
         for (let a of aPlayLists) {
-            a.addEventListener('click', () => console.log('test'));
+            a.addEventListener('click', () => {
+                const plistId = a.getAttribute('data-id');
+                console.log('클릭한 플레이리스트의 plistId:', plistId);
+                window.location.href = `../playlists/playlist?plistId=${plistId}`;
+            });
         }
     }
     

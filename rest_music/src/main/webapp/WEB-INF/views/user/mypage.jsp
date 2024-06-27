@@ -66,10 +66,15 @@
                             <c:forEach items="${like}" var="l">
                                 <tr>
                                 <c:url var="albumImage" value="${l.albumImage}"></c:url>
-                                    <td style="text-align: center; vertical-align: middle;"><img alt="songImg" src="${albumImage}"
-                                        width="100px" height="100px"></td>
-                                    <td style="text-align: center; vertical-align: middle;"><a href="">${l.title}</a></td>
-                                    <td style="text-align: center; vertical-align: middle;">${l.singerName}</td>
+                                    <td style="text-align: left; vertical-align: middle;"><img alt="songImg" src="${albumImage}"
+                                        width="80px" height="80px"></td>
+                                    <td style="text-align: left; vertical-align: middle; font-size: 14px;">
+                                        <c:url var="songDetailPage" value="/song/detail">
+                                            <c:param name="songId" value="${l.songId}"></c:param>
+                                        </c:url>
+                                    <a href="${songDetailPage}">${l.title}</a>
+                                    </td>
+                                    <td style="text-align: left; vertical-align: middle; font-size: 14px;">${l.singerName}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
