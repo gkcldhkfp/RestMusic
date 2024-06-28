@@ -65,6 +65,54 @@ from albums a
     left join singers on singers.song_id = s.song_id
     left join title_songs on title_songs.song_id= s.song_id;
     
+SELECT 
+    a.album_id, 
+    a.album_name,
+    s.song_id, 
+    s.title, 
+    s.genre, 
+    singers.singer_name,
+    title_songs.song_id as title_song,
+    COUNT(l.id) as count_likes
+FROM 
+    albums a
+    LEFT JOIN songs s ON a.album_id = s.album_id
+    LEFT JOIN singers ON singers.song_id = s.song_id
+    LEFT JOIN title_songs ON title_songs.song_id = s.song_id
+    LEFT JOIN likes l ON l.song_id = s.song_id
+GROUP BY 
+    a.album_id, 
+    a.album_name,
+    s.song_id, 
+    s.title, 
+    s.genre, 
+    singers.singer_name,
+    title_songs.song_id
+UNION
+SELECT 
+    a.album_id, 
+    a.album_name,
+    s.song_id, 
+    s.title, 
+    s.genre, 
+    singers.singer_name,
+    title_songs.song_id as title_song,
+    COUNT(l.id) as count_likes
+FROM 
+    albums a
+    LEFT JOIN songs s ON a.album_id = s.album_id
+    LEFT JOIN singers ON singers.song_id = s.song_id
+    LEFT JOIN title_songs ON title_songs.song_id = s.song_id
+    LEFT JOIN likes l ON l.song_id = s.song_id
+GROUP BY 
+    a.album_id, 
+    a.album_name,
+    s.song_id, 
+    s.title, 
+    s.genre, 
+    singers.singer_name,
+    title_songs.song_id;
+    
 -- 앨범 정보를 위한 셀렉 문
 -- 앨범 번호, 앨범타입, 앨범제목,  발매일, 앨범 커버 이미지, 
 -- 가수, 타이틀곡 장르
@@ -100,3 +148,29 @@ values (1, 1);
 select count(*)
 from albums a
 left join songs s on a.album_id = s.album_id;
+
+-- 음원 번호로 음원 정보를 가져오는 쿼리
+select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
+    singers.singer_name,
+    s.song_id, s.title, ss.song_path, s.genre
+from albums a
+    join songs s on a.album_id = s.album_id
+    join singers on  s.song_id = singers.song_id
+where s.song_id = 1;
+
+-- 회원 정보 더미데이터 1~5 까지 만듬
+insert into users (user_name, user_id, email, nickname, password, hint_question, hint_answer)
+values (5,5,5,5,1,1,1);
+
+-- 좋아요 정보 더미데이터
+insert into likes (song_id, id)
+values (5, 1);
+
+select * 
+from users;
+
+select *
+from likes;
+
+select count(song_id)
+from likes where song_id=1;

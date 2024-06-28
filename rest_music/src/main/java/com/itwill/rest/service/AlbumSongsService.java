@@ -33,4 +33,16 @@ public class AlbumSongsService {
 		log.debug("selectAlbumSongsCount(albumId={})", albumId);
 		return albumSongsDao.selectAlbumSongsCount(albumId);
 	}
+
+	// 음악의 정보를 음악 아이디로 가져오는 메서드
+	public AlbumSongs selectSongBySongId(Integer songId) {
+		log.debug("selectSongBySongId()");
+		return albumSongsDao.selectSongBySongId(songId);
+	}
+
+	// 음악의 좋아요 개수를 리턴하는 메서드
+	public Integer songLikesCount(Integer songId) {
+		log.debug("songId={}", songId);
+		return albumSongsDao.songLikesCount(songId);
+	}
 }

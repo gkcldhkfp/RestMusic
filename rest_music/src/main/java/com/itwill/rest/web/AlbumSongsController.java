@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.itwill.rest.repository.AlbumSongs;
 import com.itwill.rest.service.AlbumSongsService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +26,8 @@ public class AlbumSongsController {
 	@GetMapping("/detail")
 	public void detail(
 			@RequestParam(name = "albumId") String albumId,
-			Model model) {
+			Model model,
+			HttpSession session) throws JsonProcessingException {
 		log.debug("detail({})", albumId);
 		Integer albumIdInteger = Integer.parseInt(albumId);
 		List<AlbumSongs> list = albumSongsService.selectByAlbumId(albumIdInteger);
@@ -41,6 +44,10 @@ public class AlbumSongsController {
 		log.debug("songsCount = {}", songsCount);
 		// 앨범의 수록곡 개수를 뷰에 전달
 		model.addAttribute("songsCount", songsCount);
+
 	}
+
+
+	
 
 }
