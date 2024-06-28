@@ -8,4 +8,8 @@ public interface AlbumSongsDao {
 	AlbumSongs selectAlbumByAlbumId(Integer albumId);
 
 	Integer selectAlbumSongsCount(Integer albumId);
+
+	AlbumSongs selectSongBySongId(Integer songId);
+
+	Integer songLikesCount(Integer songId);
 }

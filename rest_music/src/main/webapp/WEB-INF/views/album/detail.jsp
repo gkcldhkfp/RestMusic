@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
-	<span%@ taglib prefix="c" uri="jakarta.tags.core" %>
+	<button%@ taglib prefix="c" uri="jakarta.tags.core" %>
 		<!DOCTYPE html>
 		<html>
 
@@ -22,6 +22,7 @@
 
 				a:hover {
 					text-decoration: underline;
+					font-weight: bold;
 				}
 
 				table {
@@ -37,8 +38,32 @@
 				}
 
 				.submenu {
-					width: 5%;
+					width: 7%;
 				}
+
+				#content {
+					padding: 20px;
+				}
+
+				/* 너는 챗지피티를 믿어?  */
+				#songPlayerContainer {
+					display: none;
+					position: fixed;
+					bottom: 0;
+					width: 100%;
+					background: #f1f1f1;
+					padding: 10px;
+					box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+					z-index: 1000;
+				}
+
+				#songPlayerContainer iframe {
+					width: 100%;
+					height: 60px;
+					border: none;
+				}
+
+				/* 너는 챗지피티를 믿어?  */
 			</style>
 		</head>
 
@@ -94,8 +119,8 @@
 							<thead class="font-size-sm">
 								<th class="submenu">#</th>
 								<th class="submenu"></th>
-								<th style="width: 30%;">음원</th>
-								<th style="width: 35%;">아티스트</th>
+								<th style="width: 26%;">음원</th>
+								<th style="width: 25%;">아티스트</th>
 								<th class="submenu">좋아요</th>
 								<th class="submenu">듣기</th>
 								<th class="submenu">재생목록</th>
@@ -114,12 +139,24 @@
 										<td class="fw-bold">
 											<a href="/song/details?songId=${s.songId}">
 												${s.title}</a>
-											</label>
 										</td>
 										<td>${s.singerName}</td>
-										<td>개수</td>
-										<td>듣기버튼</td>
-										<td>재생목록</td>
+										<td>
+											<img id="likebtn" height="50px" width="50px" src="../imgs/likeOff.png" />${s.likesCount}
+											<!-- TODO: axios로 DB insert 해야됨 -->
+										</td>
+										<td>
+											<button id="listenBtn" class="btn btn-success" data-id="${s.songId}">바로듣기</button>
+										</td>
+										<td>
+											<button id="addCPList" class="btn btn-success" data-id="${s.songId}">
+												재생목록
+											</button>
+											<!-- <button id="openModalBtn" type="button" class="btn btn-primary openModalBtn"
+												data-bs-toggle="modal" data-bs-target="#sessionListModal">
+												재생목록
+											</button> -->
+										</td>
 										<td>플리추가</td>
 										<td>더보기</td>
 									</tr>
@@ -129,12 +166,58 @@
 					</div>
 				</div>
 			</main>
+			<!-- 모달 창 -->
+			<div class="modal fade" id="sessionListModal" tabindex="-1" role="dialog" aria-labelledby="sessionListModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="sessionListModalLabel">세션에 저장된 리스트</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body" id="sessionListBody">
+							<!-- 여기에 세션에서 가져온 리스트가 들어갈 자리 -->
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+				integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+				crossorigin="anonymous"></script>
+
 			<script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
 				integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
 				crossorigin="anonymous"></script>
-			<script src="../js/album_detail.js"></script>
+			<!-- Axios JS 라이브러리 -->
+			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+			<c:url var="album_detail" value="/js/album_detail.js" />
+			<script src="${album_detail}"></script>
+			<c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
+			<script src="${addCurrentPlayList}"></script>
+			<script>
+				document.addEventListener('DOMContentLoaded', () => {
+					function showModal() {
+						console.log('mainFrame showModal 호출성공');
+						let myModal = document.querySelector('#sessionListModal');
+						console.log(myModal);
+						let modal = new bootstrap.Modal(myModal);
+						console.log(modal);
+						getCPList();
+						// Ajax요청을 보내고 모달에 태그를 작성하는 album_detail.js의 함수를 호출
+						modal.show();
+					}
+					// 다른 프레임에서 호출할 수 있도록 함수 노출
+					window.showModal = showModal;
+				});
+
+			</script>
+
 		</body>
 
 		</html>
-	</span%@>

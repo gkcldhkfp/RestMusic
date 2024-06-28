@@ -27,5 +27,7 @@ public class AlbumSongs {
 
 	private String titleSong;
 
+	private Integer likesCount;
+
 
 }

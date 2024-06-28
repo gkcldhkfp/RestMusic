@@ -36,4 +36,11 @@ public class AlbumSongsTest {
 		log.debug("album={}",album);
 		System.out.println(album);
 	}
+
+	@Test
+	public void testSelectSongBySongId() {
+		AlbumSongs song = albumSongsDao.selectSongBySongId(1);
+		log.debug("album={}", song);
+		System.out.println(song);
+	}
 }
