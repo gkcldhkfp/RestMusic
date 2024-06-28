@@ -11,14 +11,14 @@
     
     <!-- album 테이블에서 id(PK)로 검색. -->
     <select id="selectById" resultType="Album">
-        select * from album where id = #{id}
+        select * from album where id = #{id} 
     </select>
     
     <!-- 좋아요 -->
-    <update id="incrementLikes" parameterType="int">
-        update album
-        SET likes = likes + 1
-        where album_id = #{albumId}
+    <update id="updateLikes" parameterType="int">
+        update likes
+        set likes = likes + 1
+        where id = #{id}
     </update>
-
+    
 </mapper>

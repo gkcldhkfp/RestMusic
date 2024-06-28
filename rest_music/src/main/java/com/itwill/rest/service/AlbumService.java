@@ -30,7 +30,7 @@ public class AlbumService {
 	
 	public void incrementLikes(Integer albumId) {
         log.debug("incrementLikes({})", albumId);
-        albumDao.incrementLikes(albumId);
+        albumDao.updateLikes(albumId);
     }
 	
 	
