@@ -23,17 +23,18 @@
         <div class="container-fluid mt-5" style="max-width:1440px; min-width:1000px">
         
                 <c:url var="songSearchPage" value="/song/search" />
-                    <form class="mt-5" method="get" action="${songSearchPage}">
+                    <form id="searchForm" class="mt-5" method="get" action="${songSearchPage}">
                             <div class="row d-flex justify-content-center" >
                                 <div class="col-2">
-                                    <select class="form-control" name="category">
+                                    <select id="category" class="form-control" name="category">
                                         <option value="t">제목</option>
                                         <option value="s">가수</option>
                                         <option value="ts">제목+가수</option>
+                                        <option value="a">앨범명</option>
                                     </select>
                                 </div>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" name="keyword" placeholder="검색어" required/>
+                                    <input class="form-control" type="text" id="keyword" name="keyword" placeholder="검색어" required/>
                                 </div>
                                 <div class="col-1">
                                     <input type="submit" class="btn btn-outline-secondary" value="검색">
@@ -43,7 +44,6 @@
       
            <div class="card-body mt-5">
                     <table class="table table-hover mt-3">
-                        <tbody>
                         <thead>
                             <tr>
                                 <th colspan="2">앨범/곡</th>
@@ -52,6 +52,7 @@
                                 <th class="text-center">담기</th>
                             </tr>
                         </thead>
+                        <tbody id="searchResult">
                         <c:if test="${empty result}">
                             <tr><td colspan="5" class="text-center">검색 결과가 없습니다</td></tr>
                         </c:if>

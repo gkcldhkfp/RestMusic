@@ -57,9 +57,15 @@ public class SongService {
 	}
 	
 	public List<SearchResultDto> searchSongs(SongSearchDto dto) {
+		if(dto.getStartRow() == null) {
+			dto.setStartRow(1);
+			dto.setEndRow(10);
+		}
 		
 		List<SearchResultDto> result = songDao.searchSongs(dto);
-		
+		for(SearchResultDto dtod : result) {
+			log.debug("result={}",dtod);
+		}
 		return result;
 	}
 	

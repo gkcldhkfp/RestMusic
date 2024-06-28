@@ -2,7 +2,6 @@
  *  search.jsp에 포함
  */
 document.addEventListener('DOMContentLoaded', () => {
-    
     const btnAddPlayLists = document.querySelectorAll('button.addPlayList');
     
     const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
@@ -12,6 +11,101 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPage = 1;
     const itemsPerPage = 5;
     let playlistsData = [];
+    let startRow = 11;
+    let endRow = 20;
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const restKeyword = urlParams.get('keyword');
+    const category = urlParams.get('category');
+    
+    const keyword = document.querySelector('input#keyword');
+    const tbody = document.querySelector('tbody#searchResult');
+    const form = document.querySelector('form#searchForm'); 
+    
+    let debounceTimer;
+    
+    form.addEventListener('submit', (event) => {
+       event.preventDefault();
+       if (keyword.value.trim() === '') {
+            keyword.value = '';
+            return;
+        }
+        form.submit(); 
+    });
+    
+    window.onscroll = function() {
+        // 이전에 설정된 디바운스 타이머를 제거
+        clearTimeout(debounceTimer);
+    
+        // 100ms 후에 스크롤 이벤트가 반응하도록 디바운스 타이머 설정
+        debounceTimer = setTimeout(function() {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                loadMoreData();
+            }
+        }, 100); // 100ms 후에 다시 호출되지 않으면 추가 로딩 실행
+    };
+
+    function loadMoreData() {
+            axios.get('./rest/search', {
+                params: {
+                    category: category,
+                    keyword: restKeyword,
+                    startRow: startRow,
+                    endRow: endRow
+                }
+            })
+            .then(function(response) {
+                // Handle success
+                const data = response.data;
+                if(data.length === 0){
+                    window.onscroll = null;
+                    return;
+                }
+                
+                if (data.length > 0) {
+                    console.log(startRow);
+                    console.log(endRow);
+                    data.forEach(function(item) {
+                        const songDetailsPage = `../song/detail?songId=${item.songId}`;
+                        const newRow = document.createElement('tr');
+                        newRow.style.cursor = 'pointer';
+                        newRow.setAttribute('data-song-id', item.songId);
+                        newRow.onclick = function() { location.href = songDetailsPage; };
+                        
+                        newRow.innerHTML = `
+                            <td style="width: 118px;"><img alt="albumcover" src="../images/${item.albumImage}" 
+                             class="img-thumbnail" width="120px" height="120px"/></td>
+                            <td style="width:60%;"><span class="fs-4">${item.title}</span> <br/> <br/> ${item.albumName}</td>
+                            <td><br/><span class="text-center fw-bold">${item.singerName}</span></td>
+                            <td style="text-align: center;"><button style="background-image: url('../images/play.png'); width:50px; height:50px;
+                             background-size: cover; background-repeat: no-repeat;" class="btnListen btn mt-3"></button></td>
+                            <td style="text-align: center;"><button style="background-image: url('../images/playList.png'); width:60px; height:60px;
+                            background-size: cover; background-repeat: no-repeat;" class="btn addPlayList mt-3"></button></td>
+                        `;
+                        
+                        // 새로운 행에 이벤트 리스너 추가
+                        const addPlayListButton = newRow.querySelector('button.addPlayList');
+                        addPlayListButton.addEventListener('click', function(e) {
+                            e.stopPropagation(); // 이벤트 버블링 방지
+                            getPlayLists(e);
+                        });
+                        
+                        // tbody에 새로운 행 추가
+                        tbody.appendChild(newRow);
+                    });
+                    
+                    // 다음 조회를 위해 행 범위 업데이트
+                    startRow = endRow + 1;
+                    endRow += 10;
+                }
+            })
+            .catch(function(error) {
+                // Handle error
+                console.error(error);
+            });
+    }
+
+
     
     for (let a of btnAddPlayLists) {
             a.addEventListener('click', getPlayLists);
@@ -169,7 +263,5 @@ document.addEventListener('DOMContentLoaded', () => {
         displayPlayLists(currentPage);
         setupPagination(); // 이 부분에서 이벤트 리스너를 다시 등록하지 않아도 됨
     }
-    
-    
     
 });

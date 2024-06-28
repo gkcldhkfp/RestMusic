@@ -2,6 +2,7 @@ package com.itwill.rest.web;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,6 +70,18 @@ public class SongController {
 		
 		model.addAttribute("result", result);
 		
+	}
+	
+	@GetMapping("/rest/search")
+	@ResponseBody
+	public ResponseEntity<List<SearchResultDto>> restSongSearch(SongSearchDto dto) {
+		log.debug("dto={}",dto);
+		
+		List<SearchResultDto> result = songService.searchSongs(dto);
+		
+		log.debug("result={}",result);
+		
+		return ResponseEntity.ok(result);
 	}
 	
 	

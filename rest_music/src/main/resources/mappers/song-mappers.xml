@@ -40,28 +40,46 @@
     </delete>
     
     <select id="searchSongs" resultType="ResultDto">
-        <bind name="searchKeyword" value="'%' + keyword + '%'" />
-            select a.song_id, c.album_image, c.album_name, a.title, b.singer_name
-            from songs a
-            inner join singers b ON a.song_id = b.song_id
-            inner join albums c on a.album_id = c.album_id
-        <where>
-            <choose>
-                <when test='category.equals("t")'>
-                    upper(a.title) like upper(#{searchKeyword})
-                </when>
-                <when test='category.equals("s")'>
-                    upper(b.singer_name) like upper(#{searchKeyword})
-                </when>
-                <when test='category.equals("ts")'>
-                    upper(a.title) like upper(#{searchKeyword})
-                    or
-                    upper(b.singer_name) like upper(#{searchKeyword})
-                </when>
-             
-            </choose>
-        </where>
-    </select>
+    <bind name="searchKeyword" value="'%' + keyword + '%'" />
+    SELECT * FROM (
+         SELECT rnum, song_id, album_image, album_name, title, singer_name
+                     FROM (
+                SELECT 
+                    rownum AS rnum, 
+                    a.song_id, 
+                    c.album_image, 
+                    c.album_name, 
+                    a.title, 
+                    b.singer_name,
+                    ROW_NUMBER() OVER (ORDER BY c.album_release_date DESC, a.song_id) AS row_num
+                FROM songs a
+                INNER JOIN singers b ON a.song_id = b.song_id
+                INNER JOIN albums c ON a.album_id = c.album_id
+            <where>
+                <choose>
+                    <when test='category.equals("t")'>
+                        upper(a.title) like upper(#{searchKeyword})
+                    </when>
+                    <when test='category.equals("s")'>
+                        upper(b.singer_name) like upper(#{searchKeyword})
+                    </when>
+                    <when test='category.equals("a")'>
+                        upper(c.album_name) like upper(#{searchKeyword})
+                    </when>
+                    <when test='category.equals("ts")'>
+                             (
+                            upper(a.title) like upper(#{searchKeyword})
+                            OR
+                            upper(b.singer_name) like upper(#{searchKeyword})
+                        )
+                    </when>
+                </choose>
+            </where>
+        )
+        WHERE row_num BETWEEN #{startRow} AND #{endRow}
+        )
+</select>
+
     
     
   </mapper>
