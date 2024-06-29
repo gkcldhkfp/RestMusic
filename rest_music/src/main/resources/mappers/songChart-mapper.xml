@@ -23,11 +23,12 @@
         where song_id = #{songId} and id = #{id}
     </delete>
     
-    <!-- TOP30 -->
-    <select id="topSongs" resultType="SongChart">
+    <!-- TOP30 & 전체 차트-->
+    <select id="getAllSongs" resultType="SongChart">
         select
             so.song_id,
             a.album_image,
+            a.album_id,
             so.title,
             si.singer_name,
             a.album_name,
@@ -40,48 +41,23 @@
         join likes l on so.song_id = l.song_id
         group by
             so.song_id, 
-            a.album_image, 
-            so.title, 
-            si.singer_name, 
-            a.album_name, 
-            so.song_path,
-            so.video_link
-        order by count(l.song_id) desc
-    </select>
-   
-    <!-- 
-    <select id="topSongs" resultType="SongChart">
-        select
             a.album_image,
-            so.title,
-            si.singer_name,
-            a.album_name,
-            count(l.song_id) as likes,
-            so.song_path,
-            p.id,
-            so.video_link
-        from songs so
-        join albums a on so.album_id = a.album_id
-        join singers si on so.song_id = si.song_id
-        join likes l on so.song_id = l.song_id
-        join playlist_songs ps on so.song_id = ps.song_id
-        join playlists p on ps.p_list_id = p.p_list_id
-        group by 
-            a.album_image, 
+            a.album_id, 
             so.title, 
             si.singer_name, 
             a.album_name, 
             so.song_path,
-            p.id,
             so.video_link
         order by count(l.song_id) desc
     </select>
-     -->
-    
+
     <!-- 장르별 차트 -->
-    <select id="selectSongsByGenre" resultType="SongChart">
+    <select id="getSongsByGenre" resultType="SongChart">
         select
+            so.song_id,
+            so.genre,
             a.album_image,
+            a.album_id,
             so.title,
             si.singer_name,
             a.album_name,
@@ -93,8 +69,11 @@
         join singers si on so.song_id = si.song_id
         join likes l on so.song_id = l.song_id
         where genre = #{genre}
-        group by 
-            a.album_image, 
+        group by
+            so.song_id,
+            so.genre, 
+            a.album_image,
+            a.album_id, 
             so.title, 
             si.singer_name, 
             a.album_name, 
@@ -102,6 +81,19 @@
             so.video_link
         order by count(l.song_id) desc
     </select>
+    
+    <!-- 플레이리스트에 곡 추가 -->
+    <insert id="addSongToPlaylist">
+        insert into playlist_songs (p_list_id, song_id)
+        values (#{pListId}, #{songId})
+    </insert>
+    
+    <!-- 사용자 ID로 플레이리스트 조회 
+    <select id="getAllPlayListsById" resultType="PlayList">
+        select * from playlists where id = #{id}
+    </select>
+    -->
+    
     
 </mapper>
 

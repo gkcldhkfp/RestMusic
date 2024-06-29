@@ -23,12 +23,12 @@
                             <a class="dropdown-item" href="${popularSongs}">TOP 30</a>
                         </li>
 						<li>
-                            <c:url var="songsByGenre" value="/song/songsByGenre" />
-                            <a class="dropdown-item" href="${songsByGenre}">장르별 차트</a>
+                            <c:url var="chartByGenre" value="/song/genreChart" />
+                            <a class="dropdown-item" href="${chartByGenre}">장르별 차트</a>
                         </li>
 						<li>
-                            <c:url var="songsByVideo" value="/song/songsByVideo" />
-                            <a class="dropdown-item" href="${songsByVideo}">뮤직비디오 차트</a>
+                            <c:url var="chartByVideo" value="/song/videoChart" />
+                            <a class="dropdown-item" href="${chartByVideo}">뮤직비디오 차트</a>
                         </li>
 					</ul>
 				</li>

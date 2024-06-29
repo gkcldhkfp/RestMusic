@@ -13,7 +13,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
         crossorigin="anonymous" />
     
-    <link rel="stylesheet" href="<c:url value='/css/popular.css' />"> <!-- 외부 CSS 파일 링크 -->
+    <link rel="stylesheet" href="<c:url value='/css/chart.css' />"> <!-- 외부 CSS 파일 링크 -->
 
     <link
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -46,9 +46,9 @@
                     <th>순위</th>
                     <th>곡 정보</th>
                     <th>앨범</th>
-                    <th>좋아요</th>
-                    <th>듣기</th>
-                    <th>담기</th>
+                    <th>좋아요</th> <%-- TODO: 로그인 세션 --%>
+                    <th>듣기</th> <%-- TODO: 로그인 세션 --%>
+                    <th>담기</th> <%-- TODO: 로그인 세션 --%>
                     <th>뮤비</th>
                 </tr>
             </thead>
@@ -58,27 +58,41 @@
                         <td><input type="checkbox" class="songCheckbox" /></td>
                         <td>${status.index + 1}</td>
                         <td class="song-info">
-                            <c:url var="albumImageUrl" value="/data/${top.albumImage}" />
-                            <img alt="앨범표지" src="${albumImageUrl}" class="img-fluid" />
+                        
+                            <%-- TODO: 앨범 상세 매핑 주소로 수정 --%>
+                            <c:url var="albumDetailUrl" value="/album/detail"> 
+                                <c:param name="albumId" value="${top.albumId}" />
+                            </c:url>
+                            <a href="${albumDetailUrl}" class="album-link">
+                                <img alt="앨범표지" src="<c:url value='/data/${top.albumImage}' />" class="img-fluid" />
+                            </a>
+                            
+                            <%-- TODO: 음원 상세 매핑 주소로 수정 --%>
+	                        <c:url var="songDetailUrl" value="/song/detail">
+						        <c:param name="songId" value="${top.songId}" />
+						    </c:url>
                             <div>
-                                <div>${top.title}</div>
+                                <a href="${songDetailUrl}" style="font: inherit; color: inherit; text-decoration: none;">
+						            <span>${top.title}</span>
+						        </a>
                                 <div>${top.singerName}</div>
                             </div>
+                            
                         </td>
                         <td>${top.albumName}</td>
                         <td>
-						    <i class="fas fa-heart ${top.likes != null && top.likes > 0 ? 'liked' : ''}" data-song-id="${top.songId}" data-id="${top.id}"></i> 
+						    <i class="fas fa-heart ${top.likes != null && top.likes > 0 ? 'liked' : ''} heart-icon"
+						       data-song-id="${top.songId}" data-id="${top.id}"></i> 
 						    <span class="likes-count">${top.likes != null ? top.likes : 0}</span>
-						</td> 
+						</td>
                         <td>
                             <c:url var="songPath" value="/data/${top.songPath}" />
-						   <!--  <a href="#" class="btn btn-primary btn-sm play-btn" data-song-path="../${top.songPath}"> -->
 						    <a href="#" class="btn btn-primary btn-sm play-btn" data-song-path="${songPath}">
 						        <i class="fas fa-play"></i>
 						    </a>
 						</td>
                         <td>
-						    <button type="button" class="btn btn-secondary btn-sm" data-song-id="${top.songId}" data-id="${top.id}">
+						    <button type="button" class="btn btn-secondary btn-sm add-to-playlist-btn" data-song-id="${top.songId}">
 						        <i class="fas fa-plus"></i>
 						    </button>
 						</td>
@@ -100,8 +114,46 @@
         Your browser does not support the audio element.
     </audio>
     
+    <!-- Modal HTML 추가 --> <%-- TODO: 미완성 --%>
+    <div id="selectPlayList" class="modal" tabindex="-1">
+	    <div class="modal-dialog modal-dialog-centered">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title">내 플레이리스트</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div id="playLists" class="modal-body">
+	                <!-- 플레이리스트 항목들이 이곳에 추가됩니다 -->
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">취소</button>
+	                <button type="button" class="btn btn-outline-primary" id="btnUpdateComment">추가</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
     
-    <script
+    <!-- 전체 담기 Modal HTML 추가 --> <%-- TODO: 미완성 --%>
+	<div id="selectAllModal" class="modal" tabindex="-1">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-body text-center p-4">
+	                <button type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">
+	                    <i class="fas fa-times fa-3x"></i> 취소
+	                </button>
+	                <button type="button" class="btn btn-primary m-2" id="addAllToPlaylist">
+	                    <i class="fas fa-play fa-3x"></i> 전체 듣기
+	                </button>
+	                <button type="button" class="btn btn-primary m-2" id="addAllToCollection">
+	                    <i class="fas fa-plus fa-3x"></i> 전체 담기
+	                </button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+
+	<script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -110,8 +162,8 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
     <!-- 우리가 만든 JS 파일 -->
-    <c:url var="popularSongsJS" value="/js/popularSongs.js" />
-    <script src="${popularSongsJS}"></script>
+    <c:url var="songsPopularJS" value="/js/songsPopular.js" />
+    <script src="${songsPopularJS}"></script>
     
 </body>
 </html>

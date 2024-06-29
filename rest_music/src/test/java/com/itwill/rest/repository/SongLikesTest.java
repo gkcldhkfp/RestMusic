@@ -22,7 +22,7 @@ public class SongLikesTest {
 
 	 @Test
 	public void testPopularSongs() {
-		List<SongChart> ranking = songLikesDao.topSongs();
+		List<SongChart> ranking = songLikesDao.getAllSongs();
 		Assertions.assertNotNull(ranking);
 		for (SongChart rank : ranking) {
 			log.debug(rank.toString());
@@ -39,8 +39,7 @@ public class SongLikesTest {
 
 //	@Test
 	public void testDelete() {
-		SongChart songLikes = SongChart.builder().songId(1).id(1).build();
-		int result = songLikesDao.deleteSongLike(songLikes);
+		int result = songLikesDao.deleteSongLike(1, 1);
 		Assertions.assertEquals(1, result);
 
 	}
