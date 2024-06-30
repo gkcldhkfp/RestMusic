@@ -4,8 +4,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 					// 재생목록 관리를 위한 인덱스 선언
 					if (!sessionStorage.getItem('index')) {
+						// 세션스토리지를 사용한 이유: 여기서 index=0;으로 선언하면 새로고침할 때마다 인덱스는 0이 되버림.
 						sessionStorage.setItem('index', 0);
 					}
+					// 세션에서 가져와서 String으로 되어있는 index를 int타입으로 바꿈
 					index = parseInt(sessionStorage.getItem('index'));
 					console.log(index);
 
@@ -14,13 +16,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 					// console.log(cPList);
 					if (!cPList) {
+						// 세션의 cPList가 비어있으면 새로고침해서 불러옴.
 						setTimeout(() => location.reload(true), 1000);
 					}
 					console.log(cPList[index].songPath);
+					// 데이터 베이스에 저장된 음악 경로를 cPList에서 꺼내서 오디오 객체를 생성함.
 					var audio = new Audio('../data' + cPList[index].songPath + '.mp3');
 					audio.volume = 0.5; // 초기 볼륨 설정
-					audio.autoplay = true;
+
+					// 음악이 로드되면 자동으로 실행하는 코드인데 페이지가 로드되자마자는 크롬 정책때문에 실행하지 못함
+					audio.autoplay = true; 
 					console.log(typeof audio + " " + audio);
+
+					// 모든 요소가 로드되었을 때 실행하는 이벤트 리스너
+					// 맨 위에 있는 DomContentLoaded와의 차이점
+					// 이미지같은 경우는 첫 요청에 바로 보내지지 않고
+					// img태그같은 걸 만났을 때 다시 서버에 요청을 보낸다.
+					// Dom은 위 같은 상황에서 다시 요청 보내기 전에 실행되는 이벤트리스너 
+					// window.onload는 위 같은 상황에서 다시 요청을 보내고 
+					// 응답을 받은 후 이미지가 로드되었을 때 실행되는 이벤트 리스너
+					// 음악 객체를 다루기 때문에 window.onload를 사용해야 하는듯?
+
+					//* 일반태그 로드 - (Dom이벤트리스너 실행) - img태그같은 재요청 태그 로드 - (window.onload 이벤트 리스너 실행)
 					window.onload = function () {
 						// span 객체 얻기
 						var current = document.getElementById('current');
@@ -44,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 						// Audio 객체에 timeupdate 이벤트 처리를 위한 리스너 부착
 						// addEventListener() 함수 사용
+						// 시간이 변경될 때 마다 실행되는 이벤트 리스너
 						audio.addEventListener('timeupdate', function () {
 							// 오디오의 총 재생시간 얻고 설정
 							total.innerHTML = convertSecondsToMinutesSeconds(audio.duration);
@@ -58,12 +76,15 @@ document.addEventListener('DOMContentLoaded', () => {
 							progress.style.width = ratio + '%';
 							progress.setAttribute('aria-valuenow', ratio);
 						});
+						
+						// 음원이 끝까지 재생되었을 때 실행되는 이벤트 리스너
 						audio.addEventListener("ended", function () {
 							// 음원 하나가 끝나면 다음 곡을 재생하는 함수 호출.
 							next();
 						});
 	
 						// 프로그래스 바 클릭 이벤트 처리
+						// 클릭했을 때 음원의 재생 위치를 변경하는 기능을 만들거임.
 						progressBar.addEventListener("click", function (e) {
 							var rect = progressBar.getBoundingClientRect(); // 프로그래스 바의 위치와 크기 가져오기
 							var totalWidth = rect.width; // 프로그래스 바의 전체 너비
@@ -103,27 +124,41 @@ document.addEventListener('DOMContentLoaded', () => {
 					// 이전 곡 버튼 클릭 시 호출하는 함수
 					var previous = function () {
 						if (index <= 0) {
+							// 첫 곡에서 이전 버튼을 누르면 마지막 곡의 인덱스로 가도록 설정.
 							index = cPList.length - 1;
 						} else {
+							// 첫 곡이 아닌 경우 인덱스 - 1 
 							index = index - 1;
 						}
+						// 업데이트된 인덱스를 세션에도 적용시킴.
 						sessionStorage.setItem('index', index);
 						console.log(cPList.length);
 						console.log(index);
+
+						// 음원 재생 페이지를 새로고침함.
 						location.reload(true);
+
+						// 음원을 재생함.
 						audio.play();
 					}
 	
 					var next = function () {
 						if (index >= cPList.length - 1) {
+							// 마지막 곡에서 다음 버튼을 누르면 첫 번째 곡의 인덱스로 가도록 설정.
 							index = 0;
 						} else {
+							// 마지막 곡이 아닌 경우 인덱스 + 1
 							index = index + 1;
 						}
+						// 업데이트된 인덱스를 세션에도 적용시킴.
 						sessionStorage.setItem('index', index);
 						console.log(cPList.length);
 						console.log(index);
-						location.reload(true) // 새로고침 링크 클릭하는 메서드
+
+						// 음원 재생 페이지를 새로고침함.
+						location.reload(true)
+
+						// 음원을 재생함.
 						audio.play();
 					}
 	
@@ -189,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						parent.frames['mainFrame'].showModal();
 					}
 	
+					// 재생, 중지 버튼을 토글 형식으로 구현하기 위한 코드
 					const playButton = document.querySelector('#playButton');
 					const pauseButton = document.querySelector('#pauseButton');
 
