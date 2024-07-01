@@ -27,7 +27,7 @@
     </select>
 
     <select id="selectByUserid" resultType="User">
-        select * from users where user_id = #{userid}
+        select * from users where user_id = #{userId}
     </select>
 
     <select id="selectLikesByUserid" resultType="UserLike">
@@ -53,7 +53,19 @@
         LEFT JOIN 
         singers sg ON s.song_id = sg.song_id
         WHERE
-        u.user_id = #{userid}
+        u.user_id = #{userId}
     </select>
+    
+    <update id="updateUser">
+        update users
+        set
+            password = #{password},
+            email = #{email},
+            nickname = #{nickname},
+            user_profile = #{userProfile},
+            hint_question = #{hintQuestion},
+            hint_answer = #{hintAnswer}
+        where user_id = #{userId}
+    </update>
 
 </mapper>

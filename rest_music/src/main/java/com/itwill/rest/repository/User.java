@@ -11,10 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class User {
 	private Integer id;
+	private String userName;
 	private String userId;
 	private String password;
 	private String email;
-	private String nickName;
+	private String nickname;
 	private String userProfile;
 	private String hintQuestion;
 	private String hintAnswer;

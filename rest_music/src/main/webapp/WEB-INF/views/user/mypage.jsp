@@ -31,8 +31,15 @@
                 </div>
                 <div class="p-3">
                     <h3 id="userId" class="d-none">${user.id}</h3>
-                    <h3 style="font-weight: bold; font-size: 1.2rem;">닉네임: ${user.nickName}</h3>
+                    <h3 style="font-weight: bold; font-size: 1.2rem;">닉네임: ${user.nickname}</h3>
+                    <c:url var="userUpdate" value="/user/update">
+                            <c:param name="userId" value="${user.userId}" />
+                        </c:url>
+                        <a class="btn btn-outline-primary"
+                            href="${userUpdate}">ID/PW 변경 (내정보 관리)</a>
+                    <%-- 
                     <button class="btn btn-outline-primary">ID/PW 변경 (내정보 관리)</button>
+                    --%>
                 </div>
             </div>
             <br>

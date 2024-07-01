@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itwill.rest.dto.user.UserCreateDto;
 import com.itwill.rest.dto.user.UserLikeDto;
 import com.itwill.rest.dto.user.UserSignInDto;
+import com.itwill.rest.dto.user.UserUpdateDto;
 import com.itwill.rest.repository.User;
 import com.itwill.rest.service.UserService;
 
@@ -31,7 +32,7 @@ public class UserController {
 	
 	private final UserService userService;
 	
-	@GetMapping("/mypage")
+	@GetMapping({ "/mypage", "/update" })
 	public void myPage(@RequestParam(name = "userId") String userId, Model model) {
 		log.debug("userId={}", userId);
 		
@@ -121,4 +122,13 @@ public class UserController {
         
         return "redirect:/user/signin";
     }
+    
+    @PostMapping("/update")
+    public String update(UserUpdateDto dto) {
+		log.debug("POST: update(dto = {})", dto);
+		
+		userService.update(dto);
+		
+		return "redirect:/user/mypage?userId=" + dto.getUserId(); // 변경 후 마이페이지로 리다이렉트
+	}
 }

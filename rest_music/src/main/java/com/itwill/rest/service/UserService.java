@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.itwill.rest.dto.user.UserCreateDto;
 import com.itwill.rest.dto.user.UserLikeDto;
 import com.itwill.rest.dto.user.UserSignInDto;
+import com.itwill.rest.dto.user.UserUpdateDto;
 import com.itwill.rest.repository.User;
 import com.itwill.rest.repository.UserDao;
 
@@ -56,6 +57,26 @@ public class UserService {
 		List<UserLikeDto> list = userDao.selectLikesByUserid(userId);
 		
 		return list;
+	}
+	
+	// 정보 수정
+	public int update(UserUpdateDto dto) {
+		log.debug("update({})", dto);
+		
+		if(dto.getUserProfile() == null ) {
+			dto.setUserProfile("");
+		}
+		
+		if(dto.getHintQuestion() == null) {
+			dto.setHintQuestion("");
+		}
+		
+		if(dto.getHintAnswer() == null) {
+			dto.setHintAnswer("");
+		}
+		
+		int result = userDao.updateUser(dto);
+		return result;
 	}
 
 }
