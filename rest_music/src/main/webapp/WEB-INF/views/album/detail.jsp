@@ -166,24 +166,12 @@
 					</div>
 				</div>
 			</main>
-			<!-- 모달 창 -->
-			<div class="modal fade" id="sessionListModal" tabindex="-1" role="dialog" aria-labelledby="sessionListModalLabel"
-				aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="sessionListModalLabel">세션에 저장된 리스트</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body" id="sessionListBody">
-							<!-- 여기에 세션에서 가져온 리스트가 들어갈 자리 -->
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			
+
+			<footer>
+				<!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
+				<%@ include file="../fragments/footer.jspf" %>
+			</footer>
 
 
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"

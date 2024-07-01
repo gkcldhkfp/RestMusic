@@ -1,0 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+	<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+
+		<!-- 음원이 재생될 수 있는 모든 페이지에 포함되어야 할 모달 태그. -->
+		<!-- 모달 창 -->
+		<div class="modal fade" id="sessionListModal" tabindex="-1" role="dialog" aria-labelledby="sessionListModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="sessionListModalLabel">세션에 저장된 리스트</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="sessionListBody">
+						<!-- 여기에 세션에서 가져온 리스트가 들어갈 자리 -->
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
