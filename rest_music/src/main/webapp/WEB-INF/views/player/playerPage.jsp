@@ -82,7 +82,7 @@
 					</div>
 					<div class="d-flex align-items-center">
 
-						<div class="btn" onclick="previous()">
+						<div id="prevBtn" class="btn">
 							<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
 								stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<polygon points="19 20 9 12 19 4 19 20"></polygon>
@@ -96,21 +96,20 @@
 								<rect x="14" y="4" width="4" height="16"></rect>
 							</svg>
 						</div>
-						<!-- TODO: 토글 형식으로 바꾸기 -->
 						<div id="playButton" style="display: none;" class="btn">
 							<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
 								stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<polygon points="5 3 19 12 5 21 5 3"></polygon>
 							</svg>
 						</div>
-						<div class="btn" onclick="stop()">
+						<div id="stopBtn" class="btn"">
 							<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
 								stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<rect x="6" y="6" width="12" height="12"></rect>
 							</svg>
 						</div>
 
-						<div class="btn" onclick="next()">
+						<div id="nextBtn" class="btn"">
 							<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
 								stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<polygon points="5 4 15 12 5 20 5 4"></polygon>
