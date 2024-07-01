@@ -50,7 +50,7 @@ public class LikeRestController {
 
 	// 좋아요 취소
 	@DeleteMapping("/cancelLike/{songId}/{id}")
-	public ResponseEntity<Integer> deleteSongLike(@PathVariable("songId") int songId, @PathVariable("id") int id) {
+	public ResponseEntity<Integer> deleteSongLike(@PathVariable int songId, @PathVariable int id) {
 		log.debug("deleteSongLike(songId={}, id={})", songId, id);
 
 		SongLikeDto dto = new SongLikeDto(songId, id);
