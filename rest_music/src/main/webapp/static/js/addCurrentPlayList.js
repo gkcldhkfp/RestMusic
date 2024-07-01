@@ -110,7 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
 				console.log(li);
 			}
 			modalBody.appendChild(ul); // 모달에 작성.
-			modal.style.display = 'block'; // 모달창 활성화
+			if (modal.style.display !== 'block') {
+				modal.style.display = 'block'; // 모달창 활성화
+			}
 			for (let m of modalCloseBtn) {
 				// 닫기 버튼 활성화
 				m.addEventListener('click', () => {
