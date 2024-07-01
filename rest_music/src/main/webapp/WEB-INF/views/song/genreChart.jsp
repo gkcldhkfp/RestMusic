@@ -92,7 +92,9 @@
                             </a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-secondary btn-sm add-to-playlist-btn" data-song-id="${genre.songId}">
+                            <button type="button" class="btn btn-secondary btn-sm add-to-playlist-btn"
+                              data-song-id="${genre.songId}"
+                              data-id="${genre.id}">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </td>

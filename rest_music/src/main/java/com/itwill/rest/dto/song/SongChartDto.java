@@ -1,16 +1,15 @@
-package com.itwill.rest.repository;
+package com.itwill.rest.dto.song;
+
+//import com.itwill.rest.repository.SongChart;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// 차트 페이지의 좋아요를 위한 위한 클래스
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class SongChart {
+@NoArgsConstructor @AllArgsConstructor @Builder
+public class SongChartDto {
 	private Integer songId; // 음악 번호
 	private Integer id; // 회원 번호
 	private String genre; // 장르
@@ -23,5 +22,7 @@ public class SongChart {
 	private String songPath; // 음악 파일 경로
 	private String videoLink; // 뮤비 링크
 	private Integer pListId; // 플레이리스트 ID
-
+	
+	
 }
+
