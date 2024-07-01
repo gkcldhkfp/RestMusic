@@ -1,5 +1,6 @@
 package com.itwill.rest.web;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -35,10 +36,18 @@ public class PlayListController {
 		log.debug("plistId={}", pListId);
 		
 		PlayList playList = playListService.getPlayListInfoByListId(pListId); // 플레이리스트 정보 가져오기
-		List<PlayListSongInfoDto> songs = playListService.getSongsByPlistId(pListId); // 곡 정보 가져오기
 		
 		model.addAttribute("playList", playList);
-		model.addAttribute("songs", songs);
+	}
+	
+	@GetMapping("/getPlayListSong/{id}")
+	@ResponseBody
+	public ResponseEntity<List<PlayListSongInfoDto>> getPlayListSong(@PathVariable int id) {
+		log.debug("getPlayList({})",id);
+		
+		List<PlayListSongInfoDto> result = playListService.getSongsByPlistId(id); // 플레이리스트 곡 정보 가져오기
+		
+		return ResponseEntity.ok(result);
 	}
 	
 	@GetMapping("/getPlayList/{id}")
@@ -82,12 +91,15 @@ public class PlayListController {
     	return ResponseEntity.ok(result);
 	}
 	
-	@DeleteMapping("/deletePlayListSong/{pListId},{songId}")
+	@DeleteMapping("/deletePlayListSong/{pListId}/{songId}/{createdTime}")
 	@ResponseBody
-	public ResponseEntity<Integer> deleteListSongBySongId(@PathVariable int pListId, int songId) {
+	public ResponseEntity<Integer> deleteListSongBySongId(
+			@PathVariable int pListId, @PathVariable int songId, @PathVariable String createdTime) {
 		log.debug("deleteByListId(ListId={})");
 		
-		int result = playListService.deleteListSongsBySongId(pListId, songId);
+        Timestamp timestamp = new Timestamp(Long.parseLong(createdTime));
+        
+		int result = playListService.deleteListSongsBySongId(pListId, songId, timestamp);
 		
 		return ResponseEntity.ok(result);
 	}

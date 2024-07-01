@@ -29,8 +29,9 @@
                     <img alt="albumCover" src="" class="rounded" 
                     style="display: inline-block;  vertical-align: middle; left:400px; width: 220px; height: 220px;" >
                     <div class="ms-2" style="display: inline-block; vertical-align: middle;">
+                        <h2 id="pListId" class="d-none">${playList.pListId}</h2>
                         <h2 class="mt-4">${playList.pListName}</h2>
-                        <p class="mt-3" id="songCount" style="color:gray;"/> <!-- 자바스크립트를 사용하여 총 ?곡인지 출력되는 부분 -->
+                        <p class="mt-3" id="songCount" style="color:gray;">총 <span id="totalSongs">0</span>곡</p> <!-- 자바스크립트를 사용하여 총 ?곡인지 출력되는 부분 -->
                         <p class="d-none">플리 생성날짜</p>
                         <div class="mt-4">
                             <button class="btn btn-success" >재생목록추가</button>
@@ -43,7 +44,7 @@
             <!-- 추가할 박스 (카드) -->
             <div class="card">
                 <div class="card-body" id="playLists">
-                    <table class="table table-striped" style="border: 1px solid #ddd;">
+                     <table class="table table-striped" style="border: 1px solid #ddd;">
                         <thead>
                             <tr>
                                 <th style="text-align: left; vertical-align: middle;">커버</th>
@@ -51,32 +52,7 @@
                                 <th style="text-align: left; vertical-align: middle;">아티스트</th>
                             </tr>
                         </thead>
-                        <tbody id="songsTableBody">
-                            <c:forEach items="${songs}" var="s">
-                                <tr>
-                                <c:url var="albumImage" value="${s.albumImage}"></c:url>
-                                    <td style="text-align: left; vertical-align: middle;"><img alt="songImg" src="${albumImage}"
-                                        width="80px" height="80px"></td>
-                                    <td style="text-align: left; vertical-align: middle; font-size: 14px;">
-                                        <c:url var="songDetailPage" value="/song/detail">
-                                            <c:param name="songId" value="${s.songId}"></c:param>
-                                        </c:url>
-                                        <a href="${songDetailPage}">${s.title}</a>
-                                    </td>
-                                    <td style="text-align: left; vertical-align: middle; font-size: 14px">${s.singerName}</td>
-                                    <td style="text-align: center; vertical-align: middle; font-size: 14px;">
-                                        <button class="deleteButton btn btn-primary ms-2 mt-2" data-id="${s.songId}"
-                                        style="position: relative; width: 40px; height: 40px; overflow: hidden; background-color:white; border:none; background-color:transparent;">
-                                            <c:url var="deleteImage" value="/images/delete.png" />
-                                                <div class="flex-grow-1 ms-3">
-                                                    <img src="${deleteImage}" 
-                                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                                                </div>
-                                        </button>
-                                    </td>    
-                                    <%-- <td style="display:none;" id="plistName">${s.plistName}</td> --%>
-                                </tr>
-                            </c:forEach>
+                        <tbody id="songsTableBody"> <!-- playlist.js를 통해 플리의 음원 리스트가 삽입될 부분 -->
                         </tbody>
                     </table>
                     <h5 id="defaultList" class="mt-4" style="text-align: center; color:gray;"></h5>

@@ -1,5 +1,6 @@
 package com.itwill.rest.repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
@@ -22,6 +23,6 @@ public interface PlayListDao {
 	
 	PlayList getPlayListInfoByListId(Integer pListId);
 	
-	int deleteListSongBySongId(Integer pListId, Integer songId);
+	int deleteListSongBySongId(Integer pListId, Integer songId, Timestamp createdTime);
 
 }

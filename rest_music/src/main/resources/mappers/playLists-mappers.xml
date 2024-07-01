@@ -89,6 +89,7 @@
     DELETE FROM playlist_songs
     WHERE p_list_id = #{pListId}
     AND song_id = #{songId}
+    AND created_time = #{createdTime}
     </delete>
   
   </mapper>

@@ -1,5 +1,6 @@
 package com.itwill.rest.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -65,10 +66,10 @@ public class PlayListService {
 		return result;
 	}
 	
-	public int deleteListSongsBySongId(Integer pListId, Integer songId) {
+	public int deleteListSongsBySongId(Integer pListId, Integer songId, Timestamp createdTime) {
 		log.debug("deleteByListId(ListId={})");
 		log.debug("deleteByListId(songId={})");
-		int result = playListDao.deleteListSongBySongId(pListId, songId);
+		int result = playListDao.deleteListSongBySongId(pListId, songId, createdTime);
 		
 		return result;
 	}
