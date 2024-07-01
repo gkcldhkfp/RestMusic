@@ -131,3 +131,5 @@ create table pur_users ( -- 결제 회원 (컬럼 2개)
 );
 
 commit;
+
+    
