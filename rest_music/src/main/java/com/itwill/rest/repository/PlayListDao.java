@@ -17,4 +17,6 @@ public interface PlayListDao {
 	
 	int deleteListSongsByListId(Integer pListId);
 
+	Integer checkSongInPlayList(AddSongToPlayListDto dto);
+
 }

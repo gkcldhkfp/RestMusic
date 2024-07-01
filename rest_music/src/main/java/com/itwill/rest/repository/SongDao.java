@@ -1,8 +1,12 @@
 package com.itwill.rest.repository;
 
-import com.itwill.rest.dto.playlists.AddPlayListDto;
+import java.util.List;
+
+import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
 import com.itwill.rest.dto.song.SongDetailDto;
 import com.itwill.rest.dto.song.SongLikeDto;
+import com.itwill.rest.dto.song.SongSearchDto;
+import com.itwill.rest.dto.song.SearchResultDto;
 
 public interface SongDao {
 
@@ -14,5 +18,7 @@ public interface SongDao {
 	
 	int removeLike(SongLikeDto dto);
 	
-	int addPlayList(AddPlayListDto dto);
+	int addPlayList(AddSongToPlayListDto dto);
+	
+	List<SearchResultDto> searchSongs (SongSearchDto dto);
 }

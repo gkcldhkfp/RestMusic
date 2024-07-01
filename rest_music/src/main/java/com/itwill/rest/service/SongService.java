@@ -1,10 +1,14 @@
 package com.itwill.rest.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import com.itwill.rest.dto.playlists.AddPlayListDto;
+import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
+import com.itwill.rest.dto.song.SearchResultDto;
 import com.itwill.rest.dto.song.SongDetailDto;
 import com.itwill.rest.dto.song.SongLikeDto;
+import com.itwill.rest.dto.song.SongSearchDto;
 import com.itwill.rest.repository.SongDao;
 
 import lombok.RequiredArgsConstructor;
@@ -17,8 +21,10 @@ public class SongService {
 	private final SongDao songDao;
 	
 	public SongDetailDto readDetail(int songId) {
+		log.debug("id={}",songId);
 		
 		SongDetailDto dto = songDao.detailBySongId(songId);
+		log.debug("dto={}",dto);
 		
 		return dto;
 	}
@@ -36,6 +42,31 @@ public class SongService {
 			return false; // 좋아요가 있을경우 삭제 후 false 반환
 			}
 		
+	}
+
+	public boolean isLikes(SongLikeDto dto) {
+		
+		int result = songDao.isLikes(dto);
+		
+		if (result == 0) {
+			return true; // 좋아요가 없을경우 생성 후 true 반환
+		} else {
+			return false; // 좋아요가 있을경우 삭제 후 false 반환
+		}
+		
+	}
+	
+	public List<SearchResultDto> searchSongs(SongSearchDto dto) {
+		if(dto.getStartRow() == null) {
+			dto.setStartRow(1);
+			dto.setEndRow(10);
+		}
+		
+		List<SearchResultDto> result = songDao.searchSongs(dto);
+		for(SearchResultDto dtod : result) {
+			log.debug("result={}",dtod);
+		}
+		return result;
 	}
 	
 	

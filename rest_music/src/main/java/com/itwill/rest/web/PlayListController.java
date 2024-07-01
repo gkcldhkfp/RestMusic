@@ -68,4 +68,14 @@ public class PlayListController {
     	return ResponseEntity.ok(result);
 	}
 	
+	@PostMapping("checkSongInPlayList")
+	@ResponseBody
+	public ResponseEntity<Boolean> checkSongInPlayList(@RequestBody AddSongToPlayListDto dto) {
+		log.debug("checkSongInPlayList");
+		
+		Boolean result = playListService.checkSongInPlayList(dto);
+		
+		return ResponseEntity.ok(result);
+	}
+	
 }
