@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             getPlayLists(e);
                         });
 
-                        const addPlayButton = newRow.querySelector('button#listenBtn');
+                        const addPlayButton = newRow.querySelector('button#listenBtn'); // 바로듣기
                         addPlayButton.addEventListener('click', function(e) {
                             e.stopPropagation(); // 이벤트 버블링 방지
                         });
