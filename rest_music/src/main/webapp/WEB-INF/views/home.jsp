@@ -16,7 +16,7 @@
     <header>
         <div class="container-fluid">
             <c:set var="pageTitle" value="Rest" scope="page" />
-            <%@ include file="./fragments/header.jspf"%>
+            <%@ include file="./fragments/header.jspf" %>
         </div>
     </header>
 

@@ -3,7 +3,7 @@ package com.itwill.rest.dto.user;
 import com.itwill.rest.repository.User;
 import lombok.Data;
 
-//회원 가입 요청에서 요청 파라미터들을 저장하기 위한 DTO
+// 회원 가입 요청에서 요청 파라미터들을 저장하기 위한 DTO
 @Data
 public class UserCreateDto {
     private String userId;
@@ -21,7 +21,7 @@ public class UserCreateDto {
                 .userName(userName)
                 .password(password)
                 .email(email)
-                .nickName(nickname)
+                .nickname(nickname)
                 .userProfile(userProfile)
                 .hintQuestion(hintQuestion)
                 .hintAnswer(hintAnswer)

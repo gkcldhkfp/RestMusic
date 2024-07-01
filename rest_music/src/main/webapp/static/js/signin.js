@@ -1,14 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const saveIdYn = document.getElementById('saveIdYn');
-    saveIdYn.addEventListener('change', saveId);
+    // saveIdYn.addEventListener('change', saveId);
 
     const inputUserid = document.querySelector('input#userId');
+
+    document.getElementById("loginForm").addEventListener('submit', saveId);
 
     getCookieId();
     /* -------------------- 함수 선언 -------------------- */
 
     // 아이디저장(쿠키설정)
     function saveId(event) {
+
         const is_checked = saveIdYn.checked;
         const userId = inputUserid.value;
 
@@ -36,6 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             inputUserid.value = cookieValue;
             saveIdYn.checked = true;
+
         }
     }
+
 });
