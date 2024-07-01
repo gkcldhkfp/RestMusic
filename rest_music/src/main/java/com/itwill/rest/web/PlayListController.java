@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwill.rest.dto.playlists.AddPlayListDto;
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
 import com.itwill.rest.dto.playlists.PlaylistFirstAlbumImgDto;
 import com.itwill.rest.repository.PlayList;
@@ -44,6 +46,26 @@ public class PlayListController {
 		
 		
 		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping("/addPlayList")
+	@ResponseBody
+	public ResponseEntity<Integer> addPlayList(@RequestBody AddPlayListDto dto) {
+		log.debug("addPlayList({})", dto);
+		
+		int result = playListService.addPlayList(dto);
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@DeleteMapping("/deletePlayList/{pListId}")
+	@ResponseBody
+	public ResponseEntity<Integer> deleteByListId(@PathVariable int pListId) {
+		log.debug("deleteByListId(ListId={})");
+		
+		int result = playListService.deleteByListId(pListId);
+		
+    	return ResponseEntity.ok(result);
 	}
 	
 	@PostMapping("checkSongInPlayList")

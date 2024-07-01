@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.itwill.rest.repository.PlayListDao">
+  
+    <select id="allPlayListsByUserId" resultType="PlaylistFirstAlbumImgDto">
+     SELECT
+    playlists.p_list_id,
+    playlists.p_list_name,
+    albums.album_image
+        FROM
+            users
+        JOIN
+            playlists ON users.id = playlists.id
+        LEFT JOIN
+            playlist_songs ON playlists.p_list_id = playlist_songs.p_list_id
+        LEFT JOIN
+            songs ON playlist_songs.song_id = songs.song_id
+        LEFT JOIN
+            albums ON songs.album_id = albums.album_id
+        WHERE
+            users.id = #{id}
+            AND (
+                playlist_songs.created_time IS NULL
+                OR playlist_songs.created_time = (
+                    SELECT
+                        MIN(ps2.created_time)
+                    FROM
+                        playlist_songs ps2
+                    WHERE
+                        ps2.p_list_id = playlists.p_list_id
+                )
+            )
+        ORDER BY
+            playlists.p_list_id
+    </select>
+    
+    <insert id="addSongToPlayListDto">
+        insert into playlist_songs (p_list_id, song_id) values ( #{pListId}, #{songId} ) 
+    </insert>
+    
+    <insert id="addSongToPlayList">
+        insert into playlist_songs (p_list_id, song_id) values ( #{pListId}, #{songId} ) 
+    </insert>
+    
+    <insert id="addPlayList">
+        insert into playlists (id, p_list_name) values (#{id}, #{pListName})
+    </insert>
+    
+    <delete id="deleteByListId">
+        delete from playlists where p_list_id = #{pListId}
+    </delete>
+    
+    <delete id="deleteListSongsByListId">
+        delete from playlist_songs where p_list_id = #{pListId}
+    </delete>
+  
+  </mapper>
