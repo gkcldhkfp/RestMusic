@@ -3,40 +3,45 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
     const btnAddPlayLists = document.querySelectorAll('button.addPlayList');
-    
+
     const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
-    
+
     let songId;
-    
+
     let currentPage = 1;
     const itemsPerPage = 5;
     let playlistsData = [];
     let startRow = 11;
     let endRow = 20;
-    
+
     const urlParams = new URLSearchParams(window.location.search);
     const restKeyword = urlParams.get('keyword');
     const category = urlParams.get('category');
-    
+
     const keyword = document.querySelector('input#keyword');
     const tbody = document.querySelector('tbody#searchResult');
-    const form = document.querySelector('form#searchForm'); 
-    
+    const form = document.querySelector('form#searchForm');
+
     let debounceTimer;
-    
-    form.addEventListener('submit', (event) => {
-       event.preventDefault();
-       if (keyword.value.trim() === '') {
+
+    form.addEventListener('keydown', () => {
+        if (keyword.value.trim() === '') {
             keyword.value = '';
             return;
         }
-        form.submit(); 
     });
-    
+
+    const addPlayButton = document.querySelectorAll('button#listenBtn');
+    for(let e of addPlayButton){
+        e.addEventListener('click', (event) => {
+            event.stopPropagation(); // 이벤트 버블링 방지
+        });
+    }
+
     window.onscroll = function() {
         // 이전에 설정된 디바운스 타이머를 제거
         clearTimeout(debounceTimer);
-    
+
         // 100ms 후에 스크롤 이벤트가 반응하도록 디바운스 타이머 설정
         debounceTimer = setTimeout(function() {
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
@@ -46,22 +51,22 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function loadMoreData() {
-            axios.get('./rest/search', {
-                params: {
-                    category: category,
-                    keyword: restKeyword,
-                    startRow: startRow,
-                    endRow: endRow
-                }
-            })
+        axios.get('./rest/search', {
+            params: {
+                category: category,
+                keyword: restKeyword,
+                startRow: startRow,
+                endRow: endRow
+            }
+        })
             .then(function(response) {
                 // Handle success
                 const data = response.data;
-                if(data.length === 0){
+                if (data.length === 0) {
                     window.onscroll = null;
                     return;
                 }
-                
+
                 if (data.length > 0) {
                     console.log(startRow);
                     console.log(endRow);
@@ -71,29 +76,34 @@ document.addEventListener('DOMContentLoaded', () => {
                         newRow.style.cursor = 'pointer';
                         newRow.setAttribute('data-song-id', item.songId);
                         newRow.onclick = function() { location.href = songDetailsPage; };
-                        
+
                         newRow.innerHTML = `
                             <td style="width: 118px;"><img alt="albumcover" src="../images/${item.albumImage}" 
                              class="img-thumbnail" width="120px" height="120px"/></td>
                             <td style="width:60%;"><span class="fs-4">${item.title}</span> <br/> <br/> ${item.albumName}</td>
                             <td><br/><span class="text-center fw-bold">${item.singerName}</span></td>
-                            <td style="text-align: center;"><button style="background-image: url('../images/play.png'); width:50px; height:50px;
-                             background-size: cover; background-repeat: no-repeat;" class="btnListen btn mt-3"></button></td>
+                            <td style="text-align: center;"><button data-id="${item.songId}" style="background-image: url('../images/play.png'); width:50px; height:50px;
+                             background-size: cover; background-repeat: no-repeat;" id="listenBtn" class="btnListen btn mt-3"></button></td>
                             <td style="text-align: center;"><button style="background-image: url('../images/playList.png'); width:60px; height:60px;
                             background-size: cover; background-repeat: no-repeat;" class="btn addPlayList mt-3"></button></td>
                         `;
-                        
+
                         // 새로운 행에 이벤트 리스너 추가
                         const addPlayListButton = newRow.querySelector('button.addPlayList');
                         addPlayListButton.addEventListener('click', function(e) {
                             e.stopPropagation(); // 이벤트 버블링 방지
                             getPlayLists(e);
                         });
-                        
+
+                        const addPlayButton = newRow.querySelector('button#listenBtn');
+                        addPlayButton.addEventListener('click', function(e) {
+                            e.stopPropagation(); // 이벤트 버블링 방지
+                        });
+
                         // tbody에 새로운 행 추가
                         tbody.appendChild(newRow);
                     });
-                    
+
                     // 다음 조회를 위해 행 범위 업데이트
                     startRow = endRow + 1;
                     endRow += 10;
@@ -106,30 +116,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    
+
     for (let a of btnAddPlayLists) {
-            a.addEventListener('click', getPlayLists);
-        }
+        a.addEventListener('click', getPlayLists);
+    }
 
     function getPlayLists(event) {
-        if(id===''){ // 유저아이디
+        if (id === '') { // 유저아이디
             alert('로그인이 필요함');
             return;
         }
         event.stopPropagation();
         songId = event.target.closest('tr').getAttribute('data-song-id');
-        
+
         const uri = `../getPlayList/${id}`;
         axios
             .get(uri)
             .then((response) => {
-                
+
                 playlistsData = response.data;
-                
+
                 displayPlayLists(currentPage);
-                
+
                 setupPagination();
-                
+
                 playListModal.show();
             })
             .catch((error) => {
@@ -179,8 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function addSongPlayList(event) {
 
         const plistId = event.currentTarget.getAttribute('data-id');
-        
-        
+
+
         const data = { plistId, songId };
 
         axios.post('../checkSongInPlayList', data)
@@ -212,19 +222,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     }
-    
+
     function displayPlayLists(page) {
         const startIndex = (page - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
         const paginatedPlaylists = playlistsData.slice(startIndex, endIndex);
         makePlayListElements(paginatedPlaylists);
     }
-    
-     function setupPagination() {
+
+    function setupPagination() {
         const totalPages = Math.ceil(playlistsData.length / itemsPerPage);
         const paginationElement = document.getElementById('pagination');
         let paginationHtml = '';
-    
+
         for (let i = 1; i <= totalPages; i++) {
             if (i === currentPage) {
                 paginationHtml += `
@@ -240,16 +250,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
         }
-    
+
         paginationElement.innerHTML = paginationHtml;
-    
+
         // 기존 이벤트 리스너 제거
         paginationElement.removeEventListener('click', handlePaginationClick);
-    
+
         // 이벤트 리스너 등록
         paginationElement.addEventListener('click', handlePaginationClick);
     }
-    
+
     function handlePaginationClick(event) {
         event.preventDefault(); // 기본 동작 방지
         if (event.target.tagName === 'A') {
@@ -257,11 +267,11 @@ document.addEventListener('DOMContentLoaded', () => {
             changePage(page);
         }
     }
-    
+
     function changePage(page) {
         currentPage = page;
         displayPlayLists(currentPage);
         setupPagination(); // 이 부분에서 이벤트 리스너를 다시 등록하지 않아도 됨
     }
-    
+
 });

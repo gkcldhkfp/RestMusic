@@ -5,7 +5,7 @@
   <mapper namespace="com.itwill.rest.repository.SongDao">
   
     <select id="detailBySongId" resultType="SongDetail">
-        SELECT s.title AS song_title, a.album_name, a.album_image, s.genre, si.singer_name,
+     SELECT s.song_id, s.title AS song_title, a.album_name, a.album_image, s.genre, si.singer_name,
         LISTAGG(DISTINCT wr.writer, ', ') WITHIN GROUP (ORDER BY wr.writer) AS writers,
         LISTAGG(DISTINCT co.composer, ', ') WITHIN GROUP (ORDER BY co.composer) AS composers,
         LISTAGG(DISTINCT ar.arranger, ', ') WITHIN GROUP (ORDER BY ar.arranger) AS arrangers,
@@ -24,7 +24,7 @@
             arrangers ar ON s.song_id = ar.song_id
         WHERE
             s.song_id = #{id}
-        GROUP BY s.title, a.album_name, a.album_image, s.genre, si.singer_name, s.lyrics
+        GROUP BY s.song_id, s.title, a.album_name, a.album_image, s.genre, si.singer_name, s.lyrics
     </select>
   
     <select id="isLikes" resultType="integer">

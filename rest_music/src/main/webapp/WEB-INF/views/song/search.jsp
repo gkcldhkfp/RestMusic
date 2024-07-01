@@ -66,7 +66,7 @@
                                     <td style="width:60%;"><span class="fs-4">${r.title}</span> <br/> <br/> ${r.albumName}</td>
                                     <td><br/><span class="text-center fw-bold">${r.singerName}</span></td>
                                     <td style="text-align: center;"><button style="background-image: url('../images/play.png'); width:50px; height:50px;
-                                    background-size: cover; background-repeat: no-repeat;" class="btnListen btn mt-3"></button></td>
+                                    background-size: cover; background-repeat: no-repeat;" data-id="${r.songId}" class="btnListen btn mt-3" id="listenBtn"></button></td>
                                     <td style="text-align: center;"><button style="background-image: url('../images/playList.png'); width:60px; height:60px;
                                     background-size: cover; background-repeat: no-repeat;" class="btn addPlayList mt-3"></button></td>
                                 </tr>
@@ -85,7 +85,7 @@
                                     <button type="button" class="btn-close"
                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div id="playLists"class="modal-body">
+                                <div id="playLists"class="modal-body" style="height:393px;">
                                     <!--  플리가 추가 될 부분 -->
                                 </div>
                                 <nav aria-label="Playlist navigation">

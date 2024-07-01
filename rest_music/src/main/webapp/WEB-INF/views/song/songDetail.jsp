@@ -35,7 +35,7 @@
                         <p class="mt-2">장르<span class="ms-3">${data.genre}</span></p>
                         <div class="mt-3">
                             <button id="btnLike" class="btn btn-success" ></button>
-                            <button id="btnAddcPList"class="btn btn-success" >재생목록추가</button>
+                            <button data-id="${data.songId}" id="listenBtn"class="btn btn-success" >재생목록추가</button>
                             <button id="btnAddPlayList"class="btn btn-success" >플리추가</button>
                         </div>
                     </div>
@@ -158,7 +158,7 @@
                                     <button type="button" class="btn-close"
                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div id="playLists"class="modal-body">
+                                <div id="playLists"class="modal-body" style="height:393px;">
                                     <!--  플리가 추가 될 부분 -->
                                 </div>
                                 <nav aria-label="Playlist navigation">
