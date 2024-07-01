@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let htmlStr = '';
         // 플리 음원 갯수 count
         let songCount = 0;
+        
+        // 가장 최근에 추가된 곡을 저장할 변수
+        let recentSong = null;
 
         for (let playlistSong of data) {
             // 기본 이미지 URL 정의
@@ -45,6 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // ${playlist.albumImage}가 null이면 기본 이미지 사용
             const albumImageSrc = playlistSong.albumImage ? `..${playlistSong.albumImage}` : defaultImage;
+
+            // 가장 최근에 추가된 곡을 설정
+            if (!recentSong || playlistSong.createdTime > recentSong.createdTime) {
+                recentSong = playlistSong;
+            }
 
             console.log(playlistSong);
             htmlStr += `
@@ -89,6 +97,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 `
             playLists.innerHTML = htmlStr;
+        }
+        
+        // 가장 최근에 추가된 곡의 앨범 커버 이미지 설정
+        const albumCoverImg = document.querySelector('img[alt="albumCover"]');
+        if (recentSong) {
+            const recentAlbumImageSrc = recentSong.albumImage ? `..${recentSong.albumImage}` : defaultImage;
+            albumCoverImg.src = recentAlbumImageSrc;
         }
 
         const deleteList = document.querySelectorAll('button.deleteButton'); // htmlStr로 추가된 html 영역의 button 태그의 클래스 이름을 지정

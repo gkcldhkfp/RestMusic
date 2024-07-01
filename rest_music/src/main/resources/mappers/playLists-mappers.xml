@@ -71,8 +71,10 @@
     JOIN songs s ON ps.song_id = s.song_id
     JOIN singers si ON s.song_id = si.song_id
     JOIN albums a ON s.album_id = a.album_id
-    where
+    WHERE
     pl.p_list_id = #{pListId}
+    ORDER BY
+    ps.created_time DESC
     </select>
     
     <select id="getPlayListInfoByListId" resultType="PlayList">
