@@ -188,23 +188,7 @@
 			<script src="${album_detail}"></script>
 			<c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
 			<script src="${addCurrentPlayList}"></script>
-			<script>
-				document.addEventListener('DOMContentLoaded', () => {
-					function showModal() {
-						console.log('mainFrame showModal 호출성공');
-						let myModal = document.querySelector('#sessionListModal');
-						console.log(myModal);
-						let modal = new bootstrap.Modal(myModal);
-						console.log(modal);
-						getCPList();
-						// Ajax요청을 보내고 모달에 태그를 작성하는 album_detail.js의 함수를 호출
-						modal.show();
-					}
-					// 다른 프레임에서 호출할 수 있도록 함수 노출
-					window.showModal = showModal;
-				});
 
-			</script>
 
 		</body>
 
