@@ -54,6 +54,8 @@
         singers sg ON s.song_id = sg.song_id
         WHERE
         u.user_id = #{userid}
+        ORDER BY
+        s.title
     </select>
 
 </mapper>

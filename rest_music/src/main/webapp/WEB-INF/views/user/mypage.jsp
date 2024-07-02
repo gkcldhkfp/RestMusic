@@ -65,9 +65,14 @@
                         <tbody>
                             <c:forEach items="${like}" var="l">
                                 <tr>
+                                <c:set var="defaultAlbumImage" value="/Rest/images/default.png" />
                                 <c:url var="albumImage" value="${l.albumImage}"></c:url>
-                                    <td style="text-align: left; vertical-align: middle;"><img alt="songImg" src="${albumImage}"
-                                        width="80px" height="80px"></td>
+                                    <td style="text-align: left; vertical-align: middle;">
+                                        <img alt="songImg" src="${empty albumImage ? defaultAlbumImage : albumImage}"
+                                        width="80px" height="80px">
+                                    </td>
+                                    <%-- <td style="text-align: left; vertical-align: middle;"><img alt="songImg" src="${albumImage}"
+                                        width="80px" height="80px"></td> --%>
                                     <td style="text-align: left; vertical-align: middle; font-size: 14px;">
                                         <c:url var="songDetailPage" value="/song/detail">
                                             <c:param name="songId" value="${l.songId}"></c:param>
