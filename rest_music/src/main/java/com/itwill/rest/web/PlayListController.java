@@ -83,6 +83,16 @@ public class PlayListController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@PostMapping("checkSongInPlayList")
+	@ResponseBody
+	public ResponseEntity<Boolean> checkSongInPlayList(@RequestBody AddSongToPlayListDto dto) {
+		log.debug("checkSongInPlayList");
+		
+		Boolean result = playListService.checkSongInPlayList(dto);
+		
+		return ResponseEntity.ok(result);
+	}
+	
 	@DeleteMapping("/deletePlayList/{pListId}")
 	@ResponseBody
 	public ResponseEntity<Integer> deleteByListId(@PathVariable int pListId) {

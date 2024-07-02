@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class SongDetailDto {
+	private Integer songId;
 	private String songTitle;
 	private String albumName;
 	private String albumImage;

@@ -36,10 +36,6 @@
             playlists.p_list_id
     </select>
     
-    <insert id="addSongToPlayListDto">
-        insert into playlist_songs (p_list_id, song_id) values ( #{pListId}, #{songId} ) 
-    </insert>
-    
     <insert id="addSongToPlayList">
         insert into playlist_songs (p_list_id, song_id) values ( #{pListId}, #{songId} ) 
     </insert>
@@ -97,5 +93,9 @@
     <update id="updatePlayListNameByListId">
         update playlists set p_list_name = #{pListName} where p_list_id = #{pListId}
     </update>
+    
+    <select id="checkSongInPlayList" resultType="Integer">
+        select count(*) from playlist_songs where p_list_id = #{pListId} and song_id = #{songId}
+    </select>
   
   </mapper>

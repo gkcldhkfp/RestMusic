@@ -12,7 +12,7 @@ public interface PlayListDao {
 	
 	List<PlaylistFirstAlbumImgDto> allPlayListsByUserId(int id);
 
-	int addSongToPlayListDto(AddSongToPlayListDto dto);
+	int addSongToPlayList(AddSongToPlayListDto dto);
 	
 	int addPlayList(PlayList playList);
 	
@@ -27,5 +27,7 @@ public interface PlayListDao {
 	int deleteListSongBySongId(Integer pListId, Integer songId, Timestamp createdTime);
 	
 	int updatePlayListNameByListId(PlayListNameUpdateDto dto);
+
+	Integer checkSongInPlayList(AddSongToPlayListDto dto);
 
 }
