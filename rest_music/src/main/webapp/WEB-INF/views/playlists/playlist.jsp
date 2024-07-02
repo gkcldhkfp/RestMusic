@@ -30,7 +30,11 @@
                     style="display: inline-block;  vertical-align: middle; left:400px; width: 220px; height: 220px;" >
                     <div class="ms-2" style="display: inline-block; vertical-align: middle;">
                         <h2 id="pListId" class="d-none">${playList.pListId}</h2>
-                        <h2 class="mt-4">${playList.pListName}</h2>
+                        <h2 id="pListName" class="mt-4 d-inline-block" style="display: inline-block;">${playList.pListName}</h2>
+                        <c:url var="editImage" value="/images/edit.png" />
+                            <button id="editButton" style="position: relative; width: 20px; height: 20px; overflow: hidden; border:none; background-color:transparent !important;;">
+                                <img src="${editImage}" alt="edit" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                            </button>
                         <p class="mt-3" id="songCount" style="color:gray;">총 <span id="totalSongs">0</span>곡</p> <!-- 자바스크립트를 사용하여 총 ?곡인지 출력되는 부분 -->
                         <p class="d-none">플리 생성날짜</p>
                         <div class="mt-4">

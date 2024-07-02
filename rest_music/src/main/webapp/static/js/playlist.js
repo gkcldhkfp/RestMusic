@@ -36,15 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
         let htmlStr = '';
         // 플리 음원 갯수 count
         let songCount = 0;
-        
+
         // 가장 최근에 추가된 곡을 저장할 변수
         let recentSong = null;
 
+        // 기본 이미지 URL 정의
+        const defaultImage = '../images/default.png';
+        // 삭제 이미지 URL 정의
+        const deleteImage = '../images/delete.png';
+
         for (let playlistSong of data) {
-            // 기본 이미지 URL 정의
-            const defaultImage = '../images/default.png';
-            // 삭제 이미지 URL 정의
-            const deleteImage = '../images/delete.png';
 
             // ${playlist.albumImage}가 null이면 기본 이미지 사용
             const albumImageSrc = playlistSong.albumImage ? `..${playlistSong.albumImage}` : defaultImage;
@@ -85,8 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
         tbodySongsTableBody.innerHTML = htmlStr;
         songCountElement.textContent = songCount; // 곡 수 업데이트
 
-        // 추가된 곡이 없으면(플리가 비어있으면) 해당 텍스트, defaultImage 출력.
+        // 추가된 곡이 없으면(플리가 비어있으면) 리스트를 출력하는 부분에 해당 텍스트, defaultListImage 출력.
         const defaultListImage = '../images/defaultList.png';
+        const albumCoverImg = document.querySelector('img[alt="albumCover"]'); // 플레이리스트 커버(이미지) 태그 지정
+
         if (songCount == 0) {
             htmlStr += `
                 <div class='container' style="text-align: center;">
@@ -96,11 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     </h5>
                 </div>
                 `
+            albumCoverImg.src = defaultImage; // 플레이리스트에 곡이 없다면(count가 0) 플레이리스트 커버(이미지)를 defaultImage로 설정
             playLists.innerHTML = htmlStr;
         }
-        
+
         // 가장 최근에 추가된 곡의 앨범 커버 이미지 설정
-        const albumCoverImg = document.querySelector('img[alt="albumCover"]');
         if (recentSong) {
             const recentAlbumImageSrc = recentSong.albumImage ? `..${recentSong.albumImage}` : defaultImage;
             albumCoverImg.src = recentAlbumImageSrc;
@@ -124,13 +127,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function deletePlayListSong(event) {
         const songId = event.currentTarget.getAttribute('data-songId');
         const createdTime = event.currentTarget.getAttribute('data-createdTime');
-        
+
         // 문자열로 받은 timestamp 값을 숫자 타입으로 변환
         const timestamp = Number(createdTime);
 
         // 숫자 타입의 timestamp 값을 Date 객체로 변환
         const date = new Date(timestamp).getTime();
-        
+
         console.log('plistId = ' + pListId);
         console.log('songId = ' + songId);
         console.log('createdTime = ' + date);
@@ -150,6 +153,91 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(response.data);
                 alert(`플레이 리스트를 삭제하였습니다.`);
                 getPlayListSong();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    document.getElementById('editButton').addEventListener('click', function() {
+        var pListNameElement = document.getElementById('pListName');
+        var currentName = pListNameElement.innerText;
+
+        // 이미 입력 필드가 있는지 확인
+        if (document.getElementById('pListNameInput')) {
+            return; // 이미 있다면 함수 종료
+        }
+
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.value = currentName;
+        input.className = 'form-control';
+        input.id = 'pListNameInput';
+        input.style.position = 'absolute';
+        input.style.zIndex = '10';
+        input.style.width = '700px'; // pListName 요소의 너비와 동일하게 설정
+        input.maxLength = '20'; // input 내의 글자수 제한 설정
+
+        console.log('create input');
+
+        // 입력 필드를 pListName 요소 위에 배치
+        pListNameElement.style.position = 'relative';
+        pListNameElement.insertBefore(input, pListNameElement.firstChild);
+        console.log('set input');
+        
+        // pListName 텍스트를 숨김
+        pListNameElement.style.display = 'none';
+
+        // input 바깥으로 포커스 아웃시키면 작업 취소
+        input.addEventListener('blur', function() {
+            cancelUpdatePlaylistName();
+        });
+
+        // ESC 키 다운 이벤트 발생 시 작업 취소
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                cancelUpdatePlaylistName();
+            }
+        });
+        
+        // input에서 Enter 키다운 이벤트가 발생하면 input에 입력된 값을 받아 업데이트 작업(updatePlayListName 함수) 실행  
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                updatePlayListName(input.value);
+                pListNameElement.innerText = input.value; // 텍스트 업데이트
+                pListNameElement.style.display = 'block'; // 원래 텍스트 보이기
+                input.remove(); // 입력 필드 제거
+            }
+        });
+
+        input.focus();
+    });
+
+    function cancelUpdatePlaylistName() {
+        var pListNameElement = document.getElementById('pListName');
+        pListNameElement.style.display = 'block'; // 원래 텍스트 보이기
+        var input = document.getElementById('pListNameInput');
+        // 입력 필드가 존재하고, 이를 pListName 요소의 자식 요소로서 제거
+        if (input && input.parentNode === pListNameElement) {
+            // setTimeout을 사용하여 비동기적으로 입력 필드를 제거
+            setTimeout(function() {
+                if (input.parentNode === pListNameElement) {
+                    pListNameElement.removeChild(input); // 입력 필드 제거
+                }
+            }, 0);
+        }
+    }
+
+    function updatePlayListName(pListName) {
+        console.log(pListId);
+        console.log(pListName);
+
+        const uri = `../updatePlayListName/${pListId}`;
+        axios
+            .put(uri, { plistName: pListName })
+            .then((response) => {
+                console.log(response);
+                alert(`플레이리스트 이름이 업데이트되었습니다.`);
             })
             .catch((error) => {
                 console.log(error);

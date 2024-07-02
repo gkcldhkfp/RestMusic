@@ -93,5 +93,9 @@
     AND song_id = #{songId}
     AND created_time = #{createdTime}
     </delete>
+    
+    <update id="updatePlayListNameByListId">
+        update playlists set p_list_name = #{pListName} where p_list_id = #{pListId}
+    </update>
   
   </mapper>

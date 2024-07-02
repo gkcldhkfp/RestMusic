@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwill.rest.dto.playlists.AddPlayListDto;
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
+import com.itwill.rest.dto.playlists.PlayListNameUpdateDto;
 import com.itwill.rest.dto.playlists.PlayListSongInfoDto;
 import com.itwill.rest.dto.playlists.PlaylistFirstAlbumImgDto;
 import com.itwill.rest.repository.PlayList;
@@ -70,6 +71,12 @@ public class PlayListService {
 		log.debug("deleteByListId(ListId={})");
 		log.debug("deleteByListId(songId={})");
 		int result = playListDao.deleteListSongBySongId(pListId, songId, createdTime);
+		
+		return result;
+	}
+	
+	public int updatePlayListNameByListId(PlayListNameUpdateDto dto) {
+		int result = playListDao.updatePlayListNameByListId(dto);
 		
 		return result;
 	}

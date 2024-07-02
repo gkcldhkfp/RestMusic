@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
+import com.itwill.rest.dto.playlists.PlayListNameUpdateDto;
 import com.itwill.rest.dto.playlists.PlayListSongInfoDto;
 import com.itwill.rest.dto.playlists.PlaylistFirstAlbumImgDto;
 
@@ -24,5 +25,7 @@ public interface PlayListDao {
 	PlayList getPlayListInfoByListId(Integer pListId);
 	
 	int deleteListSongBySongId(Integer pListId, Integer songId, Timestamp createdTime);
+	
+	int updatePlayListNameByListId(PlayListNameUpdateDto dto);
 
 }
