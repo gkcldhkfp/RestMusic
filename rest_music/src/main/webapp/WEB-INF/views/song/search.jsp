@@ -12,6 +12,11 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
 <title>Rest</title>
+<style>
+   #resultTable tr{
+        min-width:1100px;
+    }
+</style>
 </head>
 <body>
     <header>
@@ -22,7 +27,7 @@
     </header>
 
     <main>
-        <div class="container-fluid mt-5"
+        <div class="container mt-5"
             style="max-width: 1440px; min-width: 1000px">
 
             <c:url var="songSearchPage" value="/song/search" />
@@ -51,13 +56,14 @@
             </form>
 
             <div class="card-body mt-5">
-                <table class="table table-hover mt-3">
+                <table id="resultTable" class="table table-hover mt-3">
                     <thead>
                         <tr>
                             <th colspan="2">앨범/곡</th>
                             <th>가수</th>
                             <th class="text-center">듣기</th>
-                            <th class="text-center">담기</th>
+                            <th class="text-center" style="min-width: 81px;">재생목록</th>
+                            <th class="text-center" style="min-width: 87px;">내 리스트</th>
                         </tr>
                     </thead>
                     <tbody id="searchResult">
@@ -93,6 +99,9 @@
                                         id="listenBtn"></button></td>
                                 <td style="text-align: center;"><button
                                         style="background-image: url('../images/playList.png'); width: 60px; height: 60px; background-size: cover; background-repeat: no-repeat;"
+                                        class="btn addNextPlay mt-3"></button></td>
+                                <td style="text-align: center;"><button
+                                        style="background-image: url('../images/myPlayList.png'); width: 55px; height: 55px; background-size: cover; background-repeat: no-repeat;"
                                         class="btn addPlayList mt-3"></button></td>
                             </tr>
                         </c:forEach>
@@ -146,9 +155,11 @@
 
     <c:url var="searchJS" value="/js/search.js" />
     <script src="${searchJS}"></script>
+    
     <script>
-					const id = 1 // 유저아이디
-				</script>
+		const id = 1 // 유저아이디
+	</script>
+    
     <c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
     <script src="${addCurrentPlayList}"></script>
 

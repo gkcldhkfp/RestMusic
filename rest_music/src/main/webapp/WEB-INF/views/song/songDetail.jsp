@@ -45,11 +45,18 @@
                             장르<span class="ms-3">${data.genre}</span>
                         </p>
                         <div class="mt-3">
-                            <button id="btnLike" class="btn btn-success"></button>
+                            <button id="btnLike" class="btn fs-3"></button>
                             <button data-id="${data.songId}"
-                                id="listenBtn" class="btn btn-success">재생목록추가</button>
+                                id="listenBtn" title="재생" class="btn" style="background-image: url('../images/play.png'); 
+                                width: 45px; height: 45px; background-size: cover; background-repeat: no-repeat;"></button>
+                                
+                            <button data-id="${data.songId}"
+                                id="" title="재생목록에 추가" class="btn ms-1" style="background-image: url('../images/playList.png'); 
+                                width: 60px; height: 60px; background-size: cover; background-repeat: no-repeat;"></button>
+                                
                             <button id="btnAddPlayList"
-                                class="btn btn-success">플리추가</button>
+                                class="btn ms-1" title="내 리스트에 담기" style="background-image: url('../images/myPlayList.png'); 
+                                width: 50px; height: 50px; background-size: cover; background-repeat: no-repeat;"></button>
                         </div>
                     </div>
                 </div>

@@ -37,6 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
             event.stopPropagation(); // 이벤트 버블링 방지
         });
     }
+    
+    const addNextPlayButton = document.querySelectorAll('button.addNextPlay');
+    for(let e of addNextPlayButton){
+        e.addEventListener('click', (event) => {
+            event.stopPropagation(); // 이벤트 버블링 방지
+        });
+    }
 
     window.onscroll = function() {
         // 이전에 설정된 디바운스 타이머를 제거
@@ -84,7 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             <td><br/><span class="text-center fw-bold">${item.singerName}</span></td>
                             <td style="text-align: center;"><button data-id="${item.songId}" style="background-image: url('../images/play.png'); width:50px; height:50px;
                              background-size: cover; background-repeat: no-repeat;" id="listenBtn" class="btnListen btn mt-3"></button></td>
-                            <td style="text-align: center;"><button style="background-image: url('../images/playList.png'); width:60px; height:60px;
+                             <td style="text-align: center;"><button style="background-image: url('../images/playList.png'); width: 60px; height: 60px; background-size: cover; 
+                             background-repeat: no-repeat;" class="btn addNextPlay mt-3"></button></td>
+                            <td style="text-align: center;"><button style="background-image: url('../images/myPlayList.png'); width:55px; height:55px;
                             background-size: cover; background-repeat: no-repeat;" class="btn addPlayList mt-3"></button></td>
                         `;
 
@@ -99,6 +108,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         addPlayButton.addEventListener('click', function(e) {
                             e.stopPropagation(); // 이벤트 버블링 방지
                         });
+                        
+                        const addNextPlayButton = newRow.querySelector('button.addNextPlay');
+                            addNextPlayButton.addEventListener('click', (event) => {
+                                event.stopPropagation(); // 이벤트 버블링 방지
+                        });
+                        
 
                         // tbody에 새로운 행 추가
                         tbody.appendChild(newRow);

@@ -36,7 +36,7 @@
             playlists.p_list_id
     </select>
     
-    <insert id="addSongToPlayListDto">
+    <insert id="addSongToPlayList">
         insert into playlist_songs (p_list_id, song_id) values ( #{pListId}, #{songId} ) 
     </insert>
     

@@ -9,7 +9,7 @@ public interface PlayListDao {
 	
 	List<PlaylistFirstAlbumImgDto> allPlayListsByUserId(int id);
 
-	int addSongToPlayListDto(AddSongToPlayListDto dto);
+	int addSongToPlayList(AddSongToPlayListDto dto);
 
 	Integer checkSongInPlayList(AddSongToPlayListDto dto);
 
