@@ -3,11 +3,11 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     const id = document.querySelector('h3#userId').textContent;
-    
+
     getPlayLists();
-    
+
     function getPlayLists() {
         const uri = `../getPlayList/${id}`;
 
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(error);
             });
     }
-    
+
     const btnAddPlaylist = document.querySelector('button#btnAddPlaylist');
     btnAddPlaylist.addEventListener('click', addPlaylist);
 
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bootstrapModal = new bootstrap.Modal(modal);
 
     function addPlaylist() {
-        
+
         console.log(id);
 
         const plistName = document.querySelector('input#playlistName').value;
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cancelButton.addEventListener('click', function() {
         bootstrapModal.hide();
     });
-    
+
     function makePlayListElements(data) {
         // 플리 목록 HTML이 삽입될 div
         const divPlayLists = document.querySelector('div#playLists');
@@ -103,15 +103,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 </button>
             </div>`;
         }
-        
+
         // 작성된 HTML 코드를 div 영역에 삽입.
         divPlayLists.innerHTML = htmlStr;
-        
+
         const deleteList = document.querySelectorAll('button.deleteButton'); // htmlStr로 추가된 html 영역의 button 태그의 클래스 이름을 지정
         for (let button of deleteList) {
             button.addEventListener('click', deletePlayList);
         }
-        
+
         const aPlayLists = document.querySelectorAll('a.playList');
         for (let a of aPlayLists) {
             a.addEventListener('click', () => {
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-    
+
     function deletePlayList(event) {
 
         const plistId = event.currentTarget.getAttribute('data-id');
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!result) { // 사용자가 [취소]를 선택했을 때
             return; // 함수 종료
         }
-        
+
         // Ajax 요청을 보낼 URI
         const uri = `../deletePlayList/${plistId}`;
 
@@ -149,5 +149,59 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
     }
-    
+
+    // 비밀번호 모달 창의 '확인' 버튼 클릭 시 호출되는 함수
+    const btnConfirmPassword = document.getElementById('btnConfirmPassword');
+
+    btnConfirmPassword.addEventListener('click', function() {
+        // 비밀번호 입력 값 가져오기
+        const password = document.getElementById('password').value;
+        const userId = document.getElementById('userId').value;
+
+        // 비밀번호가 맞는지 확인하는 함수 호출
+        verifyPassword(userId, password).then(isValid => {
+            if (isValid) {
+                // 비밀번호가 올바른 경우, ID/PW 변경 페이지로 이동
+                alert('비밀번호가 확인되었습니다.');
+                location.href = `../user/update?userId=${userId}`;
+            } else {
+                // 비밀번호가 틀린 경우, 알림창 표시
+                alert('비밀번호가 틀렸습니다.');
+                console.log('비밀번호가 틀렸습니다.');
+            }
+        });
+    });
+
+    // 비밀번호 검증 함수
+    function verifyPassword(userId, password) {
+        const data = {
+            userId: userId,
+            password: password
+        };
+        
+        return axios.post('../user/verifyPassword', null, data, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.data)  // 서버 응답에서 비밀번호 유효성 여부 확인
+        .catch(error => {
+            console.error('비밀번호 확인 중 오류가 발생했습니다:', error);
+            return false;
+        });
+    }
+        
+        
+        //return axios.post(`../user/verifyPassword`, null, {
+            //params: {
+                //userId: userId,
+                //password : password
+            //}
+        //})
+            //.then(response => response.data)  // 서버 응답에서 비밀번호 유효성 여부 확인
+            //.catch(error => {
+                //console.error('비밀번호 확인 중 오류가 발생했습니다:', error);
+                //return false;
+            //});
+
 });

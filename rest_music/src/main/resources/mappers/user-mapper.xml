@@ -67,5 +67,12 @@
             hint_answer = #{hintAnswer}
         where user_id = #{userId}
     </update>
+    
+    <update id="updateUserProfile">
+    update users
+    set
+       user_profile = #{userProfile}
+    where user_id = #{userId}
+    </update>
 
 </mapper>

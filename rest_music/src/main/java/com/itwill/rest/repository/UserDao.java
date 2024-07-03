@@ -13,6 +13,7 @@ public interface UserDao {
     User selectByUserIdAndPassword(UserSignInDto dto);
 	User selectByUserid(String userid);
 	List<UserLikeDto> selectLikesByUserid(String userId);
-	int updateUser(UserUpdateDto user);
+	int updateUser(User user);
+	int updateUserProfile(String userId, String userProfile);
 
 }

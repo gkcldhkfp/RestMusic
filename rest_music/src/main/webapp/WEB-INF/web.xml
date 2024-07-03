@@ -48,6 +48,13 @@
             <param-value>/WEB-INF/servlet-context.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
+        
+        <multipart-config>
+        <max-file-size>104857600</max-file-size>   <!-- 100 MB -->
+        <max-request-size>1004857600</max-request-size>  <!-- 1000 MB -->
+        <file-size-threshold>0</file-size-threshold> <!-- 사용하지 않음 -->
+        </multipart-config>
+        
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
