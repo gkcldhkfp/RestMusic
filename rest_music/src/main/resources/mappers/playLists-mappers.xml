@@ -59,6 +59,7 @@
     ps.song_id,
     ps.created_time,
     s.title,
+    s.album_id,
     si.singer_name,
     a.album_image
     FROM

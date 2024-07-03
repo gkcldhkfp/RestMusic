@@ -44,6 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const defaultImage = '../images/default.png';
 
         for (let playlistSong of data) {
+            
+            // albumPage, songPage로 이동할 주소 지정
+            const albumPage = `/Rest/album/detail?albumId=${playlistSong.albumId}`;
+            const songPage = `/Rest/song/detail?songId=${playlistSong.songId}`;
 
             // ${playlist.albumImage}가 null이면 기본 이미지 사용
             const albumImageSrc = playlistSong.albumImage ? `../images/${playlistSong.albumImage}` : defaultImage;
@@ -59,10 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td style="text-align: center; vertical-align: middle;">
                     <input type="checkbox" class="songCheckbox" data-songId="${playlistSong.songId}" data-createdTime="${playlistSong.createdTime}">
                 </td>
-                <td style="text-align: left; vertical-align: middle;"><img alt="songImg" src="${albumImageSrc}"
-                    width="80px" height="80px"></td>
+                <td style="text-align: left; vertical-align: middle;">
+                    <a href="${albumPage}">
+                        <img alt="songImg" src="${albumImageSrc}" width="80px" height="80px">
+                    </a>
+                </td>
                 <td style="text-align: left; vertical-align: middle; font-size: 14px;">
-                    <a href="">${playlistSong.title}</a>
+                    <a href="${songPage}">${playlistSong.title}</a>
                 </td>
                 <td style="text-align: left; vertical-align: middle; font-size: 14px">${playlistSong.singerName}</td>
             </tr>

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,10 +37,18 @@ public class UserController {
 		log.debug("userId={}", userId);
 		
 		User user = userService.readInfo(userId); // 유저 정보 불러오기(프로필 사진, 닉네임 출력)
-		List<UserLikeDto> list = userService.selectLikesByUserid(userId); // 유저가 좋아요 누른 곡 출력
 		
 		model.addAttribute("user", user);
-		model.addAttribute("like", list);
+	}
+	
+	@GetMapping("/getUserLike/{userId}")
+	@ResponseBody
+	public ResponseEntity<List<UserLikeDto>> getUserLike(@PathVariable String userId) {
+		log.debug("getUserLike({})", userId);
+		
+		List<UserLikeDto> list = userService.selectLikesByUserid(userId); // 유저가 좋아요 누른 곡 출력
+		
+		return ResponseEntity.ok(list);
 	}
 	
     @GetMapping("/signup") // GET 방식의 /user/signup 요청을 처리하는 컨트롤러 메서드 
