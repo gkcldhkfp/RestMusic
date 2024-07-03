@@ -235,7 +235,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-		const id = 1 //userid
+		const id = ${loginUserId} //id
 		const songId = ${songId}
 	</script>
 

@@ -3,6 +3,9 @@
  * detail.jsp에 포함
  */
 document.addEventListener('DOMContentLoaded', () => {
+	if(!sessionStorage.getItem('isAdded')){
+		sessionStorage.setItem('isAdded','N');
+	}
 	const addCPList = document.querySelectorAll('#addCPList');
 	for (let a of addCPList) {
 		a.addEventListener('click', addToCPList);
@@ -20,7 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		axios.
 			get(url).
 			then((response) => {
-				console.log(response);
+				if (sessionStorage.getItem('isAdded') ==='N') {
+					sessionStorage.setItem('index', 0);
+					sessionStorage.setItem('isAdded', 'Y');
+					parent.songFrame.location.reload();
+				}
 			}).
 			catch((error) => { console.log(error); });
 	}
@@ -33,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			.get(url)
 			.then((response) => {
 				console.log("성공");
-				alert('듣기 버튼 성공');
+				sessionStorage.setItem('index', 0);
 				parent.songFrame.location.reload();
 			})
 			.catch((error) => { });
@@ -132,7 +139,19 @@ document.addEventListener('DOMContentLoaded', () => {
 			let li = document.createElement('li');
 			li.textContent = '현재 재생목록이 없습니다.';
 		}
+
+		const cPList = document.querySelectorAll('.list-group-item');
+		for (let i = 0; i < cPList.length; i++) {
+			cPList[i].addEventListener('click', ()=> {
+				sessionStorage.setItem('index', i);
+				modal.style.display = "none";
+				parent.songFrame.location.reload();
+				modal.style.display = "block"
+			});
+		}
+
 	}
+
 
 
 });
