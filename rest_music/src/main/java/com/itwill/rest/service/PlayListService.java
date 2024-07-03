@@ -1,11 +1,14 @@
 package com.itwill.rest.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.itwill.rest.dto.playlists.AddPlayListDto;
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
+import com.itwill.rest.dto.playlists.PlayListNameUpdateDto;
+import com.itwill.rest.dto.playlists.PlayListSongInfoDto;
 import com.itwill.rest.dto.playlists.PlaylistFirstAlbumImgDto;
 import com.itwill.rest.repository.PlayList;
 import com.itwill.rest.repository.PlayListDao;
@@ -28,12 +31,19 @@ public class PlayListService {
 		
 		return result;
 	}
-
+	
+	public List<PlayListSongInfoDto> getSongsByPlistId(int pListId) {
+		return playListDao.getSongsByPlistId(pListId);
+	}
+	
+	public PlayList getPlayListInfoByListId(int pListId) {
+		return playListDao.getPlayListInfoByListId(pListId);
+	}
 
 	public int songAddToPlayList(AddSongToPlayListDto dto) {
 		log.debug("service{}",dto);
 		
-	int result = playListDao.addSongToPlayListDto(dto);
+	int result = playListDao.addSongToPlayList(dto);
 		
 		return result;
 	}
@@ -56,8 +66,20 @@ public class PlayListService {
 		
 		return result;
 	}
-
-
+	
+	public int deleteListSongsBySongId(Integer pListId, Integer songId, Timestamp createdTime) {
+		log.debug("deleteByListId(ListId={})");
+		log.debug("deleteByListId(songId={})");
+		int result = playListDao.deleteListSongBySongId(pListId, songId, createdTime);
+		
+		return result;
+	}
+	
+	public int updatePlayListNameByListId(PlayListNameUpdateDto dto) {
+		int result = playListDao.updatePlayListNameByListId(dto);
+		
+		return result;
+	}
 
 	public Boolean checkSongInPlayList(AddSongToPlayListDto dto) {
 		log.debug("checkSongInPlayList = ({})",dto);
@@ -71,6 +93,4 @@ public class PlayListService {
 		}
 		
 	}
-
-
 }

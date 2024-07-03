@@ -153,7 +153,7 @@
 
 
                         <!-- 댓글 업데이트 모달(다이얼로그) -->
-                        <div id="commentModal" class="modal"
+                        <div id="commentModal" class="modal fade"
                             tabindex="-1">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -235,8 +235,8 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-		const id = ${loginUserId} //id
 		const songId = ${songId}
+		const id = `${loginUserId}` //id
 	</script>
 
     <c:url var="commentsJS" value="/js/comments.js" />

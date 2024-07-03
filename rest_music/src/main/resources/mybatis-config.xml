@@ -17,6 +17,7 @@
         <typeAlias type="com.itwill.rest.repository.Comment" alias="Comment" />
         <typeAlias type="com.itwill.rest.repository.PlayList" alias="PlayList" />
         <typeAlias type="com.itwill.rest.dto.playlists.PlaylistFirstAlbumImgDto" alias="PlaylistFirstAlbumImgDto" />
+        <typeAlias type="com.itwill.rest.dto.playlists.PlayListSongInfoDto" alias="PlayListSongInfoDto" />
         <typeAlias type="com.itwill.rest.dto.song.SearchResultDto" alias="ResultDto" />
         <typeAlias type="com.itwill.rest.repository.AlbumSongs" alias="AlbumSongs" />
     </typeAliases>

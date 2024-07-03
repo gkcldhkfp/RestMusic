@@ -93,7 +93,7 @@
       select count(*)
       from albums a
       left join songs s on a.album_id = s.album_id
-      where a.album_id = #{albumId}
+      where a.album_id=#{albumId}
     </select>
 
     <select id="selectSongBySongId" resultType="AlbumSongs">

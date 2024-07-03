@@ -26,12 +26,14 @@
             <div class="d-flex align-items-center">
                 <div class="p-3">
                     <c:url var="profileImg" value="/images/profileimage/profile.jpg"></c:url>
-                    <img alt="profileImg" src="${empty user.userProfile ? profileImg : user.userProfile}"
+                    <c:url var="userProfile" value="/images/profileimage/${user.userProfile}"></c:url>
+                    <img alt="profileImg" src="${empty userProfile ? profileImg : userProfile}"
                         width="200px" height="200px">
                 </div>
                 <div class="p-3">
-                    <h3 id="userId" class="d-none">${user.id}</h3>
-                    <h3 style="font-weight: bold; font-size: 1.2rem;">닉네임: ${user.nickName}</h3>
+                    <h3 id="id" class="d-none">${user.id}</h3>
+                    <h3 id="userId" class="d-none">${user.userId}</h3>
+                    <h3 style="font-weight: bold; font-size: 1.2rem;">닉네임: ${user.nickname}</h3>
                     <button class="btn btn-outline-primary">ID/PW 변경 (내정보 관리)</button>
                 </div>
             </div>
@@ -50,32 +52,28 @@
                     data-bs-target="#addPlaylistModal">플레이리스트 추가</button>
             </div>
             <br>
-            <h2 style="font-size: 1.2rem; text-align : center;">좋아요 누른 곡</h2><hr>
+            <h2 id="userLikesSection" style="font-size: 1.2rem; text-align : center;">좋아요 누른 곡</h2><hr>
             <!-- 추가할 박스 (카드) -->
             <div class="card">
                 <div class="card-body">
                     <table class="table table-striped" style="border: 1px solid #ddd;">
                         <thead>
                             <tr>
-                                <th style="text-align: center; vertical-align: middle;">커버</th>
-                                <th style="text-align: center; vertical-align: middle;">노래 제목</th>
-                                <th style="text-align: center; vertical-align: middle;">아티스트</th>
+                                <th style="text-align: left; vertical-align: middle;">커버</th>
+                                <th style="text-align: left; vertical-align: middle;">노래 제목</th>
+                                <th style="text-align: left; vertical-align: middle;">아티스트</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <c:forEach items="${like}" var="l">
-                                <tr>
-                                <c:url var="albumImage" value="${l.albumImage}"></c:url>
-                                    <td style="text-align: center; vertical-align: middle;"><img alt="songImg" src="${albumImage}"
-                                        width="100px" height="100px"></td>
-                                    <td style="text-align: center; vertical-align: middle;"><a href="">${l.title}</a></td>
-                                    <td style="text-align: center; vertical-align: middle;">${l.singerName}</td>
-                                </tr>
-                            </c:forEach>
+                        <tbody id="likeTableBody">
                         </tbody>
                     </table>
                 </div>
             </div>
+            <!-- 페이지네이션 컨트롤 -->
+            <nav>
+                <ul class="pagination justify-content-center mt-4"
+                    id="pagination"></ul>
+            </nav>
         </div>
     </div>
     
