@@ -8,7 +8,7 @@
         select * from playlists where id = #{id}
     </select>
     
-    <insert id="addPlayList">
+    <insert id="addSongToPlayListDto">
         insert into playlist_songs (p_list_id, song_id) values ( #{pListId}, #{songId} ) 
     </insert>
   

@@ -10,7 +10,6 @@
 
     <!-- 매퍼 XML 파일에서 resultType 속성을 설정할 때 간단히 하기 위해서 -->
     <typeAliases>
-        <!-- <typeAlias type="com.itwill.rest.repository.SongChart" alias="SongChart" />  -->
         <typeAlias type="com.itwill.rest.repository.PlayList" alias="PlayList" />
         <typeAlias type="com.itwill.rest.repository.Song" alias="Song" />
         <typeAlias type="com.itwill.rest.dto.song.SongChartDto" alias="SongChartDto" />

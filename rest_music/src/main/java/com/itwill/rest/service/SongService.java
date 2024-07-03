@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.itwill.rest.dto.playlists.AddPlayListDto;
+import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
 import com.itwill.rest.dto.song.SongChartDto;
 //import com.itwill.rest.dto.song.AddSongLikeDto;
 import com.itwill.rest.dto.song.SongDetailDto;
@@ -90,7 +90,7 @@ public class SongService {
     }
     
     // 플레이리스트에 곡 추가
-    public int addSongToPlaylist(AddPlayListDto dto) {
+    public int addSongToPlaylist(AddSongToPlayListDto dto) {
         log.debug("addSongToPlaylist({})", dto);
         
         int result = songDao.addSongToPlaylist(dto);

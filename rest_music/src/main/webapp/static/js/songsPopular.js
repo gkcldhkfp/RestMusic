@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let likesCountElement = icon.nextElementSibling; // 좋아요 개수를 표시하는 요소를 가져옴
 
         // 특정 사용자가 특정 노래를 좋아요 했는지 여부를 서버에 요청
-        const data = { songId, id }; 
+        const data = { songId, id };
         axios.post(`../api/isLiked`, data)
             .then(response => {
                 // 서버 응답에 따라 좋아요 상태를 설정
@@ -81,12 +81,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 icon.style.color = 'black';
             });
     });
-    
+
     // 전체 선택 체크박스 이벤트 핸들러
     const selectAllCheckbox = document.getElementById('selectAllCheckbox');
     const songCheckboxes = document.querySelectorAll('.songCheckbox');
     const selectAllModal = new bootstrap.Modal(document.getElementById('selectAllModal'), {});
-    
 
     // 전체 선택 체크박스 이벤트 핸들러
     selectAllCheckbox.addEventListener('change', function() {
@@ -141,8 +140,8 @@ document.addEventListener("DOMContentLoaded", function() {
             audioPlayer.play();
         });
     });
-    
-    const saveButton = document.getElementById('btnUpdateComment');
+
+    const saveButton = document.getElementById('btnAddSong');
     const selectPlayListModal = new bootstrap.Modal(document.getElementById('selectPlayList'));
 
     // 플레이리스트 추가 버튼 클릭 이벤트 핸들러
@@ -162,8 +161,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             const listElement = document.createElement('div');
                             listElement.classList.add('form-check');
                             listElement.innerHTML = `
-                                <input class="form-check-input" type="checkbox" value="${list.pListId}" id="playlist-${list.pListId}" data-playlist-id="${list.pListId}" />
-                                <label class="form-check-label" for="playlist-${list.pListId}">${list.pListName}</label>
+                                <input class="form-check-input songCheckbox" type="checkbox" value="${list.plistId}" id="playlist-${list.plistId}" data-playlist-id="${list.plistId}" />
+                                <label class="form-check-label" for="playlist-${list.plistId}">${list.plistName}</label>
                             `;
                             playListsContainer.appendChild(listElement);
                         });
@@ -194,22 +193,28 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        axios.post(`../addPlayList`, {
-            pListId: selectedPlaylistIds,
-            songId: songId
-        })
-        .then(response => {
-            if (response.status === 200) {
-                alert('플레이리스트에 곡이 추가되었습니다.');
-                selectPlayListModal.hide();
-            }
-        })
-        .catch(error => {
-            console.error('Error adding songs to playlists:', error);
-            alert('플레이리스트에 곡을 추가하는 중 오류가 발생했습니다.');
-        });
-    });
-  
+        console.log(selectedPlaylistIds);
+        console.log(songId);
 
+        for (let list of selectedPlaylistIds) {
+            axios.post(`../addSongToPlayList`, {
+                "plistId": list,
+                "songId": songId
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        alert('플레이리스트에 곡이 추가되었습니다.');
+                        selectPlayListModal.hide();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error adding songs to playlists:', error);
+                    alert('플레이리스트에 곡을 추가하는 중 오류가 발생했습니다.');
+                });
+        }
+
+
+    });
 });
+
 

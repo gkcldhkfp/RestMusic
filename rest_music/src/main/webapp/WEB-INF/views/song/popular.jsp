@@ -48,6 +48,7 @@
                     <th>앨범</th>
                     <th>좋아요</th> <%-- TODO: 로그인 세션 --%>
                     <th>듣기</th> <%-- TODO: 로그인 세션 --%>
+                    <th>재생목록</th> <%-- TODO: 로그인 세션 --%>
                     <th>담기</th> <%-- TODO: 로그인 세션 --%>
                     <th>뮤비</th>
                 </tr>
@@ -91,6 +92,13 @@
 						        <i class="fas fa-play"></i>
 						    </a>
 						</td>
+						<td>
+                            <button type="button" class="btn btn-secondary btn-sm add-to-collection-btn"
+                                data-song-id="${top.songId}"
+                                data-id="${top.id}">
+                                <i class="fa-sharp fa-thin fa-list-music"></i>>
+                            </button>
+                        </td>
                         <td>
 						    <button type="button" class="btn btn-secondary btn-sm add-to-playlist-btn"
 						      data-song-id="${top.songId}"
@@ -116,24 +124,25 @@
         Your browser does not support the audio element.
     </audio>
     
-    <!-- Modal HTML 추가 --> <%-- TODO: 미완성 --%>
-    <div id="selectPlayList" class="modal" tabindex="-1">
-	    <div class="modal-dialog modal-dialog-centered">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title">내 플레이리스트</h5>
-	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	            </div>
-	            <div id="playLists" class="modal-body">
-	                <!-- 플레이리스트 항목들이 이곳에 추가됩니다 -->
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">취소</button>
-	                <button type="button" class="btn btn-outline-primary" id="btnUpdateComment">추가</button>
-	            </div>
-	        </div>
-	    </div>
-	</div>
+    <!-- 플레이리스트 모달 창 -->
+        <div class="modal fade" id="selectPlayList" tabindex="-1" aria-labelledby="selectPlayListLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="selectPlayListLabel">플레이리스트 선택</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 플레이리스트 체크박스 목록이 여기에 동적으로 추가됩니다 -->
+                        <div id="playLists"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                        <button type="button" id="btnAddSong" class="btn btn-primary">곡 추가</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     
     <!-- 전체 담기 Modal HTML 추가 --> <%-- TODO: 미완성 --%>
 	<div id="selectAllModal" class="modal" tabindex="-1">
