@@ -10,11 +10,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class User {
+	private String userName;
 	private Integer id;
 	private String userId;
 	private String password;
 	private String email;
-	private String nickName;
+	private String nickname;
 	private String userProfile;
 	private String hintQuestion;
 	private String hintAnswer;

@@ -34,11 +34,11 @@
         COUNT(l.id) as likes_count
       FROM 
         albums a
-        LEFT JOIN songs s ON a.album_id = s.album_id
+        LEFT JOIN songs s ON  a.album_id= s.album_id
         LEFT JOIN singers ON singers.song_id = s.song_id
         LEFT JOIN title_songs ON title_songs.song_id = s.song_id
         LEFT JOIN likes l ON l.song_id = s.song_id
-        where a.album_id=#{albumId}
+      where a.album_id = #{albumId} 
       GROUP BY 
         a.album_id, 
         a.album_name,
@@ -63,7 +63,7 @@
         LEFT JOIN singers ON singers.song_id = s.song_id
         LEFT JOIN title_songs ON title_songs.song_id = s.song_id
         LEFT JOIN likes l ON l.song_id = s.song_id
-        where a.album_id=#{albumId}
+        where a.album_id = #{albumId} 
       GROUP BY 
         a.album_id, 
         a.album_name,

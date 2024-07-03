@@ -235,8 +235,8 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-		const id = 1 //userid
 		const songId = ${songId}
+		const id = `${loginUserId}` //id
 	</script>
 
     <c:url var="commentsJS" value="/js/comments.js" />

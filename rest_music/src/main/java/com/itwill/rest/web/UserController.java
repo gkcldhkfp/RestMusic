@@ -20,6 +20,7 @@ import com.itwill.rest.dto.user.UserSignInDto;
 import com.itwill.rest.repository.User;
 import com.itwill.rest.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,10 +58,10 @@ public class UserController {
     }
     
     @PostMapping("/signup") // POST 방식의 /user/signup 요청을 처리하는 컨트롤러 메서드
-    public String signUp(UserCreateDto dto) {
+    public String signUp(UserCreateDto dto, HttpServletRequest request) {
         log.debug("POST signUp({})", dto);
         
-        userService.create(dto);
+        userService.create(dto, request);
         
         return "redirect:/user/signin"; // 로그인 페이지로 이동.
     }
@@ -103,13 +104,13 @@ public class UserController {
             @RequestParam(name = "target", defaultValue = "") String target,
             HttpSession session) throws IOException {
         log.debug("POST signIn({})", dto);
-        
+
         User user = userService.read(dto);
         String targetPage = "";
         if (user != null) { // 아이디와 비밀번호가 일치하는 사용자 있는 경우
             // 세션에 로그인 사용자 아이디를 저장
             session.setAttribute("SESSION_ATTR_USER", user.getUserId());
-            
+            session.setAttribute("loginUserId", user.getId());
             // 로그인 성공 후 이동할 타겟 페이지
             targetPage = (target.equals("")) ? "/" : target;
             
@@ -117,17 +118,89 @@ public class UserController {
             targetPage = "/user/signin?result=f&target="
                     + URLEncoder.encode(target, "UTF-8");
         }
-        
+
         return "redirect:" + targetPage;
     }
     
     @GetMapping("/signout")
     public String signOut(HttpSession session) {
         log.debug("singOut()");
-        
+
         session.removeAttribute("SESSION_ATTR_USER");
         session.invalidate();
         
         return "redirect:/user/signin";
     }
+
+    // 아이디 찾기 (화면)
+    @GetMapping("/findUserId")
+    public void findUserId() {
+        log.debug("GET findUserId()");
+    }
+
+    // 아이디 찾기 (조회)
+    @PostMapping("/findUserId")
+    public String findUserId(User user) {
+        log.debug("POST findUserId({})", user);
+        String userId = null;
+        String targetPage = "";
+
+        User findUser = userService.findUserId(user);
+
+        if(findUser != null) {
+            userId = findUser.getUserId();
+            targetPage = "/user/findUserResult?userId=" + userId;
+        } else {
+            targetPage = "/user/findUserId?result=f";
+        }
+
+        return "redirect:" + targetPage;
+
+    }
+
+    // 아이디 찾기 결과
+    @GetMapping("/findUserResult")
+    public void findUserResult(@RequestParam(name = "userId") String userId, Model model) {
+        model.addAttribute("userId", userId);
+        log.debug("GET findUserResult()");
+    }
+
+    // 비밀번호 찾기 (화면)
+    @GetMapping("/findpassword")
+    public void findpassword() {
+        log.debug("GET findpassword()");
+    }
+
+    // 비밀번호 찾기 (조회)
+    @PostMapping("findpassword")
+    public String findpassword(User user) {
+        log.debug("POST findpassword({})", user);
+
+        User findUser = userService.findpassword(user);
+        String targetPage = "";
+        if (findUser != null) {
+            targetPage = "/user/setpassword?userId=" + user.getUserId();
+        } else {
+            targetPage = "/user/findpassword?result=f";
+        }
+
+        return "redirect:" + targetPage;
+    }
+
+    // 비밀번호 설정 (화면)
+    @GetMapping("setpassword")
+    public void setpassword() {
+        log.debug("GET setpassword()");
+    }
+
+    @PostMapping("setpassword")
+    public String setpassword(User user) {
+        log.debug("POST setpassword({})", user);
+
+        userService.setpassword(user);
+
+        return "redirect:/user/signin";
+    }
+    
+    
 }

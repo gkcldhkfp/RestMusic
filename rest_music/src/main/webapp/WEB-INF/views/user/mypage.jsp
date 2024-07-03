@@ -33,7 +33,7 @@
                 <div class="p-3">
                     <h3 id="id" class="d-none">${user.id}</h3>
                     <h3 id="userId" class="d-none">${user.userId}</h3>
-                    <h3 style="font-weight: bold; font-size: 1.2rem;">닉네임: ${user.nickName}</h3>
+                    <h3 style="font-weight: bold; font-size: 1.2rem;">닉네임: ${user.nickname}</h3>
                     <button class="btn btn-outline-primary">ID/PW 변경 (내정보 관리)</button>
                 </div>
             </div>

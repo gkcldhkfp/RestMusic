@@ -55,6 +55,7 @@ from albums a
     left join songs s on a.album_id = s.album_id
     left join singers on singers.song_id = s.song_id
     left join title_songs on title_songs.song_id= s.song_id
+    where a.album_id = 1
 union
 select a.album_id, a.album_name,
         s.song_id, s.title, s.genre, 
@@ -63,7 +64,8 @@ select a.album_id, a.album_name,
 from albums a
     left join songs s on a.album_id = s.album_id
     left join singers on singers.song_id = s.song_id
-    left join title_songs on title_songs.song_id= s.song_id;
+    left join title_songs on title_songs.song_id= s.song_id
+    where a.album_id = 1;
     
 SELECT 
     a.album_id, 

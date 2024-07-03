@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(error);
             });
     }
-
     const btnAddPlaylist = document.querySelector('button#btnAddPlaylist');
     btnAddPlaylist.addEventListener('click', addPlaylist);
 
@@ -34,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const bootstrapModal = new bootstrap.Modal(modal);
 
     function addPlaylist() {
-
         console.log(id);
 
         const plistName = document.querySelector('input#playlistName').value;
@@ -72,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     cancelButton.addEventListener('click', function() {
         bootstrapModal.hide();
     });
-
     function makePlayListElements(data) {
         // 플리 목록 HTML이 삽입될 div
         const divPlayLists = document.querySelector('div#playLists');
@@ -138,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!result) { // 사용자가 [취소]를 선택했을 때
             return; // 함수 종료
         }
-
         // Ajax 요청을 보낼 URI
         const uri = `../deletePlayList/${plistId}`;
 
