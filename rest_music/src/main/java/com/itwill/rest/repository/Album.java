@@ -2,6 +2,8 @@ package com.itwill.rest.repository;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +18,7 @@ public class Album {
 	private String albumName;
 	private String albumImage;
 	private String albumType;
-	private LocalDateTime albumReleaseDate;
+    private LocalDateTime albumReleaseDate;
 	private int likes; // 좋아요 개수 필드 추가.
 }
+

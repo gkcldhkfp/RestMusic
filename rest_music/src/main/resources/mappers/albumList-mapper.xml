@@ -6,19 +6,53 @@
 
     <!-- album 테이블 전체 검색. 목록 보기. -->
     <select id="selectAllByAlbumId" resultType="Album">
-        select * from albums order by album_id desc
+        SELECT * FROM albums ORDER BY album_id DESC
     </select>
+
+
+    <!-- 최신 날짜 순으로 정렬 -->
+    <select id="selectOrderByDate" resultType="Album">
+        SELECT * FROM albums ORDER BY album_release_date DESC
+    </select>
+
+
+    <!-- 좋아요 높은 순으로 정렬. join 사용 -->
+    <select id="selectOrderByLikes" resultType="Album">
+        SELECT a.album_id, a.album_name, a.album_image,a.album_type, a.album_release_date, COALESCE(SUM(l.like_count), 0) AS total_likes
+        FROM albums a
+        LEFT JOIN songs s ON a.album_id = s.album_id
+        LEFT JOIN (
+            SELECT song_id, COUNT(*) AS like_count
+            FROM likes
+            GROUP BY song_id
+        ) l ON s.song_id = l.song_id
+        GROUP BY a.album_id, a.album_name, a.album_image, a.album_type, a.album_release_date
+        ORDER BY total_likes DESC
+    <!--
+    <select> 태그: MyBatis에서 SQL 쿼리를 정의하는 태그. 
+    id="selectOrderByLikes"는 이 쿼리를 나중에 호출할 때 사용할 식별자.
+    resultType="Album": 반환되는 결과 타입을 지정. 
+    이 예에서는 Album 이라는 클래스나 타입으로 결과가 매핑될 것을 기대함. 
     
-    <!-- album 테이블에서 id(PK)로 검색. -->
-    <select id="selectById" resultType="Album">
-        select * from album where id = #{id} 
-    </select>
+    a.album_id, a.album_name, a.album_image, a.album_type, a.album_release_date: albums 테이블에서 선택된 각 컬럼들을 반환함.
+    여기서 a는 albums 테이블의 별칭.
+    
+    COALESCE(SUM(l.like_count), 0) AS total_likes: 각 앨범에 대한 총 좋아요 수를 계산. 
+    SUM(l.like_count)가 NULL일 경우 0을 반환하도록 COALESCE 함수를 사용. 
+    이 결과는 total_likes라는 별칭으로 반환됩니다.
+    
+    LEFT JOIN songs s: songs 테이블과 LEFT JOIN을 수행. 
+    이는 albums 테이블의 모든 행을 포함하고, 각 앨범에 해당하는 노래들을 songs 테이블에서 가져옵니다. 
+    s는 songs 테이블의 별칭입니다.
+    ON a.album_id = s.album_id: 조인의 조건을 지정합니다. 
+    albums 테이블의 album_id와 songs 테이블의 album_id가 일치하는 행을 결합함.
+    -->
+    
     
     <!-- 좋아요 -->
-    <update id="updateLikes" parameterType="int">
-        update likes
-        set likes = likes + 1
-        where id = #{id}
-    </update>
     
+    
+    
+    </select>
+
 </mapper>

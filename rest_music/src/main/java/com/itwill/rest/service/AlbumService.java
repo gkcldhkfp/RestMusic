@@ -20,13 +20,35 @@ public class AlbumService {
 	
 	
 	
-	public List<Album> read() {
+	public List<Album> selectAllByAlbumId() {
 		log.debug("read()");
 		
 		List<Album> list = albumDao.selectAllByAlbumId();
 		log.debug("list = {}", list);
 		return list;
 	}
+	
+	
+	
+	public List<Album> selectOrderByDate() {
+		log.debug("selectOrderByDate()");
+		
+		List<Album> list = albumDao.selectOrderByDate();
+		log.debug("list = {}" , list);
+		return list;
+	}
+	
+	
+	public List<Album> selectOrderByLikes() {
+		log.debug("selectOrderByLikes()");
+		
+		List<Album> list = albumDao.selectOrderByLikes();
+		log.debug("list = {}" , list);
+		return list;
+	}
+	
+	
+	
 	
 	public void incrementLikes(Integer albumId) {
         log.debug("incrementLikes({})", albumId);
