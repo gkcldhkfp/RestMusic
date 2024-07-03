@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
 
-import com.itwill.rest.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +19,7 @@ import com.itwill.rest.dto.user.UserSignInDto;
 import com.itwill.rest.repository.User;
 import com.itwill.rest.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -111,7 +110,7 @@ public class UserController {
         if (user != null) { // 아이디와 비밀번호가 일치하는 사용자 있는 경우
             // 세션에 로그인 사용자 아이디를 저장
             session.setAttribute("SESSION_ATTR_USER", user.getUserId());
-
+            session.setAttribute("loginUserId", user.getId());
             // 로그인 성공 후 이동할 타겟 페이지
             targetPage = (target.equals("")) ? "/" : target;
             

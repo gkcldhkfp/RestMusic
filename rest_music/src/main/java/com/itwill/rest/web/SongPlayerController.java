@@ -48,27 +48,22 @@ public class SongPlayerController {
 	@GetMapping("/song/addCurrentPlayList")
 	@ResponseBody
 	public void addCurrentPlayList(
-			@RequestParam(value = "songId", required = false) String songId,
-			HttpSession session,
-			Model model) {
+			@RequestParam(value = "songId") String songId,
+			HttpSession session) {
 
-		//세션에서 리스트를 가져옴
+		// 세션에서 리스트를 가져옴
 		List<AlbumSongs> cPList = (List<AlbumSongs>) session.getAttribute("cPList");
 		if (cPList == null) { // 리스트가 널이면 새 배열을 넣어줌.
 			cPList = new ArrayList<>();
 		}
-		if (songId != null) { // 요청파라미터 없이 요청이 들어왔을 때 널포인터익셉션 발생 방지
-			log.debug("songId =s {}", songId);
-			AlbumSongs song = albumSongsService.selectSongBySongId(Integer.parseInt(songId));
-			// 요청 파라미터로 받은 songId로 음악 객체를 생성함.
-			log.debug("song", song);
-			cPList.add(song);
-			// 생성한 음악 객체를 현재 재생 목록에 추가함.
-		}
+		log.debug("songId = {}", songId);
+		AlbumSongs song = albumSongsService.selectSongBySongId(Integer.parseInt(songId));
+		// 요청 파라미터로 받은 songId로 음악 객체를 생성함.
+		log.debug("song", song);
+		cPList.add(song);
+		// 생성한 음악 객체를 현재 재생 목록에 추가함.
 
 		log.debug("cPList = {}", cPList);
-		model.addAttribute("cPList", cPList);
-		// 재생목록을 jsp에 전달.
 		session.setAttribute("cPList", cPList);
 		// 재생목록을 세션에 업데이트.
 	}
@@ -79,17 +74,17 @@ public class SongPlayerController {
 			@RequestParam(value = "songId") String songId,
 			HttpSession session) {
 
-				session.setAttribute("cPList", null);
-				// 바로듣기 버튼 클릭 시 세션에 저장된 리스트를 지움.
-				List<AlbumSongs> cPList = new ArrayList<>();
-				// 리스트를 지웠으므로 새 리스트를 생성해줌.
-				AlbumSongs song = albumSongsService.selectSongBySongId(Integer.parseInt(songId));
-				// 요청 파라미터로 받은 songId로 음악 객체를 생성
-				log.debug("song = {}", song);
-				cPList.add(song);
-				// 새로 생성한 리스트에 음악 객체를 추가.
-				session.setAttribute("cPList", cPList);
-				// 세션에 리스트를 업데이트
+		session.setAttribute("cPList", null);
+		// 바로듣기 버튼 클릭 시 세션에 저장된 리스트를 지움.
+		List<AlbumSongs> cPList = new ArrayList<>();
+		// 리스트를 지웠으므로 새 리스트를 생성해줌.
+		AlbumSongs song = albumSongsService.selectSongBySongId(Integer.parseInt(songId));
+		// 요청 파라미터로 받은 songId로 음악 객체를 생성
+		log.debug("song = {}", song);
+		cPList.add(song);
+		// 새로 생성한 리스트에 음악 객체를 추가.
+		session.setAttribute("cPList", cPList);
+		// 세션에 리스트를 업데이트
 	}
 
 }

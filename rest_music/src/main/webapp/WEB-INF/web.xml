@@ -29,15 +29,15 @@
     </filter-mapping>
 
     <!-- 인증 필터 -->
-    <filter>
+    <!-- <filter>
         <filter-name>authFilter</filter-name>
         <filter-class>com.itwill.rest.filter.AuthenticationFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>authFilter</filter-name>
+        <filter-name>authFilter</filter-name> -->
         <!-- 매핑 예시 -->
-        <url-pattern>/song/*</url-pattern>
-    </filter-mapping>
+        <!-- <url-pattern>/song/*</url-pattern> -->
+    <!-- </filter-mapping> -->
 
 
     <!-- Listener 설정 -->

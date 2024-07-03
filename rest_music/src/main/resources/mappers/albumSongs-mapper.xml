@@ -34,10 +34,11 @@
         COUNT(l.id) as likes_count
       FROM 
         albums a
-        LEFT JOIN songs s ON #{albumId} = s.album_id
+        LEFT JOIN songs s ON  a.album_id= s.album_id
         LEFT JOIN singers ON singers.song_id = s.song_id
         LEFT JOIN title_songs ON title_songs.song_id = s.song_id
         LEFT JOIN likes l ON l.song_id = s.song_id
+      where a.album_id = #{albumId} 
       GROUP BY 
         a.album_id, 
         a.album_name,
@@ -58,10 +59,11 @@
         COUNT(l.id) as likes_count
       FROM 
         albums a
-        LEFT JOIN songs s ON #{albumId} = s.album_id
+        LEFT JOIN songs s ON a.album_id = s.album_id
         LEFT JOIN singers ON singers.song_id = s.song_id
         LEFT JOIN title_songs ON title_songs.song_id = s.song_id
         LEFT JOIN likes l ON l.song_id = s.song_id
+        where a.album_id = #{albumId} 
       GROUP BY 
         a.album_id, 
         a.album_name,
@@ -79,9 +81,10 @@
         s.song_id, s.title, s.genre,
         title_songs.song_id
       from albums a
-          join songs s on #{albumId} = s.album_id
+          join songs s on a.album_id = s.album_id
           join singers on singers.song_id = s.song_id
           join title_songs on title_songs.song_id= s.song_id
+          where a.album_id = #{albumId}
           order by s.title
     </select>
 
@@ -89,7 +92,8 @@
       <!-- 앨범의 수록곡 개수를 가져오는 셀렉문 -->
       select count(*)
       from albums a
-      left join songs s on a.album_id = #{albumId}
+      left join songs s on a.album_id = s.album_id
+      where a.album_id = #{albumId}
     </select>
 
     <select id="selectSongBySongId" resultType="AlbumSongs">
