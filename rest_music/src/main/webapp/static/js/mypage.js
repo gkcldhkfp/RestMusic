@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const deleteImage = '../images/delete.png';
 
             // ${playlist.albumImage}가 null이면 기본 이미지 사용
-            const albumImageSrc = playlist.albumImage ? `..${playlist.albumImage}` : defaultImage;
+            const albumImageSrc = playlist.albumImage ? `../images/${playlist.albumImage}` : defaultImage;
 
             console.log(playlist);
             htmlStr += `

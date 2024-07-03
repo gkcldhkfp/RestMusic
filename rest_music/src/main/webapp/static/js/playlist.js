@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let playlistSong of data) {
 
             // ${playlist.albumImage}가 null이면 기본 이미지 사용
-            const albumImageSrc = playlistSong.albumImage ? `..${playlistSong.albumImage}` : defaultImage;
+            const albumImageSrc = playlistSong.albumImage ? `../images/${playlistSong.albumImage}` : defaultImage;
 
             // 가장 최근에 추가된 곡을 설정
             if (!recentSong || playlistSong.createdTime > recentSong.createdTime) {
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td style="text-align: left; vertical-align: middle;"><img alt="songImg" src="${albumImageSrc}"
                     width="80px" height="80px"></td>
                 <td style="text-align: left; vertical-align: middle; font-size: 14px;">
-                    <a>${playlistSong.title}</a>
+                    <a href="">${playlistSong.title}</a>
                 </td>
                 <td style="text-align: left; vertical-align: middle; font-size: 14px">${playlistSong.singerName}</td>
             </tr>
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 가장 최근에 추가된 곡의 앨범 커버 이미지 설정
         if (recentSong) {
-            const recentAlbumImageSrc = recentSong.albumImage ? `..${recentSong.albumImage}` : defaultImage;
+            const recentAlbumImageSrc = recentSong.albumImage ? `../images/${recentSong.albumImage}` : defaultImage;
             albumCoverImg.src = recentAlbumImageSrc;
         }
 

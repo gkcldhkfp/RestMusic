@@ -26,7 +26,8 @@
             <div class="d-flex align-items-center">
                 <div class="p-3">
                     <c:url var="profileImg" value="/images/profileimage/profile.jpg"></c:url>
-                    <img alt="profileImg" src="${empty user.userProfile ? profileImg : user.userProfile}"
+                    <c:url var="userProfile" value="/images/profileimage/${user.userProfile}"></c:url>
+                    <img alt="profileImg" src="${empty userProfile ? profileImg : userProfile}"
                         width="200px" height="200px">
                 </div>
                 <div class="p-3">
@@ -57,16 +58,16 @@
                     <table class="table table-striped" style="border: 1px solid #ddd;">
                         <thead>
                             <tr>
-                                <th style="text-align: center; vertical-align: middle;">커버</th>
-                                <th style="text-align: center; vertical-align: middle;">노래 제목</th>
-                                <th style="text-align: center; vertical-align: middle;">아티스트</th>
+                                <th style="text-align: left; vertical-align: middle;">커버</th>
+                                <th style="text-align: left; vertical-align: middle;">노래 제목</th>
+                                <th style="text-align: left; vertical-align: middle;">아티스트</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach items="${like}" var="l">
                                 <tr>
-                                <c:set var="defaultAlbumImage" value="/Rest/images/default.png" />
-                                <c:url var="albumImage" value="${l.albumImage}"></c:url>
+                                <c:url var="defaultAlbumImage" value="/images/default.png" />
+                                <c:url var="albumImage" value="/images/${l.albumImage}" />
                                     <td style="text-align: left; vertical-align: middle;">
                                         <img alt="songImg" src="${empty albumImage ? defaultAlbumImage : albumImage}"
                                         width="80px" height="80px">
