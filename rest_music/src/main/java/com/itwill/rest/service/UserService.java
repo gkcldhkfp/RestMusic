@@ -63,25 +63,6 @@ public class UserService {
 		return list;
 	}
 	
-//	// 비밀번호 인증
-//	public boolean verifyPassword(String userId, String inputPassword) {
-//        User user = userDao.selectByUserId(userId);
-//        if (user == null) {
-//            return false;
-//        }
-//        
-//      
-//        return inputPassword.equals(user.getPassword());
-//    }
-	
-	// 비밀번호 인증
-		public boolean verifyPassword(UserSignInDto dto) {
-	        User user = userDao.selectByUserIdAndPassword(dto);
-	        return user != null;
-	    }
-	
-	
-	
 	// 프로필 변경
 	public boolean updateProfileImage(String userId, MultipartFile profileImage, HttpServletRequest request) {
 	    try {

@@ -56,6 +56,15 @@
         u.user_id = #{userId}
     </select>
     
+    <!-- 프로필 변경 -->
+    <update id="updateUserProfile">
+    update users
+    set
+       user_profile = #{userProfile}
+    where user_id = #{userId}
+    </update>
+    
+    <!-- 회원 정보 수정 -->
     <update id="updateUser">
         update users
         set
@@ -68,11 +77,5 @@
         where user_id = #{userId}
     </update>
     
-    <update id="updateUserProfile">
-    update users
-    set
-       user_profile = #{userProfile}
-    where user_id = #{userId}
-    </update>
-
+    
 </mapper>

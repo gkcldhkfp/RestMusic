@@ -130,22 +130,6 @@ public class UserController {
         return "redirect:/user/signin";
     }
     
-//    // 비밀번호 인증
-//    @PostMapping("/verifyPassword")
-//    @ResponseBody
-//    public ResponseEntity<Boolean> verifyPassword(@RequestParam("userId") String userId, @RequestParam("password") String inputPassword) {
-//        boolean isVerified = userService.verifyPassword(userId, inputPassword);
-//        return ResponseEntity.ok(isVerified);
-//    }
-    
-    // 비밀번호 인증
-    @PostMapping("/verifyPassword")
-    @ResponseBody
-    public ResponseEntity<Boolean> verifyPassword(@RequestBody UserSignInDto dto) {
-    	boolean isVerified = userService.verifyPassword(dto);
-        return ResponseEntity.ok(isVerified);
-    }
-    
     // 프로필 변경
     @PostMapping("/updateProfileImage")
     @ResponseBody
