@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    const saveButton = document.getElementById('btnUpdateComment');
+    const saveButton = document.getElementById('btnAddSong');
     const selectPlayListModal = new bootstrap.Modal(document.getElementById('selectPlayList'));
 
     // 플레이리스트 추가 버튼 클릭 이벤트 핸들러
@@ -176,8 +176,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             const listElement = document.createElement('div');
                             listElement.classList.add('form-check');
                             listElement.innerHTML = `
-                                <input class="form-check-input" type="checkbox" value="${list.pListId}" id="playlist-${list.pListId}" data-playlist-id="${list.pListId}" />
-                                <label class="form-check-label" for="playlist-${list.pListId}">${list.pListName}</label>
+                                <input class="form-check-input songCheckbox" type="checkbox" value="${list.plistId}" id="playlist-${list.plistId}" data-playlist-id="${list.plistId}" />
+                                <label class="form-check-label" for="playlist-${list.plistId}">${list.plistName}</label>
                             `;
                             playListsContainer.appendChild(listElement);
                         });
@@ -208,20 +208,23 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        axios.post(`../addPlayList`, {
-            pListId: selectedPlaylistIds,
-            songId: songId
-        })
-        .then(response => {
-            if (response.status === 200) {
-                alert('플레이리스트에 곡이 추가되었습니다.');
-                selectPlayListModal.hide();
-            }
-        })
-        .catch(error => {
-            console.error('Error adding songs to playlists:', error);
-            alert('플레이리스트에 곡을 추가하는 중 오류가 발생했습니다.');
-        });
+        for (let list of selectedPlaylistIds) {
+            axios.post(`../addSongToPlayList`, {
+                "plistId": list,
+                "songId": songId
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        alert('플레이리스트에 곡이 추가되었습니다.');
+                        selectPlayListModal.hide();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error adding songs to playlists:', error);
+                    alert('플레이리스트에 곡을 추가하는 중 오류가 발생했습니다.');
+                });
+        }
+
     });
     
     

@@ -2,7 +2,6 @@ package com.itwill.rest.repository;
 
 import java.util.List;
 
-import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
 import com.itwill.rest.dto.song.SongChartDto;
 import com.itwill.rest.dto.song.SongDetailDto;
 import com.itwill.rest.dto.song.SongLikeDto;
@@ -16,21 +15,17 @@ public interface SongDao {
 
 	// 좋아요 추가
 	int addLike(SongLikeDto dto);
-	
+
 	// 좋아요 삭제
 	int removeLike(SongLikeDto dto);
-	
-	// 플레이리스트에 곡 추가
-    int addSongToPlaylist(AddSongToPlayListDto dto);
-	
+
 	// 좋아요 개수 검사
 	Integer countSongLikes(Integer songId);
-	
+
 	// top 30
 	List<SongChartDto> getAllSongs();
-		
+
 	// 장르별 차트
 	List<SongChartDto> getSongsByGenre(String genre);
-		
-}
 
+}

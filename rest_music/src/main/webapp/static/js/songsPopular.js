@@ -193,9 +193,6 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        console.log(selectedPlaylistIds);
-        console.log(songId);
-
         for (let list of selectedPlaylistIds) {
             axios.post(`../addSongToPlayList`, {
                 "plistId": list,

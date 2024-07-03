@@ -15,5 +15,4 @@ public class Song {
 	private String videoLink;
 	private String genre;
 	
-
 }

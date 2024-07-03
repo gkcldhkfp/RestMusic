@@ -47,12 +47,12 @@
         join singers si on so.song_id = si.song_id
         join likes l on so.song_id = l.song_id
         group by
-            so.song_id, 
+            so.song_id,
             a.album_image,
-            a.album_id, 
-            so.title, 
-            si.singer_name, 
-            a.album_name, 
+            a.album_id,
+            so.title,
+            si.singer_name,
+            a.album_name,
             so.song_path,
             so.video_link
         order by count(l.song_id) desc
@@ -78,24 +78,17 @@
         where genre = #{genre}
         group by
             so.song_id,
-            so.genre, 
+            so.genre,
             a.album_image,
-            a.album_id, 
-            so.title, 
-            si.singer_name, 
-            a.album_name, 
+            a.album_id,
+            so.title,
+            si.singer_name,
+            a.album_name,
             so.song_path,
             so.video_link
         order by count(l.song_id) desc
     </select>
-    
-    <!-- 플레이리스트에 곡 추가 -->
-    <insert id="addSongToPlaylist">
-        insert into playlist_songs (p_list_id, song_id)
-        values (#{pListId}, #{songId})
-    </insert>
-    
-    
+       
 </mapper>
 
 

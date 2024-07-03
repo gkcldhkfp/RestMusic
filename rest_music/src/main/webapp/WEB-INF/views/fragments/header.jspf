@@ -19,7 +19,7 @@
 					data-bs-toggle="dropdown" aria-expanded="false">REST 차트</a>
 					<ul class="dropdown-menu">
 						<li>
-                            <c:url var="popularSongs" value="/song/popular" />
+                            <c:url var="popularSongs" value="/song/popularChart" />
                             <a class="dropdown-item" href="${popularSongs}">TOP 30</a>
                         </li>
 						<li>

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwill.rest.dto.song.SongChartDto;
-import com.itwill.rest.dto.song.SongDetailDto;
 
 import com.itwill.rest.service.SongService;
 
@@ -26,20 +25,8 @@ public class SongController {
 
 	private final SongService songService;
 
-	@GetMapping("/detail")
-	public String songDetail(@RequestParam(name = "songId") int id, Model model) {
-		log.debug("id={}", id);
-
-		SongDetailDto data = songService.readDetail(id);
-
-		model.addAttribute("songId", id);
-		model.addAttribute("data", data);
-
-		return "song/songDetail";
-	}
-
 	// top30 차트
-	@GetMapping("/popular")
+	@GetMapping("/popularChart")
 	public void showPopularSongs(Model model) {
 		log.debug("showPopularSongs({})", model);
 
@@ -66,11 +53,10 @@ public class SongController {
 		}
 	}
 
-	// 뮤직비디오 차트
-	@GetMapping("/videoChart")
-	public void showVideoSongs(Model model) {
-
-	}
+//	// 뮤직비디오 차트
+//	@GetMapping("/videoChart")
+//	public void showVideoSongs(Model model) {
+//
+//	}
 
 }
-
