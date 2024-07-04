@@ -155,7 +155,6 @@
             so.video_link
         order by count(l.song_id) desc
     </select>
->>>>>>> refs/heads/develop
 
     <!-- 장르별 차트 -->
     <select id="getSongsByGenre" resultType="SongChartDto">
