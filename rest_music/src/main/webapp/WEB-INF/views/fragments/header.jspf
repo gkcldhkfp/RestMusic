@@ -83,6 +83,7 @@
 					</form>
 				</li>
 			</ul>
+			<a href="../purchase">test</a>
 
 			<!-- 로그인 안했을때 -->
 			<c:if test="${empty sessionScope.SESSION_ATTR_USER}">

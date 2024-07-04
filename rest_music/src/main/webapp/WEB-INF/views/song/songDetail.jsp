@@ -45,11 +45,18 @@
                             장르<span class="ms-3">${data.genre}</span>
                         </p>
                         <div class="mt-3">
-                            <button id="btnLike" class="btn btn-success"></button>
+                            <button id="btnLike" class="btn fs-3"></button>
                             <button data-id="${data.songId}"
-                                id="listenBtn" class="btn btn-success">재생목록추가</button>
+                                id="listenBtn" title="재생" class="btn" style="background-image: url('../images/play.png'); 
+                                width: 45px; height: 45px; background-size: cover; background-repeat: no-repeat;"></button>
+                                
+                            <button data-id="${data.songId}"
+                                id="" title="재생목록에 추가" class="btn ms-1" style="background-image: url('../images/playList.png'); 
+                                width: 60px; height: 60px; background-size: cover; background-repeat: no-repeat;"></button>
+                                
                             <button id="btnAddPlayList"
-                                class="btn btn-success">플리추가</button>
+                                class="btn ms-1" title="내 리스트에 담기" style="background-image: url('../images/myPlayList.png'); 
+                                width: 50px; height: 50px; background-size: cover; background-repeat: no-repeat;"></button>
                         </div>
                     </div>
                 </div>
@@ -124,25 +131,27 @@
                     <div class="card-body collapse"
                         id="collapseComments">
                         <!-- 댓글 등록 -->
-                        <div class="mt-2 card card-body">
-                            <div class="mt-2 row">
-                                <div class="col-10">
-                                    <!-- 댓글 입력 -->
-                                    <textarea class="form-control"
-                                        rows="3" id="ctext"
-                                        placeholder="댓글 내용"></textarea>
-                                    <!-- 댓글 작성자 아이디를 로그인한 사용자의 아이디로 설정 -->
-                                    <input class="" id="username"
-                                        value="${signedInUser}" />
+                        
+                            <div class="mt-2 card card-body" id="commnetRegistForm">
+                                <div class="mt-2 row">
+                                    <div class="col-10">
+                                        <!-- 댓글 입력 -->
+                                        
+                                        <textarea class="form-control"
+                                            rows="3" id="ctext"
+                                            placeholder="댓글 내용"></textarea>
+                                        <!-- 댓글 작성자 아이디를 로그인한 사용자의 아이디로 설정 -->
+                                        <input class="d-none" id="username"
+                                            value="${signedInUser}" />
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="btn btn-outline-success"
+                                            id="btnRegisterComment">등록</button>
+                                    </div>
                                 </div>
-                                <div class="col-2">
-                                    <button
-                                        class="btn btn-outline-success"
-                                        id="btnRegisterComment">등록</button>
-                                </div>
-                            </div>
-                        </div>
-
+                            </div>  
+                      
 
                         <!-- 포스트에 달려 있는 댓글 목록을 보여줄 영역 -->
                         <div class="my-2" id="comments"></div>
@@ -235,8 +244,13 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-		const songId = ${songId}
-		const id = `${loginUserId}` //id
+		const songId = ${songId};
+        let id;
+		if(${loginUserId eq null}){
+			id = 0; //userid
+		} else {
+			id = '${loginUserId}';
+		}
 	</script>
 
     <c:url var="commentsJS" value="/js/comments.js" />

@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class CommentItemDto {
 	
-	private int cId;
+	private Integer cId;
+	private Integer userId;
 	private String nickname;
 	private String cText;
 	private Timestamp modifiedTime;
