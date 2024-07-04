@@ -22,12 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		console.log(url);
 		axios.
 			get(url).
-			then((response) => {
+			then((response) => {	
+				console.log(response);
 				if (sessionStorage.getItem('isAdded') ==='N') {
 					sessionStorage.setItem('index', 0);
 					sessionStorage.setItem('isAdded', 'Y');
 					parent.songFrame.location.reload();
 				}
+				document.location.reload();
 			}).
 			catch((error) => { console.log(error); });
 	}
@@ -41,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			.then((response) => {
 				console.log("성공");
 				sessionStorage.setItem('index', 0);
+				sessionStorage.setItem('isAdded', 'Y');
+				document.location.reload();
 				parent.songFrame.location.reload();
 			})
 			.catch((error) => { });
@@ -84,13 +88,15 @@ document.addEventListener('DOMContentLoaded', () => {
 				console.log(error);
 			});
 	}
+	// 외부에서 실행할 수 있도록 함수 노출
+	window.getCPList = getCPList;
 
 	function makeCPListElements(data) {
 		// 모달 창에 리스트 출력하기
 		let modalBody = document.getElementById('sessionListBody');
 		let modal = document.querySelector('.modal');
 		let modalCloseBtn = document.querySelectorAll('#modalCloseBtn');
-
+		modal.style.display = "none";
 		modalBody.innerHTML = ''; // 모달 바디 초기화
 
 		// 재생목록 관리를 위한 인덱스 선언
@@ -142,8 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		const cPList = document.querySelectorAll('.list-group-item');
 		for (let i = 0; i < cPList.length; i++) {
-			cPList[i].addEventListener('click', ()=> {
+			cPList[i].addEventListener('click', (event)=> {
 				sessionStorage.setItem('index', i);
+				getCPList();
 				modal.style.display = "none";
 				parent.songFrame.location.reload();
 				modal.style.display = "block"
