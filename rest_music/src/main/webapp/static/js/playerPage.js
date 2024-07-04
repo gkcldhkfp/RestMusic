@@ -8,11 +8,42 @@ document.addEventListener('DOMContentLoaded', () => {
 		sessionStorage.setItem('index', 0);
 	}
 	// 세션에서 가져와서 String으로 되어있는 index를 int타입으로 바꿈
-	index = parseInt(sessionStorage.getItem('index'));
+	let index = parseInt(sessionStorage.getItem('index'));
+
+	// 재생, 중지 버튼을 토글 형식으로 구현하기 위해 버튼을 찾음
+	const playButton = document.querySelector('#playButton');
+	const pauseButton = document.querySelector('#pauseButton');
+
+	// 음원 버튼들 찾음
+	const prevBtn = document.querySelector('#prevBtn');
+	const nextBtn = document.querySelector('#nextBtn');
+	const stopBtn = document.querySelector('#stopBtn');
+
+	// 인덱스 변경 감지 함수를 위한 객체 선언.
+	let obj = {};
+
+	// 인덱스 변경 감지 함수
+	Object.defineProperty(obj, 'index', {
+		// 얘가 아래에 있으면 인덱스 변경을 감지하지 못함.
+		// 변경하는 곳 위에 있어야되는 함수임.
+		get: function () {
+			return index;
+		},
+		set: function (newIndex) {
+			console.log(`index가 ${index}에서 ${newIndex}로 변경되었습니다.`);
+			index = parseInt(newIndex);
+			sessionStorage.setItem('index', index);
+			// 세션에 업데이트
+			location.href = location.href;
+			// 새로고침
+		},
+		enumerable: true,
+		configurable: true
+	});
 
 
 	// ! JSON을 리스트로 만드는 코드는 playerPage.jsp의 아래부분에 선언함.
-
+	console.log('자바스크립트');
 	//? 자동 새로고침 없어도 되게끔 만들어야 할듯.
 	// // console.log(cPList);
 	// if (!cPList) {
@@ -20,6 +51,27 @@ document.addEventListener('DOMContentLoaded', () => {
 	// 	setTimeout(() => location.reload(true), 1000);
 	// }
 	if (cPList) {
+		console.log('index = ' + index);
+		if (cPList[index] === undefined || cPList[index] === null) {
+			console.log('인덱스가 배열의 크기를 넘었어요!');
+			// 객체가 비어있는 지 검사하는 자바스크립트 코드
+			if (index > 0) {
+				console.log("index > 0"); // 디버깅용 로그
+				// 인덱스 변경 감지로 새로고침 했는데 인덱스가 커서
+				// 배열 원소가 비어있는 경우
+				obj.index = 0;
+				console.log('index = ' + index);
+				// 인덱스 초기화 => 새로고침됨
+			}
+			if (index <= -1) {
+				console.log("index < -1"); // 디버깅용 로그
+				// 인덱스 변경 감지로 새로고침 했는데 인덱스가 음수여서
+				// 배열 원소가 비어있는 경우
+				obj.index = cPList.length - 1;
+				// 배열의 마지막 원소로 추가
+				console.log('index = ' + index);
+			}
+		}
 		console.log(cPList[index].songPath);
 		// 데이터 베이스에 저장된 음악 경로를 cPList에서 꺼내서 오디오 객체를 생성함.
 		var audio = new Audio('../data' + cPList[index].songPath + '.mp3');
@@ -40,6 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		//* 일반태그 로드 - (Dom이벤트리스너 실행) - img태그같은 재요청 태그 로드 - (window.onload 이벤트 리스너 실행)
 		window.onload = function () {
+			// 정보 업데이트
+			// 다른 자바스크립트 파일에서 노출한 함수 실행.
+			// 곡 변경 시 모달창의 하이라이팅도 업데이트
+			parent.frames['mainFrame'].getCPList();
+
 			// span 객체 얻기
 			var current = document.getElementById('current');
 			var total = document.getElementById('total');
@@ -60,6 +117,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			artist.innerHTML = cPList[index].singerName;
 
 
+			prevBtn.addEventListener('click', previous);
+			nextBtn.addEventListener('click', next);
+			stopBtn.addEventListener('click', stop);
+
+			pauseButton.addEventListener('click', toggleAudio);
+			playButton.addEventListener('click', toggleAudio);
+
 			// Audio 객체에 timeupdate 이벤트 처리를 위한 리스너 부착
 			// addEventListener() 함수 사용
 			// 시간이 변경될 때 마다 실행되는 이벤트 리스너
@@ -76,12 +140,27 @@ document.addEventListener('DOMContentLoaded', () => {
 				var ratio = audio.currentTime / audio.duration * 100;
 				progress.style.width = ratio + '%';
 				progress.setAttribute('aria-valuenow', ratio);
+
+
 			});
+
 
 			// 음원이 끝까지 재생되었을 때 실행되는 이벤트 리스너
 			audio.addEventListener("ended", function () {
 				// 음원 하나가 끝나면 다음 곡을 재생하는 함수 호출.
 				next();
+
+			});
+
+			// 음원이 실행 중일 때 버튼을 활성화하기 위한 이벤트 리스너
+			audio.addEventListener("playing", () => {
+				playButton.style.display = 'none'; // 재생 버튼 숨기기
+				pauseButton.style.display = 'block'; // 정지 버튼 보이기
+			});
+
+			audio.addEventListener("puase", () => {
+				playButton.style.display = 'block'; // 재생 버튼 보이기
+				pauseButton.style.display = 'none'; // 정지 버튼 숨기기
 			});
 
 
@@ -103,169 +182,112 @@ document.addEventListener('DOMContentLoaded', () => {
 				progress.setAttribute('aria-valuenow', percentage);
 			});
 
-		};
 
-		// 재생버튼시 호출하는 함수
-		var play = function () {
-			audio.play();
-		};
 
-		// 일시정지버튼시 호출하는 함수
-		var pause = function () {
-			audio.pause();
-		};
 
-		// 정지버튼시 호출하는 함수
-		var stop = function () {
-			// stop 함수는 별도로 없어서 따로 이런식으로 만들자.
-			if (audio.played) {
+
+			// 정지버튼시 호출하는 함수
+			function stop() {
+				// stop 함수는 별도로 없어서 따로 이런식으로 만들자.
+				if (audio.played) {
+					// 음원을 중지하고 토글버튼 업데이트
+					pauseAudio();
+					audio.currentTime = 0;
+				}
+			};
+			// 이전 곡 버튼 클릭 시 호출하는 함수
+			function previous() {
+				obj.index = index - 1;
+			}
+
+			function next() {
+				obj.index = index + 1;
+			}
+			// 시간형식 맞추는 함수
+			function convertSecondsToMinutesSeconds(seconds) {
+				// 소수점 이하 버리기
+				seconds = Math.floor(seconds);
+
+				// 분 계산
+				var minutes = Math.floor(seconds / 60);
+
+				// 초 계산
+				var remainingSeconds = seconds % 60;
+
+				// 결과 문자열 조합
+				var result = minutes + ":" + remainingSeconds;
+
+				return result;
+			}
+
+			// 볼륨 슬라이더 엘리먼트 가져오기
+			var volumeSlider = document.getElementById('volumeSlider');
+
+			// 음소거 버튼 엘리먼트 가져오기
+			var muteButton = document.getElementById('muteButton');
+			var muteIcon = document.getElementById('muteIcon');
+			// 볼륨 슬라이더 값 변경 이벤트 리스너 추가
+			volumeSlider.addEventListener('input', function () {
+				audio.volume = volumeSlider.value;
+				console.log('Volume:', audio.volume); // 디버깅용 로그
+				updateMuteButton(); // 볼륨 조절 시 음소거 버튼 상태 업데이트
+			});
+
+			// 음소거 버튼 클릭 이벤트 리스너 추가
+			muteButton.addEventListener('click', function () {
+				if (audio.volume > 0) {
+					audio.volume = 0;
+					volumeSlider.value = 0;
+					console.log(audio.volume);
+				} else {
+					audio.volume = volumeSlider.value = 0.5; // 기본 볼륨을 0.5 로 설정
+					console.log(audio.volume);
+				}
+				updateMuteButton();
+			});
+
+			// 음소거 버튼 아이콘 업데이트 함수 정의
+			function updateMuteButton() {
+				if (audio.volume == 0) {
+					muteIcon.classList.remove('bi-volume-up-fill');
+					muteIcon.classList.add('bi-volume-mute-fill');
+					// 음소거 아이콘으로 변경
+				} else {
+					muteIcon.classList.remove('bi-volume-mute-fill');
+					muteIcon.classList.add('bi-volume-up-fill');
+					// 음소거 아이콘 해제
+				}
+			}
+
+			// songFrame의 버튼으로 mainFrame의 모달을 활성화 하기 위한 코드.
+			document.getElementById("showModalButton").onclick = function () {
+				console.log('mainframe의 메서드 호출');
+				parent.frames['mainFrame'].showModal();
+			}
+
+
+
+
+			function toggleAudio() {
+				if (audio.paused) {
+					playAudio();
+				} else {
+					pauseAudio();
+				}
+			}
+
+			function playAudio() {
+				playButton.style.display = 'none'; // 재생 버튼 숨기기
+				pauseButton.style.display = 'block'; // 정지 버튼 보이기
+				audio.play();
+			}
+
+			function pauseAudio() {
+				playButton.style.display = 'block'; // 재생 버튼 보이기
+				pauseButton.style.display = 'none'; // 정지 버튼 숨기기
 				audio.pause();
-				audio.currentTime = 0;
 			}
 		};
-		// 이전 곡 버튼 클릭 시 호출하는 함수
-		var previous = function () {
-			parent.songFrame.location.reload();
-			location.reload(true)
-			if (index <= 0) {
-				// 첫 곡에서 이전 버튼을 누르면 마지막 곡의 인덱스로 가도록 설정.
-				index = cPList.length - 1;
-			} else {
-				// 첫 곡이 아닌 경우 인덱스 - 1 
-				index = index - 1;
-			}
-			// 업데이트된 인덱스를 세션에도 적용시킴.
-			sessionStorage.setItem('index', index);
-			console.log(cPList.length);
-			console.log(index);
-
-			// 음원 재생 페이지를 새로고침함.
-			location.reload(true);
-
-			// 음원을 재생함.
-			audio.play();
-		}
-
-		var next = function () {
-			parent.songFrame.location.reload();
-			location.reload(true)
-			if (index >= cPList.length - 1) {
-				// 마지막 곡에서 다음 버튼을 누르면 첫 번째 곡의 인덱스로 가도록 설정.
-				index = 0;
-			} else {
-				// 마지막 곡이 아닌 경우 인덱스 + 1
-				index = index + 1;
-			}
-			// 업데이트된 인덱스를 세션에도 적용시킴.
-			sessionStorage.setItem('index', index);
-			console.log(cPList.length);
-			console.log(index);
-
-			// 음원 재생 페이지를 새로고침함.
-			location.reload(true)
-
-			// 음원을 재생함.
-			audio.play();
-		}
-
-		// 시간형식 맞추는 함수
-		function convertSecondsToMinutesSeconds(seconds) {
-			// 소수점 이하 버리기
-			seconds = Math.floor(seconds);
-
-			// 분 계산
-			var minutes = Math.floor(seconds / 60);
-
-			// 초 계산
-			var remainingSeconds = seconds % 60;
-
-			// 결과 문자열 조합
-			var result = minutes + ":" + remainingSeconds;
-
-			return result;
-		}
-
-		// 볼륨 슬라이더 엘리먼트 가져오기
-		var volumeSlider = document.getElementById('volumeSlider');
-
-		// 음소거 버튼 엘리먼트 가져오기
-		var muteButton = document.getElementById('muteButton');
-		var muteIcon = document.getElementById('muteIcon');
-		// 볼륨 슬라이더 값 변경 이벤트 리스너 추가
-		volumeSlider.addEventListener('input', function () {
-			audio.volume = volumeSlider.value;
-			console.log('Volume:', audio.volume); // 디버깅용 로그
-			updateMuteButton(); // 볼륨 조절 시 음소거 버튼 상태 업데이트
-		});
-
-		// 음소거 버튼 클릭 이벤트 리스너 추가
-		muteButton.addEventListener('click', function () {
-			if (audio.volume > 0) {
-				audio.volume = 0;
-				volumeSlider.value = 0;
-				console.log(audio.volume);
-			} else {
-				audio.volume = volumeSlider.value = 0.5; // 기본 볼륨을 0.5 로 설정
-				console.log(audio.volume);
-			}
-			updateMuteButton();
-		});
-
-		// 음소거 버튼 아이콘 업데이트 함수 정의
-		function updateMuteButton() {
-			if (audio.volume == 0) {
-				muteIcon.classList.remove('bi-volume-up-fill');
-				muteIcon.classList.add('bi-volume-mute-fill');
-				// 음소거 아이콘으로 변경
-			} else {
-				muteIcon.classList.remove('bi-volume-mute-fill');
-				muteIcon.classList.add('bi-volume-up-fill');
-				// 음소거 아이콘 해제
-			}
-		}
-
-		// songFrame의 버튼으로 mainFrame의 모달을 활성화 하기 위한 코드.
-		document.getElementById("showModalButton").onclick = function () {
-			console.log('mainframe의 메서드 호출');
-			parent.frames['mainFrame'].showModal();
-		}
-
-
-		// 음원 버튼들 찾고 클릭 이벤트 리스너 등록
-		const prevBtn = document.querySelector('#prevBtn');
-		const nextBtn = document.querySelector('#nextBtn');
-		const stopBtn = document.querySelector('#stopBtn');
-		prevBtn.addEventListener('click', previous);
-		nextBtn.addEventListener('click', next);
-		stopBtn.addEventListener('click', stop);
-
-		// 재생, 중지 버튼을 토글 형식으로 구현하기 위한 코드
-		const playButton = document.querySelector('#playButton');
-		const pauseButton = document.querySelector('#pauseButton');
-
-		pauseButton.addEventListener('click', toggleAudio);
-		playButton.addEventListener('click', toggleAudio);
-
-		function toggleAudio() {
-			if (audio.paused) {
-				playAudio();
-			} else {
-				pauseAudio();
-			}
-		}
-
-		function playAudio() {
-			audio.play();
-			playButton.style.display = 'none'; // 재생 버튼 숨기기
-			pauseButton.style.display = 'block'; // 정지 버튼 보이기
-		}
-
-		function pauseAudio() {
-			audio.pause();
-			playButton.style.display = 'block'; // 재생 버튼 보이기
-			pauseButton.style.display = 'none'; // 정지 버튼 숨기기
-		}
-
 	}
 
 });
