@@ -57,14 +57,16 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>/WEB-INF/servlet-context.xml</param-value>
         </init-param>
-        <!-- 여기 부분 추가 -->
+        <load-on-startup>1</load-on-startup>
+        
+        <!-- 여기 부분 추가 (멀티파트 파일 업로드) -->
         <multipart-config>
-            <location>/images/profileimage</location>
+           <!-- <location>/images/profileimage</location> -->
             <max-file-size>20971520</max-file-size> <!-- 20MB -->
             <max-request-size>41943040</max-request-size> <!-- 40MB -->
             <file-size-threshold>20971520</file-size-threshold> <!-- 20MB -->
         </multipart-config>
-        <load-on-startup>1</load-on-startup>
+        
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
