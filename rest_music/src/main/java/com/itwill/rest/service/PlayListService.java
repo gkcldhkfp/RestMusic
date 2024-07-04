@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwill.rest.dto.playlists.AddPlayListDto;
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
+import com.itwill.rest.dto.playlists.PlayListNameUpdateDto;
 import com.itwill.rest.dto.playlists.PlayListSongInfoDto;
 import com.itwill.rest.dto.playlists.PlaylistFirstAlbumImgDto;
 import com.itwill.rest.repository.PlayList;
@@ -42,7 +43,7 @@ public class PlayListService {
 	public int songAddToPlayList(AddSongToPlayListDto dto) {
 		log.debug("service{}",dto);
 		
-	int result = playListDao.addSongToPlayListDto(dto);
+	int result = playListDao.addSongToPlayList(dto);
 		
 		return result;
 	}
@@ -73,5 +74,23 @@ public class PlayListService {
 		
 		return result;
 	}
+	
+	public int updatePlayListNameByListId(PlayListNameUpdateDto dto) {
+		int result = playListDao.updatePlayListNameByListId(dto);
+		
+		return result;
+	}
 
+	public Boolean checkSongInPlayList(AddSongToPlayListDto dto) {
+		log.debug("checkSongInPlayList = ({})",dto);
+		
+		int result = playListDao.checkSongInPlayList(dto);
+		
+		if(result == 0 ) { 
+			return true; // 플리의 해당 곡이 없다면 true 리턴
+		} else {
+			return false; // 플리의 해당 곡이 있다면 false 리턴
+		}
+		
+	}
 }

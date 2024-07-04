@@ -1,10 +1,14 @@
 package com.itwill.rest.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
+import com.itwill.rest.dto.song.SearchResultDto;
 import com.itwill.rest.dto.song.SongDetailDto;
 import com.itwill.rest.dto.song.SongLikeDto;
+import com.itwill.rest.dto.song.SongSearchDto;
 import com.itwill.rest.repository.SongDao;
 
 import lombok.RequiredArgsConstructor;
@@ -50,6 +54,19 @@ public class SongService {
 			return false; // 좋아요가 있을경우 삭제 후 false 반환
 		}
 		
+	}
+	
+	public List<SearchResultDto> searchSongs(SongSearchDto dto) {
+		if(dto.getStartRow() == null) {
+			dto.setStartRow(1);
+			dto.setEndRow(10);
+		}
+		
+		List<SearchResultDto> result = songDao.searchSongs(dto);
+		for(SearchResultDto dtod : result) {
+			log.debug("result={}",dtod);
+		}
+		return result;
 	}
 	
 	

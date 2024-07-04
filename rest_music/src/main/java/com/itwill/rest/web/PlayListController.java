@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwill.rest.dto.playlists.AddPlayListDto;
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
+import com.itwill.rest.dto.playlists.PlayListNameUpdateDto;
 import com.itwill.rest.dto.playlists.PlayListSongInfoDto;
 import com.itwill.rest.dto.playlists.PlaylistFirstAlbumImgDto;
 import com.itwill.rest.repository.PlayList;
@@ -81,6 +83,16 @@ public class PlayListController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@PostMapping("checkSongInPlayList")
+	@ResponseBody
+	public ResponseEntity<Boolean> checkSongInPlayList(@RequestBody AddSongToPlayListDto dto) {
+		log.debug("checkSongInPlayList");
+		
+		Boolean result = playListService.checkSongInPlayList(dto);
+		
+		return ResponseEntity.ok(result);
+	}
+	
 	@DeleteMapping("/deletePlayList/{pListId}")
 	@ResponseBody
 	public ResponseEntity<Integer> deleteByListId(@PathVariable int pListId) {
@@ -102,6 +114,19 @@ public class PlayListController {
 		int result = playListService.deleteListSongsBySongId(pListId, songId, timestamp);
 		
 		return ResponseEntity.ok(result);
+	}
+	
+	@PutMapping("/updatePlayListName/{pListId}")
+	@ResponseBody
+	public ResponseEntity<Integer> updatePlayListName(@PathVariable int pListId, @RequestBody PlayListNameUpdateDto dto) {
+		log.debug("updatePlayListNameByListId(id={})", pListId);
+		log.debug("updatePlayListNameByListId(dto={})", dto);
+		
+		dto.setPListId(pListId);
+		
+    	int result = playListService.updatePlayListNameByListId(dto);
+    	
+    	return ResponseEntity.ok(result);
 	}
 	
 }

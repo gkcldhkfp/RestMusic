@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.itwill.rest.repository.AlbumSongsDao">
+    <!-- 앨범 번호로 모든 컬럼을 가져오는 셀렉문
+          아직 모든 컬럼은 아님. -->
+    <select id="selectByAlbumId" resultType="AlbumSongs">
+      <!-- select a.album_id, a.album_name,
+        s.song_id, s.title, s.genre, 
+        singers.singer_name,
+        title_songs.song_id as title_song
+      from albums a
+          left join songs s on #{albumId} = s.album_id
+          left join singers on singers.song_id = s.song_id
+          left join title_songs on title_songs.song_id= s.song_id
+      union
+      select a.album_id, a.album_name,
+              s.song_id, s.title, s.genre, 
+              singers.singer_name,
+              title_songs.song_id as title_song
+      from albums a
+          left join songs s on #{albumId} = s.album_id
+          left join singers on singers.song_id = s.song_id
+          left join title_songs on title_songs.song_id= s.song_id -->
+      SELECT 
+        a.album_id, 
+        a.album_name,
+        s.song_id, 
+        s.title, 
+        s.genre, 
+        singers.singer_name,
+        title_songs.song_id as title_song,
+        COUNT(l.id) as likes_count
+      FROM 
+        albums a
+        LEFT JOIN songs s ON  a.album_id= s.album_id
+        LEFT JOIN singers ON singers.song_id = s.song_id
+        LEFT JOIN title_songs ON title_songs.song_id = s.song_id
+        LEFT JOIN likes l ON l.song_id = s.song_id
+      where a.album_id = #{albumId} 
+      GROUP BY 
+        a.album_id, 
+        a.album_name,
+        s.song_id, 
+        s.title, 
+        s.genre, 
+        singers.singer_name,
+        title_songs.song_id
+      UNION
+      SELECT 
+        a.album_id, 
+        a.album_name,
+        s.song_id, 
+        s.title, 
+        s.genre, 
+        singers.singer_name,
+        title_songs.song_id as title_song,
+        COUNT(l.id) as likes_count
+      FROM 
+        albums a
+        LEFT JOIN songs s ON a.album_id = s.album_id
+        LEFT JOIN singers ON singers.song_id = s.song_id
+        LEFT JOIN title_songs ON title_songs.song_id = s.song_id
+        LEFT JOIN likes l ON l.song_id = s.song_id
+        where a.album_id = #{albumId} 
+      GROUP BY 
+        a.album_id, 
+        a.album_name,
+        s.song_id, 
+        s.title, 
+        s.genre, 
+        singers.singer_name,
+        title_songs.song_id
+    </select>
+
+    <select id="selectAlbumByAlbumId" resultType="AlbumSongs">
+      <!-- 앨범 상세보기에서 사용하는 데이터를 가져오는 셀렉문 -->
+      select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
+        singers.singer_name,
+        s.song_id, s.title, s.genre,
+        title_songs.song_id
+      from albums a
+          join songs s on a.album_id = s.album_id
+          join singers on singers.song_id = s.song_id
+          join title_songs on title_songs.song_id= s.song_id
+          where a.album_id = #{albumId}
+          order by s.title
+    </select>
+
+    <select id="selectAlbumSongsCount" resultType="Integer">
+      <!-- 앨범의 수록곡 개수를 가져오는 셀렉문 -->
+      select count(*)
+      from albums a
+      left join songs s on a.album_id = s.album_id
+      where a.album_id=#{albumId}
+    </select>
+
+    <select id="selectSongBySongId" resultType="AlbumSongs">
+      select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
+        singers.singer_name,
+        s.song_id, s.title, s.song_path, s.genre
+      from albums a
+        join songs s on a.album_id = s.album_id
+        join singers on  s.song_id = singers.song_id
+      where s.song_id = #{songId}
+    </select>
+
+    <select id="songLikesCount" resultType="Integer">
+      select count(song_id)
+      from likes where song_id=#{songId};
+    </select>
+
+
+  </mapper>
