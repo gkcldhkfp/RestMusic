@@ -255,7 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordConfirmModal = new bootstrap.Modal(passwordConfirmModalElement);
     const confirmPasswordBtn = document.getElementById('confirmPasswordBtn');
     const passwordInput = document.getElementById('password');
-    const userId = document.getElementById('userId').textContent;
     const userPassword = document.getElementById('userPassword').value; // userPassword 값 가져오기
 
     // ID/PW 변경 버튼 클릭 시 비밀번호 확인 모달을 보여줍니다.
