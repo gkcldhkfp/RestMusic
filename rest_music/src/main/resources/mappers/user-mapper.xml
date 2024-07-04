@@ -15,9 +15,9 @@
     </select>
     
     <!-- 회원 가입 -->
-    <insert id="insert" parameterType="com.itwill.rest.repository.User">
-        insert into users (user_id, password, email, nickname, user_profile, hint_question, hint_answer)
-        values (#{userId}, #{password}, #{email}, #{nickname}, #{userProfile}, #{hintQuestion}, #{hintAnswer})
+    <insert id="insert" parameterType="com.itwill.rest.dto.user.UserCreateDto">
+    INSERT INTO users (user_id, user_name, password, email, nickname, hint_question, hint_answer)
+    VALUES (#{userId}, #{userName}, #{password}, #{email}, #{nickname}, #{hintQuestion}, #{hintAnswer})
     </insert>
     
     <!-- 로그인 -->

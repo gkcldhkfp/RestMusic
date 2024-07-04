@@ -65,9 +65,9 @@
                     <table class="table table-striped" style="border: 1px solid #ddd;">
                         <thead>
                             <tr>
-                                <th style="text-align: center; vertical-align: middle;">커버</th>
-                                <th style="text-align: center; vertical-align: middle;">노래 제목</th>
-                                <th style="text-align: center; vertical-align: middle;">아티스트</th>
+                                <th style="text-align: left; vertical-align: middle;">커버</th>
+                                <th style="text-align: left; vertical-align: middle;">노래 제목</th>
+                                <th style="text-align: left; vertical-align: middle;">아티스트</th>
                             </tr>
                         </thead>
                         <tbody id="likeTableBody">
