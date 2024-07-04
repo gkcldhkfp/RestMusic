@@ -80,31 +80,12 @@
             )
     </select>
     
-    <!-- 특정 회원이 특정 노래를 좋아요 했는지 여부 -->
-    <select id="isLikes" resultType="Integer">
-        select count(*) 
-        from likes 
-        where song_id = #{songId} and id = #{id}
-    </select>
-    
     <!-- 좋아요 개수 확인 -->
     <select id="countSongLikes" resultType="Integer">
         select count(*)
         from likes
         where song_id = #{songId}
     </select>
-
-    <!-- 좋아요 추가 -->
-    <insert id="addLike">
-        insert into likes (song_id, id)
-        values (#{songId}, #{id})
-    </insert>
-
-    <!-- 좋아요 삭제 -->
-    <delete id="removeLike">
-        delete from likes
-        where song_id = #{songId} and id = #{id}
-    </delete>
     
     <!-- TOP30 -->
     <select id="getAllSongs" resultType="SongChartDto">
