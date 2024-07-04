@@ -37,6 +37,8 @@
     -->
     <context:component-scan base-package="com.itwill.rest.web" />
 
-    <!-- 여기 부분 추가 -->
+    <!-- 여기 부분 추가 (멀티파트 파일 업로드) -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+    
+    
 </beans>
