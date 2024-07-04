@@ -25,16 +25,22 @@
             <h2 style="font-weight: bold;">마이페이지</h2><hr>
             <div class="d-flex align-items-center">
                 <div class="p-3">
-                    <c:url var="profileImg" value="/images/profileimage/profile.jpg"></c:url>
-                    <c:url var="userProfile" value="/images/profileimage/${user.userProfile}"></c:url>
+                     <c:url var="profileImg" value="/images/profileimage/profile.jpg" />
+                    <c:url var="userProfile" value="/images/profileimage/${user.userProfile}" />
                     <img alt="profileImg" src="${empty userProfile ? profileImg : userProfile}"
-                        width="200px" height="200px">
+                        width="200px" height="200px" />
                 </div>
                 <div class="p-3">
-                    <h3 id="id" class="d-none">${user.id}</h3>
+                	<h3 id="id" class="d-none">${user.id}</h3>
                     <h3 id="userId" class="d-none">${user.userId}</h3>
-                    <h3 style="font-weight: bold; font-size: 1.2rem;">닉네임: ${user.nickname}</h3>
-                    <button class="btn btn-outline-primary">ID/PW 변경 (내정보 관리)</button>
+                    <h3 style="font-weight: bold; font-size: 1.2rem;">닉네임: ${user.nickname}</h3>                
+                    <!-- 비밀번호 확인 모달을 여는 버튼 -->
+                    <c:url var="userUpdate" value="/user/update">
+                        <c:param name="userId" value="${user.userId}" />
+                    </c:url>
+                    <a class="btn btn-outline-primary" id="updateInfoBtn"
+                        href="${userUpdate}">ID/PW 변경 (내정보 관리)
+                    </a>
                 </div>
             </div>
             <br>
@@ -100,6 +106,31 @@
             </div>
         </div>
     </div>
+    
+	<!-- 비밀번호 확인 모달 추가 -->
+	<div class="modal fade" id="passwordConfirmModal" tabindex="-1" aria-labelledby="passwordConfirmModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="passwordConfirmModalLabel">비밀번호 확인</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <form id="passwordConfirmForm">
+	          <div class="mb-3">
+	            <label for="password" class="form-label">비밀번호를 입력하세요</label>
+	            <input type="password" class="form-control" id="password" required>
+	            <input type="hidden" id="userPassword" value="${user.password}">
+	          </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	        <button type="button" class="btn btn-primary" id="confirmPasswordBtn">확인</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
     
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

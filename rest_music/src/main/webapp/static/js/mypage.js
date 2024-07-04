@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
     }
-
+    
     function getUserLike() {
         const uri = `../user/getUserLike/${userId}`;
 
@@ -248,5 +248,33 @@ document.addEventListener('DOMContentLoaded', () => {
             userLikesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
+
+    // ID/PW 변경 버튼과 모달 창 관련 요소들을 가져옵니다.
+    const updateInfoBtn = document.getElementById('updateInfoBtn');
+    const passwordConfirmModalElement = document.getElementById('passwordConfirmModal');
+    const passwordConfirmModal = new bootstrap.Modal(passwordConfirmModalElement);
+    const confirmPasswordBtn = document.getElementById('confirmPasswordBtn');
+    const passwordInput = document.getElementById('password');
+    const userId = document.getElementById('userId').textContent;
+    const userPassword = document.getElementById('userPassword').value; // userPassword 값 가져오기
+
+    // ID/PW 변경 버튼 클릭 시 비밀번호 확인 모달을 보여줍니다.
+    updateInfoBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        passwordConfirmModal.show();
+    });
+
+    // 확인 버튼 클릭 시 비밀번호 검증을 수행합니다.
+    confirmPasswordBtn.addEventListener('click', function() {
+        const password = passwordInput.value;
+
+        // 클라이언트 측에서 비밀번호 비교
+        if (password === userPassword) {
+            passwordConfirmModal.hide();
+            location.href = '../user/update?userId=' + userId;
+        } else {
+            alert('비밀번호가 올바르지 않습니다.');
+        }
+    });
 
 });

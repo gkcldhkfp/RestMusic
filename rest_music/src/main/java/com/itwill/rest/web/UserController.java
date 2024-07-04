@@ -1,22 +1,29 @@
 package com.itwill.rest.web;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.itwill.rest.dto.user.UserCreateDto;
 import com.itwill.rest.dto.user.UserLikeDto;
 import com.itwill.rest.dto.user.UserSignInDto;
+import com.itwill.rest.dto.user.UserUpdateDto;
 import com.itwill.rest.repository.User;
 import com.itwill.rest.service.UserService;
 
@@ -33,7 +40,7 @@ public class UserController {
 	
 	private final UserService userService;
 	
-	@GetMapping("/mypage")
+	@GetMapping({ "/mypage", "/update" })
 	public void myPage(@RequestParam(name = "userId") String userId, Model model) {
 		log.debug("userId={}", userId);
 		
@@ -42,7 +49,7 @@ public class UserController {
 		model.addAttribute("user", user);
 	}
 	
-	@GetMapping("/getUserLike/{userId}")
+    @GetMapping("/getUserLike/{userId}")
 	@ResponseBody
 	public ResponseEntity<List<UserLikeDto>> getUserLike(@PathVariable String userId) {
 		log.debug("getUserLike({})", userId);
@@ -52,7 +59,7 @@ public class UserController {
 		return ResponseEntity.ok(list);
 	}
 	
-    @GetMapping("/signup") // GET 방식의 /user/signup 요청을 처리하는 컨트롤러 메서드 
+	@GetMapping("/signup") // GET 방식의 /user/signup 요청을 처리하는 컨트롤러 메서드 
     public void signUp() {
         log.debug("GET signUp()");
     }
@@ -125,14 +132,14 @@ public class UserController {
     @GetMapping("/signout")
     public String signOut(HttpSession session) {
         log.debug("singOut()");
-
+        
         session.removeAttribute("SESSION_ATTR_USER");
         session.invalidate();
         
         return "redirect:/user/signin";
     }
-
-    // 아이디 찾기 (화면)
+    
+        // 아이디 찾기 (화면)
     @GetMapping("/findUserId")
     public void findUserId() {
         log.debug("GET findUserId()");
@@ -202,5 +209,46 @@ public class UserController {
         return "redirect:/user/signin";
     }
     
+    // 프로필 변경
+    @PostMapping("/updateProfileImage")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> updateProfileImage(
+    		@RequestParam("userId") String userId, 
+    		@RequestParam("profileImage") MultipartFile profileImage, 
+    		HttpServletRequest request) {
+    	boolean isUpdated = userService.updateProfileImage(userId, profileImage, request);
+    	Map<String, Object> response = new HashMap<>();
+    	if (isUpdated) {
+    		String imageUrl = "../images/profileimage/" + profileImage.getOriginalFilename();
+            response.put("success", true);
+            response.put("message", "Profile image updated successfully");
+            response.put("imageUrl", imageUrl);  // 반환할 이미지 URL
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("success", false);
+            response.put("message", "Failed to update profile image");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+    
+    // 정보 수정
+    @PostMapping("/update")
+	public String update(UserUpdateDto dto,
+			@RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws IOException {
+		log.debug("POST: update(dto = {}, file = {})", dto, profileImage);
+
+		if (profileImage != null && !profileImage.isEmpty()) {
+
+			String filePath = profileImage.getOriginalFilename();
+			File destinationFile = new File(filePath);
+			profileImage.transferTo(destinationFile); // 파일 저장
+
+			dto.setUserProfile(filePath);
+		}
+
+		userService.update(dto);
+
+		return "redirect:/user/mypage?userId=" + dto.getUserId(); // 변경 후 마이페이지로 리다이렉트
+	}
     
 }
