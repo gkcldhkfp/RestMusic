@@ -49,7 +49,8 @@
 						<li><a class="dropdown-item" href="#">장르 6</a></li>
 						<li><a class="dropdown-item" href="#">장르 7</a></li>
 						<li><a class="dropdown-item" href="#">장르 8</a></li>
-					</ul></li>
+					</ul>
+				</li>
 
 				<li class="nav-item dropdown mx-2"><a
 					class="nav-link dropdown-toggle" href="#" role="button"
@@ -57,10 +58,11 @@
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item" href="/album/popular">인기 앨범</a></li>
 						<li><a class="dropdown-item" href="/album/newest">최신 앨범</a></li>
-					</ul></li>
+					</ul>
+				</li>
 
-				<li class="ms-2"><c:url var="songSearchPage"
-						value="/song/search" />
+				<li class="ms-2">
+				    <c:url var="songSearchPage" value="/song/search" />
 					<form method="get" action="${songSearchPage}">
 						<div class="row">
 							<div class="col-3">
@@ -72,15 +74,14 @@
 								</select>
 							</div>
 							<div class="col-7">
-								<input class="form-control" type="text" name="keyword"
-									placeholder="검색어" required />
+								<input class="form-control" type="text" name="keyword" placeholder="검색어" required />
 							</div>
 							<div class="col-2">
-								<input type="submit" class="btn btn-outline-secondary"
-									value="검색">
+								<input type="submit" class="btn btn-outline-secondary" value="검색">
 							</div>
 						</div>
-					</form></li>
+					</form>
+				</li>
 			</ul>
 
 			<!-- 로그인 안했을때 -->
@@ -94,13 +95,11 @@
 			<!-- 로그인 했을때 -->
 			<c:if test="${not empty sessionScope.SESSION_ATTR_USER}">
 				<div style="font-size: 0.75rem">
-					<c:out value="${sessionScope.SESSION_ATTR_USER}" />
-					님 환영합니다 &nbsp;
+					<c:out value="${sessionScope.SESSION_ATTR_USER}" /> 님 환영합니다 &nbsp;
 				</div>
 				<c:url var="signOutPage" value="/user/signout" />
 				<a style="font-size: 0.75rem" class="me-2" href="${signOutPage}">로그아웃</a>
-				<c:url var="myPage"
-					value="/user/mypage?userId=${sessionScope.SESSION_ATTR_USER}" />
+				<c:url var="myPage" value="/user/mypage?userId=${sessionScope.SESSION_ATTR_USER}" />
 				<a style="font-size: 0.75rem" class="me-2" href="${myPage}">마이페이지</a>
 			</c:if>
 		</div>
