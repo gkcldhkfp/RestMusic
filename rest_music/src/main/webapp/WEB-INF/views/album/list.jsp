@@ -1,25 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Rest</title>
-<!-- 타이틀 -->
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-    crossorigin="anonymous" />
-<!-- Bootstrap CSS 파일을 CDN에서 불러옴 -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rest</title>
+    
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous" />
+    <!-- Bootstrap CSS 파일을 CDN에서 불러옴 -->
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- jQuery 라이브러리 불러옴 -->
-
-<link href="../css/albumList.css" rel="stylesheet" />
-<!-- css 불러옴 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery 라이브러리 불러옴 -->
+    
+    <link href="../css/albumList.css" rel="stylesheet" />
+    <!-- css 불러옴 -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Font Awesome 불러옴 -->
 </head>
 
 <body>
@@ -64,27 +69,27 @@
                                             ID: ${a.albumId}</p>
                                         <small
                                             class="card-text text-muted fw-bold">${a.albumType}</small>
-                                        <small class="card-text fw-bold">${a.albumReleaseDate}</small>
+                                        <small id="rDate" class="card-text fw-bold">${a.albumReleaseDate}</small>
                                         <p class="card-text">좋아요:
                                             ${a.likes}</p>
-
-                                        <button
-                                            class="btn btn-primary btn-sm"
-                                            id="btnLikes"
-                                            data-id="${a.albumId}">좋아요</button>
-
-                                        <button
-                                            class="btn btn-primary btn-sm"
-                                            id="btnListenAlbum">듣기</button>
-
-                                        <button
-                                            class="btn btn-primary btn-sm"
-                                            id="btnAdd">담기</button>
-
-                                        <button
-                                            class="btn btn-primary btn-sm"
-                                            id="btnAddPl">플리담기</button>
-
+                                            
+                                        <div>
+                                            <button class="btn btn-primary btn-sm" id="btnLikes" data-id="${a.albumId}">
+                                                <i class="fas fa-heart"></i>
+                                            </button>
+    
+                                            <button class="btn btn-primary btn-sm" id="btnListenAlbum">
+                                                <i class="fas fa-play"></i>
+                                            </button>
+    
+                                            <button class="btn btn-primary btn-sm" id="btnAdd">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+    
+                                            <button class="btn btn-primary btn-sm" id="btnAddPl">
+                                                <i class="fas fa-list"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +99,7 @@
             </div>
         </c:if>
 
-        <!-- 리스트 2 최신앨범 -->
+        <!-- 리스트 2 최신 순 -->
         <c:if test="${listType == 'list2'}">
             <div class="row">
                 <c:forEach var="a" items="${albumList}">
@@ -105,7 +110,7 @@
                                 <div class="col-md-6">
                                     <a href="details?=${a.albumId}">
                                         <img
-                                        src="../data/${a.albumImage}.png"
+                                        src="../../data/${a.albumImage}.png"
                                         class="img-fluid rounded"
                                         alt="${a.albumName}">
                                     </a>
@@ -120,7 +125,7 @@
                                             ID: ${a.albumId}</p>
                                         <small
                                             class="card-text text-muted fw-bold">${a.albumType}</small>
-                                        <small class="card-text fw-bold">${a.albumReleaseDate}</small>
+                                        <small id="rDate" class="card-text fw-bold">${a.albumReleaseDate}</small>
                                         <p class="card-text">좋아요:
                                             ${a.likes}</p>
 
@@ -150,7 +155,7 @@
             </div>
         </c:if>
 
-        <!-- 리스트 3 좋아요 순 인기앨범 -->
+        <!-- 리스트 3 좋아요 순 -->
         <c:if test="${listType == 'list3'}">
             <div class="row">
                 <c:forEach var="a" items="${albumList}">
@@ -161,7 +166,7 @@
                                 <div class="col-md-6">
                                     <a href="details?=${a.albumId}">
                                         <img
-                                        src="../data/${a.albumImage}.png"
+                                        src="../../data/${a.albumImage}.png"
                                         class="img-fluid rounded"
                                         alt="${a.albumName}">
                                     </a>
@@ -176,7 +181,7 @@
                                             ID: ${a.albumId}</p>
                                         <small
                                             class="card-text text-muted fw-bold">${a.albumType}</small>
-                                        <small class="card-text fw-bold">${a.albumReleaseDate}</small>
+                                        <small id="rDate" class="card-text fw-bold">${a.albumReleaseDate}</small>
                                         <p class="card-text">좋아요:
                                             ${a.likes}</p>
 
@@ -206,6 +211,34 @@
             </div>
         </c:if>
     </main>
+    
+    
+    
+    
+    <!-- 로그인 권고 모달(다이얼로그) -->
+        <div id="likesModal" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">로그인이 되지 않았습니다.</h5>
+                        <button type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 수정할 댓글 아이디(번호) -->
+                        <input class="d-none" id="modalCommentId" />
+                        <!-- 수정할 댓글 내용 -->
+                        <textarea class="form-control" id="modalCommentText" ></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary"
+                            id="btnUpdateComment">저장</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <div class="shadow-box">
         <p>css 테스트</p>
@@ -252,6 +285,12 @@
         background-color: olive;
         /* 요소의 배경색을 올리브색으로 설정합니다. */
     }
+    
+     p {
+        margin: 0;  /* p태그 기본 마진 제거 */
+    }
+    
+    
     </style>
 
     <!-- bootstrap js 라이브러리 -->

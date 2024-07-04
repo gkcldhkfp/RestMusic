@@ -10,7 +10,7 @@
     </select>
 
 
-    <!-- 최신 날짜 순으로 정렬 -->
+    <!-- 최신 날짜 순으로 정렬. -->
     <select id="selectOrderByDate" resultType="Album">
         SELECT * FROM albums ORDER BY album_release_date DESC
     </select>
