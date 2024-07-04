@@ -137,11 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getPlayLists(event) {
-        if (id === '') { // 유저아이디
-            alert('로그인이 필요함');
+        event.stopPropagation();
+        if (id === 0) { // 유저아이디
+            alert('로그인이 필요합니다');
             return;
         }
-        event.stopPropagation();
         songId = event.target.closest('tr').getAttribute('data-song-id');
 
         const uri = `../getPlayList/${id}`;

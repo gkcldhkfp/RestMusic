@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="text-secondary">${modifiedTime}</span>
                 </div>
                 <div>${comment.ctext}</div>`;
-         if (comment.userId === id) {    
+         if (comment.userId == id) {    
             htmlStr += `
                 <div>
                     <button class="btnDeleteComment btn btn-outline-danger btn-sm"

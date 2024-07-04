@@ -84,8 +84,6 @@
 				</li>
 			</ul>
 			<a href="../purchase">test</a>
-			<a style="font-size: 0.75rem" class="me-2" href="/user/signin">로그인</a>
-			<a style="font-size: 0.75rem" class="me-2" href="/user/signup">회원가입</a>
 
 			<!-- 로그인 안했을때 -->
 			<c:if test="${empty sessionScope.SESSION_ATTR_USER}">

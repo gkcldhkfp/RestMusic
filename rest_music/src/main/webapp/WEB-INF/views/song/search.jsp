@@ -157,7 +157,12 @@
     <script src="${searchJS}"></script>
     
     <script>
-		const id = 1 // 유저아이디
+		let id;
+		if(${loginUserId eq null}){
+            id = 0; //userid
+        } else {
+            id = '${loginUserId}';
+        }   // 유저아이디
 	</script>
     
     <c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />

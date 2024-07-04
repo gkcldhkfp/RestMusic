@@ -131,6 +131,7 @@
                     <div class="card-body collapse"
                         id="collapseComments">
                         <!-- 댓글 등록 -->
+                        
                             <div class="mt-2 card card-body" id="commnetRegistForm">
                                 <div class="mt-2 row">
                                     <div class="col-10">
@@ -150,7 +151,7 @@
                                     </div>
                                 </div>
                             </div>  
-
+                      
 
                         <!-- 포스트에 달려 있는 댓글 목록을 보여줄 영역 -->
                         <div class="my-2" id="comments"></div>
@@ -243,10 +244,12 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-        let id = 0
-		const songId = ${songId}
-		if(${signedInUser eq null}){
-			id = 1 //userid
+		const songId = ${songId};
+        let id;
+		if(${loginUserId eq null}){
+			id = 0; //userid
+		} else {
+			id = '${loginUserId}';
 		}
 	</script>
 

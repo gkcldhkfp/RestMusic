@@ -40,6 +40,10 @@
         insert into playlist_songs (p_list_id, song_id) values ( #{pListId}, #{songId} ) 
     </insert>
     
+    <insert id="addPlayList">
+        insert into playlists (id, p_list_name) values (#{id}, #{pListName})
+    </insert>
+    
     <select id="checkSongInPlayList" resultType="Integer">
         select count(*) from playlist_songs where p_list_id = #{pListId} and song_id = #{songId}
     </select>
