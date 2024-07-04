@@ -9,7 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
      const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
     btnAddPlayList.addEventListener('click', getPlayLists);
-
+    
+    if(id == null) {
+        id = 1
+    };
+    
     const data = { songId, id };
     let currentPage = 1;
     const itemsPerPage = 5;

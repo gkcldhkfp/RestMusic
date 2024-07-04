@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="text-secondary">${modifiedTime}</span>
                 </div>
                 <div>${comment.ctext}</div>`;
-
+         if (comment.userId === id) {    
             htmlStr += `
                 <div>
                     <button class="btnDeleteComment btn btn-outline-danger btn-sm"
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button class="btnModifyComment btn btn-outline-primary btn-sm"
                         data-id="${comment.cid}">수정</button>
                 </div>`;
-
+        }
             htmlStr += '</div>'; // <div class="card card-body my-1">의 종료 태그!!
         }
 
