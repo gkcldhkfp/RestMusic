@@ -10,4 +10,12 @@ public class PlayList {
 	private Integer pListId;
 	private Integer id;
 	private String pListName;
+	
+	public Integer getpListId() {
+		return pListId;
+	}
+	
+	public String getpListName() {
+		return pListName;
+	}
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
-	<button%@ taglib prefix="c" uri="jakarta.tags.core" %>
+	<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 		<!DOCTYPE html>
 		<html>
 
@@ -141,8 +141,8 @@
 												${s.title}</a>
 										</td>
 										<td>${s.singerName}</td>
-										<td>
-											<img id="likebtn" height="50px" width="50px" src="../imgs/likeOff.png" />${s.likesCount}
+										<td id="countLike" data-id="${s.songId}">
+											<img id="btnLike" height="50px" width="50px" src="../imgs/likeOff.png" />${s.likesCount}
 											<!-- TODO: axios로 DB insert 해야됨 -->
 										</td>
 										<td>
@@ -184,6 +184,10 @@
 				crossorigin="anonymous"></script>
 			<!-- Axios JS 라이브러리 -->
 			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+			<script>
+				const id = ${loginUserId}; //id
+				
+			</script>
 			<c:url var="album_detail" value="/js/album_detail.js" />
 			<script src="${album_detail}"></script>
 			<c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
