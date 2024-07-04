@@ -85,7 +85,7 @@ public class SongController {
 		
 		return ResponseEntity.ok(result);
 	}
-
+	
 	// top30 차트
 	@GetMapping("/popularChart")
 	public void showPopularSongs(Model model) {

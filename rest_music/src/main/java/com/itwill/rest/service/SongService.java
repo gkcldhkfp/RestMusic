@@ -44,7 +44,7 @@ public class SongService {
 			}
 		
 	}
-	
+
 	public boolean isLikes(SongLikeDto dto) {
 		
 		int result = songDao.isLikes(dto);
@@ -69,7 +69,7 @@ public class SongService {
 		}
 		return result;
 	}
-
+	
 	// 특정 사용자가 특정 노래를 좋아요 했는지 여부 확인
 	public boolean isUserLikedSong(SongLikeDto dto) {
 		log.debug("isUserLikedSong({})", dto);

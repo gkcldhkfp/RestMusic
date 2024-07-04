@@ -64,8 +64,8 @@ public class PlayListController {
 	
 	@PostMapping("/addSongToPlayList")
 	@ResponseBody
-	public ResponseEntity<Integer> addSontToPlayList(@RequestBody AddSongToPlayListDto dto) {
-		log.debug("addSontToPlayList({})",dto);
+	public ResponseEntity<Integer> addSongToPlayList(@RequestBody AddSongToPlayListDto dto) {
+		log.debug("addSongToPlayList({})",dto);
 		
 		int result = playListService.songAddToPlayList(dto);
 		
