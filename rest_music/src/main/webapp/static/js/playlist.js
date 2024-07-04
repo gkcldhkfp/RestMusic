@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td style="text-align: left; vertical-align: middle; font-size: 14px;">
                     <a href="${songPage}">${playlistSong.title}</a>
                 </td>
-                <td style="text-align: left; vertical-align: middle; font-size: 14px">${playlistSong.singerName}</td>
+                <td style="text-align: left; vertical-align: middle; font-size: 14px">${playlistSong.artistName}</td>
             </tr>
             `;
 

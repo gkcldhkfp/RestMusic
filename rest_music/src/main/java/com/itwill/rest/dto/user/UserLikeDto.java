@@ -17,6 +17,6 @@ public class UserLikeDto {
 	private String albumName;
 	private String albumImage;
 	private String albumType;
-	private String singerName;
+	private String artistName;
 
 }

@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function getUserLike() {
-        const uri = `../user/getUserLike/${userId}`;
+        const uri = `../user/getUserLike/${id}`;
 
         axios
             .get(uri)
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td style="text-align: left; vertical-align: middle; font-size: 14px;">
                     <a href=${songPage}>${like.title}</a>
                 </td>
-                <td style="text-align: left; vertical-align: middle; font-size: 14px;">${like.singerName}</td>
+                <td style="text-align: left; vertical-align: middle; font-size: 14px;">${like.artistName}</td>
             </tr>
             `;
         }

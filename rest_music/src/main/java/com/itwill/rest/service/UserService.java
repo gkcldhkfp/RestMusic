@@ -62,8 +62,8 @@ public class UserService {
         return userDao.selectByUserid(userId);
 	}
 	
-	public List<UserLikeDto> selectLikesByUserid(String userId) {
-		List<UserLikeDto> list = userDao.selectLikesByUserid(userId);
+	public List<UserLikeDto> selectLikesByUserid(Integer id) {
+		List<UserLikeDto> list = userDao.selectLikesByUserid(id);
 		
 		return list;
 	}
