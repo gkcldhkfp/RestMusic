@@ -28,7 +28,7 @@
                      <c:url var="profileImg" value="/images/profileimage/profile.jpg" />
                     <c:url var="userProfile" value="/images/profileimage/${user.userProfile}" />
                     <img alt="profileImg" src="${empty userProfile ? profileImg : userProfile}"
-                        width="200px" height="200px" class="rounded-circle mb-3" />
+                        width="200px" height="200px" />
                 </div>
                 <div class="p-3">
                 	<h3 id="id" class="d-none">${user.id}</h3>
