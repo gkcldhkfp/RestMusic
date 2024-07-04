@@ -18,9 +18,9 @@
             <%@ include file="../fragments/header.jspf"%>
         </div>
     </header>
-    
-    <button class="fs-3" id="purchase">test</button>
-    
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <button class=" btn-lg fs-3" id="purchase">test</button>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
     crossorigin="anonymous"></script>
@@ -28,6 +28,10 @@
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <script>
+     let loginUserId ='${loginUserId}';
+    </script>
     
     <c:url var="purchaseJS" value="/js/purchase.js" />
     <script src="${purchaseJS}"></script>

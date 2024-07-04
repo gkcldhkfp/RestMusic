@@ -107,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let comment of data) {
             // 댓글 최종 수정 시간
             const modifiedTime = new Date(comment.modifiedTime).toLocaleString();
-
             htmlStr += `
             <div class="card card-body my-1">
                 <div style="font-size: 0.825rem;">
