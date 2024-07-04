@@ -31,6 +31,7 @@
                         width="200px" height="200px" class="rounded-circle mb-3" />
                 </div>
                 <div class="p-3">
+                	<h3 id="id" class="d-none">${user.id}</h3>
                     <h3 id="userId" class="d-none">${user.userId}</h3>
                     <h3 style="font-weight: bold; font-size: 1.2rem;">닉네임: ${user.nickname}</h3>
                     
@@ -59,7 +60,7 @@
                     data-bs-target="#addPlaylistModal">플레이리스트 추가</button>
             </div>
             <br>
-            <h2 style="font-size: 1.2rem; text-align : center;">좋아요 누른 곡</h2><hr>
+            <h2 id="userLikesSection" style="font-size: 1.2rem; text-align : center;">좋아요 누른 곡</h2><hr>
             <!-- 추가할 박스 (카드) -->
             <div class="card">
                 <div class="card-body">
@@ -71,25 +72,16 @@
                                 <th style="text-align: center; vertical-align: middle;">아티스트</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <c:forEach items="${like}" var="l">
-                                <tr>
-                                <c:url var="albumImage" value="${l.albumImage}"></c:url>
-                                    <td style="text-align: left; vertical-align: middle;"><img alt="songImg" src="${albumImage}"
-                                        width="80px" height="80px"></td>
-                                    <td style="text-align: left; vertical-align: middle; font-size: 14px;">
-                                        <c:url var="songDetailPage" value="/song/detail">
-                                            <c:param name="songId" value="${l.songId}"></c:param>
-                                        </c:url>
-                                    <a href="${songDetailPage}">${l.title}</a>
-                                    </td>
-                                    <td style="text-align: left; vertical-align: middle; font-size: 14px;">${l.singerName}</td>
-                                </tr>
-                            </c:forEach>
+                        <tbody id="likeTableBody">
                         </tbody>
                     </table>
                 </div>
             </div>
+            <!-- 페이지네이션 컨트롤 -->
+            <nav>
+                <ul class="pagination justify-content-center mt-4"
+                    id="pagination"></ul>
+            </nav>
         </div>
     </div>
     

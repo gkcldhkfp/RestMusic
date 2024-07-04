@@ -13,6 +13,9 @@ public interface UserDao {
     User selectByUserIdAndPassword(UserSignInDto dto);
 	User selectByUserid(String userid);
 	List<UserLikeDto> selectLikesByUserid(String userId);
+	User findUserId(User user);
+    User findpassword(User user);
+    void setpassword(User user);
 	int updateUser(User user);
 	int updateUserProfile(String userId, String userProfile);
 

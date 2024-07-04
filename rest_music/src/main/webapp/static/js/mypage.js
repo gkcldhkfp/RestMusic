@@ -4,9 +4,14 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const id = document.querySelector('h3#userId').textContent;
+    const id = document.querySelector('h3#id').textContent;
+    const userId = document.querySelector('h3#userId').textContent;
+
+    const itemsPerPage = 5; // 페이지당 표시할 아이템 수
+    let currentPage = 1; // 현재 페이지
 
     getPlayLists();
+    getUserLike();
 
     function getPlayLists() {
         const uri = `../getPlayList/${id}`;
@@ -21,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(error);
             });
     }
-
     const btnAddPlaylist = document.querySelector('button#btnAddPlaylist');
     btnAddPlaylist.addEventListener('click', addPlaylist);
 
@@ -29,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const bootstrapModal = new bootstrap.Modal(modal);
 
     function addPlaylist() {
-
         console.log(id);
 
         const plistName = document.querySelector('input#playlistName').value;
@@ -67,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     cancelButton.addEventListener('click', function() {
         bootstrapModal.hide();
     });
-
     function makePlayListElements(data) {
         // 플리 목록 HTML이 삽입될 div
         const divPlayLists = document.querySelector('div#playLists');
@@ -81,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const deleteImage = '../images/delete.png';
 
             // ${playlist.albumImage}가 null이면 기본 이미지 사용
-            const albumImageSrc = playlist.albumImage ? `..${playlist.albumImage}` : defaultImage;
+            const albumImageSrc = playlist.albumImage ? `../images/${playlist.albumImage}` : defaultImage;
 
             console.log(playlist);
             htmlStr += `
@@ -133,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!result) { // 사용자가 [취소]를 선택했을 때
             return; // 함수 종료
         }
-
         // Ajax 요청을 보낼 URI
         const uri = `../deletePlayList/${plistId}`;
 
@@ -148,6 +149,104 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(error);
             });
 
+    }
+    
+    function getUserLike() {
+        const uri = `../user/getUserLike/${userId}`;
+
+        axios
+            .get(uri)
+            .then((response) => {
+                console.log(response.data);
+                const { data } = response;
+                const totalPages = Math.ceil(data.length / itemsPerPage);
+                makeUserLikeElements(data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage));
+                setupPagination(totalPages);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    function makeUserLikeElements(data) {
+        // 좋아요 목록 HTML이 삽입될 tbody
+        const likeTableBody = document.querySelector('tbody#likeTableBody');
+
+        if (!likeTableBody) {
+            console.error('songsTableBody를 찾을 수 없습니다.');
+            return;
+        }
+
+        // 좋아요 목록 HTML 코드
+        let htmlStr = '';
+        for (let like of data) {
+            // 기본 이미지 URL 정의
+            const defaultImage = '../images/default.png';
+            // 좋아요 이미지 URL 정의
+            /*const deleteImage = '../images/delete.png';*/
+
+            const songPage = `/Rest/song/detail?songId=${like.songId}`;
+            // ${like.albumImage}가 null이면 기본 이미지 사용
+            const albumImageSrc = like.albumImage ? `../images/${like.albumImage}` : defaultImage;
+
+            console.log(like);
+            htmlStr += `
+            <tr>
+                <td style="text-align: left; vertical-align: middle;">
+                    <img alt="songImg" src="${albumImageSrc}" width="80px" height="80px">
+                </td>
+                <td style="text-align: left; vertical-align: middle; font-size: 14px;">
+                    <a href=${songPage}>${like.title}</a>
+                </td>
+                <td style="text-align: left; vertical-align: middle; font-size: 14px;">${like.singerName}</td>
+            </tr>
+            `;
+        }
+
+        // 작성된 HTML 코드를 div 영역에 삽입.
+        likeTableBody.innerHTML = htmlStr;
+    }
+
+    function setupPagination(totalPages) {
+        const pagination = document.querySelector('#pagination');
+        if (!pagination) {
+            console.error('pagination을 찾을 수 없습니다.');
+            return;
+        }
+
+        pagination.innerHTML = '';
+
+        // 이전 페이지 버튼 추가
+        let htmlStr = `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">이전</a>
+                      </li>`;
+
+        // 페이지 번호 버튼 추가
+        for (let i = 1; i <= totalPages; i++) {
+            htmlStr += `<li class="page-item ${currentPage === i ? 'active' : ''}">
+                            <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+                        </li>`;
+        }
+
+        // 다음 페이지 버튼 추가
+        htmlStr += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">다음</a>
+                    </li>`;
+
+        pagination.innerHTML = htmlStr;
+    }
+
+    window.changePage = function(page) {
+        currentPage = page;
+        getUserLike();
+        scrollToUserLikes();
+    };
+
+    function scrollToUserLikes() {
+        const userLikesSection = document.getElementById('userLikesSection');
+        if (userLikesSection) {
+            userLikesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
 
     // ID/PW 변경 버튼과 모달 창 관련 요소들을 가져옵니다.

@@ -6,8 +6,8 @@ import lombok.Data;
 //회원 가입 요청에서 요청 파라미터들을 저장하기 위한 DTO
 @Data
 public class UserCreateDto {
-	private String userName;
 	private String userId;
+	private String userName;
     private String password;
     private String email;
     private String nickname;
@@ -17,8 +17,8 @@ public class UserCreateDto {
 
     public User toEntity() {
         return User.builder()
+        		.userId(userId)
         		.userName(userName)
-                .userId(userId)
                 .password(password)
                 .email(email)
                 .nickname(nickname)

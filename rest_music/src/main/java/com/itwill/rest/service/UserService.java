@@ -13,7 +13,7 @@ import com.itwill.rest.dto.user.UserSignInDto;
 import com.itwill.rest.dto.user.UserUpdateDto;
 import com.itwill.rest.repository.User;
 import com.itwill.rest.repository.UserDao;
-
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
 	
 	private final UserDao userDao;
+	
+	private final ServletContext servletContext;
 	
     // 아이디 중복 체크: true - 중복되지 않은 아이디(사용 가능한 아이디), false - 중복된 아이디.
     public boolean checkUserId(String userId) {
@@ -42,8 +44,11 @@ public class UserService {
     }
 
     // 회원 가입 서비스
-    public int create(UserCreateDto dto) {
+    public int create(UserCreateDto dto, HttpServletRequest request) {
         log.debug("create({})", dto);
+
+        // 파일 업로드 제거
+
         return userDao.insert(dto.toEntity());
     }
     
@@ -62,6 +67,18 @@ public class UserService {
 		
 		return list;
 	}
+	
+    public User findUserId(User user) {
+        return userDao.findUserId(user);
+    }
+
+    public User findpassword(User user) {
+        return userDao.findpassword(user);
+    }
+
+    public void setpassword(User user) {
+        userDao.setpassword(user);
+    }
 	
 	// 프로필 변경
 	public boolean updateProfileImage(String userId, MultipartFile profileImage, HttpServletRequest request) {
@@ -147,4 +164,3 @@ public class UserService {
 		}
 
 }
-
