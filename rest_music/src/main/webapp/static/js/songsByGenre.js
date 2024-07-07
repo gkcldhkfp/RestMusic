@@ -8,30 +8,30 @@ document.addEventListener("DOMContentLoaded", function() {
 
     genreButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const genre = this.dataset.genre;
-            if (genre === '전체') {
+            const genreName = this.dataset.genreName;
+            if (genreName === '전체') {
                 location.href = '../song/genreChart'; // '전체' 버튼 클릭 시 해당 URL로 이동
             } else {
-                location.href = `../song/genreChart?genre=${genre}`; // 다른 장르 버튼 클릭 시 해당 URL로 이동
+                location.href = `../song/genreChart?genreName=${genreName}`; // 다른 장르 버튼 클릭 시 해당 URL로 이동
             }
         });
     });
 
     // 좋아요 아이콘 클릭 이벤트 핸들러
-    const heartIcons = document.querySelectorAll(".heart-icon");
-    const id = 22; // 실제 사용자 ID로 대체, 로그인되지 않은 경우 null 또는 0으로 설정
+    const heartIcons = document.querySelectorAll('.heart-icon');
 
     heartIcons.forEach(icon => {
         const songId = icon.dataset.songId;
+        const id = parseInt(icon.dataset.id)
         let likesCountElement = icon.nextElementSibling; // 좋아요 개수를 표시하는 요소를 가져옴
-
+        
         // 특정 사용자가 특정 노래를 좋아요 했는지 여부를 서버에 요청
         const data = { songId, id }; 
-        axios.post("../api/isLiked", data)
+        axios.post('../api/isLiked', data)
             .then(response => {
                 // 서버 응답에 따라 좋아요 상태를 설정
                 if (response.data) {
-                    icon.classList.add("liked"); // liked 클래스를 추가
+                    icon.classList.add('liked'); // liked 클래스를 추가
                     icon.classList.remove('far'); // 비어있는 하트 아이콘 클래스를 제거
                     icon.classList.add('fas'); // 채워진 하트 아이콘 클래스를 추가
                     icon.style.color = 'red'; // 아이콘 색상을 빨간색으로 설정
@@ -45,8 +45,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 // 아이콘 클릭 이벤트 리스너 추가
                 icon.addEventListener('click', function() {
                     if (id === 0) { // 로그인하지 않은 경우
-                        alert('로그인 후 이용하세요.');
-                        return;
+                        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                        loginModal.show();
+                        return;     
                     }
 
                     let likesCount = parseInt(likesCountElement.textContent); // 현재 좋아요 개수를 가져옴
@@ -70,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     } else { // 좋아요 상태가 아닌 경우
                         const data = { songId, id }; // 서버로 보낼 데이터 생성
                         // 좋아요 추가 요청을 서버로 보냄
-                        axios.post(`../api/addLike`, data)
+                        axios.post('../api/addLike', data)
                             .then(response => {
                                 if (response.status === 200) { // 서버 응답이 성공적인 경우
                                     icon.classList.add('liked'); // liked 클래스를 추가
@@ -163,7 +164,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const addToPlaylistButtons = document.querySelectorAll('.add-to-playlist-btn');
     addToPlaylistButtons.forEach(button => {
         button.addEventListener('click', function(event) {
-            const songId = this.dataset.songId;
+            const id = parseInt(this.dataset.id);
+            if (id === 0) { // 로그인하지 않은 경우
+                const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                loginModal.show();
+                return;    
+            }
 
             axios.get(`../getPlayList/${id}`)  // 실제 사용자 ID로 대체
                 .then(response => {
@@ -227,7 +233,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
     
+    // 모달 창 관련 코드
+    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    const loginConfirmButton = document.getElementById('loginConfirmButton');
+    const loginCancelButton = document.getElementById('loginCancelButton');
+
+    loginConfirmButton.addEventListener('click', function() {
+        const currentPath = location.pathname.replace('/Rest', '');
+        location.href = '../user/signin?target=' + encodeURIComponent(currentPath);
+    });
+
+    loginCancelButton.addEventListener('click', function() {
+        loginModal.hide();
+    });
     
 });
-
 
