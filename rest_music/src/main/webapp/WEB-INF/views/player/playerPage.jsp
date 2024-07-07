@@ -68,8 +68,7 @@
 			<div class="d-flex justify-content-between">
 				<span>
 					<span style="float:left;" class="m-2">
-						<c:url var="restLogo" value="../imgs/rest_logo.png" />
-						<img id="albumImage" src="${restLogo}">
+						<img id="albumImage" src="../imgs/rest_logo.png">
 					</span>
 					<span class="info ms-2">
 						<p id="music-title" class="my-1 fw-bold"></p>

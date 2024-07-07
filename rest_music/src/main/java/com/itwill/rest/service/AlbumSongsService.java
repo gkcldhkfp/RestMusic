@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.itwill.rest.dto.album.AlbumLikeDto;
 import com.itwill.rest.repository.AlbumSongs;
 import com.itwill.rest.repository.AlbumSongsDao;
 
@@ -44,5 +45,67 @@ public class AlbumSongsService {
 	public Integer songLikesCount(Integer songId) {
 		log.debug("songId={}", songId);
 		return albumSongsDao.songLikesCount(songId);
+	}
+
+	// 앨범의 좋아요 개수를 리턴하는 메서드
+	public Integer albumLikesCount(Integer albumId) {
+		log.debug("albumId = {}", albumId);
+		return albumSongsDao.albumLikesCount(albumId);
+	}
+
+	public boolean isAlbumLikes(AlbumLikeDto dto) {
+
+		int result = albumSongsDao.isAlbumLikes(dto);
+
+		if (result == 0) {
+			return true; // 좋아요가 없을경우 생성 후 true 반환
+		} else {
+			return false; // 좋아요가 있을경우 삭제 후 false 반환
+		}
+
+	}
+
+	// 좋아요를 눌렀을 때 실행하는 메서드
+	public boolean albumLikes(AlbumLikeDto dto) {
+		log.debug("serviceLikes{}", dto);
+		int result = albumSongsDao.isAlbumLikes(dto);
+		log.debug("dto={}", dto);
+
+		if (result == 0) {
+			albumSongsDao.addAlbumLike(dto);
+			return true; // 좋아요가 없을경우 생성 후 true 반환
+		} else {
+			albumSongsDao.removeAlbumLike(dto);
+			return false; // 좋아요가 있을경우 삭제 후 false 반환
+		}
+
+	}
+
+	// 특정 사용자가 특정 노래를 좋아요 했는지 여부 확인
+	public boolean isUserLikedAlbum(AlbumLikeDto dto) {
+		log.debug("isUserLikedSong({})", dto);
+
+		int result = albumSongsDao.isAlbumLikes(dto);
+
+		// 결과를 boolean으로 변환하여 반환
+		return result > 0;
+	}
+
+	// 좋아요 추가
+	public int addSongLike(AlbumLikeDto dto) {
+		log.debug("addSongLike({})", dto);
+
+		int result = albumSongsDao.addAlbumLike(dto);
+		return result;
+
+	}
+
+	// 좋아요 취소
+	public int cancelAlbumLike(AlbumLikeDto dto) {
+		log.debug("cancelAlbumLike({})", dto);
+
+		int result = albumSongsDao.removeAlbumLike(dto);
+		return result;
+
 	}
 }

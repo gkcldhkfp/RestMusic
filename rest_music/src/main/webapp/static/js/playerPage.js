@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		console.log(cPList[index].songPath);
 		// 데이터 베이스에 저장된 음악 경로를 cPList에서 꺼내서 오디오 객체를 생성함.
-		var audio = new Audio('../data' + cPList[index].songPath + '.mp3');
+		var audio = new Audio('../data/' + cPList[index].songPath);
 		audio.volume = 0.5; // 초기 볼륨 설정
 
 		// 음악이 로드되면 자동으로 실행하는 코드인데 페이지가 로드되자마자는 크롬 정책때문에 실행하지 못함
@@ -107,14 +107,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			// 앨범 커버 사진 설정
 			const albumImage = document.querySelector('#albumImage');
 			// 앨범 커버 사진 등록
-			albumImage.src = "../data/" + cPList[index].albumImage + ".jpg";
+			albumImage.src = "../data/" + cPList[index].albumImage;
 
 
 			// 노래 제목과 가수 설정
 			const musicTitle = document.querySelector('#music-title');
 			const artist = document.querySelector("#artist");
 			musicTitle.innerHTML = cPList[index].title;
-			artist.innerHTML = cPList[index].singerName;
+			artist.innerHTML = cPList[index].artistName;
 
 
 			prevBtn.addEventListener('click', previous);

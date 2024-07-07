@@ -33,7 +33,7 @@
 
 				#like {
 					position: relative;
-					top: 40px;
+					top: 20px;
 					left: 30px;
 				}
 
@@ -78,7 +78,7 @@
 							<div class="fw-bold">"${album.albumName}" 앨범정보</div>
 							<hr />
 							<div style="float:left" class="mouseScale-up">
-								<img src="../data/${album.albumImage}.jpg" alt="앨범 커버" width="250" height="250" />
+								<img src="../data/${album.albumImage}" alt="앨범 커버" width="250" height="250" />
 							</div>
 							<div style="float: left">
 								<table class="table-borderless intro">
@@ -91,7 +91,7 @@
 									</tr>
 									<tr>
 										<td>아티스트</td>
-										<td class="intro">${album.singerName}</td>
+										<td class="intro">${album.artistName}</td>
 									</tr>
 									<tr>
 										<td>발매일</td>
@@ -99,7 +99,7 @@
 									</tr>
 									<tr>
 										<td>장르</td>
-										<td class="intro">${album.genre}</td>
+										<td class="intro">${album.genreName}</td>
 									</tr>
 									<tr style="text-align: left;">
 										<td>타이틀 곡</td>
@@ -107,7 +107,7 @@
 									</tr>
 								</table>
 								<div id="like">
-									<span>좋아요개수</span>
+									<button id="btnLike" class="btn btn-success">♡</button>
 									<span class="intro">뭐쓰지</span>
 								</div>
 							</div>
@@ -140,9 +140,9 @@
 											<a href="/song/details?songId=${s.songId}">
 												${s.title}</a>
 										</td>
-										<td>${s.singerName}</td>
+										<td>${s.artistName}</td>
 										<td id="countLike" data-id="${s.songId}">
-											<img id="btnLike" height="50px" width="50px" src="../imgs/likeOff.png" />${s.likesCount}
+											<img id="btnLike" height="30px" width="30px" src="../imgs/likeOn.png" />${s.likesCount}
 											<!-- TODO: axios로 DB insert 해야됨 -->
 										</td>
 										<td>
@@ -185,8 +185,8 @@
 			<!-- Axios JS 라이브러리 -->
 			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 			<script>
-				const id = ${loginUserId}; //id
-				
+				const albumId = ${album.albumId};
+				const id = '${loginUserId}'; //id
 			</script>
 			<c:url var="album_detail" value="/js/album_detail.js" />
 			<script src="${album_detail}"></script>

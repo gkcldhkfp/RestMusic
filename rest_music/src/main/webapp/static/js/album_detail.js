@@ -5,12 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	const albumImage = document.querySelector(".mouseScale-up");
 	albumImage.addEventListener('mouseenter', () => {
 		albumImage.style.transform = "scale(1.1)";
-		albumImage.style.trasition = "all 0.5s";
+		albumImage.style.transition = "all 0.5s";
 	});
 
 	albumImage.addEventListener('mouseleave', () => {
 		albumImage.style.transform = "scale(1)";
-		albumImage.style.trasition = "all 0.5s";
+		albumImage.style.transition = "all 0.5s";
 	});
 
 	const originDate = document.querySelector('#date');
@@ -18,49 +18,83 @@ document.addEventListener('DOMContentLoaded', () => {
 	const date = originDate.innerHTML.slice(2, 10).replaceAll('-', '.');
 	console.log(date);
 	originDate.innerHTML = date;
-/* 
-	const btnLike = document.querySelectorAll('#btnLike');
-	for (let l of btnLike) {
-		songId = l.getAttribute('data-id');
-		const data = { songId, id };
+
+	const btnLike = document.querySelector('button#btnLike');
+
+	const data = { albumId, id };
+	axios
+		.post('./like', data)
+		.then((response) => {
+			if (response.data) {
+				btnLike.textContent = '♡';
+			} else {
+				btnLike.textContent = '♥';
+			}
+		}
+		)
+		.catch((error) => {
+			console.log(error);
+		});
+	btnLike.addEventListener('click', () => {
+
 		axios
-			.post('../song/like', data)
+			.put('./like', data)
 			.then((response) => {
 				if (response.data) {
-					// l.textContent = '♡';
-					l.src = '../imgs/likeOff.png'
+					btnLike.textContent = '♥';
 				} else {
-					// l.textContent = '♥';
-					l.src = '../imgs/likeOn.png';
+					btnLike.textContent = '♡';
 				}
 			}
 			)
 			.catch((error) => {
 				console.log(error);
 			});
-		l.addEventListener('click', () => {
+
+	});
+	/* 
+		const btnLike = document.querySelectorAll('#btnLike');
+		for (let l of btnLike) {
+			songId = l.getAttribute('data-id');
+			const data = { songId, id };
 			axios
-				.put('../song/like', data)
+				.post('../song/like', data)
 				.then((response) => {
 					if (response.data) {
-						// l.textContent = '♥';
-						l.innerHTML = l.value + 1;
-						l.src = '../imgs/likeOn.png';
-					} else {
 						// l.textContent = '♡';
-						l.innerHTML = l.value - 1;
-
 						l.src = '../imgs/likeOff.png'
+					} else {
+						// l.textContent = '♥';
+						l.src = '../imgs/likeOn.png';
 					}
 				}
 				)
 				.catch((error) => {
 					console.log(error);
 				});
-
-		}
-		);
-	} */
+			l.addEventListener('click', () => {
+				axios
+					.put('../song/like', data)
+					.then((response) => {
+						if (response.data) {
+							// l.textContent = '♥';
+							l.innerHTML = l.value + 1;
+							l.src = '../imgs/likeOn.png';
+						} else {
+							// l.textContent = '♡';
+							l.innerHTML = l.value - 1;
+	
+							l.src = '../imgs/likeOff.png'
+						}
+					}
+					)
+					.catch((error) => {
+						console.log(error);
+					});
+	
+			}
+			);
+		} */
 });
 
 
