@@ -43,7 +43,7 @@ public class PlayListService {
 	public int songAddToPlayList(AddSongToPlayListDto dto) {
 		log.debug("service{}",dto);
 		
-	int result = playListDao.addSongToPlayList(dto);
+		int result = playListDao.addSongToPlayList(dto);
 		
 		return result;
 	}

@@ -28,13 +28,17 @@ create table songs ( -- 음악 (컬럼 7개)
         video_link                          varchar2(200), -- 뮤비 링크 (200바이트)
         
         ------- 장르 코드 테이블로 변경해야됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        genre_id                            number(4), -- 장르 번호 (4자리)
+      --  genre_id                            number(4), -- 장르 번호 (4자리)
         
         constraint songs_song_id_pk         primary key (song_id), -- 음악 번호 (고유키)
-        constraint songs_album_id_fk        foreign key (album_id) references albums (album_id), -- 앨범 번호 (외래키)
-        constraint songs_genre_code_id_fk   foreign key (genre_id) references genre_code (genre_id) -- 장르 번호 (외래키)
+        constraint songs_album_id_fk        foreign key (album_id) references albums (album_id) -- 앨범 번호 (외래키)
 
 );
+
+create table song_genre (
+    song_id number(4) references songs (song_id),
+    genre_id number(4) references genre_code (genre_id)
+)
 
 create table title_songs ( -- 타이틀 곡 (컬럼 2개)
         album_id                            number(4), -- 앨범 번호 (4자리)
@@ -59,7 +63,7 @@ create table artist_roles ( -- 아티스트 참여 음원 (컬럼 3개)
     role_id                                    number(4), -- 역할 번호 (4자리)
     constraint artist_roles_artist_id_fk       foreign key (artist_id) references artists (artist_id), -- 아티스트 번호 (외래키)
     constraint artist_roles_song_id_fk         foreign key (song_id) references songs (song_id), -- 음악 번호 (외래키)
-    constraint artist_roles_role_id_fk         foreign key (role) references role_code (role_id) -- 역할 번호 (외래키)
+    constraint artist_roles_role_id_fk         foreign key (role_id) references role_code (role_id) -- 역할 번호 (외래키)
 )
 
 create table code_master ( -- 코드 마스터 (컬럼 2개)
