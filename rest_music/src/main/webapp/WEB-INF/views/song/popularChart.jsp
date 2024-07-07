@@ -188,9 +188,9 @@
 	</div>
 	
 	<footer>
-                <!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
-                <%@ include file="../fragments/footer.jspf" %>
-            </footer>
+        <!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
+        <%@ include file="../fragments/footer.jspf" %>
+    </footer>
      
 	<script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
