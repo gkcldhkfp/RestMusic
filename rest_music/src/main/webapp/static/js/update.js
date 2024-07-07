@@ -12,9 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const hiddenUserId = document.getElementById('hiddenUserId');
         const profileImagePreview = document.getElementById('profileImagePreview'); // 이미지 미리보기 요소
 
-        console.log(profileImageInput);
-        console.log(hiddenUserId);
-
         if (profileImageInput && hiddenUserId) {
             const file = profileImageInput.files[0];  // 선택된 파일을 가져옵니다.
             const userId = hiddenUserId.value;  // userId 값을 가져옵니다.
@@ -53,19 +50,148 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Required elements are missing in the HTML.');
         }
     });
+    
+    // 이메일 관련 요소 선택
+    const emailInput = document.getElementById('email');
+    const checkEmailResult = document.getElementById('checkEmailResult');
+
+    // 이메일 유효성 검사 함수
+    function validateEmail(email) {
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+        return emailPattern.test(email);
+    }
+
+    // 이메일 입력 필드의 값이 변경될 때마다 유효성 검사 및 중복 확인
+    emailInput.addEventListener('change', function() {
+        const email = this.value.trim();
+
+        if (email === '') {
+            // 이메일이 비어있는 경우
+            checkEmailResult.textContent = '';
+            checkEmailResult.className = 'form-text';
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            // 이메일 형식이 올바르지 않은 경우
+            checkEmailResult.textContent = '이메일 형식이 올바르지 않습니다.';
+            checkEmailResult.className = 'form-text text-danger';
+            return;
+        }
+
+        // 서버에 이메일 중복 확인 요청
+        const uri = `../user/checkemail?email=${email}`;
+        axios.get(uri)
+            .then((response) => {
+                if (response.data === 'Y') {
+                    checkEmailResult.textContent = '사용 가능한 이메일입니다.';
+                    checkEmailResult.className = 'form-text text-success';
+                } else {
+                    checkEmailResult.textContent = '이미 사용 중인 이메일입니다.';
+                    checkEmailResult.className = 'form-text text-danger';
+                }
+            })
+            .catch((error) => {
+                console.error('이메일 중복 확인 중 오류 발생:', error);
+                checkEmailResult.textContent = '이메일 중복 확인 중 오류가 발생했습니다.';
+                checkEmailResult.className = 'form-text text-danger';
+            });
+    });
+
+      
+    // 비밀번호 입력 필드의 input 이벤트 리스너
+    document.getElementById('password').addEventListener('change', checkPassword);
+    
+    function checkPassword(event) {
+        const password = event.target.value;
+        const checkPasswordResult = document.getElementById('checkPasswordResult');
+        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    
+        // 비밀번호 필드가 비어있는 경우
+        if (password === '') {
+            checkPasswordResult.innerHTML = '';
+            checkPasswordResult.classList.remove('text-danger', 'text-success');
+        }     
+        // 비밀번호가 패턴과 일치하지 않는 경우
+        else if (!passwordPattern.test(password)) {
+            checkPasswordResult.innerHTML = '8자 이상의 영문 대/소문자와 숫자만 사용 가능합니다.';
+            checkPasswordResult.classList.add('text-danger');
+            checkPasswordResult.classList.remove('text-success');
+        }    
+        // 비밀번호가 유효한 경우
+        else {
+            checkPasswordResult.innerHTML = '유효한 비밀번호 형식입니다.';
+            checkPasswordResult.classList.add('text-success');
+            checkPasswordResult.classList.remove('text-danger');
+        }
+    }
+    
+    // 힌트 질문 관련 로직
+    const hintQuestionInput = document.getElementById('hintQuestion');
+    const hintQuestionSelect = document.getElementById('hintQuestionSelect');
+
+    // 기존 힌트 질문이 있는 경우
+    if (hintQuestionInput.value) {
+        const option = Array.from(hintQuestionSelect.options).find(opt => opt.value === hintQuestionInput.value);
+        if (option) {
+          // 기존 힌트 질문이 선택지에 있는 경우
+          option.selected = true;
+        } else {
+          // 기존 힌트 질문이 선택지에 없는 경우, 새 옵션 추가
+          const newOption = new Option(hintQuestionInput.value, hintQuestionInput.value);
+          hintQuestionSelect.add(newOption);
+          newOption.selected = true;
+        }
+        hintQuestionChecked = true;
+    }
+    
+    // 힌트 질문 선택 이벤트 리스너
+    document.getElementById('hintQuestionSelect').addEventListener('change', function(event) {
+        const selectedValue = event.target.value;
+        const hintQuestionInput = document.getElementById('hintQuestion');
+      
+        // 선택된 값이 없는 경우
+        if (selectedValue === '') {
+            hintQuestionInput.value = '';
+            hintQuestionChecked = false;
+        } 
+        // 힌트 질문이 선택된 경우
+        else {
+            hintQuestionInput.value = selectedValue;
+            hintQuestionChecked = true;
+        }
+    });
 
     // '변경 사항 저장' 버튼 클릭 시 사용자 정보 업데이트 요청
     document.getElementById('updateUserForm').addEventListener('submit', (event) => {
         event.preventDefault();  // 기본 폼 제출 동작을 방지합니다.
 
         const formData = new FormData(event.target);
+        
         const profileImageInput = document.getElementById('profileImageInput');
-        const file = profileImageInput.files[0];  // 선택된 파일을 가져옵니다.
-
+        const file = profileImageInput.files[0];  // 선택된 파일을 가져옵니다. 
+        // 프로필 이미지가 선택된 경우 폼 데이터에 추가  
         if (file) {
             formData.append('profileImage', file);  // 폼 데이터에 프로필 이미지 추가
         }
-
+        
+        const password = document.getElementById('password').value;
+        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        // 비밀번호가 입력되었지만 유효하지 않은 경우
+        if (password !== '' && !passwordPattern.test(password)) {
+            event.preventDefault();
+            alert('유효하지 않은 비밀번호 형식입니다. 8자 이상의 영문 대/소문자와 숫자를 사용해주세요.');
+            return;
+        }
+        
+        const email = emailInput.value.trim();
+        // 이메일 유효성 재확인
+        if (!validateEmail(email)) {
+            alert('올바른 이메일 주소를 입력해주세요.');
+            return;
+        }
+        
+        // 서버에 사용자 정보 업데이트 요청
         axios.post(event.target.action, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -73,16 +199,17 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => {
                 if (response.status === 200) {
+                    // 업데이트 성공 시 처리
                     alert('변경 사항이 성공적으로 저장되었습니다!');
                     location.href = "../user/mypage?userId=" + formData.get('userId');
                 }
             })
             .catch(error => {
+                // 오류 발생 시 처리
                 console.error('변경 사항 저장 중 오류 발생:', error);
                 alert('변경 사항 저장 중 오류가 발생했습니다.');
             });
     });
-
-
+    
 });
 

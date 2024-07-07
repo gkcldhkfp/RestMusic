@@ -115,8 +115,8 @@ public class UserService {
 	            uploadDirFile.mkdirs();
 	        }
 
-	        // 새로운 이미지 파일의 저장 경로를 지정합니다. 기존 파일의 이름 충돌 방지를 위해 userId를 사용합니다.
-	        String filename = originalFilename;  // 사용자 ID로 파일명을 생성
+	        // 새로운 이미지 파일의 저장 경로를 지정합니다.
+	        String filename = originalFilename;
 	        String filePath = uploadDir + File.separator + filename;
 	        File file = new File(filePath);
 	        
