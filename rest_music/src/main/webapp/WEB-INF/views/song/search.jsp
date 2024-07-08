@@ -37,25 +37,39 @@
                     <div class="col-2">
                         <select id="category" class="form-control"
                             name="category">
-                            <option value="t">제목</option>
-                            <option value="s">가수</option>
-                            <option value="ts">제목+가수</option>
-                            <option value="a">앨범명</option>
+                            <option value="t" >제목</option>
+                            <option value="s" ${param.category == 's' ? 'selected' : ''}>가수</option>
+                            <option value="ts" ${param.category == 'ts' ? 'selected' : ''}>제목+가수</option>
+                            <option value="a" ${param.category == 'a' ? 'selected' : ''}>앨범명</option>
                         </select>
                     </div>
                     <div class="col-6">
                         <input class="form-control" type="text"
                             id="keyword" name="keyword"
-                            placeholder="검색어" required />
+                            placeholder="검색어" required value="${param.keyword}"/>
                     </div>
+                    <input name="sortType" value="accuracy" class="d-none">
                     <div class="col-1">
                         <input type="submit"
                             class="btn btn-outline-secondary" value="검색">
                     </div>
                 </div>
             </form>
-
+            
+                
+            
+            
             <div class="card-body mt-5">
+            
+                <div class="d-flex">
+                    <div class="p-2 flex-grow-1"></div>
+                    <div class="p-2">
+                        <button id="accuracy" type="button" class="btn"> 정확도순 </button>
+                        <button id="recency" type="button" class="btn"> 최신순 </button>
+                        <button id="alphabet" type="button" class="btn"> 가나다순 </button>
+                    </div>
+                </div>
+            
                 <table id="resultTable" class="table table-hover mt-3">
                     <thead>
                         <tr>
@@ -157,12 +171,7 @@
     <script src="${searchJS}"></script>
     
     <script>
-		let id;
-		if(${loginUserId eq null}){
-            id = 0; //userid
-        } else {
-            id = '${loginUserId}';
-        }   // 유저아이디
+    let loginUserId ='${loginUserId}';
 	</script>
     
     <c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />

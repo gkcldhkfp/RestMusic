@@ -18,8 +18,19 @@
             <%@ include file="../fragments/header.jspf"%>
         </div>
     </header>
-    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-        <button class=" btn-lg fs-3" id="purchase">test</button>
+    
+    <div class="mt-5 d-flex justify-content-center" >
+        <div class="container text-center m-5 border p-4 rounded" style="width:900px; min-width:900px">
+              <div class="row">
+                <div class="col-7 order-first">
+                  <p class="mt-2 fs-3">내용</p>
+                </div>
+                <div class="col-5 order-last row">
+                    <p class="col fs-4 mt-2">10원</p>
+                  <button class="btn btn-primary btn-sm fs-3 col" title="test" id="purchase">구매</button>
+                </div>
+              </div>
+            </div>  
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 

@@ -10,10 +10,10 @@ import lombok.Data;
 public class CommentCreateDto {
 	private Integer songId;
 	private String cText;
-	private Integer id;
+	private Integer loginUserId;
 	
 	// CommentCreateDto 타입을 Comment 타입으로 변환해서 리턴.
 	public Comment toEntity() {
-		return Comment.builder().songId(songId).cText(cText).id(id).build();
+		return Comment.builder().songId(songId).cText(cText).id(loginUserId).build();
 	}
 }
