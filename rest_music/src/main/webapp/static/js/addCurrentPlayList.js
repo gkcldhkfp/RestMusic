@@ -16,8 +16,48 @@ document.addEventListener('DOMContentLoaded', () => {
 		l.addEventListener('click', clickListenBtn)
 	}
 
+	// 앨범 듣기 기능
 	const btnListenAlbum = document.querySelector('#btnListenAlbum');
 	btnListenAlbum.addEventListener('click', listenAlbum);
+
+	// 앨범을 다음 곡으로 추가 기능
+	const btnAddCPListAlbum = document.querySelector('#btnAddCPListAlbum');
+	btnAddCPListAlbum.addEventListener('click', addCPListAlbum)
+
+	function addCPListAlbum(event) {
+		const albumId = event.target.getAttribute('data-id');
+		// console.log(id); // 정상작동: 1
+		let url = `../api/album?albumId=${albumId}`;
+		axios.
+			get(url).
+			then((response) => {
+				console.log(response);
+				// 앨범의 음원 리스트를 가져옴
+				let listSong = response.data;
+				console.log(listSong);
+				
+				// 앨범의 모든 곡을 다음 재생 목록에 추가.
+				for (let i = 0; i < listSong.length; i++) {
+					let id = listSong[i].songId;
+					url = `../song/addCurrentPlayList?songId=${id}`
+					console.log(url);
+					axios.
+						get(url).
+						then((response) => {
+							console.log(response);
+							if (sessionStorage.getItem('isAdded') === 'N') {
+								sessionStorage.setItem('index', 0);
+								sessionStorage.setItem('isAdded', 'Y');
+								parent.songFrame.location.reload();
+							}
+						}).
+						catch((error) => { console.log(error); });
+				}
+			}).
+			catch((error) => console.log(error));
+
+
+	}
 
 	function listenAlbum(event) {
 		const albumId = event.target.getAttribute('data-id');
@@ -51,21 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
 							axios.
 								get(url3).
 								then((response) => {
-									// setTimeout(() => {
 									console.log(response);
 									if (sessionStorage.getItem('isAdded') === 'N') {
 										sessionStorage.setItem('index', 0);
 										sessionStorage.setItem('isAdded', 'Y');
 										parent.songFrame.location.reload();
 									}
-									// }, 100);
 								}).
 								catch((error) => { console.log(error); });
 						}
 					})
-					.catch((error) => { });
+					.catch((error) => console.log(error));
 			}).
-			catch((error) => { console.log(error); });
+			catch((error) => console.log(error));
 	}
 
 	function addToCPList(event) {
