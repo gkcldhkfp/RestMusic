@@ -27,7 +27,7 @@
                     artist_roles ar
                     JOIN artists art ON ar.artist_id = art.artist_id
                 WHERE
-                    ar.role_id = 1
+                    ar.role_id = 10
                 GROUP BY
                     ar.song_id
             ) singer ON s.song_id = singer.song_id
@@ -39,7 +39,7 @@
                     artist_roles ar
                     JOIN artists art ON ar.artist_id = art.artist_id
                 WHERE
-                    ar.role_id = 2
+                    ar.role_id = 30
                 GROUP BY
                     ar.song_id
             ) writer ON s.song_id = writer.song_id
@@ -51,7 +51,7 @@
                     artist_roles ar
                     JOIN artists art ON ar.artist_id = art.artist_id
                 WHERE
-                    ar.role_id = 3
+                    ar.role_id = 20
                 GROUP BY
                     ar.song_id
             ) composer ON s.song_id = composer.song_id
@@ -63,7 +63,7 @@
                     artist_roles ar
                     JOIN artists art ON ar.artist_id = art.artist_id
                 WHERE
-                    ar.role_id = 4
+                    ar.role_id = 40
                 GROUP BY
                     ar.song_id
             ) arranger ON s.song_id = arranger.song_id
@@ -115,7 +115,7 @@
                    ) AS rnum
             FROM songs s
             JOIN albums a ON s.album_id = a.album_id
-            JOIN artist_roles ar ON s.song_id = ar.song_id AND ar.role_id = 1
+            JOIN artist_roles ar ON s.song_id = ar.song_id AND ar.role_id = 10
             JOIN artists art ON ar.artist_id = art.artist_id
             WHERE 1=1
             <choose>
