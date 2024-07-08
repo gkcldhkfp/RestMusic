@@ -94,7 +94,6 @@ playButtons.forEach(button => {
     button.addEventListener('click', function(e) {
         e.preventDefault();
         const songPath = button.dataset.songPath;
-        const songId = button.dataset.songId;
         const id = parseInt(button.dataset.id);
 
         // 로그인 상태 확인
