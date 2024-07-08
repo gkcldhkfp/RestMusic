@@ -109,8 +109,10 @@
 								<div id="like">
 									<button id="btnLike" class="btn btn-success">♡</button>
 									<button id="btnListenAlbum" class="intro btn btn-success" data-id="${album.albumId}">앨범 듣기</button>
-									<button id="btnAddCPListAlbum" class="intro btn btn-success" data-id="${album.albumId}">앨범을 다음 곡으로 추가</button>
-									<button id="btnAddUPListAlbum" class="intro btn btn-success" data-id="${album.albumId}">앨범을 플레이리스트에 추가</button>
+									<button id="btnAddCPListAlbum" class="intro btn btn-success" data-id="${album.albumId}">앨범을 다음 곡으로
+										추가</button>
+									<button id="btnAddUPListAlbum" class="intro btn btn-success" data-id="${album.albumId}">앨범을 플레이리스트에
+										추가</button>
 								</div>
 							</div>
 						</section>
@@ -159,7 +161,9 @@
 												재생목록
 											</button> -->
 										</td>
-										<td>플리추가</td>
+										<td><button id="btnAddPlayList" class="btn btn-success" data-id="${s.songId}">
+												플리추가
+											</button></td>
 										<td>더보기</td>
 									</tr>
 								</c:forEach>
@@ -168,8 +172,29 @@
 					</div>
 				</div>
 			</main>
-
-
+			<!-- 플레이리스트 모달 -->
+			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+				aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">추가할 플레이리스트</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div id="playLists" class="modal-body" style="height: 393px;">
+							<!--  플리가 추가 될 부분 -->
+						</div>
+						<nav aria-label="Playlist navigation">
+							<ul id="pagination" class="pagination pagination-sm justify-content-center">
+								<!-- 페이징이 추가될 부분 -->
+							</ul>
+						</nav>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">취소</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			<footer>
 				<!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
 				<%@ include file="../fragments/footer.jspf" %>
@@ -187,6 +212,7 @@
 			<!-- Axios JS 라이브러리 -->
 			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 			<script>
+				const songId = document.querySelector('#btnAddPlayList');
 				const albumId = ${ album.albumId };
 				const id = '${loginUserId}'; //id
 			</script>
@@ -194,6 +220,8 @@
 			<script src="${album_detail}"></script>
 			<c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
 			<script src="${addCurrentPlayList}"></script>
+			<c:url var="detailJS" value="/js/detail.js" />
+			<script src="${detailJS}"></script>
 
 
 		</body>

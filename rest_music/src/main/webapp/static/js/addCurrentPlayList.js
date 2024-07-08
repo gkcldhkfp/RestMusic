@@ -6,59 +6,54 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (!sessionStorage.getItem('isAdded')) {
 		sessionStorage.setItem('isAdded', 'N');
 	}
+
+	// 음원 다음 곡으로 재생 기능
 	const addCPList = document.querySelectorAll('#addCPList');
 	for (let a of addCPList) {
 		a.addEventListener('click', addToCPList);
 	}
+	function addToCPList(event) {
+		const id = event.target.getAttribute('data-id');
+		const url = `../song/addCurrentPlayList?songId=${id}`
+		console.log(url);
+		axios.
+			get(url).
+			then((response) => {
+				console.log(response);
+				if (sessionStorage.getItem('isAdded') === 'N') {
+					sessionStorage.setItem('index', 0);
+					sessionStorage.setItem('isAdded', 'Y');
+					parent.songFrame.location.reload();
+				}
+				document.location.reload();
+			}).
+			catch((error) => { console.log(error); });
+	}
 
+	// 음원 듣기 기능
 	const listenBtn = document.querySelectorAll('#listenBtn');
 	for (let l of listenBtn) {
 		l.addEventListener('click', clickListenBtn)
+	}
+	function clickListenBtn(event) {
+		const id = event.target.getAttribute('data-id');
+		const url = `../song/listen?songId=${id}`
+		console.log(url);
+		axios
+			.get(url)
+			.then((response) => {
+				console.log("성공");
+				sessionStorage.setItem('index', 0);
+				sessionStorage.setItem('isAdded', 'Y');
+				document.location.reload();
+				parent.songFrame.location.reload();
+			})
+			.catch((error) => { });
 	}
 
 	// 앨범 듣기 기능
 	const btnListenAlbum = document.querySelector('#btnListenAlbum');
 	btnListenAlbum.addEventListener('click', listenAlbum);
-
-	// 앨범을 다음 곡으로 추가 기능
-	const btnAddCPListAlbum = document.querySelector('#btnAddCPListAlbum');
-	btnAddCPListAlbum.addEventListener('click', addCPListAlbum)
-
-	function addCPListAlbum(event) {
-		const albumId = event.target.getAttribute('data-id');
-		// console.log(id); // 정상작동: 1
-		let url = `../api/album?albumId=${albumId}`;
-		axios.
-			get(url).
-			then((response) => {
-				console.log(response);
-				// 앨범의 음원 리스트를 가져옴
-				let listSong = response.data;
-				console.log(listSong);
-				
-				// 앨범의 모든 곡을 다음 재생 목록에 추가.
-				for (let i = 0; i < listSong.length; i++) {
-					let id = listSong[i].songId;
-					url = `../song/addCurrentPlayList?songId=${id}`
-					console.log(url);
-					axios.
-						get(url).
-						then((response) => {
-							console.log(response);
-							if (sessionStorage.getItem('isAdded') === 'N') {
-								sessionStorage.setItem('index', 0);
-								sessionStorage.setItem('isAdded', 'Y');
-								parent.songFrame.location.reload();
-							}
-						}).
-						catch((error) => { console.log(error); });
-				}
-			}).
-			catch((error) => console.log(error));
-
-
-	}
-
 	function listenAlbum(event) {
 		const albumId = event.target.getAttribute('data-id');
 		// console.log(id); // 정상작동: 1
@@ -106,39 +101,59 @@ document.addEventListener('DOMContentLoaded', () => {
 			catch((error) => console.log(error));
 	}
 
-	function addToCPList(event) {
-		const id = event.target.getAttribute('data-id');
-		const url = `../song/addCurrentPlayList?songId=${id}`
-		console.log(url);
+
+	// 앨범을 다음 곡으로 추가 기능
+	const btnAddCPListAlbum = document.querySelector('#btnAddCPListAlbum');
+	btnAddCPListAlbum.addEventListener('click', addCPListAlbum)
+
+	function addCPListAlbum(event) {
+		const albumId = event.target.getAttribute('data-id');
+		// console.log(id); // 정상작동: 1
+		let url = `../api/album?albumId=${albumId}`;
 		axios.
 			get(url).
 			then((response) => {
 				console.log(response);
-				if (sessionStorage.getItem('isAdded') === 'N') {
-					sessionStorage.setItem('index', 0);
-					sessionStorage.setItem('isAdded', 'Y');
-					parent.songFrame.location.reload();
+				// 앨범의 음원 리스트를 가져옴
+				let listSong = response.data;
+				console.log(listSong);
+
+				// 앨범의 모든 곡을 다음 재생 목록에 추가.
+				for (let i = 0; i < listSong.length; i++) {
+					let id = listSong[i].songId;
+					url = `../song/addCurrentPlayList?songId=${id}`
+					console.log(url);
+					axios.
+						get(url).
+						then((response) => {
+							console.log(response);
+							if (sessionStorage.getItem('isAdded') === 'N') {
+								sessionStorage.setItem('index', 0);
+								sessionStorage.setItem('isAdded', 'Y');
+								parent.songFrame.location.reload();
+							}
+						}).
+						catch((error) => { console.log(error); });
 				}
-				document.location.reload();
 			}).
-			catch((error) => { console.log(error); });
+			catch((error) => console.log(error));
+
+
 	}
 
-	function clickListenBtn(event) {
-		const id = event.target.getAttribute('data-id');
-		const url = `../song/listen?songId=${id}`
-		console.log(url);
-		axios
-			.get(url)
-			.then((response) => {
-				console.log("성공");
-				sessionStorage.setItem('index', 0);
-				sessionStorage.setItem('isAdded', 'Y');
-				document.location.reload();
-				parent.songFrame.location.reload();
-			})
-			.catch((error) => { });
+	// 플리에 추가 기능
+	const btnAddUPList = document.querySelector('#btnAddUPList');
+	btnAddUPList.addEventListener('click', addUPList);
+	function addUPList(event) {
+		const albumId = event.target.getAttribute('data-id');
+
+		// TODO: 플리에 추가하는 Rest 매핑 컨트롤러 호출.
+
 	}
+	
+
+
+	// 아래는 다른 페이지에서도 사용하는 함수
 
 	function showModal() {
 		console.log('mainFrame showModal 호출성공');
