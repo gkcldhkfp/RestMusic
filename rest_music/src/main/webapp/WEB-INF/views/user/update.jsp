@@ -59,9 +59,20 @@
                 <label for="email" class="form-label">이메일</label>
                 <div class="input-group">
                     <input type="email" class="form-control" id="email" name="email" value="${user.email}" required>
-                 </div>
-                 <div id="checkEmailResult" class="form-text"></div>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-primary" id="mailCheckBtn">인증번호 받기</button>
+                    </div>
+                </div>
+                <div id="checkEmailResult" class="form-text text-danger"></div>
             </div>
+            <div class="input-group mb-3">
+                <input type="text" id="emailVerificationCode" name="emailAuthNumber" class="form-control"
+                       placeholder="인증번호를 입력해주세요" maxlength="6" disabled>
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-primary" id="verifyCodeBtn">인증번호 확인</button>
+                </div>
+            </div>
+            <div id="emailVerificationResult" class="form-text text-danger"></div>
             <div class="mb-3">
                 <label for="password" class="form-label">비밀번호</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="새 비밀번호 ">
