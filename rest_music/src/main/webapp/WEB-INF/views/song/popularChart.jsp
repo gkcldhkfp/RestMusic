@@ -93,21 +93,19 @@
 						    <span class="likes-count">${top.likes != null ? top.likes : 0}</span>
 						</td>
                         <td>
-    <c:url var="songPath" value="/data/${top.songPath}" />
-    <a href="#" class="btn btn-primary btn-sm play-btn"
-        data-song-path="${songPath}"
-        data-song-id="${top.songId}"
-        data-id="${loginUserId}">
-        <i class="fas fa-play"></i>
-    </a>
-</td>
-						<td>
-						
+						    <c:url var="songPath" value="/data/${top.songPath}" />
+						    <a href="#" class="btn btn-primary btn-sm play-btn"
+						        data-song-path="${songPath}"
+						        data-song-id="${top.songId}"
+						        data-id="${loginUserId}">
+						        <i class="fas fa-play"></i>
+						    </a>
+						</td>
+						<td>			
                             <button type="button" class="btn btn-secondary btn-sm" id="addCPList"
                                 data-id="${top.songId}">
                                 <i class="fa-solid fa-list"></i>
                             </button>
-                            
                         </td>
                         <td>
 						    <button type="button" class="btn btn-secondary btn-sm add-to-playlist-btn"
@@ -211,8 +209,9 @@
 	
 	
 	<footer>
-        <!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
-        <%@ include file="../fragments/footer.jspf" %>
+        <div class="container">
+            <%@ include file="../fragments/footer.jspf" %>
+        </div>
     </footer>
      
 	<script
