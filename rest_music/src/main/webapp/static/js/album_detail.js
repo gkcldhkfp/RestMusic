@@ -61,13 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	});
 
-	// TODO: 플레이리스트에 추가 기능 구현
-
-	// 앨범 듣기: 음원 바로듣기와 비슷한 기능
-	
-	// 앨범 현재 재생 목록에 추가: 음원 재생목록 추가와 비슷한 기능
-
-	// 앨범을 플레이리스트에 추가: 플레이리스트 추가와 비슷한 기능
 	/* 
 		const btnLike = document.querySelectorAll('#btnLike');
 		for (let l of btnLike) {
