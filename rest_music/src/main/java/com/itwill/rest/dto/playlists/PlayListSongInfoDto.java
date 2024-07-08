@@ -13,6 +13,7 @@ public class PlayListSongInfoDto {
 	private Integer albumId; // song(음원)의 albumId(songs 테이블)
 	private String title; // song 제목(songs 테이블)
 	private String albumImage; // album 커버(album 테이블)
+	private Integer artistId; // 가수 id(artists 테이블)
 	private String artistName; // 가수 이름(artists 테이블)
 	
 	public Integer getpListId() {

@@ -35,6 +35,7 @@
     al.album_image,
     s.song_id,
     s.title,
+    ar.artist_id,
     ar.artist_name,
     al.album_name
     FROM

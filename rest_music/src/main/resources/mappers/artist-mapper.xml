@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwill.rest.repository.ArtistDao">
+    <select id="selectByArtistId" resultType="Artist">
+        SELECT * FROM artists WHERE artist_id = #{artistId}
+    </select>
+    
+    <select id="selectSongsByArtistId" resultType="ArtistSongDto">
+        SELECT 
+        ar.artist_id, 
+        ar.song_id, 
+        al.album_id,
+        al.album_image, 
+        s.title AS song_title, 
+        a.artist_name
+        FROM 
+        artist_roles ar
+        JOIN songs s ON ar.song_id = s.song_id
+        JOIN albums al ON s.album_id = al.album_id
+        JOIN artists a ON ar.artist_id = a.artist_id
+        WHERE ar.artist_id = #{artistId}
+    </select>
+    
+    <select id="selectAlbumsByArtistId" resultType="ArtistAlbumDto">
+        SELECT DISTINCT 
+        a.album_id, 
+        a.album_name, 
+        a.album_image, 
+        a.album_type, 
+        a.album_release_date, 
+        art.artist_name
+        FROM albums a
+        JOIN songs s ON a.album_id = s.album_id
+        JOIN artist_roles ar ON s.song_id = ar.song_id
+        JOIN artists art ON ar.artist_id = art.artist_id
+        WHERE ar.artist_id = #{artistId}
+    </select>
+</mapper>

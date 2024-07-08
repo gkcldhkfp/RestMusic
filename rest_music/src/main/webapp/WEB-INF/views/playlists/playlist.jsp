@@ -37,7 +37,7 @@
                         <p class="mt-3" id="songCount" style="color:gray;">총 <span id="totalSongs">0</span>곡</p> <!-- 자바스크립트를 사용하여 총 ?곡인지 출력되는 부분 -->
                         <p class="d-none">플리 생성날짜</p>
                         <div class="mt-4">
-                            <button class="btn btn-success" >재생목록추가</button>
+                            <button class="btn btn-success" onclick="window.location.href = '/Rest/frameset/${playList.pListId}'">재생목록추가</button>
                         </div>
                     </div>
                 </div>
@@ -63,6 +63,7 @@
                                 <th style="text-align: left; vertical-align: middle;">커버</th>
                                 <th style="text-align: left; vertical-align: middle;">노래 제목</th>
                                 <th style="text-align: left; vertical-align: middle;">아티스트</th>
+                                <th style="text-align: left; vertical-align: middle;">듣기</th>
                             </tr>
                         </thead>
                         <tbody id="songsTableBody"> <!-- playlist.js를 통해 플리의 음원 리스트가 삽입될 부분 -->

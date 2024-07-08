@@ -186,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
             /*const deleteImage = '../images/delete.png';*/
 
             const songPage = `/Rest/song/detail?songId=${like.songId}`;
+            const artistPage = `/Rest/artist/songs?artistId=${like.artistId}`;
             // ${like.albumImage}가 null이면 기본 이미지 사용
             const albumImageSrc = like.albumImage ? `../images/${like.albumImage}` : defaultImage;
 
@@ -196,9 +197,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img alt="songImg" src="${albumImageSrc}" width="80px" height="80px">
                 </td>
                 <td style="text-align: left; vertical-align: middle; font-size: 14px;">
-                    <a href=${songPage}>${like.title}</a>
+                    <a href=${songPage} style="color: black; text-decoration: none;"
+                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${like.title}</a>
                 </td>
-                <td style="text-align: left; vertical-align: middle; font-size: 14px;">${like.artistName}</td>
+                <td style="text-align: left; vertical-align: middle; font-size: 14px;">
+                    <a href=${artistPage} style="color: black; text-decoration: none;"
+                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${like.artistName}</a>
+                </td>
             </tr>
             `;
         }

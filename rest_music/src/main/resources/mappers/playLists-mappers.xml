@@ -61,6 +61,7 @@
     s.title,
     s.album_id,
     al.album_image,
+    ar.artist_id,
     ar.artist_name
     FROM
     playlists pl
