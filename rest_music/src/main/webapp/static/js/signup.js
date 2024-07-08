@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 회원 가입 버튼 활성화/비활성화
     function changeButtonState() {
         const btnSignUp = document.querySelector('button#btnSignUp');
-        if (useridChecked && passwordChecked && confirmPasswordChecked && emailChecked && nicknameChecked && hintQuestionChecked && hintAnswerChecked && authNumberChecked) {
+        if (useridChecked && passwordChecked && confirmPasswordChecked && emailChecked && nicknameChecked && authNumberChecked) {
             btnSignUp.classList.remove('disabled');
             btnSignUp.disabled = false;
         } else {

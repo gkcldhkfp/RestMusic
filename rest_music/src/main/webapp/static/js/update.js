@@ -51,6 +51,61 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
+    // 닉네임 관련 요소 선택
+const nicknameInput = document.getElementById('nickname');
+const checkNicknameResult = document.getElementById('checkNicknameResult');
+
+// 닉네임 유효성 검사 함수
+function validateNickname(nickname) {
+    // 기본 유효성 검사: 닉네임은 2~20자 사이의 영문, 숫자, 한글만 허용
+    const nicknamePattern = /^[a-zA-Z0-9가-힣]{2,20}$/;
+    return nicknamePattern.test(nickname);
+}
+
+// 닉네임 입력 필드의 값이 변경될 때마다 유효성 검사 및 중복 확인
+nicknameInput.addEventListener('change', function() {
+    const nickname = this.value.trim();
+
+    if (nickname === '') {
+        // 닉네임이 비어있는 경우
+        checkNicknameResult.textContent = '';
+        checkNicknameResult.className = 'form-text';
+        return;
+    }
+
+    if (!validateNickname(nickname)) {
+        // 닉네임 형식이 올바르지 않은 경우
+        checkNicknameResult.textContent = '닉네임은 2~20자의 영문, 숫자, 한글만 사용 가능합니다';
+        checkNicknameResult.className = 'form-text text-danger';
+        return;
+    }
+
+    // 서버에 닉네임 중복 확인 요청
+    const uri = `../user/checknickname?nickname=${nickname}`;
+    axios.get(uri)
+        .then((response) => {
+            if (response.data === 'Y') {
+                checkNicknameResult.textContent = '사용 가능한 닉네임입니다.';
+                checkNicknameResult.className = 'form-text text-success';
+                // 닉네임 검증 상태를 true로 설정
+                nicknameChecked = true;
+            } else {
+                checkNicknameResult.textContent = '이미 사용 중인 닉네임입니다.';
+                checkNicknameResult.className = 'form-text text-danger';
+                // 닉네임 검증 상태를 false로 설정
+                nicknameChecked = false;
+            }
+        })
+        .catch((error) => {
+            console.error('닉네임 중복 확인 중 오류 발생:', error);
+            checkNicknameResult.textContent = '닉네임 중복 확인 중 오류가 발생했습니다.';
+            checkNicknameResult.className = 'form-text text-danger';
+            nicknameChecked = false;
+        });
+});
+
+    
+    
     // 이메일 관련 요소 선택
     const emailInput = document.getElementById('email');
     const checkEmailResult = document.getElementById('checkEmailResult');
@@ -175,19 +230,26 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('profileImage', file);  // 폼 데이터에 프로필 이미지 추가
         }
         
+        const nickname = nicknameInput.value.trim();
+        if (!validateNickname(nickname)) {
+        // 닉네임 형식이 올바르지 않은 경우
+        alert('유효하지 않은 닉네임 형식입니다. 2~20자의 영문, 숫자, 한글을 사용해주세요.');
+        return;
+        }
+    
+        const email = emailInput.value.trim();
+        // 이메일 유효성 재확인
+        if (!validateEmail(email)) {
+            alert('올바른 이메일 주소를 입력해주세요.');
+            return;
+        }
+        
         const password = document.getElementById('password').value;
         const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         // 비밀번호가 입력되었지만 유효하지 않은 경우
         if (password !== '' && !passwordPattern.test(password)) {
             event.preventDefault();
             alert('유효하지 않은 비밀번호 형식입니다. 8자 이상의 영문 대/소문자와 숫자를 사용해주세요.');
-            return;
-        }
-        
-        const email = emailInput.value.trim();
-        // 이메일 유효성 재확인
-        if (!validateEmail(email)) {
-            alert('올바른 이메일 주소를 입력해주세요.');
             return;
         }
         
