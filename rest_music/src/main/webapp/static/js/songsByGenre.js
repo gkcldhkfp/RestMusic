@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function() {
         Promise.all(promises).then(() => {
             const addedPlaylists = selectedPlaylistIds.filter(plistId => alreadyAdded[plistId]);
             if (addedPlaylists.length > 0) {
-                alert('해당 플레이리스트에 이미 추가된 곡입니다.');
+                alert('플레이리스트에 이미 추가된 곡입니다.');
                 return;
             }
 
@@ -237,7 +237,11 @@ document.addEventListener("DOMContentLoaded", function() {
             loginModal.show();
             return;
         }
-        showPlayListModal(id);
+        // 기존의 전체 선택 모달을 숨깁니다.
+        selectAllModal.hide();
+
+        // "곡 추가" 버튼이 있는 모달 창을 열게 됩니다.
+        showPlayListModal(id);  // "곡 추가" 모달 창을 엽니다.
     });
 
     // 플레이리스트에 곡 추가 버튼 클릭 이벤트 핸들러
