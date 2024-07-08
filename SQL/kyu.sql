@@ -221,7 +221,6 @@ values (7, 4, 40);
 insert into title_songs (album_id, song_id)
 values (1, 1); -- what time은 타이틀곡
 
-update albums set album_image = 'what_time_album_image.jpg' where album_image = 'what_time_album_image';
 
 -- 아티스트 쿼리문 작성 (Kenzi)
 select s.song_id, s.title,
@@ -230,7 +229,8 @@ from songs s
 join artist_roles artr on s.song_id = artr.song_id
 join artists art on artr.artist_id = art.artist_id
 join role_code rc on artr.role_id = rc.role_id
-where art.artist_id = 1;
+where art.artist_id = 1
+order by song_id;
 
 -- 앨범 쿼리문 작성
     select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
@@ -291,6 +291,8 @@ GROUP BY a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_i
         join artists art on artr.artist_id = art.artist_id
         join role_code rc on artr.role_id = rc.role_id
       where s.song_id = 1;
+      
+commit;
 
 --표준 문법
 --select e.ename, d.dname, e.sal, s.grade

@@ -19,10 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
 	console.log(date);
 	originDate.innerHTML = date;
 
+	// 좋아요 버튼 찾기
 	const btnLike = document.querySelector('button#btnLike');
 
+	// jsp에서 전달한 변수로 객체 생성
 	const data = { albumId, id };
 	axios
+	// postmapping controller 호출.
+	//  로그인한 사용자가 이 음원에 눌렀는 지 검사하고 그에 따른 표현 문자열을 다르게 해줌
+	// 생성한 객체 전달
 		.post('./like', data)
 		.then((response) => {
 			if (response.data) {
@@ -35,8 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		.catch((error) => {
 			console.log(error);
 		});
-	btnLike.addEventListener('click', () => {
 
+	// 버튼 클릭 이벤트 리스너 등록
+	btnLike.addEventListener('click', () => {
+	// putmapping controller 호출. => 좋아요버튼 토글 기능임.
+	// 생성한 객체 전달
 		axios
 			.put('./like', data)
 			.then((response) => {
@@ -52,6 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 
 	});
+
+	// TODO: 플레이리스트에 추가 기능 구현
+
+	// 앨범 듣기: 음원 바로듣기와 비슷한 기능
+	
+	// 앨범 현재 재생 목록에 추가: 음원 재생목록 추가와 비슷한 기능
+
+	// 앨범을 플레이리스트에 추가: 플레이리스트 추가와 비슷한 기능
 	/* 
 		const btnLike = document.querySelectorAll('#btnLike');
 		for (let l of btnLike) {

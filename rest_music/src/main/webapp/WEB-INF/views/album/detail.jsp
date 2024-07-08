@@ -108,7 +108,9 @@
 								</table>
 								<div id="like">
 									<button id="btnLike" class="btn btn-success">♡</button>
-									<span class="intro">뭐쓰지</span>
+									<button id="btnListenAlbum" class="intro btn btn-success" data-id="${album.albumId}">앨범 듣기</button>
+									<button id="btnAddCPListAlbum" class="intro btn btn-success" data-id="${album.albumId}">앨범을 다음 곡으로 추가</button>
+									<button id="btnAddUPListAlbum" class="intro btn btn-success" data-id="${album.albumId}">앨범을 플레이리스트에 추가</button>
 								</div>
 							</div>
 						</section>
@@ -166,7 +168,7 @@
 					</div>
 				</div>
 			</main>
-			
+
 
 			<footer>
 				<!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
@@ -185,7 +187,7 @@
 			<!-- Axios JS 라이브러리 -->
 			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 			<script>
-				const albumId = ${album.albumId};
+				const albumId = ${ album.albumId };
 				const id = '${loginUserId}'; //id
 			</script>
 			<c:url var="album_detail" value="/js/album_detail.js" />

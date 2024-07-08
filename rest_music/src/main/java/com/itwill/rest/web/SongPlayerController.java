@@ -3,6 +3,7 @@ package com.itwill.rest.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -86,5 +87,14 @@ public class SongPlayerController {
 		session.setAttribute("cPList", cPList);
 		// 세션에 리스트를 업데이트
 	}
+
+	@GetMapping("/api/album")
+	public ResponseEntity<List<AlbumSongs>> getAlbum(@RequestParam(value = "albumId") String albumId) {
+		log.debug("albumId = {}", albumId);
+		List<AlbumSongs> list = albumSongsService.selectByAlbumId(Integer.parseInt(albumId));
+		log.debug("list = {}", list);
+		return ResponseEntity.ok(list);
+	}
+	
 
 }
