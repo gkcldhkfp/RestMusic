@@ -230,9 +230,6 @@
     <c:url var="songsPopularJS" value="/js/songsPopular.js" />
     <script src="${songsPopularJS}"></script>
     
-    <c:url var="playerPageJS" value="/js/playerPage.js" />
-    <script src="${playerPageJS}"></script>
-    
     <c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
     <script src="${addCurrentPlayList}"></script>
     

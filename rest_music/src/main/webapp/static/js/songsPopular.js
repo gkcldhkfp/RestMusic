@@ -248,6 +248,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const selectedPlaylistIds = Array.from(selectedPlaylists).map(checkbox => checkbox.dataset.playlistId);
 
         // add-to-playlist-btn 클래스를 가진 버튼 중 현재 선택된 노래의 songId를 가져옵니다.
+        
+        // 잘못된 코드입니다 수정하세요! 
+        // 힌트: 쿼리셀렉트ALL은 반복문 돌리고 그 안에서 체크가 됐는 지 안됐는 지 검사하고
+        // 체크된 음악번호를 배열로 추가해야함
         const songIdElements = document.querySelectorAll('.add-to-playlist-btn.active');
         const songIds = Array.from(songIdElements).map(btn => btn.dataset.songId); // 현재 선택된 곡의 songId 배열 생성
 
