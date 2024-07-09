@@ -30,7 +30,7 @@
                     <div class="ms-2" style="display: inline-block; vertical-align: middle;">
                         <h2 id="pListId" class="d-none">${playList.pListId}</h2>
                         <h2 id="pListName" class="mt-4 d-inline-block" style="display: inline-block;">${playList.pListName}</h2>
-                        <c:url var="editImage" value="/images/edit.png" />
+                        <c:url var="editImage" value="/images/icon/edit.png" />
                             <button id="editButton" style="position: relative; width: 20px; height: 20px; overflow: hidden; border:none; background-color:transparent !important;">
                                 <img src="${editImage}" alt="edit" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                             </button>
@@ -44,7 +44,7 @@
             <div class="d-flex justify-content-end mb-2">
                 <button class="btn btn-primary ms-2 mt-2" id="deleteButton"
                 style="position: relative; width: 40px; height: 40px; overflow: hidden; background-color:white; border:none; background-color:transparent;">
-                <c:url var="deleteImage" value="/images/delete.png" />
+                <c:url var="deleteImage" value="/images/icon/delete.png" />
                     <div class="flex-grow-1 ms-3">
                         <img src="${deleteImage}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                     </div>

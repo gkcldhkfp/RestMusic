@@ -28,7 +28,7 @@
     <div class="container-fluid" style="padding: 30px;">
         <div class="m-5 ">
             <div class="p-3">
-                <c:url var="artistCover" value="/artist/${artist.artistImage}" /> <!-- 아티스트 이미지 주소 지정 -->
+                <c:url var="artistCover" value="/artist/image/${artist.artistImage}" /> <!-- 아티스트 이미지 주소 지정 -->
                 <c:url var="albumPage" value="/artist/albums?artistId=${artist.artistId}" /> <!-- 아티스트의 앨범 페이지 이동 주소 지정 -->
                 <img alt="artistCover" src="${artistCover}" class="rounded-circle"
                     style="display: inline-block; vertical-align: middle; left: 400px; width: 240px; height: 240px; object-fit: cover;">
@@ -51,7 +51,7 @@
                     <c:catch var="error">
                         <%-- 파일 읽기를 시도하고 에러가 발생할 경우 처리 --%>
                         <c:set var="filePath"
-                            value="/static/artist/${artist.artistDescription}" />
+                            value="/static/artist/description/${artist.artistDescription}" />
                         <%
                         ServletContext context = request.getServletContext();
                         String realPath = context.getRealPath((String) pageContext.getAttribute("filePath"));
@@ -100,8 +100,8 @@
                     </thead>
                     <tbody id="songsTableBody">
                         <c:forEach items="${ songs }" var="s">
-                        <c:url var="albumImage" value="/images/${s.albumImage}" />
-                        <c:url var="playImage" value="/images/play.png" />
+                        <c:url var="albumImage" value="/images/albumcover/${s.albumImage}" />
+                        <c:url var="playImage" value="/images/icon/play.png" />
                         <c:url var="songPage" value="/song/detail?songId=${s.songId}" />
                             <tr>
                                 <td style="text-align: center; vertical-align: middle;">
