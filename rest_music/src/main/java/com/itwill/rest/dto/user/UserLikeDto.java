@@ -21,4 +21,4 @@ public class UserLikeDto {
 	private Integer artistId;
 	private String artistName;
 
-}ㄴ
+}
