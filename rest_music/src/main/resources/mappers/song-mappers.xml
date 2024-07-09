@@ -27,7 +27,7 @@
                     artist_roles ar
                     JOIN artists art ON ar.artist_id = art.artist_id
                 WHERE
-                    ar.role_id = 1
+                    ar.role_id = 10
                 GROUP BY
                     ar.song_id
             ) singer ON s.song_id = singer.song_id
@@ -39,7 +39,7 @@
                     artist_roles ar
                     JOIN artists art ON ar.artist_id = art.artist_id
                 WHERE
-                    ar.role_id = 2
+                    ar.role_id = 30
                 GROUP BY
                     ar.song_id
             ) writer ON s.song_id = writer.song_id
@@ -51,7 +51,7 @@
                     artist_roles ar
                     JOIN artists art ON ar.artist_id = art.artist_id
                 WHERE
-                    ar.role_id = 3
+                    ar.role_id = 20
                 GROUP BY
                     ar.song_id
             ) composer ON s.song_id = composer.song_id
@@ -63,7 +63,7 @@
                     artist_roles ar
                     JOIN artists art ON ar.artist_id = art.artist_id
                 WHERE
-                    ar.role_id = 4
+                    ar.role_id = 40
                 GROUP BY
                     ar.song_id
             ) arranger ON s.song_id = arranger.song_id
@@ -77,57 +77,69 @@
     </select>
   
     <select id="isLikes" resultType="integer">
-        select count(*) from likes where song_id = #{songId} and id = #{id}
+        select count(*) from likes where song_id = #{songId} and id = #{loginUserId}
     </select>
     
     <insert id="addLike">
-        insert into likes (song_id, id) values (#{songId}, #{id})
+        insert into likes (song_id, id) values (#{songId}, #{loginUserId})
     </insert>
     
     <delete id="removeLike">
-        delete from likes where song_id = #{songId} and id = #{id}
+        delete from likes where song_id = #{songId} and id = #{loginUserId}
     </delete>
     
-    <select id="searchSongs" resultType="ResultDto">
+  <select id="searchSongs" resultType="ResultDto">
     <bind name="searchKeyword" value="'%' + keyword + '%'" />
-                            SELECT * FROM (
-                    SELECT songId, albumName, albumImage, title, singerName, releaseDate, rnum
-                    FROM (
-                        SELECT s.song_id AS songId,
-                               a.album_name AS albumName,
-                               a.album_image AS albumImage,
-                               s.title AS title,
-                               art.artist_name AS singerName,
-                               a.album_release_date AS releaseDate,
-                               ROW_NUMBER() OVER (ORDER BY a.album_release_date DESC) AS rnum
-                        FROM songs s
-                        JOIN albums a ON s.album_id = a.album_id
-                        JOIN artist_roles ar ON s.song_id = ar.song_id AND ar.role_id = 1 
-                        JOIN artists art ON ar.artist_id = art.artist_id
-                    <where>
-                        <choose>
-                            <when test='category.equals("t")'>
-                                upper(s.title) like upper(#{searchKeyword})
-                            </when>
-                            <when test='category.equals("s")'>
-                                upper(art.artist_name) like upper(#{searchKeyword})
-                            </when>
-                            <when test='category.equals("ts")'>
-                                upper(s.title) like upper(#{searchKeyword})
-                                or
-                                upper(art.artist_name) like upper(#{searchKeyword})
-                            </when>
-                            <when test='category.equals("a")'>
-                                upper(a.album_name) like upper(#{searchKeyword})
-                            </when>
-                        </choose>
-                    </where>
-                    ORDER BY a.album_release_date DESC
-                )
-                WHERE ROWNUM &lt;= #{endRow}
-            )
-            WHERE rnum >= #{startRow}
-        </select>
+    SELECT * FROM (
+        SELECT songId, albumName, albumImage, title, singerName, releaseDate, score, rnum
+        FROM (
+            SELECT s.song_id AS songId,
+                   a.album_name AS albumName,
+                   a.album_image AS albumImage,
+                   s.title AS title,
+                   LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS singerName,
+                   a.album_release_date AS releaseDate,
+                   MAX(SCORE(1)) AS score,
+                   ROW_NUMBER() OVER (
+                       <choose>
+                           <when test='sortType.equals("accuracy")'>
+                               ORDER BY MAX(SCORE(1)) DESC
+                           </when>
+                           <when test='sortType.equals("recency")'>
+                               ORDER BY a.album_release_date DESC
+                           </when>
+                           <when test='sortType.equals("alphabet")'>
+                               ORDER BY s.title ASC
+                           </when>
+                       </choose>
+                   ) AS rnum
+            FROM songs s
+            JOIN albums a ON s.album_id = a.album_id
+            JOIN artist_roles ar ON s.song_id = ar.song_id AND ar.role_id = 10
+            JOIN artists art ON ar.artist_id = art.artist_id
+            WHERE 1=1
+            <choose>
+                <when test='category.equals("t")'>
+                    AND CONTAINS(s.title, #{searchKeyword}, 1) > 0
+                </when>
+                <when test='category.equals("s")'>
+                    AND CONTAINS(art.artist_name, #{searchKeyword}, 1) > 0
+                </when>
+                <when test='category.equals("ts")'>
+                    AND (CONTAINS(s.title, #{keyword}, 1) > 0
+                    OR CONTAINS(art.artist_name, #{searchKeyword}, 2) > 0)
+                </when>
+                <when test='category.equals("a")'>
+                    AND CONTAINS(a.album_name, #{searchKeyword}, 1) > 0
+                </when>
+            </choose>
+            GROUP BY s.song_id, a.album_name, a.album_image, s.title, a.album_release_date
+        )
+        WHERE ROWNUM &lt;= #{endRow}
+    )
+    WHERE rnum >= #{startRow}
+    </select>
+
     
     <!-- 좋아요 개수 확인 -->
     <select id="countSongLikes" resultType="Integer">

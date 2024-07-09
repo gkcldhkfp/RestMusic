@@ -245,12 +245,7 @@
 
     <script>
 		const songId = ${songId};
-        let id;
-		if(${loginUserId eq null}){
-			id = 0; //userid
-		} else {
-			id = '${loginUserId}';
-		}
+		let loginUserId ='${loginUserId}';
 	</script>
 
     <c:url var="commentsJS" value="/js/comments.js" />

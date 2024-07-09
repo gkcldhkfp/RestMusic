@@ -5,7 +5,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAddPlayLists = document.querySelectorAll('button.addPlayList');
 
     const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
-
+    
+    
+    // 현재 페이지의 URL 가져오기
+    const currentUrl = window.location.href;
+    
+    // URL에서 쿼리 문자열 파싱
+    const url = new URL(currentUrl);
+    const params = new URLSearchParams(url.search);
+    
+    
+    const btnAccuracy = document.querySelector('button#accuracy');
+    btnAccuracy.addEventListener('click', ()=> {
+        sort('accuracy');
+    })
+    const btnRecency = document.querySelector('button#recency');
+    btnRecency.addEventListener('click', ()=> {
+         sort('recency');
+    })
+    const btnAlphabet = document.querySelector('button#alphabet');
+    btnAlphabet.addEventListener('click', ()=>{
+         sort('alphabet');
+    })
+    
     let songId;
 
     let currentPage = 1;
@@ -56,12 +78,44 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 100); // 100ms 후에 다시 호출되지 않으면 추가 로딩 실행
     };
+    
+    function sort(newest) {
+        
+    // 새로운 sortType 값 설정 (예시: 'newest'로 변경)
+    let newSortType = newest;
+    
+    // 기존 sortType 값과 새로운 값 비교하여 변경
+    params.set('sortType', newSortType);  // 새로운 값으로 변경
+    
+    // 변경된 쿼리 문자열을 적용한 새로운 URL 생성
+    url.search = params.toString();
+    const newUrl = url.toString();
+    
+    // 변경된 URL로 리다이렉트
+    window.location.href = newUrl;
+    }
+    
+    // url에서 쿼리문의 마지막 파라미터 가져오기
+    let lastQueryParamValue;
+    for (let value of urlParams.values()) {
+        lastQueryParamValue = value;
+    }
 
+    // lastQueryParamValue에 따라 버튼 색 변경
+    if(lastQueryParamValue === 'accuracy'){
+        btnAccuracy.style.color = 'blue';  
+    } else if (lastQueryParamValue === 'recency'){
+        btnRecency.style.color = 'blue';
+    } else if (lastQueryParamValue === 'alphabet'){
+        btnAlphabet.style.color = 'blue';
+    };
+    
     function loadMoreData() {
         axios.get('./rest/search', {
             params: {
                 category: category,
                 keyword: restKeyword,
+                sortType: lastQueryParamValue,
                 startRow: startRow,
                 endRow: endRow
             }
@@ -138,13 +192,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getPlayLists(event) {
         event.stopPropagation();
-        if (id === 0) { // 유저아이디
+        if (loginUserId == '') { // 유저아이디
             alert('로그인이 필요합니다');
             return;
         }
         songId = event.target.closest('tr').getAttribute('data-song-id');
 
-        const uri = `../getPlayList/${id}`;
+        const uri = `../getPlayList/${loginUserId}`;
         axios
             .get(uri)
             .then((response) => {

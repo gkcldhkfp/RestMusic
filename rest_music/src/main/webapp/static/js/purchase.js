@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPurchase = document.querySelector('button#purchase');  
     btnPurchase.addEventListener('click', requestPay);
     
-    if(loginUserId == ''){
-        loginUserId = 1;
-    }
+    //if(loginUserId == ''){
+    //    loginUserId = 1;
+    //}
     const amount = 10;
     const IMP = window.IMP; 
     IMP.init('imp62307542'); // 'imp12345678' 대신 실제 가맹점 식별코드를 입력하세요.
@@ -29,7 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     
     function requestPay() {
-              
+         if(loginUserId == ''){
+            alert('로그인이 필요합니다');
+            return;
+        }
+        
         IMP.request_pay({
           pg: "html5_inicis.INIpayTest",
           pay_method: "card",

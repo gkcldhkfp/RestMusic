@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return; // 이벤트 리스너를 종료
         }
 
-        const data = { songId, ctext, id };
+        const data = { songId, ctext, loginUserId };
         // console.log(data);
 
         axios
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="text-secondary">${modifiedTime}</span>
                 </div>
                 <div>${comment.ctext}</div>`;
-         if (comment.userId == id) {    
+         if (comment.userId == loginUserId) {    
             htmlStr += `
                 <div>
                     <button class="btnDeleteComment btn btn-outline-danger btn-sm"
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((response) => {
                 // console.log(response.data);
                 if (response.data === 1) {
-                    alert(`댓글(${id}) 삭제 성공`);
+                    alert(`삭제 성공`);
                     getAllComments(); // 댓글 목록 갱신
                 }
             })

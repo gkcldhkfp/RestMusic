@@ -10,16 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
      const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
     btnAddPlayList.addEventListener('click', getPlayLists);
     
-    if(id === 0){
+    if(loginUserId == ''){
         const commnetRegistForm = document.querySelector('div#commnetRegistForm')
         commnetRegistForm.classList.add('d-none');
     }
     
-    const data = { songId, id };
+    const data = { songId, loginUserId };
     let currentPage = 1;
     const itemsPerPage = 5;
     let playlistsData = [];
-    if(id != ''){
+    if(loginUserId != ''){
     axios
         .post('./like', data)
         .then((response) => {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     btnLike.addEventListener('click', () => {
-    if(id === 0 ) {
+    if(loginUserId == '') {
         alert('로그인이 필요합니다');
         return
         }
@@ -60,11 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function getPlayLists() {
-        if(id === 0 ) {
+        if(loginUserId == '' ) {
         alert('로그인이 필요합니다');
         return
         }
-        const uri = `../getPlayList/${id}`;
+        const uri = `../getPlayList/${loginUserId}`;
         axios
             .get(uri)
             .then((response) => {
