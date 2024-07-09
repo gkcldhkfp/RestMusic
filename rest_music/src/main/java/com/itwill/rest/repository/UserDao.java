@@ -13,7 +13,7 @@ public interface UserDao {
     int insert(User user);
     User selectByUserIdAndPassword(UserSignInDto dto);
 	User selectByUserid(String userid);
-	List<UserLikeDto> selectLikesByUserid(String userId);
+	List<UserLikeDto> selectLikesByUserid(Integer id);
 	User findUserId(User user);
     User findpassword(User user);
     void setpassword(User user);

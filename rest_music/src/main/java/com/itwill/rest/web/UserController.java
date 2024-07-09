@@ -6,7 +6,6 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,12 +51,12 @@ public class UserController {
 		model.addAttribute("user", user);
 	}
 	
-    @GetMapping("/getUserLike/{userId}")
+    @GetMapping("/getUserLike/{id}")
 	@ResponseBody
-	public ResponseEntity<List<UserLikeDto>> getUserLike(@PathVariable String userId) {
-		log.debug("getUserLike({})", userId);
+	public ResponseEntity<List<UserLikeDto>> getUserLike(@PathVariable Integer id) {
+		log.debug("getUserLike({})", id);
 		
-		List<UserLikeDto> list = userService.selectLikesByUserid(userId); // 유저가 좋아요 누른 곡 출력
+		List<UserLikeDto> list = userService.selectLikesByUserid(id); // 유저가 좋아요 누른 곡 출력
 		
 		return ResponseEntity.ok(list);
 	}
@@ -211,7 +210,7 @@ public class UserController {
         // findpassword 호출로 비밀번호 찾기 로직 수행
         User findUser = userService.findpassword(user);
         
-        String targetPage;
+        String targetPage = "";
         // findUser가 null이 아닌지 확인하고, 힌트 질문 및 답변이 일치하는지 확인
         if (findUser != null) {
             if ((findUser.getHintQuestion() == null && user.getHintQuestion().equals("null")) &&
@@ -247,7 +246,7 @@ public class UserController {
         return "redirect:/user/signin";
     }
     
- // 이메일 인증 번호 발송
+    // 이메일 인증 번호 발송
     @GetMapping("/sendEmailAuth")
     @ResponseBody
     public ResponseEntity<String> sendEmailAuth(@RequestParam(name = "email") String email, HttpSession session) {

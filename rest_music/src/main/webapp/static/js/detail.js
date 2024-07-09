@@ -9,12 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
      const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
     btnAddPlayList.addEventListener('click', getPlayLists);
-
-    const data = { songId, id };
+    
+    if(loginUserId == ''){
+        const commnetRegistForm = document.querySelector('div#commnetRegistForm')
+        commnetRegistForm.classList.add('d-none');
+    }
+    
+    const data = { songId, loginUserId };
     let currentPage = 1;
     const itemsPerPage = 5;
     let playlistsData = [];
-
+    if(loginUserId != ''){
     axios
         .post('./like', data)
         .then((response) => {
@@ -28,11 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch((error) => {
             console.log(error);
         });
-
+    } else {
+        btnLike.textContent = '♡';
+    }
 
 
     btnLike.addEventListener('click', () => {
-
+    if(loginUserId == '') {
+        alert('로그인이 필요합니다');
+        return
+        }
         axios
             .put('./like', data)
             .then((response) => {
@@ -50,7 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function getPlayLists() {
-        const uri = `../getPlayList/${id}`;
+        if(loginUserId == '' ) {
+        alert('로그인이 필요합니다');
+        return
+        }
+        const uri = `../getPlayList/${loginUserId}`;
         axios
             .get(uri)
             .then((response) => {
