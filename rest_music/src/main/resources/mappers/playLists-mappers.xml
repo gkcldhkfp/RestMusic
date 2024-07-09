@@ -25,7 +25,7 @@
                 playlist_songs.created_time IS NULL
                 OR playlist_songs.created_time = (
                     SELECT
-                        MIN(ps2.created_time)
+                        MAX(ps2.created_time)
                     FROM
                         playlist_songs ps2
                     WHERE
@@ -60,14 +60,16 @@
     ps.created_time,
     s.title,
     s.album_id,
-    si.singer_name,
-    a.album_image
+    al.album_image,
+    ar.artist_id,
+    ar.artist_name
     FROM
     playlists pl
     JOIN playlist_songs ps ON pl.p_list_id = ps.p_list_id
     JOIN songs s ON ps.song_id = s.song_id
-    JOIN singers si ON s.song_id = si.song_id
-    JOIN albums a ON s.album_id = a.album_id
+    JOIN albums al ON s.album_id = al.album_id
+    JOIN artist_roles arr ON s.song_id = arr.song_id
+    JOIN artists ar ON arr.artist_id = ar.artist_id
     WHERE
     pl.p_list_id = #{pListId}
     ORDER BY
