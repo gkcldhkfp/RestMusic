@@ -49,12 +49,12 @@ public class UserController {
 		model.addAttribute("user", user);
 	}
 	
-    @GetMapping("/getUserLike/{userId}")
+    @GetMapping("/getUserLike/{id}")
 	@ResponseBody
-	public ResponseEntity<List<UserLikeDto>> getUserLike(@PathVariable String userId) {
-		log.debug("getUserLike({})", userId);
+	public ResponseEntity<List<UserLikeDto>> getUserLike(@PathVariable Integer id) {
+		log.debug("getUserLike({})", id);
 		
-		List<UserLikeDto> list = userService.selectLikesByUserid(userId); // 유저가 좋아요 누른 곡 출력
+		List<UserLikeDto> list = userService.selectLikesByUserid(id); // 유저가 좋아요 누른 곡 출력
 		
 		return ResponseEntity.ok(list);
 	}

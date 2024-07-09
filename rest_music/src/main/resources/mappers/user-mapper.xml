@@ -31,29 +31,21 @@
     </select>
 
     <select id="selectLikesByUserid" resultType="UserLike">
-        SELECT
-        u.user_name,
-        u.user_id,
-        s.song_id,
-        s.title,
-        s.song_path,
-        s.genre,
-        a.album_name,
-        a.album_image,
-        a.album_type,
-        sg.singer_name
-        FROM
-        users u
-        JOIN
-        likes l ON u.id = l.id
-        JOIN
-        songs s ON l.song_id = s.song_id
-        JOIN
-        albums a ON s.album_id = a.album_id
-        LEFT JOIN 
-        singers sg ON s.song_id = sg.song_id
-        WHERE
-        u.user_id = #{userId}
+    SELECT
+    al.album_image,
+    s.song_id,
+    s.title,
+    ar.artist_id,
+    ar.artist_name,
+    al.album_name
+    FROM
+    likes l
+    JOIN songs s ON l.song_id = s.song_id
+    JOIN albums al ON s.album_id = al.album_id
+    JOIN artist_roles arr ON s.song_id = arr.song_id
+    JOIN artists ar ON arr.artist_id = ar.artist_id
+    WHERE
+    l.id = #{id}
     </select>
     
     <select id="findUserId" resultType="User" parameterType="User">
