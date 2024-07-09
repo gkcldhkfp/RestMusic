@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -197,20 +198,33 @@ public class UserController {
     // 비밀번호 찾기 (조회)
     @PostMapping("findpassword")
     public String findpassword(User user) {
-        log.debug("POST findpassword({})", user);
-        
-        // 힌트 질문과 답변이 비어있어도 비밀번호 설정 페이지로 이동
-        if ((user.getHintQuestion() == null || user.getHintQuestion().isEmpty()) &&
-            (user.getHintAnswer() == null || user.getHintAnswer().isEmpty())) {
-            String targetPage = "/user/setpassword?userId=" + user.getUserId();
-            return "redirect:" + targetPage;
+        // 힌트 질문과 답변이 비어있으면 "null"로 설정
+        if ((user.getHintQuestion() == null || user.getHintQuestion().isEmpty())) {
+            user.setHintQuestion("null");
+        }
+        if ((user.getHintAnswer() == null || user.getHintAnswer().isEmpty())) {
+            user.setHintAnswer("null");
         }
         
+        log.debug("POST findpassword({})", user);
 
+        // findpassword 호출로 비밀번호 찾기 로직 수행
         User findUser = userService.findpassword(user);
-        String targetPage = "";
+        
+        String targetPage;
+        // findUser가 null이 아닌지 확인하고, 힌트 질문 및 답변이 일치하는지 확인
         if (findUser != null) {
-            targetPage = "/user/setpassword?userId=" + user.getUserId();
+            if ((findUser.getHintQuestion() == null && user.getHintQuestion().equals("null")) &&
+                (findUser.getHintAnswer() == null && user.getHintAnswer().equals("null"))) {
+                targetPage = "/user/setpassword?userId=" + findUser.getUserId();
+            } else if ((findUser.getHintQuestion() != null && findUser.getHintQuestion().equals(user.getHintQuestion()) ||
+                       (findUser.getHintQuestion() == null && user.getHintQuestion().equals("null"))) &&
+                       (findUser.getHintAnswer() != null && findUser.getHintAnswer().equals(user.getHintAnswer()) ||
+                       (findUser.getHintAnswer() == null && user.getHintAnswer().equals("null")))) {
+                targetPage = "/user/setpassword?userId=" + findUser.getUserId();
+            } else {
+                targetPage = "/user/findpassword?result=f";
+            }
         } else {
             targetPage = "/user/findpassword?result=f";
         }
@@ -260,42 +274,52 @@ public class UserController {
     @PostMapping("/updateProfileImage")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> updateProfileImage(
-    		@RequestParam("userId") String userId, 
-    		@RequestParam("profileImage") MultipartFile profileImage, 
-    		HttpServletRequest request) {
+    		@RequestParam("userId") String userId, // 클라이언트에서 전달된 userId 파라미터를 받습니다.
+    		@RequestParam("profileImage") MultipartFile profileImage, // 클라이언트에서 전달된 프로필 이미지 파일을 받습니다.
+    		HttpServletRequest request) { // HTTP 요청 정보를 담고 있는 HttpServletRequest 객체를 받습니다.	
+    	// 서비스 레이어에서 프로필 이미지 업데이트를 수행합니다.
     	boolean isUpdated = userService.updateProfileImage(userId, profileImage, request);
     	Map<String, Object> response = new HashMap<>();
+    	
     	if (isUpdated) {
+    		// 이미지 업로드가 성공하면, 웹에서 접근 가능한 이미지 URL을 생성합니다.
     		String imageUrl = "../images/profileimage/" + profileImage.getOriginalFilename();
-            response.put("success", true);
-            response.put("message", "Profile image updated successfully");
-            response.put("imageUrl", imageUrl);  // 반환할 이미지 URL
-            return ResponseEntity.ok(response);
+            response.put("success", true); // 요청이 성공했음을 나타냅니다.
+            response.put("message", "Profile image updated successfully"); // 성공 메시지를 응답에 추가합니다.
+            response.put("imageUrl", imageUrl); // 반환할 이미지 URL을 응답에 추가합니다.
+            return ResponseEntity.ok(response); // HTTP 상태 200 OK와 함께 응답을 반환합니다.
         } else {
-            response.put("success", false);
-            response.put("message", "Failed to update profile image");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        	// 이미지 업로드가 실패하면, 실패 메시지를 응답에 추가합니다.
+            response.put("success", false); // 요청이 실패했음을 나타냅니다.
+            response.put("message", "Failed to update profile image"); // 실패 메시지를 응답에 추가합니다.
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response); // HTTP 상태 500 Internal Server Error와 함께 응답을 반환합니다.
         }
     }
     
     // 정보 수정
     @PostMapping("/update")
-	public String update(UserUpdateDto dto,
-			@RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws IOException {
-		log.debug("POST: update(dto = {}, file = {})", dto, profileImage);
+    public String update(UserUpdateDto dto,
+            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws IOException {
+        log.debug("POST: update(dto = {}, file = {})", dto, profileImage);  // 디버그 로그에 전달된 DTO와 파일 객체를 출력합니다.
 
-		if (profileImage != null && !profileImage.isEmpty()) {
+        // 업로드된 프로필 이미지가 존재하고 비어있지 않은 경우
+        if (profileImage != null && !profileImage.isEmpty()) {
+            // 프로필 이미지 파일의 원본 파일명 가져오기
+            String filePath = profileImage.getOriginalFilename();
+            // 저장할 파일의 경로를 지정합니다. (여기서는 현재 작업 디렉토리에 저장됨)
+            File destinationFile = new File(filePath);
+            // 업로드된 파일을 지정된 경로에 저장합니다.
+            profileImage.transferTo(destinationFile);
 
-			String filePath = profileImage.getOriginalFilename();
-			File destinationFile = new File(filePath);
-			profileImage.transferTo(destinationFile); // 파일 저장
+            // UserUpdateDto의 프로필 이미지 경로를 설정합니다.
+            dto.setUserProfile(filePath);
+        }
 
-			dto.setUserProfile(filePath);
-		}
+        // UserUpdateDto를 사용하여 사용자 정보를 업데이트합니다.
+        userService.update(dto);
 
-		userService.update(dto);
-
-		return "redirect:/user/mypage?userId=" + dto.getUserId(); // 변경 후 마이페이지로 리다이렉트
-	}
+        // 업데이트가 완료되면 마이페이지로 리다이렉트합니다. (userId를 쿼리 파라미터로 전달)
+        return "redirect:/user/mypage?userId=" + dto.getUserId();
+    }
     
 }

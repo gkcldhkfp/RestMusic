@@ -48,7 +48,7 @@
       컴포넌트 애너테이션(예: @Service, @Component, ...)이 선언된 클래스의 객체를 생성/관리.
       필요한 곳에 의존성을 주입해 줌. -->
   <context:component-scan base-package="com.itwill.rest.service" />
-  <context:component-scan base-package="com.itwill.rest.web" />
+  <!--   <context:component-scan base-package="com.itwill.rest.web" /> -->
   
   <!-- JavaMailSender 빈 정의 -->
   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

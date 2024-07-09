@@ -134,7 +134,6 @@
             </div>
             <div id="checkNicknameResult" class="text-danger"></div>
 
-            <input type="hidden" id="hintQuestion" name="hintQuestion" value="">
             <div class="mb-3">
                 <select class="form-control" id="hintQuestionSelect" name="hintQuestionSelect">
                     <option value="" selected>힌트 질문</option>
@@ -142,6 +141,7 @@
                     <option value="2">핸드폰번호 뒷자리는?</option>
                     <option value="3">내 성별은?</option>
                 </select>
+                <input type="text" class="form-control mt-2 d-none" id="hintQuestion" name="hintQuestion" value="">
             </div>
 
             <div class="mb-3">
