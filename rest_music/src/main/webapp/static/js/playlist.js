@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="${artistPage}" style="color: black; text-decoration: none;"
                         onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${playlistSong.artistName}</a>
                 </td>
-                <td style="text-align: left;">
-                    <button style="background-image: url('${playImage}'); width: 50px; height: 50px; background-size: cover; background-repeat: no-repeat;"
+                <td style="text-align: center;">
+                    <button style="background-image: url('${playImage}'); width: 40px; height: 40px; background-size: cover; background-repeat: no-repeat;"
                     data-songId="${playlistSong.songId}" class="playButton btn mt-3" id="listenBtn"></button>
                 </td>
             </tr>
