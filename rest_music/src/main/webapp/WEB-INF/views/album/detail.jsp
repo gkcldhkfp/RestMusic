@@ -210,7 +210,7 @@
 			<!-- Axios JS 라이브러리 -->
 			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 			<script>
-				const albumId = ${ album.albumId };
+				const albumId = ${album.albumId};
 				const id = '${loginUserId}'; //id
 			</script>
 			<c:url var="album_detail" value="/js/album_detail.js" />
