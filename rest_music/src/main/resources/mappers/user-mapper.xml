@@ -39,6 +39,7 @@
     SELECT
     al.album_image,
     s.song_id,
+    s.album_id,
     s.title,
     ar.artist_id,
     ar.artist_name,
@@ -51,6 +52,8 @@
     JOIN artists ar ON arr.artist_id = ar.artist_id
     WHERE
     l.id = #{id}
+    ORDER BY
+    s.title
     </select>
     
     <select id="findUserId" resultType="User" parameterType="User">
