@@ -94,32 +94,33 @@
             <!-- Artist가 참여한 앨범 출력 -->
             <div class="card">
                 <div class="card-body">
-                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                    <div class="row row-cols-1 row-cols-md-2 g-3"> <!-- 2열 유지 -->
                         <c:forEach items="${albums}" var="a">
                             <div class="col">
-                                <div class="card h-100" style="width: 80%;">
+                                <div class="card h-100" style="max-width: 400px;"> <!-- 카드 최대 너비 조정 -->
                                     <div class="row g-0">
-                                        <div class="col-md-6">
-                                            <c:url var="albumPage" value="/album/detail?albumId=${a.albumId}" /> <!-- 아티스트의 앨범 상세 페이지 이동 주소 지정 -->
+                                        <div class="col-5"> <!-- 이미지 열 너비 조정 -->
+                                            <c:url var="albumPage" value="/album/detail?albumId=${a.albumId}" />
                                             <c:url var="albumImage" value="/images/${a.albumImage}" />
                                             <a href="${albumPage}">
-                                                <img src="${albumImage}" class="card-img-top" alt="Album Cover"
-                                                    style="width: 160px; height: 160px;">
+                                                <img src="${albumImage}" class="img-fluid rounded-start" alt="Album Cover"
+                                                    style="width: 100%; height: 100%; object-fit: cover;">
                                             </a>
                                         </div>
-                                        <div class="col-md-6 px-md-2">
-                                            <div class="card-body">
-                                                <h5 class="card-title mb-0">
-                                                    <a href="${albumPage}" style="color: black; text-decoration: none; font-weight: bold;"
+                                        <div class="col-7"> <!-- 텍스트 열 너비 조정 -->
+                                            <div class="card-body"> <!-- 상하 패딩 줄임 -->
+                                                <h6 class="card-title mb-1">
+                                                    <a href="${albumPage}" style="color: black; text-decoration: none; font-weight: bold; font-size: 0.9rem;"
                                                         onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${a.albumName}</a>
-                                                </h5>
-                                                <p class="card-text mt-1">
+                                                </h6>
+                                                <p class="card-text mb-1" style="font-size: 0.8rem;">
                                                     <a href="${songPage}"  
-                                                        style="color: black; font-size:14px; color: black; text-decoration: none;"
+                                                        style="color: black; text-decoration: none;"
                                                         onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${a.artistName}</a>
                                                 </p>
-                                                <p class="card-text" style="font-size:14px;">${a.albumType}</p>
-                                                <p class="card-text" style="color:gray; font-size:14px;">
+                                                <br/>
+                                                <p class="card-text mb-1" style="font-size: 0.75rem;">${a.albumType}</p>
+                                                <p class="card-text" style="color:gray; font-size: 0.75rem;">
                                                     <fmt:formatDate value="${a.albumReleaseDate}" pattern="yyyy-MM-dd" />
                                                 </p>
                                             </div>

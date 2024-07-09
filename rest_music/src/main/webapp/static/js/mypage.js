@@ -76,6 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 플리 목록 HTML 코드
         let htmlStr = '';
+        // 플리 목록을 카운트
+        let playlistCount = 0;
+        
         for (let playlist of data) {
             // 기본 이미지 URL 정의
             const defaultImage = '../images/default.png';
@@ -104,10 +107,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                 </button>
             </div>`;
+            
+            playlistCount++;
         }
 
         // 작성된 HTML 코드를 div 영역에 삽입.
         divPlayLists.innerHTML = htmlStr;
+        
+        // 플리가 비어있으면 플레이리스트를 출력하는 부분에 해당 텍스트, defaultListImage 출력.
+        const defaultListImage = '../images/myPlayListEmpty.png';
+        console.log(playlistCount);
+        if (playlistCount == 0) {
+            htmlStr += `
+                <div class='container' style="text-align: center;">
+                    <img src="${defaultListImage}" width="80px" height="80px">
+                    <h5 id="defaultList" class="mt-4" style="text-align: center; color:gray; font-size: 16px">
+                        추가된 플레이리스트가 없습니다..!
+                    </h5>
+                </div>
+                `
+            divPlayLists.innerHTML = htmlStr;
+        }
 
         const deleteList = document.querySelectorAll('button.deleteButton'); // htmlStr로 추가된 html 영역의 button 태그의 클래스 이름을 지정
         for (let button of deleteList) {
@@ -171,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function makeUserLikeElements(data) {
         // 좋아요 목록 HTML이 삽입될 tbody
         const likeTableBody = document.querySelector('tbody#likeTableBody');
+        const likeCardBody = document.querySelector('div#likeCardBody');
 
         if (!likeTableBody) {
             console.error('songsTableBody를 찾을 수 없습니다.');
@@ -179,6 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 좋아요 목록 HTML 코드
         let htmlStr = '';
+        // 좋아요 목록을 카운트
+        let likeCount = 0;        
+        
         for (let like of data) {
             // 기본 이미지 URL 정의
             const defaultImage = '../images/default.png';
@@ -206,10 +230,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 </td>
             </tr>
             `;
+            
+            likeCount++;
         }
 
         // 작성된 HTML 코드를 div 영역에 삽입.
         likeTableBody.innerHTML = htmlStr;
+        
+        // 좋아요 목록이 비어있으면 목록 출력하는 부분에 해당 텍스트, defaultListImage 출력.
+        const defaultListImage = '../images/defaultList.png';
+        console.log(likeCount);
+        if (likeCount == 0) {
+            htmlStr += `
+                <div class='container' style="text-align: center;">
+                    <img src="${defaultListImage}" width="80px" height="80px">
+                    <h5 id="defaultList" class="mt-4" style="text-align: center; color:gray; font-size: 16px">
+                        추가한 좋아요 음원이 없습니다..!
+                    </h5>
+                </div>
+                `
+            likeCardBody.innerHTML = htmlStr;
+        }
     }
 
     function setupPagination(totalPages) {

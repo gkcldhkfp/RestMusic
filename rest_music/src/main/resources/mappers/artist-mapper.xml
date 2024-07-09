@@ -36,5 +36,6 @@
         JOIN artist_roles ar ON s.song_id = ar.song_id
         JOIN artists art ON ar.artist_id = art.artist_id
         WHERE ar.artist_id = #{artistId}
+        ORDER BY a.album_release_date DESC
     </select>
 </mapper>

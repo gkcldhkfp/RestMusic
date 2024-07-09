@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             htmlStr += `
                 <div class='container' style="text-align: center;">
                     <img src="${defaultListImage}" width="80px" height="80px">
-                    <h5 id="defaultList" class="mt-4" style="text-align: center; color:gray;">
+                    <h5 id="defaultList" class="mt-4" style="text-align: center; color:gray; font-size: 16px">
                         추가된 곡이 없습니다..!
                     </h5>
                 </div>

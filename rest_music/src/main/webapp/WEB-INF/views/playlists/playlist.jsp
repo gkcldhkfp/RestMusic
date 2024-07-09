@@ -37,7 +37,7 @@
                         <p class="mt-3" id="songCount" style="color:gray;">총 <span id="totalSongs">0</span>곡</p> <!-- 자바스크립트를 사용하여 총 ?곡인지 출력되는 부분 -->
                         <p class="d-none">플리 생성날짜</p>
                         <div class="mt-4">
-                            <button class="btn btn-success" onclick="window.location.href = '/Rest/frameset/${playList.pListId}'">재생목록추가</button>
+                            <button class="btn btn-success" data-id="${playList.pListId}" onclick="window.location.href = '/Rest/frameset/${playList.pListId}'">플레이리스트 재생</button>
                         </div>
                     </div>
                 </div>

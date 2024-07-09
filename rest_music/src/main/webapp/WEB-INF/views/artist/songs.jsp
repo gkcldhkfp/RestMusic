@@ -84,22 +84,21 @@
                 </p>
             </div>
             <!-- Artist가 참여한 곡 출력 -->
-            <div class="card">
-                <div class="card-body">
-                     <table class="table table-striped" style="border: 1px solid #ddd;">
-                        <thead>
-                            <tr>
-                                <!-- 전체 선택 체크박스 추가 -->
-                                <th style="text-align: center; vertical-align: middle;">
-                                    <input type="checkbox" id="selectAllCheckbox">
-                                </th>
-                                <th style="text-align: left; vertical-align: middle;">커버</th>
-                                <th style="text-align: left; vertical-align: middle;">노래 제목</th>
-                                <th style="text-align: left; vertical-align: middle;">아티스트</th>
-                                <th style="text-align: left; vertical-align: middle;">듣기</th>
-                            </tr>
-                        </thead>
-                        <tbody id="songsTableBody">
+            <div class="card-body">
+                <table class="table table-striped" style="border: 1px solid #ddd;">
+                    <thead>
+                        <tr>
+                            <!-- 전체 선택 체크박스 추가 -->
+                            <th style="text-align: center; vertical-align: middle;">
+                                <input type="checkbox" id="selectAllCheckbox">
+                            </th>
+                            <th style="text-align: left; vertical-align: middle;">커버</th>
+                            <th style="text-align: left; vertical-align: middle;">노래 제목</th>
+                            <th style="text-align: left; vertical-align: middle;">아티스트</th>
+                            <th style="text-align: left; vertical-align: middle;">듣기</th>
+                        </tr>
+                    </thead>
+                    <tbody id="songsTableBody">
                         <c:forEach items="${ songs }" var="s">
                         <c:url var="albumImage" value="/images/${s.albumImage}" />
                         <c:url var="playImage" value="/images/play.png" />
@@ -124,10 +123,9 @@
                                 </td>
                             </tr>
                         </c:forEach>
-                        </tbody>
-                    </table>
-                    <h5 id="defaultList" class="mt-4" style="text-align: center; color:gray;"></h5>
-                </div>
+                    </tbody>
+                </table>
+                <h5 id="defaultList" class="mt-4" style="text-align: center; color:gray;"></h5>
             </div>
         </div>
 
