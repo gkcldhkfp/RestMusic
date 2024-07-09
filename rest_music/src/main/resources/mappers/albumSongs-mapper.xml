@@ -28,6 +28,7 @@
       GROUP BY a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
         s.song_id, ts.song_id, s.title, s.lyrics, s.song_path, gc.genre_name, 
         art.artist_name, art.artist_image, art.artist_description
+      order by ts.song_id, s.song_id
 
     </select>
 

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
-	<span%@ taglib prefix="c" uri="jakarta.tags.core" %>
+	<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 		<!DOCTYPE html>
 		<html>
 
@@ -102,17 +102,17 @@
 							</svg>
 						</div>
 						<div id="stopBtn" class="btn"">
-							<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
-								stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<rect x="6" y="6" width="12" height="12"></rect>
+							<svg xmlns=" http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
+							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<rect x="6" y="6" width="12" height="12"></rect>
 							</svg>
 						</div>
 
 						<div id="nextBtn" class="btn"">
-							<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
-								stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<polygon points="5 4 15 12 5 20 5 4"></polygon>
-								<line x1="19" y1="5" x2="19" y2="19"></line>
+							<svg xmlns=" http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
+							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<polygon points="5 4 15 12 5 20 5 4"></polygon>
+							<line x1="19" y1="5" x2="19" y2="19"></line>
 							</svg>
 						</div>
 
@@ -151,6 +151,8 @@
 				<div id="progress" class="progress-bar bg-success " role="progressbar" style="width: 1%" aria-valuemin="0"
 					aria-valuemax="100">
 				</div>
+				<div id="minute1" class="progress-bar bg-success" role="progressbar" style="width: 30%; opacity : 0;"
+					aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
 			<div>
 				<c:url var="refresh" value="/player/playerPage" />
@@ -164,6 +166,8 @@
 				integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
 				crossorigin="anonymous"></script>
 			<script>
+				// 로그인한 아이디 정보 전달
+				const id = '${loginUserId}'; //id
 				// 모델에서 전달받은 JSON 데이터
 				var cPListJson = '${cPList}';
 

@@ -161,7 +161,7 @@
 												재생목록
 											</button> -->
 										</td>
-										<td><button id="btnAddPlayList" class="btn btn-success" data-id="${s.songId}">
+										<td><button id="btnAddUPList" class="btn btn-success" data-id="${s.songId}">
 												플리추가
 											</button></td>
 										<td>더보기</td>
@@ -173,7 +173,7 @@
 				</div>
 			</main>
 			<!-- 플레이리스트 모달 -->
-			<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 				aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -192,7 +192,7 @@
 						</div>
 					</div>
 				</div>
-			</div> -->
+			</div>
 			<footer>
 				<!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
 				<%@ include file="../fragments/footer.jspf" %>
@@ -210,7 +210,6 @@
 			<!-- Axios JS 라이브러리 -->
 			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 			<script>
-				const songId = document.querySelector('#btnAddPlayList');
 				const albumId = ${ album.albumId };
 				const id = '${loginUserId}'; //id
 			</script>
