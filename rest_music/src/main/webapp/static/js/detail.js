@@ -9,12 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
      const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
     btnAddPlayList.addEventListener('click', getPlayLists);
-
+    
+    if(id === 0){
+        const commnetRegistForm = document.querySelector('div#commnetRegistForm')
+        commnetRegistForm.classList.add('d-none');
+    }
+    
     const data = { songId, id };
     let currentPage = 1;
     const itemsPerPage = 5;
     let playlistsData = [];
-
+    if(id != ''){
     axios
         .post('./like', data)
         .then((response) => {
@@ -28,11 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch((error) => {
             console.log(error);
         });
-
+    } else {
+        btnLike.textContent = '♡';
+    }
 
 
     btnLike.addEventListener('click', () => {
-
+    if(id === 0 ) {
+        alert('로그인이 필요합니다');
+        return
+        }
         axios
             .put('./like', data)
             .then((response) => {
@@ -50,6 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function getPlayLists() {
+        if(id === 0 ) {
+        alert('로그인이 필요합니다');
+        return
+        }
         const uri = `../getPlayList/${id}`;
         axios
             .get(uri)

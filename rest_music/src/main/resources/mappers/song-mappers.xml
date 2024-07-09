@@ -5,26 +5,75 @@
 <mapper namespace="com.itwill.rest.repository.SongDao">
 
 	<select id="detailBySongId" resultType="SongDetail">
-        SELECT s.title AS song_title, a.album_name, a.album_image, s.genre, si.singer_name,
-        LISTAGG(DISTINCT wr.writer, ', ') WITHIN GROUP (ORDER BY wr.writer) AS writers,
-        LISTAGG(DISTINCT co.composer, ', ') WITHIN GROUP (ORDER BY co.composer) AS composers,
-        LISTAGG(DISTINCT ar.arranger, ', ') WITHIN GROUP (ORDER BY ar.arranger) AS arrangers,
-        s.lyrics
+         SELECT
+            s.song_id,
+            s.title AS song_title,
+            a.album_name AS album_name,
+            a.album_image AS album_image,
+            singer.singer_name,
+            writer.writers,
+            composer.composers,
+            arranger.arrangers,
+            LISTAGG(gc.genre_name, ', ') WITHIN GROUP (ORDER BY gc.genre_name) AS genre,
+            s.lyrics
         FROM
             songs s
-        JOIN
-            albums a ON s.album_id = a.album_id
-        LEFT JOIN
-            singers si ON s.song_id = si.song_id
-        LEFT JOIN
-            writers wr ON s.song_id = wr.song_id
-        LEFT JOIN
-            composers co ON s.song_id = co.song_id
-        LEFT JOIN
-            arrangers ar ON s.song_id = ar.song_id
+            JOIN albums a ON s.album_id = a.album_id
+            LEFT JOIN (
+                SELECT
+                    ar.song_id,
+                    LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS singer_name
+                FROM
+                    artist_roles ar
+                    JOIN artists art ON ar.artist_id = art.artist_id
+                WHERE
+                    ar.role_id = 1
+                GROUP BY
+                    ar.song_id
+            ) singer ON s.song_id = singer.song_id
+            LEFT JOIN (
+                SELECT
+                    ar.song_id,
+                    LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS writers
+                FROM
+                    artist_roles ar
+                    JOIN artists art ON ar.artist_id = art.artist_id
+                WHERE
+                    ar.role_id = 2
+                GROUP BY
+                    ar.song_id
+            ) writer ON s.song_id = writer.song_id
+            LEFT JOIN (
+                SELECT
+                    ar.song_id,
+                    LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS composers
+                FROM
+                    artist_roles ar
+                    JOIN artists art ON ar.artist_id = art.artist_id
+                WHERE
+                    ar.role_id = 3
+                GROUP BY
+                    ar.song_id
+            ) composer ON s.song_id = composer.song_id
+            LEFT JOIN (
+                SELECT
+                    ar.song_id,
+                    LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS arrangers
+                FROM
+                    artist_roles ar
+                    JOIN artists art ON ar.artist_id = art.artist_id
+                WHERE
+                    ar.role_id = 4
+                GROUP BY
+                    ar.song_id
+            ) arranger ON s.song_id = arranger.song_id
+            LEFT JOIN song_genre sg ON s.song_id = sg.song_id
+            LEFT JOIN genre_code gc ON sg.genre_id = gc.genre_id
         WHERE
             s.song_id = #{id}
-        GROUP BY s.title, a.album_name, a.album_image, s.genre, si.singer_name, s.lyrics
+        GROUP BY
+            s.song_id, s.title, a.album_name, a.album_image, s.lyrics, singer.singer_name, writer.writers, 
+            composer.composers, arranger.arrangers
     </select>
   
     <select id="isLikes" resultType="integer">
@@ -41,44 +90,44 @@
     
     <select id="searchSongs" resultType="ResultDto">
     <bind name="searchKeyword" value="'%' + keyword + '%'" />
-    SELECT * FROM (
-             SELECT rnum, song_id, album_image, album_name, title, singer_name
-                         FROM (
-                    SELECT 
-                        rownum AS rnum, 
-                        a.song_id, 
-                        c.album_image, 
-                        c.album_name, 
-                        a.title, 
-                        b.singer_name,
-                        ROW_NUMBER() OVER (ORDER BY c.album_release_date DESC, a.song_id) AS row_num
-                    FROM songs a
-                    INNER JOIN singers b ON a.song_id = b.song_id
-                    INNER JOIN albums c ON a.album_id = c.album_id
-                <where>
-                    <choose>
-                        <when test='category.equals("t")'>
-                            upper(a.title) like upper(#{searchKeyword})
-                        </when>
-                        <when test='category.equals("s")'>
-                            upper(b.singer_name) like upper(#{searchKeyword})
-                        </when>
-                        <when test='category.equals("a")'>
-                            upper(c.album_name) like upper(#{searchKeyword})
-                        </when>
-                        <when test='category.equals("ts")'>
-                                 (
-                                upper(a.title) like upper(#{searchKeyword})
-                                OR
-                                upper(b.singer_name) like upper(#{searchKeyword})
-                            )
-                        </when>
-                    </choose>
-                </where>
+                            SELECT * FROM (
+                    SELECT songId, albumName, albumImage, title, singerName, releaseDate, rnum
+                    FROM (
+                        SELECT s.song_id AS songId,
+                               a.album_name AS albumName,
+                               a.album_image AS albumImage,
+                               s.title AS title,
+                               art.artist_name AS singerName,
+                               a.album_release_date AS releaseDate,
+                               ROW_NUMBER() OVER (ORDER BY a.album_release_date DESC) AS rnum
+                        FROM songs s
+                        JOIN albums a ON s.album_id = a.album_id
+                        JOIN artist_roles ar ON s.song_id = ar.song_id AND ar.role_id = 1 
+                        JOIN artists art ON ar.artist_id = art.artist_id
+                    <where>
+                        <choose>
+                            <when test='category.equals("t")'>
+                                upper(s.title) like upper(#{searchKeyword})
+                            </when>
+                            <when test='category.equals("s")'>
+                                upper(art.artist_name) like upper(#{searchKeyword})
+                            </when>
+                            <when test='category.equals("ts")'>
+                                upper(s.title) like upper(#{searchKeyword})
+                                or
+                                upper(art.artist_name) like upper(#{searchKeyword})
+                            </when>
+                            <when test='category.equals("a")'>
+                                upper(a.album_name) like upper(#{searchKeyword})
+                            </when>
+                        </choose>
+                    </where>
+                    ORDER BY a.album_release_date DESC
+                )
+                WHERE ROWNUM &lt;= #{endRow}
             )
-            WHERE row_num BETWEEN #{startRow} AND #{endRow}
-            )
-    </select>
+            WHERE rnum >= #{startRow}
+        </select>
     
     <!-- 좋아요 개수 확인 -->
     <select id="countSongLikes" resultType="Integer">

@@ -1,0 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+    crossorigin="anonymous">
+    <title>Rest</title>
+</head>
+<body>
+      <header>
+        <div class="container-fluid">
+            <c:set var="pageTitle" value="Rest" scope="page" />
+            <%@ include file="../fragments/header.jspf"%>
+        </div>
+    </header>
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <button class=" btn-lg fs-3" id="purchase">test</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+    crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <script>
+     let loginUserId ='${loginUserId}';
+    </script>
+    
+    <c:url var="purchaseJS" value="/js/purchase.js" />
+    <script src="${purchaseJS}"></script>
+    
+</body>
+</html>
