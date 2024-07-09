@@ -23,6 +23,9 @@
         <typeAlias type="com.itwill.rest.repository.AlbumSongs" alias="AlbumSongs" />
         <typeAlias type="com.itwill.rest.repository.Song" alias="Song" />
         <typeAlias type="com.itwill.rest.dto.song.SongChartDto" alias="SongChartDto" />
+        <typeAlias type="com.itwill.rest.repository.Artist" alias="Artist" />
+        <typeAlias type="com.itwill.rest.dto.artist.ArtistSongDto" alias="ArtistSongDto" />
+        <typeAlias type="com.itwill.rest.dto.artist.ArtistAlbumDto" alias="ArtistAlbumDto" />
     </typeAliases>
 
 </configuration>

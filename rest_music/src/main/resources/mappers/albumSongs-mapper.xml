@@ -6,77 +6,46 @@
     <!-- 앨범 번호로 모든 컬럼을 가져오는 셀렉문
           아직 모든 컬럼은 아님. -->
     <select id="selectByAlbumId" resultType="AlbumSongs">
-      <!-- select a.album_id, a.album_name,
-        s.song_id, s.title, s.genre, 
-        singers.singer_name,
-        title_songs.song_id as title_song
+            <!-- 
+            genre => genre_name
+            singer_name => artist_name
+            -->
+      select a.album_id, a.album_name, 
+        s.song_id, ts.song_id as title_song, s.title, s.song_path, gc.genre_name, 
+        art.artist_name, art.artist_image, art.artist_description,
+        count(l.id) as likes_count
       from albums a
-          left join songs s on #{albumId} = s.album_id
-          left join singers on singers.song_id = s.song_id
-          left join title_songs on title_songs.song_id= s.song_id
-      union
-      select a.album_id, a.album_name,
-              s.song_id, s.title, s.genre, 
-              singers.singer_name,
-              title_songs.song_id as title_song
-      from albums a
-          left join songs s on #{albumId} = s.album_id
-          left join singers on singers.song_id = s.song_id
-          left join title_songs on title_songs.song_id= s.song_id -->
-      SELECT 
-        a.album_id, 
-        a.album_name,
-        s.song_id, 
-        s.title, 
-        s.genre, 
-        singers.singer_name,
-        title_songs.song_id as title_song,
-        COUNT(l.id) as likes_count
-      FROM 
-        albums a
-        LEFT JOIN songs s ON  a.album_id= s.album_id
-        LEFT JOIN singers ON singers.song_id = s.song_id
-        LEFT JOIN title_songs ON title_songs.song_id = s.song_id
-        LEFT JOIN likes l ON l.song_id = s.song_id
-      where a.album_id = #{albumId} 
-      GROUP BY 
-        a.album_id, 
-        a.album_name,
-        s.song_id, 
-        s.title, 
-        s.genre, 
-        singers.singer_name,
-        title_songs.song_id
-      UNION
-      SELECT 
-        a.album_id, 
-        a.album_name,
-        s.song_id, 
-        s.title, 
-        s.genre, 
-        singers.singer_name,
-        title_songs.song_id as title_song,
-        COUNT(l.id) as likes_count
-      FROM 
-        albums a
-        LEFT JOIN songs s ON a.album_id = s.album_id
-        LEFT JOIN singers ON singers.song_id = s.song_id
-        LEFT JOIN title_songs ON title_songs.song_id = s.song_id
-        LEFT JOIN likes l ON l.song_id = s.song_id
-        where a.album_id = #{albumId} 
-      GROUP BY 
-        a.album_id, 
-        a.album_name,
-        s.song_id, 
-        s.title, 
-        s.genre, 
-        singers.singer_name,
-        title_songs.song_id
+        join songs s on a.album_id = s.album_id
+        left join song_genre sg on s.song_id = sg.song_id
+        left join genre_code gc on sg.genre_id = gc.genre_id
+        join artist_roles artr on s.song_id = artr.song_id
+        join artists art on artr.artist_id = art.artist_id
+        join role_code rc on artr.role_id = rc.role_id
+        left join title_songs ts on ts.song_id= s.song_id
+        left join likes l on l.song_id = s.song_id
+        left join album_likes al on al.album_id = a.album_id
+      where a.album_id = #{albumId} and rc.role_id = 10
+      GROUP BY a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
+        s.song_id, ts.song_id, s.title, s.lyrics, s.song_path, gc.genre_name, 
+        art.artist_name, art.artist_image, art.artist_description
+      order by ts.song_id, s.song_id
+
     </select>
 
     <select id="selectAlbumByAlbumId" resultType="AlbumSongs">
       <!-- 앨범 상세보기에서 사용하는 데이터를 가져오는 셀렉문 -->
       select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
+          s.song_id, ts.song_id as title_song, s.title, gc.genre_name, art.artist_name
+          from albums a
+            join songs s on a.album_id = s.album_id
+            join song_genre sg on s.song_id = sg.song_id
+            join genre_code gc on sg.genre_id = gc.genre_id
+            join artist_roles artr on s.song_id = artr.song_id
+            join artists art on artr.artist_id = art.artist_id
+            join role_code rc on artr.role_id = rc.role_id
+            join title_songs ts on ts.song_id= s.song_id
+          where a.album_id = #{albumId} and rc.role_id = 10
+      <!-- select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
         singers.singer_name,
         s.song_id, s.title, s.genre,
         title_songs.song_id
@@ -85,7 +54,12 @@
           join singers on singers.song_id = s.song_id
           join title_songs on title_songs.song_id= s.song_id
           where a.album_id = #{albumId}
-          order by s.title
+          order by s.title -->
+          <!-- 
+            genre => genre_name
+            singer_name => artist_name
+            -->
+          
     </select>
 
     <select id="selectAlbumSongsCount" resultType="Integer">
@@ -97,19 +71,45 @@
     </select>
 
     <select id="selectSongBySongId" resultType="AlbumSongs">
+      <!-- 재생하기위한 음원 정보를 가져오는 쿼리 -->
       select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
-        singers.singer_name,
-        s.song_id, s.title, s.song_path, s.genre
+        art.artist_name,
+        s.song_id, s.title, s.song_path, gc.genre_name
       from albums a
         join songs s on a.album_id = s.album_id
-        join singers on  s.song_id = singers.song_id
-      where s.song_id = #{songId}
+        join song_genre sg on s.song_id = sg.song_id
+        join genre_code gc on sg.genre_id = gc.genre_id
+        join artist_roles artr on s.song_id = artr.song_id
+        join artists art on artr.artist_id = art.artist_id
+        join role_code rc on artr.role_id = rc.role_id
+      where s.song_id = #{song_id} and rc.role_id = 10
     </select>
 
     <select id="songLikesCount" resultType="Integer">
+      <!-- 음원의 좋아요 개수 가져오는 쿼리 -->
       select count(song_id)
-      from likes where song_id=#{songId};
+      from likes where song_id=#{songId}
     </select>
-
+    
+    <select id="albumLikesCount" resultType="Integer">
+      <!-- 앨범의 좋아요 개수 가져오는 쿼리 -->
+      select count(album_id)
+      from album_likes where album_id = #{albumId}
+    </select>
+    
+    <!-- 좋아요를 눌렀는 지 검사하는 쿼리문 -->
+    <select id="isAlbumLikes" resultType="Integer">
+      select count(*) from album_likes where album_id = #{albumId} and id = #{id}
+    </select>
+  
+    <!-- 좋아요를 등록하는 쿼리문 -->
+    <insert id="addAlbumLike">
+        insert into album_likes (album_id, id) values (#{albumId}, #{id})
+    </insert>
+    
+    <!-- 좋아요를 제거하는 쿼리문 -->
+    <delete id="removeAlbumLike">
+        delete from album_likes where album_id = #{albumId} and id = #{id}
+    </delete>
 
   </mapper>

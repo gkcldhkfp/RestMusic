@@ -16,14 +16,14 @@ public class AlbumSongs {
 	private String songPath;
 	private String lyrics;
 	private String videoLink;
-	private String genre;
+	private String genreName;
 
 	private String albumName;
 	private String albumType;
 	private String albumReleaseDate;
 	private String albumImage;
 
-	private String singerName;
+	private String artistName;
 
 	private String titleSong;
 

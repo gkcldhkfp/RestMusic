@@ -42,12 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 기본 이미지 URL 정의
         const defaultImage = '../images/default.png';
+        const playImage = '../images/play.png'
 
         for (let playlistSong of data) {
             
-            // albumPage, songPage로 이동할 주소 지정
+            // albumPage, songPage, artistPage로 이동할 주소 지정
             const albumPage = `/Rest/album/detail?albumId=${playlistSong.albumId}`;
             const songPage = `/Rest/song/detail?songId=${playlistSong.songId}`;
+            const artistPage = `/Rest/artist/songs?artistId=${playlistSong.artistId}`;
 
             // ${playlist.albumImage}가 null이면 기본 이미지 사용
             const albumImageSrc = playlistSong.albumImage ? `../images/${playlistSong.albumImage}` : defaultImage;
@@ -69,14 +71,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     </a>
                 </td>
                 <td style="text-align: left; vertical-align: middle; font-size: 14px;">
-                    <a href="${songPage}">${playlistSong.title}</a>
+                    <a href="${songPage}" style="color: black; text-decoration: none;"
+                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${playlistSong.title}</a>
                 </td>
-                <td style="text-align: left; vertical-align: middle; font-size: 14px">${playlistSong.singerName}</td>
+                <td style="text-align: left; vertical-align: middle; font-size: 14px">
+                    <a href="${artistPage}" style="color: black; text-decoration: none;"
+                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${playlistSong.artistName}</a>
+                </td>
+                <td style="text-align: left;">
+                    <button style="background-image: url('${playImage}'); width: 50px; height: 50px; background-size: cover; background-repeat: no-repeat;"
+                    data-songId="${playlistSong.songId}" class="playButton btn mt-3" id="listenBtn"></button>
+                </td>
             </tr>
             `;
-
+            
             songCount++; // 음원의 갯수를 카운트
-
+            
             document.getElementById('selectAllCheckbox').addEventListener('change', function() {
                 const checkboxes = document.querySelectorAll('.songCheckbox');
                 checkboxes.forEach(checkbox => {
@@ -98,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             htmlStr += `
                 <div class='container' style="text-align: center;">
                     <img src="${defaultListImage}" width="80px" height="80px">
-                    <h5 id="defaultList" class="mt-4" style="text-align: center; color:gray;">
+                    <h5 id="defaultList" class="mt-4" style="text-align: center; color:gray; font-size: 16px">
                         추가된 곡이 없습니다..!
                     </h5>
                 </div>
@@ -112,7 +122,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const recentAlbumImageSrc = recentSong.albumImage ? `../images/${recentSong.albumImage}` : defaultImage;
             albumCoverImg.src = recentAlbumImageSrc;
         }
+        
+        // 플레이리스트 곡 재생버튼 기능
+        const play = document.querySelectorAll('button.playButton'); // htmlStr로 추가된 html 영역의 button 태그의 클래스 이름을 지정
+        for (let button of play) {
+            button.addEventListener('click', () => {
+                const songId = button.getAttribute('data-songId');
+                console.log('클릭한 플레이리스트의 songId:', songId);
+                window.location.href = `../song/listen?songId=${songId}`;
+            });
+        }
 
+        // 플레이리스트 곡 삭제버튼 기능
         const deleteButton = document.getElementById('deleteButton');
         if (deleteButton) {
             deleteButton.addEventListener('click', function() {

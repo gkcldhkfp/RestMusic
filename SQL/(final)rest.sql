@@ -38,7 +38,7 @@ create table songs ( -- 음악 (컬럼 7개)
 create table song_genre (
     song_id number(4) references songs (song_id),
     genre_id number(4) references genre_code (genre_id)
-)
+);
 
 create table title_songs ( -- 타이틀 곡 (컬럼 2개)
         album_id                            number(4), -- 앨범 번호 (4자리)
@@ -64,7 +64,7 @@ create table artist_roles ( -- 아티스트 참여 음원 (컬럼 3개)
     constraint artist_roles_artist_id_fk       foreign key (artist_id) references artists (artist_id), -- 아티스트 번호 (외래키)
     constraint artist_roles_song_id_fk         foreign key (song_id) references songs (song_id), -- 음악 번호 (외래키)
     constraint artist_roles_role_id_fk         foreign key (role_id) references role_code (role_id) -- 역할 번호 (외래키)
-)
+);
 
 create table code_master ( -- 코드 마스터 (컬럼 2개)
     code_id                                 number(4), -- 코드 번호 (4자리) (자동 생성 아님)
@@ -72,7 +72,7 @@ create table code_master ( -- 코드 마스터 (컬럼 2개)
     -- code_id: 1, code_name:roles
     -- code_id: 2, code_name:genre
     constraint code_master_code_id_pk       primary key (code_id) -- 역할 번호 (고유키)
-)
+);
 
 create table role_code ( -- 역할 코드 (컬럼 3개)
     code_id                                 number(4), -- 코드 번호 (4자리)
@@ -80,7 +80,7 @@ create table role_code ( -- 역할 코드 (컬럼 3개)
     role_id                                 number(4), -- 역할 번호 (4자리) (자동 생성 아님) ex: 가수 - 10, 작곡가 - 20, 작사가 - 30 ...
     constraint role_code_code_id_fk         foreign key (code_id) references code_master (code_id), -- 코드 번호 (외래키)
     constraint role_code_role_id_pk         primary key (role_id) -- 역할 번호 (고유키)
-)
+);
 
 create table genre_code ( -- 장르 코드 (컬럼 3개)
     code_id                                 number(4), -- 코드 번호 (4자리)
@@ -88,7 +88,7 @@ create table genre_code ( -- 장르 코드 (컬럼 3개)
     genre_id                                number(4), -- 장르 번호 (4자리) (자동 생성 아님) ex: 발라드 - 10, 팝 - 20, 힙합 - 30 ...
     constraint genre_code_code_id_fk        foreign key (code_id) references code_master (code_id), -- 코드 번호 (외래키)
     constraint genre_code_genre_id_pk       primary key (genre_id) -- 장르 번호 (고유키)
-)
+);
  
 create table users ( -- 회원 (컬럼 9개)
         id number(4)                        generated as identity, -- 회원 번호 (4자리, 자동 생성)
@@ -119,7 +119,7 @@ create table album_likes( -- 앨범 좋아요 (컬럼 2개)
         id                                      number(4), -- 회원 번호 (4자리)
         constraint album_likes_album_id_fk      foreign key (album_id) references albums (album_id), -- 앨범 번호 (외래키)
         constraint album_likes_id_fk            foreign key (id) references users (id) -- 회원 번호 (외래키)        
-)
+);
 
 create table comments ( -- 댓글 (컬럼 6개)
         c_id number(5)                      generated as identity, -- 댓글 번호 (5자리, 자동 생성)

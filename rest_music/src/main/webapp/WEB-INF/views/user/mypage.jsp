@@ -27,7 +27,7 @@
                 <div class="p-3">
                      <c:url var="profileImg" value="/images/profileimage/profile.jpg" />
                     <c:url var="userProfile" value="/images/profileimage/${user.userProfile}" />
-                    <img alt="profileImg" src="${empty userProfile ? profileImg : userProfile}"
+                    <img alt="profileImg" src="${user.userProfile == null ? profileImg : userProfile}"
                         width="200px" height="200px" />
                 </div>
                 <div class="p-3">
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="my-2">
-                <button class="btn btn-primary"
+                <button class="btn btn-primary border border-gray"
                     style="background-color: gray; color: white;"
                     data-bs-toggle="modal"
                     data-bs-target="#addPlaylistModal">플레이리스트 추가</button>
@@ -61,7 +61,7 @@
             <h2 id="userLikesSection" style="font-size: 1.2rem; text-align : center;">좋아요 누른 곡</h2><hr>
             <!-- 추가할 박스 (카드) -->
             <div class="card">
-                <div class="card-body">
+                <div class="card-body" id="likeCardBody">
                     <table class="table table-striped" style="border: 1px solid #ddd;">
                         <thead>
                             <tr>

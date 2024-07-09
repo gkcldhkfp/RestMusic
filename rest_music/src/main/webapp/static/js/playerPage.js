@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		console.log(cPList[index].songPath);
 		// 데이터 베이스에 저장된 음악 경로를 cPList에서 꺼내서 오디오 객체를 생성함.
-		var audio = new Audio('../data' + cPList[index].songPath + '.mp3');
+		var audio = new Audio('../data/' + cPList[index].songPath);
 		audio.volume = 0.5; // 초기 볼륨 설정
 
 		// 음악이 로드되면 자동으로 실행하는 코드인데 페이지가 로드되자마자는 크롬 정책때문에 실행하지 못함
@@ -103,18 +103,19 @@ document.addEventListener('DOMContentLoaded', () => {
 			// progress 객체 얻기
 			var progress = document.querySelector('#progress');
 			var progressBar = document.querySelector('.progress');
+			var minute1Progress = document.querySelector('#minute1');
 
 			// 앨범 커버 사진 설정
 			const albumImage = document.querySelector('#albumImage');
 			// 앨범 커버 사진 등록
-			albumImage.src = "../data/" + cPList[index].albumImage + ".jpg";
+			albumImage.src = "../data/" + cPList[index].albumImage;
 
 
 			// 노래 제목과 가수 설정
 			const musicTitle = document.querySelector('#music-title');
 			const artist = document.querySelector("#artist");
 			musicTitle.innerHTML = cPList[index].title;
-			artist.innerHTML = cPList[index].singerName;
+			artist.innerHTML = cPList[index].artistName;
 
 
 			prevBtn.addEventListener('click', previous);
@@ -140,7 +141,24 @@ document.addEventListener('DOMContentLoaded', () => {
 				var ratio = audio.currentTime / audio.duration * 100;
 				progress.style.width = ratio + '%';
 				progress.setAttribute('aria-valuenow', ratio);
+				if (id === '') {
+					total.innerHTML = '1:00';
+					// TODO: 나중에 조건을 결제한 아이디로 바꾸어야함.
+					// 1분 비율 계산
+					var minRatio = 60 / audio.duration * 100;
+					// 1분 위치를 고정시키기 위해 현재 재생 비율을 뺌
+					var minBar = minRatio - ratio;
+					minute1Progress.style.width = minBar + '%';
+					minute1Progress.style.opacity = 0.5;
+					if (audio.currentTime > 60) {
+						console.log('60초 넘어가면 실행되어야함');
 
+						// 1분을 넘어가면 실행하는 조건문
+						stop();
+						// 결제 권고창 띄우는 함수 호출
+						needToPaid();
+					}
+				}
 
 			});
 
@@ -172,15 +190,33 @@ document.addEventListener('DOMContentLoaded', () => {
 				var clickX = e.clientX - rect.left; // 클릭한 위치의 X 좌표
 				var percentage = (clickX / totalWidth) * 100; // 클릭한 위치의 백분율 계산
 
+
 				// 음원 재생 위치 설정
 				var duration = audio.duration; // 음원 파일의 전체 재생 시간 가져오기
 				var currentTime = (percentage / 100) * duration; // 클릭한 위치에 해당하는 재생 시간 계산
 				audio.currentTime = currentTime; // 재생 위치 설정
+				// 1분 비율 계산
+				minRatio = 60 / audio.duration * 100;
+				if (id === '' && audio.currentTime > 60) {
+					console.log('60초 넘어가면 실행되어야함');
+					// 1분의 위치를 넘었는 지 검사 
+					// 정지 메서드 호출
+					stop();
+					// 음원의 현재 위치를 0으로 초기화하고 재생을 멈춤.
 
+					// 로그인 권고창 띄움
+					// 일단 알러트
+					needToPaid();
+					return;
+				}
 				// 프로그래스 바 업데이트
 				progress.style.width = percentage + '%';
 				progress.setAttribute('aria-valuenow', percentage);
 			});
+			function needToPaid() {
+				// TODO: 나중에 결제한 회원으로 바꾸어야함.
+				alert('결제하셈');
+			}
 
 
 
@@ -189,11 +225,11 @@ document.addEventListener('DOMContentLoaded', () => {
 			// 정지버튼시 호출하는 함수
 			function stop() {
 				// stop 함수는 별도로 없어서 따로 이런식으로 만들자.
-				if (audio.played) {
-					// 음원을 중지하고 토글버튼 업데이트
-					pauseAudio();
-					audio.currentTime = 0;
-				}
+				// if (audio.played) {
+				// 음원을 중지하고 토글버튼 업데이트
+				pauseAudio();
+				audio.currentTime = 0;
+				// }
 			};
 			// 이전 곡 버튼 클릭 시 호출하는 함수
 			function previous() {

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 public class SongSearchDto {
 	private String category;
 	private String keyword;
+	private String sortType;
 	private Integer startRow;
 	private Integer endRow;
 }
