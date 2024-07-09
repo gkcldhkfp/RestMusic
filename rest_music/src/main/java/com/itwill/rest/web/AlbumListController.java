@@ -23,6 +23,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/album")
 public class AlbumListController {
     private final AlbumService albumService;
+    
+    
+    
+    
+    
 
     @GetMapping("/list")
     public String list(Model model, HttpSession session) {
@@ -58,11 +63,9 @@ public class AlbumListController {
 
         return "/album/list";
     }
+    
+    
+    
 
-    @PostMapping("/like")
-    @ResponseBody
-    public String likeAlbum(@RequestParam Integer albumId) {
-        albumService.incrementLikes(albumId);
-        return "success";
-    }
+   
 }

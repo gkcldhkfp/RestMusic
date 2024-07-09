@@ -20,6 +20,12 @@ public class AlbumService {
 	
 	
 	
+	
+    
+	
+	
+	
+	
 	public List<Album> selectAllByAlbumId() {
 		log.debug("read()");
 		
@@ -50,10 +56,9 @@ public class AlbumService {
 	
 	
 	
-	public void incrementLikes(Integer albumId) {
-        log.debug("incrementLikes({})", albumId);
-        albumDao.updateLikes(albumId);
-    }
+	
+	
+	
 	
 	
 

@@ -10,8 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Rest</title>
     
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
         crossorigin="anonymous" />
@@ -211,34 +210,8 @@
             </div>
         </c:if>
     </main>
-    
-    
-    
-    
-    <!-- 로그인 권고 모달(다이얼로그) -->
-        <div id="likesModal" class="modal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">로그인이 되지 않았습니다.</h5>
-                        <button type="button" class="btn-close"
-                            data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- 수정할 댓글 아이디(번호) -->
-                        <input class="d-none" id="modalCommentId" />
-                        <!-- 수정할 댓글 내용 -->
-                        <textarea class="form-control" id="modalCommentText" ></textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                            data-bs-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-primary"
-                            id="btnUpdateComment">저장</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
 
     <div class="shadow-box">
         <p>css 테스트</p>
@@ -317,6 +290,8 @@
             window.location.href = '/Rest/album/list/popular';
         });
     });
+    
+    
     </script>
 
 </body>

@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     
     
-    
+    /*
     const btnLikes = document.querySelectorAll('button#btnLikes'); // 모든 좋아요 버튼의 요소를 찾고 클릭 이벤트 리스너를 설정.
     for (let b of btnLikes) {
         b.addEventListener('click', showLikesModal);
@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const likesModal = new bootstrap.Modal(document.querySelector('div#likesModal'), {
         backdrop: true
     });
+    */
 
 
     for (let b of btnListenAlbum) {
@@ -72,33 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /*--------------------------------------------------------*/
     
     
-    
-    // 좋아요 버튼의 클릭 이벤트 리스너
-    function showLikesModal(event) {
-        
-        // 이벤트 타겟(수정 버튼)의 data-id 속성 값을 읽음.
-        const id = event.target.getAttribute('data-id');
-        
-        // Ajax 요청을 보내서 댓글 아이디로 검색을 하겠습니다.
-        const uri = `../album/list/${id}`;
-        axios
-        .get(uri)
-        .then((response) => {
-            
-            console.log(response.data);
-            
-            // 모달의 input(댓글 번호), textarea(댓글 내용)의 value를 채움.
-            document.querySelector('input#modalCommentId').value = id;
-            document.querySelector('textarea#modalCommentText').value = response.data.ctext;
-            
-            // 모달을 보여줌.
-            likesModal.show();
-            
-            
-        })
-        .catch((error) => console.log(error));
-    }
-    
+
 
 
 

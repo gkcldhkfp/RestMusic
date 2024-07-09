@@ -18,10 +18,7 @@ public interface AlbumDao {
     List<Album> selectOrderByLikes();
 
     
-    // 좋아요 개수를 증가시키는 메서드
-    int updateLikes(Integer id);
     
-  
     
     // 앨범수록곡 전 곡을 현재 재생 목록에 담고, 1번부터 듣는 메서드
     
