@@ -48,7 +48,7 @@ public class SongPlayerController {
 
 	@GetMapping("/song/addCurrentPlayList")
 	@ResponseBody
-	public void addCurrentPlayList(
+	public ResponseEntity<AlbumSongs> addCurrentPlayList(
 			@RequestParam(value = "songId") String songId,
 			HttpSession session) {
 
@@ -67,11 +67,13 @@ public class SongPlayerController {
 		log.debug("cPList = {}", cPList);
 		session.setAttribute("cPList", cPList);
 		// 재생목록을 세션에 업데이트.
+		
+		return ResponseEntity.ok(song);
 	}
 
 	@GetMapping("/song/listen")
 	@ResponseBody
-	public void listen(
+	public ResponseEntity<AlbumSongs> listen(
 			@RequestParam(value = "songId") String songId,
 			HttpSession session) {
 
@@ -86,6 +88,8 @@ public class SongPlayerController {
 		// 새로 생성한 리스트에 음악 객체를 추가.
 		session.setAttribute("cPList", cPList);
 		// 세션에 리스트를 업데이트
+		
+		return ResponseEntity.ok(song);
 	}
 
 	@GetMapping("/api/album")

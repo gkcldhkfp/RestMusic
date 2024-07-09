@@ -294,6 +294,25 @@ GROUP BY a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_i
       
 commit;
 
+select a.album_id, a.album_name, 
+        s.song_id, ts.song_id as title_song, s.title, s.song_path, gc.genre_name, 
+        art.artist_name, art.artist_image, art.artist_description,
+        count(l.id) as likes_count
+      from albums a
+        join songs s on a.album_id = s.album_id
+        join song_genre sg on s.song_id = sg.song_id
+        join genre_code gc on sg.genre_id = gc.genre_id
+        join artist_roles artr on s.song_id = artr.song_id
+        join artists art on artr.artist_id = art.artist_id
+        join role_code rc on artr.role_id = rc.role_id
+        left join title_songs ts on ts.song_id= s.song_id
+        left join likes l on l.song_id = s.song_id
+        left join album_likes al on al.album_id = a.album_id
+      where a.album_id = 1 and rc.role_id = 10
+      GROUP BY a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
+        s.song_id, ts.song_id, s.title, s.lyrics, s.song_path, gc.genre_name, 
+        art.artist_name, art.artist_image, art.artist_description;
+
 --표준 문법
 --select e.ename, d.dname, e.sal, s.grade
 --from emp e 

@@ -173,7 +173,7 @@
 				</div>
 			</main>
 			<!-- 플레이리스트 모달 -->
-			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 				aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -182,11 +182,9 @@
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div id="playLists" class="modal-body" style="height: 393px;">
-							<!--  플리가 추가 될 부분 -->
 						</div>
 						<nav aria-label="Playlist navigation">
 							<ul id="pagination" class="pagination pagination-sm justify-content-center">
-								<!-- 페이징이 추가될 부분 -->
 							</ul>
 						</nav>
 						<div class="modal-footer">
@@ -194,7 +192,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<footer>
 				<!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
 				<%@ include file="../fragments/footer.jspf" %>
@@ -219,7 +217,7 @@
 			<c:url var="album_detail" value="/js/album_detail.js" />
 			<script src="${album_detail}"></script>
 			<c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
-			<script src="${addCurrentPlayList}"></script>
+			<script src="${addCurrentPlayList}"></scrip>
 			<c:url var="detailJS" value="/js/detail.js" />
 			<script src="${detailJS}"></script>
 

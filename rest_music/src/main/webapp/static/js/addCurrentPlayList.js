@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	}
 
-	// 플리에 추가 기능
+	/* // 플리에 추가 기능
 	const btnAddUPList = document.querySelector('#btnAddUPList');
 	btnAddUPList.addEventListener('click', addUPList);
 	function addUPList(event) {
@@ -149,13 +149,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		// TODO: 플리에 추가하는 Rest 매핑 컨트롤러 호출.
 
-	}
-	
+	} */
+
 
 
 	// 아래는 다른 페이지에서도 사용하는 함수
 
+	let isModalOpen = false;
+
 	function showModal() {
+		if (isModalOpen) {
+			console.log('Modal is already open.');
+			return;
+		}
 		console.log('mainFrame showModal 호출성공');
 		let myModal = document.querySelector('#sessionListModal');
 		console.log(myModal);
@@ -164,6 +170,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		getCPList();
 		// Ajax요청을 보내고 모달에 태그를 작성하는 album_detail.js의 함수를 호출
 		modal.show();
+
+		// 모달이 열릴 때 상태 업데이트
+		isModalOpen = true;
+
+		myModal.addEventListener('hidden.bs.modal', () => {
+			isModalOpen = false;
+		});
 	}
 	// 다른 프레임에서 호출할 수 있도록 함수 노출
 	window.showModal = showModal;
@@ -201,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		let modalBody = document.getElementById('sessionListBody');
 		let modal = document.querySelector('.modal');
 		let modalCloseBtn = document.querySelectorAll('#modalCloseBtn');
-		modal.style.display = "none";
+		// modal.style.display = "none";
 		modalBody.innerHTML = ''; // 모달 바디 초기화
 
 		// 재생목록 관리를 위한 인덱스 선언
@@ -228,23 +241,23 @@ document.addEventListener('DOMContentLoaded', () => {
 				console.log(li);
 			}
 			modalBody.appendChild(ul); // 모달에 작성.
-			if (modal.style.display !== 'block') {
-				modal.style.display = 'block'; // 모달창 활성화
-			}
-			for (let m of modalCloseBtn) {
-				// 닫기 버튼 활성화
-				m.addEventListener('click', () => {
-					modal.style.display = "none";
-					// 포커스를 메인 프레임의 body로 이동하여 이벤트 리스너가 정상적으로 작동하도록 함
-				});
-			}
+			// if (modal.style.display !== 'block') {
+			// 	modal.style.display = 'block'; // 모달창 활성화
+			// }
+			// for (let m of modalCloseBtn) {
+			// 	// 닫기 버튼 활성화
+			// 	m.addEventListener('click', () => {
+			// 		modal.style.display = "none";
+			// 		// 포커스를 메인 프레임의 body로 이동하여 이벤트 리스너가 정상적으로 작동하도록 함
+			// 	});
+			// }
 
-			window.onclick = function (event) {
-				if (event.target == modal) {
-					modal.style.display = "none";
-					// 포커스를 메인 프레임의 body로 이동하여 이벤트 리스너가 정상적으로 작동하도록 함
-				}
-			}
+			// window.onclick = function (event) {
+			// 	if (event.target == modal) {
+			// 		modal.style.display = "none";
+			// 		// 포커스를 메인 프레임의 body로 이동하여 이벤트 리스너가 정상적으로 작동하도록 함
+			// 	}
+			// }
 
 		} else {
 			let li = document.createElement('li');
@@ -256,13 +269,16 @@ document.addEventListener('DOMContentLoaded', () => {
 			cPList[i].addEventListener('click', (event) => {
 				sessionStorage.setItem('index', i);
 				getCPList();
-				modal.style.display = "none";
+				// let modal = bootstrap.Modal.getInstance(document.querySelector('#sessionListModal'));
+				// modal.hide();
+				// modal.show();
 				parent.songFrame.location.reload();
-				modal.style.display = "block"
 			});
 		}
 
 	}
+
+	
 
 
 
