@@ -16,8 +16,8 @@
         count(l.id) as likes_count
       from albums a
         join songs s on a.album_id = s.album_id
-        join song_genre sg on s.song_id = sg.song_id
-        join genre_code gc on sg.genre_id = gc.genre_id
+        left join song_genre sg on s.song_id = sg.song_id
+        left join genre_code gc on sg.genre_id = gc.genre_id
         join artist_roles artr on s.song_id = artr.song_id
         join artists art on artr.artist_id = art.artist_id
         join role_code rc on artr.role_id = rc.role_id
