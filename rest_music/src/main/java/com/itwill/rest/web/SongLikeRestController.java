@@ -49,11 +49,12 @@ public class SongLikeRestController {
 	}
 
 	// 좋아요 취소
-	@DeleteMapping("/cancelLike/{songId}/{id}")
-	public ResponseEntity<Integer> deleteSongLike(@PathVariable int songId, @PathVariable int id) {
-		log.debug("deleteSongLike(songId={}, id={})", songId, id);
-
-		SongLikeDto dto = new SongLikeDto(songId, id);
+	@DeleteMapping("/cancelLike/{songId}/{loginUserId}")
+	public ResponseEntity<Integer> deleteSongLike(@PathVariable int songId, @PathVariable int loginUserId) {
+		log.debug("deleteSongLike(songId={}, loginUserId={})", songId, loginUserId);
+		
+		// id 못찾으면 여기일 확률 높음!!
+		SongLikeDto dto = new SongLikeDto(songId, loginUserId);
 
 		songService.cancelSongLike(dto);
 		int likesCount = songService.countSongLikes(songId); // 최신 좋아요 개수 반환

@@ -65,14 +65,14 @@
                                 <c:param name="albumId" value="${top.albumId}" />
                             </c:url>
                             <a href="${albumDetailUrl}" class="album-link">
-                                <img alt="앨범표지" src="<c:url value='/data/${top.albumImage}' />" class="img-fluid" />
+                                <img alt="앨범표지" src="<c:url value='/images/albumcover/${top.albumImage}' />" class="img-fluid" />
                             </a>    
                             <%-- TODO: 음원 상세 매핑 주소로 수정 --%>
 	                        <c:url var="songDetailUrl" value="/song/detail">
 						        <c:param name="songId" value="${top.songId}" />
 						    </c:url>   
 						    <%-- TODO: 아티스트 상세 매핑 주소로 수정 --%>
-                            <c:url var="artistDetailUrl" value="/artist/detail">
+                            <c:url var="artistDetailUrl" value="/artist/albums">
                                 <c:param name="artistId" value="${top.artistId}" />
                             </c:url>
                             <div>
@@ -93,7 +93,7 @@
 						    <span class="likes-count">${top.likes != null ? top.likes : 0}</span>
 						</td>
                         <td>
-						    <c:url var="songPath" value="/data/${top.songPath}" />
+						    <c:url var="songPath" value="/songs/${top.songPath}" />
 						    <a href="#" class="btn btn-primary btn-sm play-btn"
 						        data-song-path="${songPath}"
 						        data-song-id="${top.songId}"

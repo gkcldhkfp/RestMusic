@@ -8,11 +8,12 @@ document.addEventListener("DOMContentLoaded", function() {
     
     heartIcons.forEach(icon => {
         const songId = icon.dataset.songId;
-        const id = parseInt(icon.dataset.id);
+        const loginUserId = parseInt(icon.dataset.id);
         let likesCountElement = icon.nextElementSibling; // 좋아요 개수를 표시하는 요소를 가져옴
         
         // 특정 사용자가 특정 노래를 좋아요 했는지 여부를 서버에 요청
-        const data = { songId, id }; 
+        const data = { songId, loginUserId };
+        console.log(data);
         axios.post('../api/isLiked', data)
             .then(response => {
                 // 서버 응답에 따라 좋아요 상태를 설정
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 // 아이콘 클릭 이벤트 리스너 추가
                 icon.addEventListener('click', function() {
-                    if (id === 0) { // 로그인하지 않은 경우
+                    if (loginUserId === 0) { // 로그인하지 않은 경우
                         const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
                         loginModal.show();
                         return;
@@ -40,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     if (icon.classList.contains('liked')) { // 이미 좋아요 상태인 경우
                         // 좋아요 취소 요청을 서버로 보냄
-                        axios.delete(`../api/cancelLike/${songId}/${id}`)
+                        axios.delete(`../api/cancelLike/${songId}/${loginUserId}`)
                             .then(response => {
                                 if (response.status === 200) { // 서버 응답이 성공적인 경우
                                     icon.classList.remove('liked'); // liked 클래스를 제거
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 console.error('좋아요 제거 중 오류:', error); // 오류 처리
                             });
                     } else { // 좋아요 상태가 아닌 경우
-                        const data = { songId, id }; // 서버로 보낼 데이터 생성
+                        const data = { songId, loginUserId }; // 서버로 보낼 데이터 생성
                         // 좋아요 추가 요청을 서버로 보냄
                         axios.post('../api/addLike', data)
                             .then(response => {
