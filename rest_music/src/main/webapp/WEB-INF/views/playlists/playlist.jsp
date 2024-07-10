@@ -61,7 +61,7 @@
                     <!-- 추가할 박스 (카드) -->
                     <div class="card">
                         <div class="card-body" id="playLists">
-                            <table class="table table-striped" style="border: 1px solid #ddd;">
+                            <table class="table table-striped" style="border: 1px solid #ddd;" id="resultTable">
                                 <thead>
                                     <tr>
                                         <!-- 전체 선택 체크박스 추가 -->
