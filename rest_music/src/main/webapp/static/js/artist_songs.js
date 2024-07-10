@@ -3,7 +3,7 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
     const btnAddPlayLists = document.querySelectorAll('button.addPlayList');
-    const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
+    const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop3'), { backdrop: 'static' });
     
     let currentPage = 1;
     const itemsPerPage = 5;

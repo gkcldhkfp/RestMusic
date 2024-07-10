@@ -79,7 +79,7 @@
 							<div class="fw-bold">"${album.albumName}" 앨범정보</div>
 							<hr />
 							<div style="float:left" class="mouseScale-up">
-								<img src="../images/albumcover/${album.albumImage}" alt="앨범 커버" width="250" height="250" />
+								<a href="/Rest/album/detail?albumId=${album.albumId}"><img src="../images/albumcover/${album.albumImage}" alt="앨범 커버" width="250" height="250" /></a>
 							</div>
 							<div style="float: left">
 								<table class="table-borderless intro">
@@ -88,11 +88,11 @@
 									</tr>
 									<tr>
 										<td>앨범 명</td>
-										<td class="intro">${album.albumName}</td>
+										<td class="intro"><a href="/Rest/album/detail?albumId=${album.albumId}">${album.albumName}</a></td>
 									</tr>
 									<tr>
 										<td>아티스트</td>
-										<td class="intro">${album.artistName}</td>
+										<td class="intro"><a href="/Rest/artist/songs?artistId=${album.artistId}">${album.artistName}</a></td>
 									</tr>
 									<tr>
 										<td>발매일</td>
@@ -104,7 +104,7 @@
 									</tr>
 									<tr style="text-align: left;">
 										<td>타이틀 곡</td>
-										<td class="intro"><a href="/song/detail?sondId=${album.songId}">${album.title}</a></td>
+										<td class="intro"><a href="/Rest/song/detail?songId=${album.songId}">${album.title}</a></td>
 									</tr>
 								</table>
 								<div id="like">
@@ -148,7 +148,7 @@
 											<a href="/Rest/song/detail?songId=${s.songId}">
 												${s.title}</a>
 										</td>
-										<td>${s.artistName}</td>
+										<td><a href="/Rest/artist/songs?artistId=${album.artistId}">${s.artistName}</a></td>
 										<td id="countLike" data-id="${s.songId}">
 											<img id="btnLike" height="30px" width="30px" src="../images/icon/likeOn.png" />${s.likesCount}
 											<!-- TODO: axios로 DB insert 해야됨 -->
@@ -177,7 +177,7 @@
 				</div>
 			</main>
 			<!-- 플레이리스트 모달 -->
-			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 				aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -221,8 +221,6 @@
 			<script src="${album_detail}"></script>
 			<c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
 			<script src="${addCurrentPlayList}"></script>
-			<c:url var="detailJS" value="/js/detail.js" />
-			<script src="${detailJS}"></script>
 
 
 		</body>

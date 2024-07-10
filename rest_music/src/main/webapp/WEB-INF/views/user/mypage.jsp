@@ -39,7 +39,11 @@
                             <c:url var="userUpdate" value="/user/update">
                                 <c:param name="userId" value="${user.userId}" />
                             </c:url>
-                            <a class="btn btn-outline-primary" id="updateInfoBtn" href="${userUpdate}">ID/PW 변경 (내정보 관리)
+                            <a class="btn btn-outline-primary mb-2" id="updateInfoBtn" href="${userUpdate}">ID/PW 변경 (내정보 관리)
+                            </a>
+                            <!-- 이용권 구매(결제창) 페이지 이동 버튼 -->
+                            <c:url var="purchasePage" value="/purchase" />
+                            <a class="btn btn-outline-primary" href="${purchasePage}">이용권 구매
                             </a>
                         </div>
                     </div>
@@ -61,7 +65,7 @@
                     <hr>
                     <!-- 추가할 박스 (카드) -->
                     <div class="card">
-                        <div class="card-body" id="likeCardBody">
+                        <div class="card-body" id="resultTable">
                             <table class="table table-striped" style="border: 1px solid #ddd;">
                                 <thead>
                                     <tr>
@@ -69,6 +73,7 @@
                                         <th style="text-align: left; vertical-align: middle;">노래 제목</th>
                                         <th style="text-align: left; vertical-align: middle;">아티스트</th>
                                         <th style="text-align: center; vertical-align: middle;">듣기</th>
+                                        <th style="text-align: center; vertical-align: middle;">재생목록</th>
                                     </tr>
                                 </thead>
                                 <tbody id="likeTableBody">
