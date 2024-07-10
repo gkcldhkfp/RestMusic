@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		console.log('이 페이지에는 플리 모달이 안쓰임');
 		return;
 	}
-	const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
+	const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop2'), { backdrop: 'static' });
 	let currentPage = 1;
 	const itemsPerPage = 5;
 	let playlistsData = [];
