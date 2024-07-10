@@ -123,6 +123,8 @@
                                 value="/images/icon/myPlayList.png" />
                             <c:url var="songPage"
                                 value="/song/detail?songId=${s.songId}" />
+                            <c:url var="artistPage"
+                                value="/artist/songs?artistId=${s.artistId}" />
                             <tr>
                                 <!--    <td style="text-align: center; vertical-align: middle;">
                                     <input type="checkbox" class="songCheckbox" data-songId="${s.songId}">
@@ -138,7 +140,10 @@
                                     onmouseout="this.style.color='black';">${s.songTitle}</a>
                                 </td>
                                 <td style="text-align: left; vertical-align: middle; font-size: 14px;">
-                                    ${s.artistName}</td>
+                                    <a href="${artistPage}"
+                                    style="color: black; text-decoration: none;"
+                                    onmouseover="this.style.color='blue';"
+                                    onmouseout="this.style.color='black';">${s.artistName}</a></td>
                                 <td style="text-align: center; vertical-align: middle;">
                                     <button
                                         style="background-image: url('${playImage}'); 
