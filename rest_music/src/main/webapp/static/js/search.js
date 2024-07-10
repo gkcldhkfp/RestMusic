@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <td style="text-align: center;"><button data-id="${item.songId}" style="background-image: url('../images/icon/play.png'); width:50px; height:50px;
                              background-size: cover; background-repeat: no-repeat;" id="listenBtn" class="btnListen btn mt-3"></button></td>
                              <td style="text-align: center;"><button style="background-image: url('../images/icon/playList.png'); width: 60px; height: 60px; background-size: cover; 
-                             background-repeat: no-repeat;" class="btn addNextPlay mt-3"></button></td>
+                             background-repeat: no-repeat;" data-id="${item.songId}" id="addCPList" class="btn addNextPlay mt-3"></button></td>
                             <td style="text-align: center;"><button style="background-image: url('../images/icon/myPlayList.png'); width:55px; height:55px;
                             background-size: cover; background-repeat: no-repeat;" class="btn addPlayList mt-3"></button></td>
                         `;
