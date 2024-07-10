@@ -330,7 +330,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // "전체 담기" 버튼 클릭 이벤트 핸들러
     document.getElementById('addAllToCollection').addEventListener('click', function() {
         const id = parseInt(document.querySelector('.add-to-playlist-btn').dataset.id);
-        console.log(id);
         if (id === 0) { // 로그인하지 않은 경우
             const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
             loginModal.show();
@@ -357,7 +356,6 @@ document.addEventListener("DOMContentLoaded", function() {
         button.addEventListener('click', function(event) {
             const id = parseInt(this.dataset.id);
             const songId = this.dataset.songId;  // 버튼에서 songId를 가져옴
-            console.log(id);
             if (id === 0) { // 로그인하지 않은 경우
                 const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
                 loginModal.show();

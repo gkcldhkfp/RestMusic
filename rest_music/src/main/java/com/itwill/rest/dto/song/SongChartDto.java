@@ -1,8 +1,6 @@
 package com.itwill.rest.dto.song;
 
-//import java.sql.Date;
-//import java.time.LocalDate;
-import java.time.LocalDate;
+import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +16,7 @@ public class SongChartDto {
 	private String genreName; // 장르 이름
 	private Integer albumId; // 앨범 번호
 	private String albumImage; // 앨범 표지
-	private LocalDate albumReleaseDate; // 앨범 발매일
+	private Date albumReleaseDate; // 앨범 발매일
 	private String title; // 노래 제목
 	private Integer artistId; // 아티스트 번호
 	private String artistName; // 아티스트 이름
