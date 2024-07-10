@@ -32,7 +32,7 @@
                 <div class="col-md-4 d-flex flex-column align-items-center">
                     <c:url var="profileImg" value="/images/profileimage/profile.jpg" />
                     <c:url var="userProfile" value="/images/profileimage/${user.userProfile}" />
-                    <img id="profileImagePreview" alt="profileImg" src="${empty userProfile ? profileImg : userProfile}"
+                    <img id="profileImagePreview" alt="profileImg" src="${user.userProfile == null ? profileImg : userProfile}"
                         width="200px" height="200px" class="rounded-circle mb-3" />
                         
                     <!-- 프로필 변경 버튼 -->
