@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Top 30</title>
+    <title>최신 음악</title>
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -55,68 +55,68 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="top" items="${topSongs}" varStatus="status">
+                <c:forEach var="newewst" items="${newSongs}" varStatus="status">
                     <tr>
-                        <td><input type="checkbox" class="songCheckbox" data-song-id="${top.songId}" /></td>
+                        <td><input type="checkbox" class="songCheckbox" data-song-id="${newest.songId}" /></td>
                         <td>${status.index + 1}</td>
                         <td class="song-info"> 
                             <%-- TODO: 앨범 상세 매핑 주소로 수정 --%>
                             <c:url var="albumDetailUrl" value="/album/detail"> 
-                                <c:param name="albumId" value="${top.albumId}" />
+                                <c:param name="albumId" value="${newest.albumId}" />
                             </c:url>
                             <a href="${albumDetailUrl}" class="album-link">
-                                <img alt="앨범표지" src="<c:url value='/images/albumcover/${top.albumImage}' />" class="img-fluid" />
+                                <img alt="앨범표지" src="<c:url value='/images/albumcover/${newest.albumImage}' />" class="img-fluid" />
                             </a>    
                             <%-- TODO: 음원 상세 매핑 주소로 수정 --%>
                             <c:url var="songDetailUrl" value="/song/detail">
-                                <c:param name="songId" value="${top.songId}" />
+                                <c:param name="songId" value="${newest.songId}" />
                             </c:url>   
                             <%-- TODO: 아티스트 상세 매핑 주소로 수정 --%>
                             <c:url var="artistDetailUrl" value="/artist/songs">
-                                <c:param name="artistId" value="${top.artistId}" />
+                                <c:param name="artistId" value="${newest.artistId}" />
                             </c:url>
                             <div>
                                 <a href="${songDetailUrl}" style="font: inherit; color: inherit; text-decoration: none;">
-                                    <span>${top.title}</span><br>
+                                    <span>${newest.title}</span><br>
                                 </a>
                                 <a href="${artistDetailUrl}" style="font: inherit; color: gray; text-decoration: none;">
-                                    <span>${top.artistName}</span>
+                                    <span>${newest.artistName}</span>
                                 </a>
                             </div>                  
                         </td>
-                        <td>${top.albumName}</td>
+                        <td>${newest.albumName}</td>
                         <td>
-                            <i class="fas fa-heart ${top.likes != null && top.likes > 0 ? 'liked' : ''} heart-icon"
-                                data-song-id="${top.songId}"
+                            <i class="fas fa-heart ${newest.likes != null && newest.likes > 0 ? 'liked' : ''} heart-icon"
+                                data-song-id="${newest.songId}"
                                 data-id="${loginUserId}">
                             </i>
-                            <span class="likes-count">${top.likes != null ? top.likes : 0}</span>
+                            <span class="likes-count">${newest.likes != null ? newest.likes : 0}</span>
                         </td>
                         <td>
-                            <c:url var="songPath" value="/songs/${top.songPath}" />
+                            <c:url var="songPath" value="/songs/${newest.songPath}" />
                             <a href="#" class="btn btn-primary btn-sm play-btn"
                                 id="listenBtn"
                                 data-song-path="${songPath}"
-                                data-song-id="${top.songId}"
-                                data-id="${top.songId}">
+                                data-song-id="${newest.songId}"
+                                data-id="${newest.songId}">
                                 <i class="fas fa-play"></i>
                             </a>
                         </td>
                         <td>            
                             <button type="button" class="btn btn-secondary btn-sm" id="addCPList"
-                                data-id="${top.songId}">
+                                data-id="${newest.songId}">
                                 <i class="fa-solid fa-list"></i>
                             </button>
                         </td>
                         <td>
                             <button type="button" class="btn btn-secondary btn-sm add-to-playlist-btn"
-                              data-song-id="${top.songId}"
+                              data-song-id="${newest.songId}"
                               data-id="${loginUserId}">
                               <i class="fas fa-plus"></i>
                             </button>
                         </td>
                         <td>
-                            <a href="${top.videoLink}" target="_blank" class="btn btn-secondary btn-sm">
+                            <a href="${newest.videoLink}" target="_blank" class="btn btn-secondary btn-sm">
                                 <i class="fas fa-video"></i>
                             </a>
                         </td>
@@ -215,8 +215,8 @@
     </script>
     
     <!-- 우리가 만든 JS 파일 -->
-    <c:url var="songsPopularJS" value="/js/songsPopular.js" />
-    <script src="${songsPopularJS}"></script>
+    <c:url var="songsNewestJS" value="/js/songsNewest.js" />
+    <script src="${songsNewestJS}"></script>
     
     <c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
     <script src="${addCurrentPlayList}"></script>

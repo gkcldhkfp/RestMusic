@@ -93,17 +93,20 @@
                             <span class="likes-count">${song.likes != null ? song.likes : 0}</span>
                         </td>
                         <td>
-                            <c:url var="songPath" value="/songs/${song.songPath}" />
+                            <c:url var="songPath" value="/songs/${top.songPath}" />
                             <a href="#" class="btn btn-primary btn-sm play-btn"
+                                id="listenBtn"
                                 data-song-path="${songPath}"
-                                data-song-id="${song.songId}"
-                                data-id="${loginUserId}">
+                                data-song-id="${top.songId}"
+                                data-id="${top.songId}">
+                                <!-- data-id="${loginUserId}" -->
+                                
                                 <i class="fas fa-play"></i>
                             </a>
                         </td>         
-                        <td>
+                        <td>            
                             <button type="button" class="btn btn-secondary btn-sm" id="addCPList"
-                                data-song-id="${song.songId}">
+                                data-id="${top.songId}">
                                 <i class="fa-solid fa-list"></i>
                             </button>
                         </td>
@@ -133,6 +136,7 @@
 		<span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
 	</audio>
 	
+	<!-- 
 	<!-- 세션 리스트 모달 -->
     <div class="modal fade" id="sessionListModal" tabindex="-1" aria-labelledby="sessionListModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -147,8 +151,9 @@
             </div>
         </div>
     </div>
+    
 	
-    <!-- 플레이리스트 모달 창 -->
+    <!-- 플레이리스트 모달 창
     <div class="modal fade" id="selectPlayList" tabindex="-1" aria-labelledby="selectPlayListLabel" aria-hidden="true">
        <div class="modal-dialog modal-lg">
            <div class="modal-content">
@@ -157,7 +162,7 @@
                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                   <!-- 플레이리스트 체크박스 목록이 여기에 동적으로 추가됩니다 -->
+                   <!-- 플레이리스트 체크박스 목록이 여기에 동적으로 추가됩니다
                    <div id="playLists"></div>
                </div>
                <div class="modal-footer">
@@ -167,6 +172,7 @@
            </div>
        </div>
     </div>
+     -->
 	
 	<!-- 전체 담기 Modal HTML 추가 -->
     <div id="selectAllModal" class="modal" tabindex="-1">
@@ -176,9 +182,11 @@
                     <button type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">
                         <i class="fas fa-times fa-3x"></i> 취소
                     </button>
+                    <!-- 
                     <button type="button" class="btn btn-primary m-2" id="addAllToPlaylist">
                         <i class="fas fa-play fa-3x"></i> 전체 듣기
                     </button>
+                     -->
                     <button type="button" class="btn btn-primary m-2" id="addAllToCollection">
                         <i class="fas fa-plus fa-3x"></i> 전체 담기
                     </button>
