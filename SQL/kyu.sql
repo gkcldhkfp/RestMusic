@@ -312,6 +312,70 @@ select a.album_id, a.album_name,
       GROUP BY a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
         s.song_id, ts.song_id, s.title, s.lyrics, s.song_path, gc.genre_name, 
         art.artist_name, art.artist_image, art.artist_description;
+        
+  
+  
+SELECT 
+    a.album_id, 
+    a.album_name, 
+    s.song_id, 
+    ts.song_id AS title_song, 
+    s.title, 
+    s.song_path, 
+    LISTAGG(DISTINCT gc.genre_name, ', ') WITHIN GROUP (ORDER BY gc.genre_name) AS genre_name,
+    art.artist_id,
+    art.artist_name,
+    art.artist_image,
+    art.artist_description,
+    COUNT(DISTINCT l.id) AS likes_count
+FROM 
+    albums a
+    JOIN songs s ON a.album_id = s.album_id
+    LEFT JOIN song_genre sg ON s.song_id = sg.song_id
+    LEFT JOIN genre_code gc ON sg.genre_id = gc.genre_id
+    JOIN artist_roles artr ON s.song_id = artr.song_id
+    JOIN artists art ON artr.artist_id = art.artist_id
+    JOIN role_code rc ON artr.role_id = rc.role_id
+    LEFT JOIN title_songs ts ON ts.song_id = s.song_id
+    LEFT JOIN likes l ON l.song_id = s.song_id
+    LEFT JOIN album_likes al ON al.album_id = a.album_id
+WHERE 
+    a.album_id = 1 AND rc.role_id = 10
+GROUP BY 
+    a.album_id, a.album_name, s.song_id, ts.song_id, s.title, s.song_path,
+    art.artist_id, art.artist_name, art.artist_image, art.artist_description
+ORDER BY 
+    ts.song_id, s.song_id; 
+    
+SELECT 
+    a.album_id, 
+    a.album_type, 
+    a.album_name, 
+    a.album_release_date, 
+    a.album_image, 
+    LISTAGG(DISTINCT s.song_id, ', ') WITHIN GROUP (ORDER BY s.song_id) AS song_id,
+    LISTAGG(DISTINCT s.title, ', ') WITHIN GROUP (ORDER BY s.title) AS title,
+    LISTAGG(DISTINCT gc.genre_name, ', ') WITHIN GROUP (ORDER BY gc.genre_name) AS genre_name,
+    LISTAGG(DISTINCT art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_name,
+    LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_id) AS artist_id
+FROM 
+    albums a
+    JOIN songs s ON a.album_id = s.album_id
+    JOIN title_songs ts ON ts.song_id = s.song_id
+    LEFT JOIN song_genre sg ON s.song_id = sg.song_id
+    LEFT JOIN genre_code gc ON sg.genre_id = gc.genre_id
+    JOIN artist_roles artr ON s.song_id = artr.song_id
+    JOIN artists art ON artr.artist_id = art.artist_id
+    JOIN role_code rc ON artr.role_id = rc.role_id
+WHERE 
+    a.album_id = 1 AND rc.role_id = 10
+GROUP BY 
+    a.album_id, 
+    a.album_type, 
+    a.album_name, 
+    a.album_release_date, 
+    a.album_image;
+--
 
 --표준 문법
 --select e.ename, d.dname, e.sal, s.grade

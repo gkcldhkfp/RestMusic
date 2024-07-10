@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
 						parent.songFrame.location.reload();
 					}
 					// document.location.reload();
+					// alert('재생 목록에 추가되었습니다');
+					showAlert('재생 목록에 추가되었습니다', 2000);
+
 				}).
 				catch((error) => { console.log(error); });
 		}
@@ -48,8 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
 					console.log("성공");
 					sessionStorage.setItem('index', 0);
 					sessionStorage.setItem('isAdded', 'Y');
-					document.location.reload();
 					parent.songFrame.location.reload();
+					// alert('선택한 음원을 재생합니다.');
+					showAlert('선택한 음원을 재생합니다.', 2000);
+
 				})
 				.catch((error) => { });
 		}
@@ -125,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
 							console.log("성공");
 							sessionStorage.setItem('index', 0);
 							sessionStorage.setItem('isAdded', 'Y');
-							document.location.reload();
 							parent.songFrame.location.reload();
 							// 두번째 곡 이후부터는 재생목록에 추가.
 							for (let i = 1; i < listSong.length; i++) {
@@ -144,6 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
 									}).
 									catch((error) => { console.log(error); });
 							}
+							// alert('선택한 앨범을 재생합니다.');
+					showAlert('선택한 앨범을 재생합니다.', 2000);
+
 						})
 						.catch((error) => console.log(error));
 				}).
@@ -185,6 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
 							}).
 							catch((error) => { console.log(error); });
 					}
+					// alert('선택한 앨범이 다음 재생목록에 저장되었습니다.');
+					showAlert('선택한 앨범이 다음 재생목록에 저장되었습니다.', 2000);
 				}).
 				catch((error) => console.log(error));
 
@@ -597,6 +606,41 @@ document.addEventListener('DOMContentLoaded', () => {
 		currentPage = page;
 		displayPlayLists(currentPage);
 		setupPagination(); // 이 부분에서 이벤트 리스너를 다시 등록하지 않아도 됨
+	}
+
+	function showAlert(message, duration) {
+		// 알림창 생성
+		const alertBox = document.createElement('div');
+		alertBox.textContent = message;
+		alertBox.style.cssText = `
+			position: fixed;
+			bottom: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: #333;
+			color: white;
+			padding: 15px 20px;
+			border-radius: 5px;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+			z-index: 1000;
+			opacity: 0;
+			transition: opacity 0.5s ease-in-out;
+		`;
+	
+		document.body.appendChild(alertBox);
+	
+		// Fade in
+		setTimeout(() => {
+			alertBox.style.opacity = '1';
+		}, 10);
+	
+		// Fade out and remove
+		setTimeout(() => {
+			alertBox.style.opacity = '0';
+			setTimeout(() => {
+				document.body.removeChild(alertBox);
+			}, 500);
+		}, duration);
 	}
 
 
