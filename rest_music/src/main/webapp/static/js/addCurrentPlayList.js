@@ -89,6 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 l.addEventListener('click', clickListenBtn)
             }
         }
+        const addCPList2 = document.querySelectorAll('#addCPList');
+        if (addCPList2 !== null) {
+            for (let a of addCPList2) {
+                console.log(a);
+                a.addEventListener('click', addToCPList);
+            }
+        }
     }
 	
 	
