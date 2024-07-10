@@ -45,7 +45,7 @@
 
             <div class="mySlides fade">
                 <div class="numbertext">1 / 3</div>
-                <img src="../data/imagee1.jpg" style="width: 100%">
+                <img src="../data/image1.gif" style="width: 100%">
                 <div class="text">Caption Text</div>
             </div>
 
