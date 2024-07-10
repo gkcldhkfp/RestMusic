@@ -134,14 +134,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     data.forEach(function(item) {
                         const songDetailsPage = `../song/detail?songId=${item.songId}`;
                         const newRow = document.createElement('tr');
-                        newRow.style.cursor = 'pointer';
+                        //newRow.style.cursor = 'pointer';
                         newRow.setAttribute('data-song-id', item.songId);
-                        newRow.onclick = function() { location.href = songDetailsPage; };
+                        // newRow.onclick = function() { location.href = songDetailsPage; };
 
                         newRow.innerHTML = `
                             <td style="width: 118px;"><img alt="albumcover" src="../images/albumcover/${item.albumImage}" 
                              class="img-thumbnail" width="120px" height="120px"/></td>
-                            <td style="width:60%;"><span class="fs-4">${item.title}</span> <br/> <br/> ${item.albumName}</td>
+                            <td style="width:60%;"><span class="fs-4" onclick="location.href='${songDetailsPage}'">${item.title}</span> <br/> <br/> ${item.albumName}</td>
                             <td><br/><span class="text-center fw-bold">${item.singerName}</span></td>
                             <td style="text-align: center;"><button data-id="${item.songId}" style="background-image: url('../images/icon/play.png'); width:50px; height:50px;
                              background-size: cover; background-repeat: no-repeat;" id="listenBtn" class="btnListen btn mt-3"></button></td>
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         `;
 
                         // 새로운 행에 이벤트 리스너 추가
-                        const addPlayListButton = newRow.querySelector('button.addPlayList');
+                       /* const addPlayListButton = newRow.querySelector('button.addPlayList');
                         addPlayListButton.addEventListener('click', function(e) {
                             e.stopPropagation(); // 이벤트 버블링 방지
                             getPlayLists(e);
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const addNextPlayButton = newRow.querySelector('button.addNextPlay');
                             addNextPlayButton.addEventListener('click', (event) => {
                                 event.stopPropagation(); // 이벤트 버블링 방지
-                        });
+                        });*/
                         
 
                         // tbody에 새로운 행 추가

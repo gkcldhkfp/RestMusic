@@ -91,7 +91,7 @@
   <select id="searchSongs" resultType="ResultDto">
     <bind name="searchKeyword" value="'%' + keyword + '%'" />
     SELECT * FROM (
-        SELECT songId, albumName, albumImage, title, singerName, releaseDate, score, rnum
+        SELECT songId, albumName, albumImage, title, singerName, releaseDate, score, rnum, album_id, artist_id
         FROM (
             SELECT s.song_id AS songId,
                    a.album_name AS albumName,
@@ -112,7 +112,9 @@
                                ORDER BY s.title ASC
                            </when>
                        </choose>
-                   ) AS rnum
+                   ) AS rnum,
+                   s.album_id AS album_id
+                   art.artist_id AS artist_id
             FROM songs s
             JOIN albums a ON s.album_id = a.album_id
             JOIN artist_roles ar ON s.song_id = ar.song_id AND ar.role_id = 10
