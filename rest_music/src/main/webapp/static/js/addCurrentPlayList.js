@@ -355,6 +355,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// 앨범을 플리에 추가 기능
 	const btnAddUPListAlbum = document.querySelector('#btnAddUPListAlbum');
+	if (btnAddUPListAlbum === null) {
+		console.log('앨범을 유저플레이리스트에 추가 버튼을 사용하지 않는 페이지');
+		return;
+	}
 	btnAddUPListAlbum.addEventListener('click', getPlayListAlbum);
 	function getPlayListAlbum() {
 		if (id == '') {
