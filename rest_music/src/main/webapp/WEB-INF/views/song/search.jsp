@@ -88,23 +88,27 @@
                             </tr>
                         </c:if>
                         <c:forEach var="r" items="${result}">
-                            <c:url var="songDetailsPage"
-                                value="/song/detail">
-                                <c:param name="songId"
-                                    value="${r.songId}"></c:param>
+                            <c:url var="songDetailsPage" value="/song/detail">
+                                <c:param name="songId" value="${r.songId}"></c:param>
                             </c:url>
+                            
+                            <c:url var="albumDetailPage" value="/album/detail">
+                                    <c:param name="albumId" value="${r.albumId}"></c:param>
+                            </c:url>
+                            
                             <tr data-song-id="${r.songId}">
-                                <td style="width: 118px;"><img
-                                    alt="albumcover"
-                                    src="../images/albumcover/${r.albumImage}"
-                                    class="img-thumbnail" width="120px"
-                                    height="120px" /></td>
+                                <td style="width: 118px;">
+                                    <a href="${albumDetailPage}">
+                                        <img alt="albumcover" src="../images/albumcover/${r.albumImage}"
+                                            class="img-thumbnail" width="120px"
+                                            height="120px" />
+                                    </a>
+                                </td>
+                                    
                                 <td style="width: 60%; "><span
                                     class="fs-4" style="cursor: pointer;" onclick="location.href='${songDetailsPage}'">${r.title}</span> <br />
                                     
-                                    <c:url var="albumDetailPage" value="/album/detail">
-                                        <c:param name="albumId" value="${r.albumId}"></c:param>
-                                    </c:url>
+                                    
                                     <br /> <span style="cursor: pointer;" onclick="location.href='${albumDetailPage}'" >${r.albumName}</span></td>
                                     
                                     <c:url var="artistPage" value="/artist/songs">
