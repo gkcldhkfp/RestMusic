@@ -1,4 +1,4 @@
-1/**
+/**
  * currentPlayList.jsp에 포함
  * detail.jsp에 포함
  */
@@ -54,6 +54,44 @@ document.addEventListener('DOMContentLoaded', () => {
 				.catch((error) => { });
 		}
 	}
+    const targetNode = document.getElementById('resultTable');
+    
+    if (targetNode) {
+        // MutationObserver 콜백 함수
+        var observerCallback = function(mutationsList, observer) {
+            var rowAddedFlag = false;
+            for (var mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    rowAddedFlag = true;
+                    break;
+                }
+            }
+            if (rowAddedFlag) {
+                rowAdded();
+            }
+        };
+
+        // MutationObserver 설정
+        const observerConfig = { childList: true, subtree: true };
+        const observer = new MutationObserver(observerCallback);
+
+        // targetNode 감지 시작
+        observer.observe(targetNode, observerConfig);
+    } else {
+        console.error("Target node not found");
+    }
+
+    function rowAdded() {
+        console.log("New rows detected!");
+        const listenBtn2 = document.querySelectorAll('#listenBtn');
+        if (listenBtn2 !== null) {
+            for (let l of listenBtn2) {
+                l.addEventListener('click', clickListenBtn)
+            }
+        }
+    }
+	
+	
 	// 앨범 듣기 기능
 	const btnListenAlbum = document.querySelector('#btnListenAlbum');
 	if (btnListenAlbum !== null) {
