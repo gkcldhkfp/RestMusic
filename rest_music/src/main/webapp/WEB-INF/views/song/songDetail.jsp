@@ -35,14 +35,17 @@
                     <div class="ms-2"
                         style="display: inline-block; vertical-align: middle;">
                         <h2 class="mt-2">${data.songTitle}</h2>
-                        <p class="mt-4">
-                            가수<span class="ms-3">${data.singerName}</span>
+                        <p class="mt-4" id="singerNames">
+                            가수
                         </p>
                         <p class="mt-2">
-                            앨범<span class="ms-3">${data.albumName}</span>
+                            <c:url var="albumDetailPage" value="/album/detail">
+                                <c:param name="albumId" value="${data.albumId}"></c:param>
+                            </c:url>
+                            앨범<span class="ms-3" style="cursor: pointer;" onclick="location.href='${albumDetailPage}'" >${data.albumName}</span>
                         </p>
-                        <p class="mt-2">
-                            장르<span class="ms-3">${data.genre}</span>
+                        <p class="mt-2" id="genre">
+                            장르
                         </p>
                         <div class="mt-3">
                             <button id="btnLike" class="btn fs-3"></button>
@@ -67,17 +70,14 @@
                     <span class="mt-3 fw-bold">곡명</span><span
                         class="ms-3">${data.songTitle}</span>
                 </p>
-                <p>
-                    <span class="mt-3 fw-bold">작사</span><span
-                        class="ms-3">${data.writers}</span>
+                <p id="writers">
+                    <span class="mt-3 fw-bold">작사</span>
                 </p>
-                <p>
-                    <span class="mt-3 fw-bold">작곡</span><span
-                        class="ms-3">${data.composers}</span>
+                <p id="composers">
+                    <span class="mt-3 fw-bold">작곡</span>
                 </p>
-                <p>
-                    <span class="mt-3 fw-bold">편곡</span><span
-                        class="ms-3">${data.arrangers}</span>
+                <p id="arrangers">
+                    <span class="mt-3 fw-bold">편곡</span>
                 </p>
             </div>
 
@@ -246,6 +246,20 @@
     <script>
 		const songId = ${songId};
 		let loginUserId ='${loginUserId}';
+		
+		const writers = '${data.writers}';
+		const writerIds = '${data.writerIds}';
+		
+		const singerName = '${data.singerName}';
+		const singerIds = '${data.singerIds}';
+		
+		const composers = '${data.composers}';
+		const composerIds = '${data.composerIds}';
+		
+		const arrangers = '${data.arrangers}';
+		const arrangerIds = '${data.arrangerIds}';
+		
+		const genre = '${data.genre}';
 	</script>
 
     <c:url var="commentsJS" value="/js/comments.js" />

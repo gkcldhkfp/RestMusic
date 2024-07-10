@@ -8,72 +8,84 @@
          SELECT
             s.song_id,
             s.title AS song_title,
+            a.album_id,
             a.album_name AS album_name,
             a.album_image AS album_image,
             singer.singer_name,
+            singer.singer_ids,
             writer.writers,
+            writer.writer_ids,
             composer.composers,
+            composer.composer_ids,
             arranger.arrangers,
+            arranger.arranger_ids,
             LISTAGG(gc.genre_name, ', ') WITHIN GROUP (ORDER BY gc.genre_name) AS genre,
             s.lyrics
-        FROM
+            FROM
             songs s
             JOIN albums a ON s.album_id = a.album_id
             LEFT JOIN (
                 SELECT
-                    ar.song_id,
-                    LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS singer_name
+                ar.song_id,
+                LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS singer_name,
+                LISTAGG(art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS singer_ids
                 FROM
-                    artist_roles ar
-                    JOIN artists art ON ar.artist_id = art.artist_id
+                artist_roles ar
+                JOIN artists art ON ar.artist_id = art.artist_id
                 WHERE
-                    ar.role_id = 10
+                ar.role_id = 10
                 GROUP BY
-                    ar.song_id
+                ar.song_id
             ) singer ON s.song_id = singer.song_id
             LEFT JOIN (
                 SELECT
-                    ar.song_id,
-                    LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS writers
+                ar.song_id,
+                LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS writers,
+                LISTAGG(art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS writer_ids
                 FROM
-                    artist_roles ar
-                    JOIN artists art ON ar.artist_id = art.artist_id
+                artist_roles ar
+                JOIN artists art ON ar.artist_id = art.artist_id
                 WHERE
-                    ar.role_id = 30
+                ar.role_id = 30
                 GROUP BY
-                    ar.song_id
+                ar.song_id
             ) writer ON s.song_id = writer.song_id
             LEFT JOIN (
                 SELECT
-                    ar.song_id,
-                    LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS composers
+                ar.song_id,
+                LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS composers,
+                LISTAGG(art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS composer_ids
                 FROM
-                    artist_roles ar
-                    JOIN artists art ON ar.artist_id = art.artist_id
+                artist_roles ar
+                JOIN artists art ON ar.artist_id = art.artist_id
                 WHERE
-                    ar.role_id = 20
+                ar.role_id = 20
                 GROUP BY
-                    ar.song_id
+                ar.song_id
             ) composer ON s.song_id = composer.song_id
             LEFT JOIN (
                 SELECT
-                    ar.song_id,
-                    LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS arrangers
+                ar.song_id,
+                LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS arrangers,
+                LISTAGG(art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS arranger_ids
                 FROM
-                    artist_roles ar
-                    JOIN artists art ON ar.artist_id = art.artist_id
+                artist_roles ar
+                JOIN artists art ON ar.artist_id = art.artist_id
                 WHERE
-                    ar.role_id = 40
+                ar.role_id = 40
                 GROUP BY
-                    ar.song_id
+                ar.song_id
             ) arranger ON s.song_id = arranger.song_id
             LEFT JOIN song_genre sg ON s.song_id = sg.song_id
             LEFT JOIN genre_code gc ON sg.genre_id = gc.genre_id
-        WHERE
+            WHERE
             s.song_id = #{id}
-        GROUP BY
-            s.song_id, s.title, a.album_name, a.album_image, s.lyrics, singer.singer_name, writer.writers, 
-            composer.composers, arranger.arrangers
+            GROUP BY
+            s.song_id, s.title, a.album_id, a.album_name, a.album_image, s.lyrics, 
+            singer.singer_name, singer.singer_ids, 
+            writer.writers, writer.writer_ids,
+            composer.composers, composer.composer_ids, 
+            arranger.arrangers, arranger.arranger_ids
     </select>
   
     <select id="isLikes" resultType="integer">
@@ -113,7 +125,7 @@
                            </when>
                        </choose>
                    ) AS rnum,
-                   s.album_id AS album_id
+                   s.album_id AS album_id,
                    art.artist_id AS artist_id
             FROM songs s
             JOIN albums a ON s.album_id = a.album_id
@@ -135,7 +147,7 @@
                     AND CONTAINS(a.album_name, #{searchKeyword}, 1) > 0
                 </when>
             </choose>
-            GROUP BY s.song_id, a.album_name, a.album_image, s.title, a.album_release_date
+            GROUP BY s.song_id, a.album_name, a.album_image, s.title, a.album_release_date, s.album_id, art.artist_id
         )
         WHERE ROWNUM &lt;= #{endRow}
     )

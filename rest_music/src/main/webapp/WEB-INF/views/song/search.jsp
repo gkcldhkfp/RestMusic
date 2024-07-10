@@ -105,14 +105,14 @@
                                     <c:url var="albumDetailPage" value="/album/detail">
                                         <c:param name="albumId" value="${r.albumId}"></c:param>
                                     </c:url>
-                                    <br /> <span onclick="location.href='${albumDetailPage}'" >${r.albumName}</span></td>
+                                    <br /> <span style="cursor: pointer;" onclick="location.href='${albumDetailPage}'" >${r.albumName}</span></td>
                                     
                                     <c:url var="artistPage" value="/artist/songs">
                                         <c:param name="artistId" value="${r.artistId}"></c:param>
                                     </c:url>
                                     
                                 <td><br /> <span
-                                    class="text-center fw-bold" onclick="location.href='${artistPage}'">${r.singerName}</span></td>
+                                    class="text-center fw-bold" style="cursor: pointer;"onclick="location.href='${artistPage}'">${r.singerName}</span></td>
                                     
                                 <td style="text-align: center;"><button
                                         style="background-image: url('../images/icon/play.png'); width: 50px; height: 50px; background-size: cover; background-repeat: no-repeat;"
