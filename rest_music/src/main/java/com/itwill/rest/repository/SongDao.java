@@ -31,5 +31,5 @@ public interface SongDao {
 
 	// 장르별 차트
 	List<SongChartDto> getSongsByGenre(String genreName);
-	
+
 }
