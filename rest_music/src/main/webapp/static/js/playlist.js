@@ -84,6 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 </td>
             </tr>
             `;
+            
+            songCount++;
 
             document.getElementById('selectAllCheckbox').addEventListener('change', function () {
                 const checkboxes = document.querySelectorAll('.songCheckbox');
