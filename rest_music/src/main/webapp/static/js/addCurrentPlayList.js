@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// 플리에 추가 기능
 	const btnAddUPList = document.querySelectorAll('#btnAddUPList');
-	if (btnAddUPList !== null) {
+	if (btnAddUPList === null) {
 		console.log('이 페이지에는 플리 모달이 안쓰임');
 		return;
 	}
