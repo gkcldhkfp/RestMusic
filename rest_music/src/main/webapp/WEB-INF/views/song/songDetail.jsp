@@ -51,7 +51,7 @@
                                 width: 45px; height: 45px; background-size: cover; background-repeat: no-repeat;"></button>
                                 
                             <button data-id="${data.songId}"
-                                id="" title="재생목록에 추가" class="btn ms-1" style="background-image: url('../images/icon/playList.png'); 
+                                id="addCPList" title="재생목록에 추가" class="btn ms-1" style="background-image: url('../images/icon/playList.png'); 
                                 width: 60px; height: 60px; background-size: cover; background-repeat: no-repeat;"></button>
                                 
                             <button id="btnAddPlayList"
