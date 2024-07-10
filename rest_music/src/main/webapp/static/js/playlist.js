@@ -264,4 +264,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(error);
             });
     }
+
+    // 김영웅: 여기부터 플레이리스트를 재생목록에 추가 기능을 구현하기 위한 코드.
+    const addCPListFromUPList = document.querySelector('#addCPListFromUPList');
+    addCPListFromUPList.addEventListener('click', CPListFromUPList) 
+    function CPListFromUPList() {
+        const pListId = addCPListFromUPList.getAttribute('data_id');
+        const url = `../getPlayListSong/${pListId}`;
+    }
 });

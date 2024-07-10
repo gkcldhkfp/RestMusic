@@ -93,19 +93,27 @@
                                 <c:param name="songId"
                                     value="${r.songId}"></c:param>
                             </c:url>
-                            <tr style="cursor: pointer;"
-                                data-song-id="${r.songId}"
-                                onclick="location.href='${songDetailsPage}'">
+                            <tr data-song-id="${r.songId}">
                                 <td style="width: 118px;"><img
                                     alt="albumcover"
                                     src="../images/albumcover/${r.albumImage}"
                                     class="img-thumbnail" width="120px"
                                     height="120px" /></td>
-                                <td style="width: 60%;"><span
-                                    class="fs-4">${r.title}</span> <br />
-                                    <br /> ${r.albumName}</td>
+                                <td style="width: 60%; "><span
+                                    class="fs-4" style="cursor: pointer;" onclick="location.href='${songDetailsPage}'">${r.title}</span> <br />
+                                    
+                                    <c:url var="albumDetailPage" value="/album/detail">
+                                        <c:param name="albumId" value="${r.albumId}"></c:param>
+                                    </c:url>
+                                    <br /> <span style="cursor: pointer;" onclick="location.href='${albumDetailPage}'" >${r.albumName}</span></td>
+                                    
+                                    <c:url var="artistPage" value="/artist/songs">
+                                        <c:param name="artistId" value="${r.artistId}"></c:param>
+                                    </c:url>
+                                    
                                 <td><br /> <span
-                                    class="text-center fw-bold">${r.singerName}</span></td>
+                                    class="text-center fw-bold" style="cursor: pointer;"onclick="location.href='${artistPage}'">${r.singerName}</span></td>
+                                    
                                 <td style="text-align: center;"><button
                                         style="background-image: url('../images/icon/play.png'); width: 50px; height: 50px; background-size: cover; background-repeat: no-repeat;"
                                         data-id="${r.songId}"

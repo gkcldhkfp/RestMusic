@@ -15,4 +15,9 @@ public class SongDetailDto {
 	private String arrangers;
 	private String lyrics;
 	
+	private Integer albumId;
+	private String singerIds;
+	private String writerIds;
+	private String composerIds;
+	private String arrangerIds;
 }
