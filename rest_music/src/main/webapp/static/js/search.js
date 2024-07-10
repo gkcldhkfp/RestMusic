@@ -141,8 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         // newRow.onclick = function() { location.href = songDetailsPage; };
 
                         newRow.innerHTML = `
-                            <td style="width: 118px;"><img alt="albumcover" src="../images/albumcover/${item.albumImage}" 
-                             class="img-thumbnail" width="120px" height="120px"/></td>
+                            <td style="width: 118px;"><a href="${albumDetailsPage}"><img alt="albumcover" src="../images/albumcover/${item.albumImage}" 
+                             class="img-thumbnail" width="120px" height="120px"/></a></td>
                             <td style="width:60%;"><span class="fs-4" style="cursor: pointer;" onclick="location.href='${songDetailsPage}'">${item.title}</span> <br/> <br/> 
                             <span style="cursor: pointer;" onclick="location.href='${albumDetailsPage}'">${item.albumName}</span></td>
                             <td><br/><span style="cursor: pointer;" onclick="location.href='${artistDetailsPage}'" class="text-center fw-bold">${item.singerName}</span></td>
