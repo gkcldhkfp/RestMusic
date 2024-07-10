@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 플리 목록 HTML이 삽입될 tbody
         const tbodySongsTableBody = document.querySelector('tbody#songsTableBody');
         const songCountElement = document.getElementById('totalSongs'); // 음원 갯수를 출력할 span 요소
-        const playLists = document.querySelector('div#playLists'); // 플리에 음원이 없을 경우 출력될 요소
+        const playLists = document.querySelector('div#resultTable'); // 플리에 음원이 없을 경우 출력될 요소
 
         if (!tbodySongsTableBody) {
             console.error('songsTableBody를 찾을 수 없습니다.');
@@ -43,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // 기본 이미지 URL 정의
         const defaultImage = '../images/icon/default.png';
         const playImage = '../images/icon/play.png'
+        // 재생목록 이미지
+        const playlistImage = '../images/icon/playList.png'
 
         for (let playlistSong of data) {
 
@@ -81,6 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td style="text-align: center;">
                     <button style="background-image: url('${playImage}'); width: 40px; height: 40px; background-size: cover; background-repeat: no-repeat;"
                     data-songId="${playlistSong.songId}" data-id="${playlistSong.songId}" class="playButton btn mt-3" id="listenBtn"></button>
+                </td>
+                <td style="text-align: center;">
+                    <button data-id="${playlistSong.songId}"
+                        id="addCPList" title="재생목록에 추가" class="btn mt-3" style="background-image: url('${playlistImage}'); 
+                        width: 40px; height: 40px; background-size: cover; background-repeat: no-repeat;"></button>
                 </td>
             </tr>
             `;
@@ -256,5 +263,13 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    // 김영웅: 여기부터 플레이리스트를 재생목록에 추가 기능을 구현하기 위한 코드.
+    const addCPListFromUPList = document.querySelector('#addCPListFromUPList');
+    addCPListFromUPList.addEventListener('click', CPListFromUPList) 
+    function CPListFromUPList() {
+        const pListId = addCPListFromUPList.getAttribute('data_id');
+        const url = `../getPlayListSong/${pListId}`;
     }
 });

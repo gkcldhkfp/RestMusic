@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function makeUserLikeElements(data) {
         // 좋아요 목록 HTML이 삽입될 tbody
         const likeTableBody = document.querySelector('tbody#likeTableBody');
-        const likeCardBody = document.querySelector('div#likeCardBody');
+        const likeCardBody = document.querySelector('div#resultTable');
 
         if (!likeTableBody) {
             console.error('songsTableBody를 찾을 수 없습니다.');
@@ -205,6 +205,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // 플레이 이미지
         const playImage = '../images/icon/play.png'
+        // 재생목록 이미지
+        const playlistImage = '../images/icon/playList.png'
         
         for (let like of data) {
             // 기본 이미지 URL 정의
@@ -237,7 +239,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </td>
                 <td style="text-align: center;">
                     <button style="background-image: url('${playImage}'); width: 40px; height: 40px; background-size: cover; background-repeat: no-repeat;"
-                    data-songId="${like.songId}" class="playButton btn mt-3" id="listenBtn"></button>
+                    data-songId="${like.songId}" data-id="${like.songId}" class="playButton btn mt-3" id="listenBtn"></button>
+                </td>
+                <td style="text-align: center;">
+                    <button data-id="${like.songId}"
+                        id="addCPList" title="재생목록에 추가" class="btn mt-3" style="background-image: url('${playlistImage}'); 
+                        width: 40px; height: 40px; background-size: cover; background-repeat: no-repeat;"></button>
                 </td>
             </tr>
             `;
@@ -261,16 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 `
             likeCardBody.innerHTML = htmlStr;
-        }
-        
-        // 좋아요 곡 재생버튼 기능
-        const play = document.querySelectorAll('button.playButton'); // htmlStr로 추가된 html 영역의 button 태그의 클래스 이름을 지정
-        for (let button of play) {
-            button.addEventListener('click', () => {
-                const songId = button.getAttribute('data-songId');
-                console.log('클릭한 플레이리스트의 songId:', songId);
-                window.location.href = `../song/listen?songId=${songId}`;
-            });
         }
     }
 

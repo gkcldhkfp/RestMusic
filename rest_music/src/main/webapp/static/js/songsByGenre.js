@@ -19,14 +19,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 좋아요 아이콘 클릭 이벤트 핸들러
     const heartIcons = document.querySelectorAll('.heart-icon');
-
+    
     heartIcons.forEach(icon => {
         const songId = icon.dataset.songId;
-        const loginUserId = parseInt(icon.dataset.id)
+        const loginUserId = parseInt(icon.dataset.id);
         let likesCountElement = icon.nextElementSibling; // 좋아요 개수를 표시하는 요소를 가져옴
         
         // 특정 사용자가 특정 노래를 좋아요 했는지 여부를 서버에 요청
-        const data = { songId, loginUserId }; 
+        const data = { songId, loginUserId };
         axios.post('../api/isLiked', data)
             .then(response => {
                 // 서버 응답에 따라 좋아요 상태를 설정
@@ -37,8 +37,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     icon.style.color = 'red'; // 아이콘 색상을 빨간색으로 설정
                 } else {
                     icon.classList.remove('liked'); // liked 클래스를 제거
-                    icon.classList.remove('fas'); // 채워진 하트 아이콘 클래스를 제거
-                    icon.classList.add('far'); // 비어있는 하트 아이콘 클래스를 추가
+                    icon.classList.remove('fas'); // 채워진 하트 아이콘을 제거
+                    icon.classList.add('far'); // 비어있는 하트 아이콘을 추가
                     icon.style.color = 'black'; // 아이콘 색상을 검은색으로 설정
                 }
 
@@ -47,9 +47,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (loginUserId === 0) { // 로그인하지 않은 경우
                         const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
                         loginModal.show();
-                        return;     
+                        return;
                     }
-
+                
                     let likesCount = parseInt(likesCountElement.textContent); // 현재 좋아요 개수를 가져옴
 
                     if (icon.classList.contains('liked')) { // 이미 좋아요 상태인 경우
@@ -58,8 +58,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             .then(response => {
                                 if (response.status === 200) { // 서버 응답이 성공적인 경우
                                     icon.classList.remove('liked'); // liked 클래스를 제거
-                                    icon.classList.remove('fas'); // 채워진 하트 아이콘 클래스를 제거
-                                    icon.classList.add('far'); // 비어있는 하트 아이콘 클래스를 추가
+                                    icon.classList.remove('fas'); // 채워진 하트 아이콘을 제거
+                                    icon.classList.add('far'); // 비어있는 하트 아이콘을 추가
                                     icon.style.color = 'black'; // 아이콘 색상을 검은색으로 설정
                                     likesCount -= 1; // 좋아요 개수를 1 감소
                                     likesCountElement.textContent = response.data; // 최신 좋아요 개수로 업데이트
@@ -75,8 +75,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             .then(response => {
                                 if (response.status === 200) { // 서버 응답이 성공적인 경우
                                     icon.classList.add('liked'); // liked 클래스를 추가
-                                    icon.classList.remove('far'); // 비어있는 하트 아이콘 클래스를 제거
-                                    icon.classList.add('fas'); // 채워진 하트 아이콘 클래스를 추가
+                                    icon.classList.remove('far'); // 비어있는 하트 아이콘을 제거
+                                    icon.classList.add('fas'); // 채워진 하트 아이콘을 추가
                                     icon.style.color = 'red'; // 아이콘 색상을 빨간색으로 설정
                                     likesCount += 1; // 좋아요 개수를 1 증가
                                     likesCountElement.textContent = response.data; // 최신 좋아요 개수로 업데이트
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 icon.style.color = 'black';
             });
     });
-
+    
     // 곡 재생 버튼 클릭 이벤트 핸들러
     const playButtons = document.querySelectorAll('.play-btn');
     const audioPlayer = document.getElementById('audioPlayer');
@@ -222,11 +222,11 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // "전체 듣기" 버튼 클릭 이벤트 핸들러
-    document.getElementById('addAllToPlaylist').addEventListener('click', function() {
+    // document.getElementById('addAllToPlaylist').addEventListener('click', function() {
         // 전체 듣기 기능 구현
-        alert('전체 듣기 버튼 클릭');
-        selectAllModal.hide();
-    });
+        // alert('전체 듣기 버튼 클릭');
+        // selectAllModal.hide();
+    // });
 
     // 플레이리스트 불러오기 및 모달 표시 함수
     function showPlayListModal(id, songIds) {  // songIds를 배열로 받음
@@ -344,7 +344,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // "전체 담기" 버튼 클릭 이벤트 핸들러
     document.getElementById('addAllToCollection').addEventListener('click', function() {
         const id = parseInt(document.querySelector('.add-to-playlist-btn').dataset.id);
-        console.log(id);
         if (id === 0) { // 로그인하지 않은 경우
             const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
             loginModal.show();
@@ -371,7 +370,6 @@ document.addEventListener("DOMContentLoaded", function() {
         button.addEventListener('click', function(event) {
             const id = parseInt(this.dataset.id);
             const songId = this.dataset.songId;  // 버튼에서 songId를 가져옴
-            console.log(id);
             if (id === 0) { // 로그인하지 않은 경우
                 const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
                 loginModal.show();
