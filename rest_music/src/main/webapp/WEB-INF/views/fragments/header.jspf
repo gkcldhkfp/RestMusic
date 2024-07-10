@@ -59,13 +59,19 @@
 					</ul>
 				</li>
 				 -->
-
+				 
 				<li class="nav-item dropdown mx-2"><a
 					class="nav-link dropdown-toggle" href="#" role="button"
 					data-bs-toggle="dropdown" aria-expanded="false">REST 앨범</a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="/album/popular">인기 앨범</a></li>
-						<li><a class="dropdown-item" href="/album/newest">최신 앨범</a></li>
+						<li>
+                          <c:url var="popularAlbum" value="/album/list/popular" />
+                          <a class="dropdown-item" href="${popularAlbum}">인기 앨범</a>
+                        </li>
+                        <li>
+                          <c:url var="newestAlbum" value="/album/list/newest" />
+                          <a class="dropdown-item" href="${newestAlbum}">최신 앨범</a>
+                        </li>
 					</ul>
 				</li>
 
