@@ -12,7 +12,8 @@
 			<style>
 				.intro {
 					position: relative;
-					left: 20px;
+					/* left: 20px; */
+					margin-left: 20px;
 				}
 
 				a {
@@ -33,8 +34,8 @@
 
 				#like {
 					position: relative;
-					top: 20px;
-					left: 30px;
+					/* top: 20px; */
+					/* left: 30px; */
 				}
 
 				.submenu {
@@ -78,7 +79,7 @@
 							<div class="fw-bold">"${album.albumName}" 앨범정보</div>
 							<hr />
 							<div style="float:left" class="mouseScale-up">
-								<img src="../data/${album.albumImage}" alt="앨범 커버" width="250" height="250" />
+								<img src="../images/albumcover/${album.albumImage}" alt="앨범 커버" width="250" height="250" />
 							</div>
 							<div style="float: left">
 								<table class="table-borderless intro">
@@ -107,12 +108,16 @@
 									</tr>
 								</table>
 								<div id="like">
-									<button id="btnLike" class="btn btn-success">♡</button>
-									<button id="btnListenAlbum" class="intro btn btn-success" data-id="${album.albumId}">앨범 듣기</button>
-									<button id="btnAddCPListAlbum" class="intro btn btn-success" data-id="${album.albumId}">앨범을 다음 곡으로
-										추가</button>
-									<button id="btnAddUPListAlbum" class="intro btn btn-success" data-id="${album.albumId}">앨범을 플레이리스트에
-										추가</button>
+									<button id="btnLike" title="앨범 좋아요" class="btn fs-3"">♡</button>
+									<button id="btnListenAlbum" title="앨범 재생" class="btn intro ms-1" style="background-image: url('../images/icon/play.png'); 
+                                width: 45px; height: 45px; background-size: cover; background-repeat: no-repeat;"
+										data-id="${album.albumId}"></button>
+									<button id="btnAddCPListAlbum" title="앨범을 재생목록에 추가" class="btn intro ms-3" style="background-image: url('../images/icon/playList.png'); 
+                                width: 60px; height: 60px; background-size: cover; background-repeat: no-repeat;"
+										data-id="${album.albumId}"></button>
+									<button id="btnAddUPListAlbum" class="intro btn" class="btn mx-4" title="앨범을 내 리스트에 담기" style="background-image: url('../images/icon/myPlayList.png'); 
+                                width: 50px; height: 50px; background-size: cover; background-repeat: no-repeat;"
+										data-id="${album.albumId}"></button>
 								</div>
 							</div>
 						</section>
@@ -123,13 +128,12 @@
 							<thead class="font-size-sm">
 								<th class="submenu">#</th>
 								<th class="submenu"></th>
-								<th style="width: 26%;">음원</th>
-								<th style="width: 25%;">아티스트</th>
+								<th style="width: 30%;">음원</th>
+								<th style="width: 28%;">아티스트</th>
 								<th class="submenu">좋아요</th>
 								<th class="submenu">듣기</th>
 								<th class="submenu">재생목록</th>
 								<th class="submenu">리스트</th>
-								<th class="submenu">더보기</th>
 							</thead>
 							<tbody class="table-group-divider font-size-sm">
 								<c:forEach var="s" items="${albumSongs}" varStatus="status">
@@ -141,30 +145,30 @@
 											</c:if>
 										</td>
 										<td class="fw-bold">
-											<a href="/song/details?songId=${s.songId}">
+											<a href="/Rest/song/detail?songId=${s.songId}">
 												${s.title}</a>
 										</td>
 										<td>${s.artistName}</td>
 										<td id="countLike" data-id="${s.songId}">
-											<img id="btnLike" height="30px" width="30px" src="../imgs/likeOn.png" />${s.likesCount}
+											<img id="btnLike" height="30px" width="30px" src="../images/icon/likeOn.png" />${s.likesCount}
 											<!-- TODO: axios로 DB insert 해야됨 -->
 										</td>
 										<td>
-											<button id="listenBtn" class="btn btn-success" data-id="${s.songId}">바로듣기</button>
+											<button id="listenBtn" data-id="${s.songId}" title="재생" class="btn"
+												style="background-image: url('../images/icon/play.png'); width: 45px; height: 45px; background-size: cover; background-repeat: no-repeat;"></button>
 										</td>
 										<td>
-											<button id="addCPList" class="btn btn-success" data-id="${s.songId}">
-												재생목록
+											<button id="addCPList" class="btn ms-1" data-id="${s.songId}" style="background-image: url('../images/icon/playList.png'); 
+                                width: 60px; height: 60px; background-size: cover; background-repeat: no-repeat;">
 											</button>
 											<!-- <button id="openModalBtn" type="button" class="btn btn-primary openModalBtn"
 												data-bs-toggle="modal" data-bs-target="#sessionListModal">
 												재생목록
 											</button> -->
 										</td>
-										<td><button id="btnAddUPList" class="btn btn-success" data-id="${s.songId}">
-												플리추가
+										<td><button id="btnAddUPList" class="btn ms-1" data-id="${s.songId}" title="내 리스트에 담기" style="background-image: url('../images/icon/myPlayList.png'); 
+                                width: 50px; height: 50px; background-size: cover; background-repeat: no-repeat;">
 											</button></td>
-										<td>더보기</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -173,7 +177,7 @@
 				</div>
 			</main>
 			<!-- 플레이리스트 모달 -->
-			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 				aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -216,9 +220,7 @@
 			<c:url var="album_detail" value="/js/album_detail.js" />
 			<script src="${album_detail}"></script>
 			<c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
-			<script src="${addCurrentPlayList}"></scrip>
-			<c:url var="detailJS" value="/js/detail.js" />
-			<script src="${detailJS}"></script>
+			<script src="${addCurrentPlayList}"></script>
 
 
 		</body>

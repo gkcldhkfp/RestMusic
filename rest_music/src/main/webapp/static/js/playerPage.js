@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		console.log(cPList[index].songPath);
 		// 데이터 베이스에 저장된 음악 경로를 cPList에서 꺼내서 오디오 객체를 생성함.
-		var audio = new Audio('../data/' + cPList[index].songPath);
+		var audio = new Audio('../songs/' + cPList[index].songPath);
 		audio.volume = 0.5; // 초기 볼륨 설정
 
 		// 음악이 로드되면 자동으로 실행하는 코드인데 페이지가 로드되자마자는 크롬 정책때문에 실행하지 못함
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			// 앨범 커버 사진 설정
 			const albumImage = document.querySelector('#albumImage');
 			// 앨범 커버 사진 등록
-			albumImage.src = "../data/" + cPList[index].albumImage;
+			albumImage.src = "../images/albumcover/" + cPList[index].albumImage;
 
 
 			// 노래 제목과 가수 설정
@@ -116,6 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
 			const artist = document.querySelector("#artist");
 			musicTitle.innerHTML = cPList[index].title;
 			artist.innerHTML = cPList[index].artistName;
+			// 노래 제목에 음원 상세페이지 연결
+			musicTitle.href = '/Rest/song/detail?songId='+cPList[index].songId;
+
+			// 가수에 아티스트 상세 페이지 연결
+			artist.href = '/Rest/artist/songs?artistId='+cPList[index].artistId;
+
 
 
 			prevBtn.addEventListener('click', previous);
@@ -258,7 +264,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			// 볼륨 슬라이더 엘리먼트 가져오기
 			var volumeSlider = document.getElementById('volumeSlider');
-
 			// 음소거 버튼 엘리먼트 가져오기
 			var muteButton = document.getElementById('muteButton');
 			var muteIcon = document.getElementById('muteIcon');
@@ -322,6 +327,48 @@ document.addEventListener('DOMContentLoaded', () => {
 				playButton.style.display = 'block'; // 재생 버튼 보이기
 				pauseButton.style.display = 'none'; // 정지 버튼 숨기기
 				audio.pause();
+			}
+
+			// prevBtn.addEventListener('click', previous);
+			// nextBtn.addEventListener('click', next);
+			// stopBtn.addEventListener('click', stop);
+
+			// pauseButton.addEventListener('click', toggleAudio);
+			// playButton.addEventListener('click', toggleAudio);
+			prevBtn.addEventListener('mouseenter', scaleUp);
+			prevBtn.addEventListener('mouseleave', scaleDown);
+
+			nextBtn.addEventListener('mouseenter', scaleUp);
+			nextBtn.addEventListener('mouseleave', scaleDown);
+
+			stopBtn.addEventListener('mouseenter', scaleUp);
+			stopBtn.addEventListener('mouseleave', scaleDown);
+
+			pauseButton.addEventListener('mouseenter', scaleUp);
+			pauseButton.addEventListener('mouseleave', scaleDown);
+
+			playButton.addEventListener('mouseenter', scaleUp);
+			playButton.addEventListener('mouseleave', scaleDown);
+			
+			muteButton.addEventListener('mouseenter', scaleUp);
+			muteButton.addEventListener('mouseleave', scaleDown);
+			
+			muteIcon.addEventListener('mouseenter', scaleUp);
+			muteIcon.addEventListener('mouseleave', scaleDown);
+			
+			volumeSlider.addEventListener('mouseenter', scaleUp);
+			volumeSlider.addEventListener('mouseleave', scaleDown);
+
+			function scaleUp(event) {
+				target = event.target;
+				target.style.transform = "scale(1.1)";
+				target.style.transition = "all 0.5s";
+			}
+		
+			function scaleDown(event) {
+				target = event.target;
+				target.style.transform = "scale(1)";
+				target.style.transition = "all 0.5s";
 			}
 		};
 	}

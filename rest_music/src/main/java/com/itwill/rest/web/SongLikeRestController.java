@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.rest.dto.song.SongLikeDto;
-//import com.itwill.rest.dto.song.AddSongLikeDto;
-//import com.itwill.rest.service.SongChartService;
 import com.itwill.rest.service.SongService;
 
 import lombok.RequiredArgsConstructor;
@@ -49,11 +47,12 @@ public class SongLikeRestController {
 	}
 
 	// 좋아요 취소
-	@DeleteMapping("/cancelLike/{songId}/{id}")
-	public ResponseEntity<Integer> deleteSongLike(@PathVariable int songId, @PathVariable int id) {
-		log.debug("deleteSongLike(songId={}, id={})", songId, id);
-
-		SongLikeDto dto = new SongLikeDto(songId, id);
+	@DeleteMapping("/cancelLike/{songId}/{loginUserId}")
+	public ResponseEntity<Integer> deleteSongLike(@PathVariable int songId, @PathVariable int loginUserId) {
+		log.debug("deleteSongLike(songId={}, loginUserId={})", songId, loginUserId);
+		
+		// id 못찾으면 여기일 확률 높음!!
+		SongLikeDto dto = new SongLikeDto(songId, loginUserId);
 
 		songService.cancelSongLike(dto);
 		int likesCount = songService.countSongLikes(songId); // 최신 좋아요 개수 반환
