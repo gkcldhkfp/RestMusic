@@ -8,7 +8,7 @@
     </select>
     
     <select id="selectSongsByArtistId" resultType="ArtistSongDto">
-        SELECT 
+        SELECT DISTINCT
         ar.artist_id, 
         ar.song_id, 
         al.album_id,

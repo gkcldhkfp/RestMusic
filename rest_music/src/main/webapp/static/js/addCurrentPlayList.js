@@ -1,4 +1,4 @@
-1/**
+/**
  * currentPlayList.jsp에 포함
  * detail.jsp에 포함
  */
@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
 						parent.songFrame.location.reload();
 					}
 					// document.location.reload();
+					// alert('재생 목록에 추가되었습니다');
+					showAlert('재생 목록에 추가되었습니다', 2000);
+
 				}).
 				catch((error) => { console.log(error); });
 		}
@@ -48,12 +51,59 @@ document.addEventListener('DOMContentLoaded', () => {
 					console.log("성공");
 					sessionStorage.setItem('index', 0);
 					sessionStorage.setItem('isAdded', 'Y');
-					document.location.reload();
 					parent.songFrame.location.reload();
+					// alert('선택한 음원을 재생합니다.');
+					showAlert('선택한 음원을 재생합니다.', 2000);
+
 				})
 				.catch((error) => { });
 		}
 	}
+	const targetNode = document.getElementById('resultTable');
+
+	if (targetNode) {
+		// MutationObserver 콜백 함수
+		var observerCallback = function (mutationsList, observer) {
+			var rowAddedFlag = false;
+			for (var mutation of mutationsList) {
+				if (mutation.type === 'childList') {
+					rowAddedFlag = true;
+					break;
+				}
+			}
+			if (rowAddedFlag) {
+				rowAdded();
+			}
+		};
+
+		// MutationObserver 설정
+		const observerConfig = { childList: true, subtree: true };
+		const observer = new MutationObserver(observerCallback);
+
+		// targetNode 감지 시작
+		observer.observe(targetNode, observerConfig);
+	} else {
+		console.error("Target node not found");
+	}
+
+	function rowAdded() {
+		console.log("New rows detected!");
+		const listenBtn2 = document.querySelectorAll('#listenBtn');
+		if (listenBtn2 !== null) {
+			for (let l of listenBtn2) {
+				l.addEventListener('click', clickListenBtn)
+			}
+		}
+		const addCPList2 = document.querySelectorAll('#addCPList');
+		if (addCPList2 !== null) {
+			for (let a of addCPList2) {
+				console.log(a);
+				a.addEventListener('click', addToCPList);
+			}
+		}
+	}
+
+
 	// 앨범 듣기 기능
 	const btnListenAlbum = document.querySelector('#btnListenAlbum');
 	if (btnListenAlbum !== null) {
@@ -80,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
 							console.log("성공");
 							sessionStorage.setItem('index', 0);
 							sessionStorage.setItem('isAdded', 'Y');
-							document.location.reload();
 							parent.songFrame.location.reload();
 							// 두번째 곡 이후부터는 재생목록에 추가.
 							for (let i = 1; i < listSong.length; i++) {
@@ -99,6 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
 									}).
 									catch((error) => { console.log(error); });
 							}
+							// alert('선택한 앨범을 재생합니다.');
+					showAlert('선택한 앨범을 재생합니다.', 2000);
+
 						})
 						.catch((error) => console.log(error));
 				}).
@@ -140,6 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
 							}).
 							catch((error) => { console.log(error); });
 					}
+					// alert('선택한 앨범이 다음 재생목록에 저장되었습니다.');
+					showAlert('선택한 앨범이 다음 재생목록에 저장되었습니다.', 2000);
 				}).
 				catch((error) => console.log(error));
 
@@ -273,11 +327,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// 플리에 추가 기능
 	const btnAddUPList = document.querySelectorAll('#btnAddUPList');
-	if (btnAddUPList !== null) {
+	if (btnAddUPList === null) {
 		console.log('이 페이지에는 플리 모달이 안쓰임');
 		return;
 	}
-	const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
+	const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop2'), { backdrop: 'static' });
 	let currentPage = 1;
 	const itemsPerPage = 5;
 	let playlistsData = [];
@@ -307,6 +361,37 @@ document.addEventListener('DOMContentLoaded', () => {
 				});
 		}
 	}
+
+	// 앨범을 플리에 추가 기능
+	const btnAddUPListAlbum = document.querySelector('#btnAddUPListAlbum');
+	if (btnAddUPListAlbum === null) {
+		console.log('앨범을 유저플레이리스트에 추가 버튼을 사용하지 않는 페이지');
+		return;
+	}
+	btnAddUPListAlbum.addEventListener('click', getPlayListAlbum);
+	function getPlayListAlbum() {
+		if (id == '') {
+			alert('로그인이 필요합니다.');
+			return
+		}
+		const uri = `../getPlayList/${id}`;
+		axios
+			.get(uri)
+			.then((response) => {
+
+				playlistsData = response.data;
+
+				displayPlayListsAlbum(currentPage);
+
+				setupPagination();
+
+				playListModal.show();
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
 	function makePlayListElements(data) {
 		// 플리 목록 HTML이 삽입될 div
 		const divPlayLists = document.querySelector('div#playLists');
@@ -315,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		let htmlStr = '';
 		for (let playlist of data) {
 			// 기본 이미지 URL 정의
-			const defaultImage = '../images/default.png';
+			const defaultImage = '../images/icon/default.png';
 
 			// ${playlist.albumImage}가 null이면 기본 이미지 사용
 			const albumImageSrc = playlist.albumImage ? `../images/albumcover/${playlist.albumImage}` : defaultImage;
@@ -387,6 +472,99 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 
+	function makePlayListAlbumElements(data) {
+		// 플리 목록 HTML이 삽입될 div
+		const divPlayLists = document.querySelector('div#playLists');
+
+		// 플리 목록 HTML 코드
+		let htmlStr = '';
+		for (let playlist of data) {
+			// 기본 이미지 URL 정의
+			const defaultImage = '../images/icon/default.png';
+
+			// ${playlist.albumImage}가 null이면 기본 이미지 사용
+			const albumImageSrc = playlist.albumImage ? `../images/albumcover/${playlist.albumImage}` : defaultImage;
+
+
+			htmlStr += `
+				<a class="playListAlbum btn btn-outline-success form-control mt-2" data-id="${playlist.plistId}" >
+				<div class="d-flex align-items-center">
+						<div class="flex-shrink-0">
+								<img src="${albumImageSrc}" alt="..." width="50px" height="50px">
+							</div>
+								<div class="flex-grow-1 ms-3">
+								${playlist.plistName}
+							</div>
+						</div>
+				</a>`;
+		}
+
+		// 작성된 HTML 코드를 div 영역에 삽입.
+		divPlayLists.innerHTML = htmlStr;
+
+		const aPlayLists = document.querySelectorAll('a.playListAlbum');
+		for (let a of aPlayLists) {
+			a.addEventListener('click', addAlbumPlayList);
+		}
+	}
+
+	function addAlbumPlayList(event) {
+
+		const plistId = event.currentTarget.getAttribute('data-id');
+		let url = `../api/album?albumId=${albumId}`;
+		console.log(url);
+		axios.
+			get(url).
+			then((response) => {
+				console.log(response);
+				// 앨범의 음원 리스트를 가져옴
+				let listSong = response.data;
+				console.log(listSong);
+				for (let i = 0; i < listSong.length; i++) {
+					let songId = listSong[i].songId;
+					console.log(songId);
+					let albumData = { plistId, songId };
+					console.log(albumData);
+					axios.post('../checkSongInPlayList', albumData)
+						.then((response) => {
+							if (!response.albumData) {
+								dubSong = listSong[i].title;
+								if (confirm(`"${dubSong}"은 이미 추가된 곡입니다. 그래도 추가하시겠습니까?`)) {
+									// 사용자가 확인을 눌렀을 때 추가 요청 보냄
+									addToPlayList(albumData);
+								}
+							} else {
+								// 데이터가 없으면 바로 추가 요청 보냄
+								addToPlayList(albumData);
+							}
+						})
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+
+		function addToPlayList(data) {
+			axios
+				.post('../addSongToPlayList', data)
+				.then((response) => {
+					alert(`추가 성공`);
+					playListModal.hide();
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+
+	}
+	function displayPlayListsAlbum(page) {
+		const startIndex = (page - 1) * itemsPerPage;
+		const endIndex = startIndex + itemsPerPage;
+		const paginatedPlaylists = playlistsData.slice(startIndex, endIndex);
+		makePlayListAlbumElements(paginatedPlaylists);
+	}
+
+
 	function setupPagination() {
 		const totalPages = Math.ceil(playlistsData.length / itemsPerPage);
 		const paginationElement = document.getElementById('pagination');
@@ -429,6 +607,43 @@ document.addEventListener('DOMContentLoaded', () => {
 		displayPlayLists(currentPage);
 		setupPagination(); // 이 부분에서 이벤트 리스너를 다시 등록하지 않아도 됨
 	}
+
+	function showAlert(message, duration) {
+		// 알림창 생성
+		const alertBox = document.createElement('div');
+		alertBox.textContent = message;
+		alertBox.style.cssText = `
+			position: fixed;
+			bottom: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: #333;
+			color: white;
+			padding: 15px 20px;
+			border-radius: 5px;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+			z-index: 1000;
+			opacity: 0;
+			transition: opacity 0.5s ease-in-out;
+		`;
+	
+		document.body.appendChild(alertBox);
+	
+		// Fade in
+		setTimeout(() => {
+			alertBox.style.opacity = '1';
+		}, 10);
+	
+		// Fade out and remove
+		setTimeout(() => {
+			alertBox.style.opacity = '0';
+			setTimeout(() => {
+				document.body.removeChild(alertBox);
+			}, 500);
+		}, duration);
+	}
+
+
 
 
 

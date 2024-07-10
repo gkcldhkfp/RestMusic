@@ -133,26 +133,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log(endRow);
                     data.forEach(function(item) {
                         const songDetailsPage = `../song/detail?songId=${item.songId}`;
+                        const albumDetailsPage = `../album/detail?albumId=${item.albumId}`;
+                        const artistDetailsPage = `../artist/songs?artistId=${item.artistId}`;
                         const newRow = document.createElement('tr');
-                        newRow.style.cursor = 'pointer';
+                        //newRow.style.cursor = 'pointer';
                         newRow.setAttribute('data-song-id', item.songId);
-                        newRow.onclick = function() { location.href = songDetailsPage; };
+                        // newRow.onclick = function() { location.href = songDetailsPage; };
 
                         newRow.innerHTML = `
-                            <td style="width: 118px;"><img alt="albumcover" src="../images/albumcover/${item.albumImage}" 
-                             class="img-thumbnail" width="120px" height="120px"/></td>
-                            <td style="width:60%;"><span class="fs-4">${item.title}</span> <br/> <br/> ${item.albumName}</td>
-                            <td><br/><span class="text-center fw-bold">${item.singerName}</span></td>
+                            <td style="width: 118px;"><a href="${albumDetailsPage}"><img alt="albumcover" src="../images/albumcover/${item.albumImage}" 
+                             class="img-thumbnail" width="120px" height="120px"/></a></td>
+                            <td style="width:60%;"><span class="fs-4" style="cursor: pointer;" onclick="location.href='${songDetailsPage}'">${item.title}</span> <br/> <br/> 
+                            <span style="cursor: pointer;" onclick="location.href='${albumDetailsPage}'">${item.albumName}</span></td>
+                            <td><br/><span style="cursor: pointer;" onclick="location.href='${artistDetailsPage}'" class="text-center fw-bold">${item.singerName}</span></td>
                             <td style="text-align: center;"><button data-id="${item.songId}" style="background-image: url('../images/icon/play.png'); width:50px; height:50px;
                              background-size: cover; background-repeat: no-repeat;" id="listenBtn" class="btnListen btn mt-3"></button></td>
                              <td style="text-align: center;"><button style="background-image: url('../images/icon/playList.png'); width: 60px; height: 60px; background-size: cover; 
-                             background-repeat: no-repeat;" class="btn addNextPlay mt-3"></button></td>
+                             background-repeat: no-repeat;" data-id="${item.songId}" id="addCPList" class="btn addNextPlay mt-3"></button></td>
                             <td style="text-align: center;"><button style="background-image: url('../images/icon/myPlayList.png'); width:55px; height:55px;
                             background-size: cover; background-repeat: no-repeat;" class="btn addPlayList mt-3"></button></td>
                         `;
 
                         // 새로운 행에 이벤트 리스너 추가
-                        const addPlayListButton = newRow.querySelector('button.addPlayList');
+                       /* const addPlayListButton = newRow.querySelector('button.addPlayList');
                         addPlayListButton.addEventListener('click', function(e) {
                             e.stopPropagation(); // 이벤트 버블링 방지
                             getPlayLists(e);
@@ -166,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const addNextPlayButton = newRow.querySelector('button.addNextPlay');
                             addNextPlayButton.addEventListener('click', (event) => {
                                 event.stopPropagation(); // 이벤트 버블링 방지
-                        });
+                        });*/
                         
 
                         // tbody에 새로운 행 추가
@@ -257,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function addSongPlayList(event) {
 
-        const plistId = event.currentTarget.getAttribute('data-id');
+        const plistId = event.target.closest('tr').getAttribute('data-song-id');
 
 
         const data = { plistId, songId };

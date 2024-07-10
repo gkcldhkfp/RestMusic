@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class AlbumSongs {
-	private Integer songId;
+	private String songId;
 	private Integer albumId;
 	private String title;
 	private String songPath;
@@ -23,7 +23,7 @@ public class AlbumSongs {
 	private String albumReleaseDate;
 	private String albumImage;
 
-	private Integer artistId;
+	private String artistId;
 	private String artistName;
 
 	private String titleSong;
