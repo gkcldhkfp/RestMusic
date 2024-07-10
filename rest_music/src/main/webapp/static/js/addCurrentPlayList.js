@@ -89,6 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 l.addEventListener('click', clickListenBtn)
             }
         }
+        const addCPList2 = document.querySelectorAll('#addCPList');
+        if (addCPList2 !== null) {
+            for (let a of addCPList2) {
+                console.log(a);
+                a.addEventListener('click', addToCPList);
+            }
+        }
     }
 	
 	
@@ -311,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// 플리에 추가 기능
 	const btnAddUPList = document.querySelectorAll('#btnAddUPList');
-	if (btnAddUPList !== null) {
+	if (btnAddUPList === null) {
 		console.log('이 페이지에는 플리 모달이 안쓰임');
 		return;
 	}
@@ -353,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		let htmlStr = '';
 		for (let playlist of data) {
 			// 기본 이미지 URL 정의
-			const defaultImage = '../images/default.png';
+			const defaultImage = '../images/icon/default.png';
 
 			// ${playlist.albumImage}가 null이면 기본 이미지 사용
 			const albumImageSrc = playlist.albumImage ? `../images/albumcover/${playlist.albumImage}` : defaultImage;

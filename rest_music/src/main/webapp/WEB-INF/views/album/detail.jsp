@@ -221,8 +221,6 @@
 			<script src="${album_detail}"></script>
 			<c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
 			<script src="${addCurrentPlayList}"></script>
-			<c:url var="detailJS" value="/js/detail.js" />
-			<script src="${detailJS}"></script>
 
 
 		</body>
