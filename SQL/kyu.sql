@@ -261,7 +261,7 @@ where a.album_id = 1 and rc.role_id = 10;
 -- 앨범, 음원, 아티스트(가수), 타이틀곡 정렬, 음원 좋아요, 앨범 좋아요 쿼리문 작성
 select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, count(al.id) as album_likes_count, 
         s.song_id, ts.song_id as title_song, s.title, s.lyrics, s.song_path, gc.genre_name, 
-        art.artist_name, art.artist_image, art.artist_description, rc.role_name, 
+        art.artist_id, art.artist_name, art.artist_image, art.artist_description, rc.role_name, 
         count(l.id) as likes_count
 from albums a
 join songs s on a.album_id = s.album_id
@@ -276,12 +276,12 @@ left join album_likes al on al.album_id = a.album_id
 where a.album_id = 1 and rc.role_id = 10
 GROUP BY a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
         s.song_id, ts.song_id, s.title, s.lyrics, s.song_path, gc.genre_name, 
-        art.artist_name, art.artist_image, art.artist_description, rc.role_name;
+        art.artist_name, art.artist_image, art.artist_description, rc.role_name, art.artist_id;
         
 
 -- 재생을 위한 음원정보를 가져오는 쿼리
       select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
-        art.artist_name,
+        art.artist_name, art.artist_id,
         s.song_id, s.title, s.song_path, gc.genre_name
       from albums a
         join songs s on a.album_id = s.album_id
@@ -290,7 +290,7 @@ GROUP BY a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_i
         join artist_roles artr on s.song_id = artr.song_id
         join artists art on artr.artist_id = art.artist_id
         join role_code rc on artr.role_id = rc.role_id
-      where s.song_id = 1;
+      where s.song_id = 1 and rc.role_id=10;
       
 commit;
 

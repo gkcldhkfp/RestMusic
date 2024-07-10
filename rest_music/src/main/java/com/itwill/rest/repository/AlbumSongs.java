@@ -23,6 +23,7 @@ public class AlbumSongs {
 	private String albumReleaseDate;
 	private String albumImage;
 
+	private Integer artistId;
 	private String artistName;
 
 	private String titleSong;
