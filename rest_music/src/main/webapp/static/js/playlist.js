@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const playImage = '../images/icon/play.png'
 
         for (let playlistSong of data) {
-            
+
             // albumPage, songPage, artistPage로 이동할 주소 지정
             const albumPage = `/Rest/album/detail?albumId=${playlistSong.albumId}`;
             const songPage = `/Rest/song/detail?songId=${playlistSong.songId}`;
@@ -80,14 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </td>
                 <td style="text-align: center;">
                     <button style="background-image: url('${playImage}'); width: 40px; height: 40px; background-size: cover; background-repeat: no-repeat;"
-                    data-songId="${playlistSong.songId}" class="playButton btn mt-3" id="listenBtn"></button>
+                    data-songId="${playlistSong.songId}" data-id="${playlistSong.songId}" class="playButton btn mt-3" id="listenBtn"></button>
                 </td>
             </tr>
             `;
-            
-            songCount++; // 음원의 갯수를 카운트
-            
-            document.getElementById('selectAllCheckbox').addEventListener('change', function() {
+
+            document.getElementById('selectAllCheckbox').addEventListener('change', function () {
                 const checkboxes = document.querySelectorAll('.songCheckbox');
                 checkboxes.forEach(checkbox => {
                     checkbox.checked = this.checked;
@@ -122,21 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const recentAlbumImageSrc = recentSong.albumImage ? `../images/albumcover/${recentSong.albumImage}` : defaultImage;
             albumCoverImg.src = recentAlbumImageSrc;
         }
-        
-        // 플레이리스트 곡 재생버튼 기능
-        const play = document.querySelectorAll('button.playButton'); // htmlStr로 추가된 html 영역의 button 태그의 클래스 이름을 지정
-        for (let button of play) {
-            button.addEventListener('click', () => {
-                const songId = button.getAttribute('data-songId');
-                console.log('클릭한 플레이리스트의 songId:', songId);
-                window.location.href = `../song/listen?songId=${songId}`;
-            });
-        }
+
 
         // 플레이리스트 곡 삭제버튼 기능
         const deleteButton = document.getElementById('deleteButton');
         if (deleteButton) {
-            deleteButton.addEventListener('click', function() {
+            deleteButton.addEventListener('click', function () {
                 const checkedCheckboxes = document.querySelectorAll('.songCheckbox:checked');
                 if (checkedCheckboxes.length === 0) {
                     alert('삭제할 곡을 선택해주세요.');
@@ -156,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         }
-        
+
         const aPlayLists = document.querySelectorAll('a.playList');
         for (let a of aPlayLists) {
             a.addEventListener('click', () => {
@@ -182,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    document.getElementById('editButton').addEventListener('click', function() {
+    document.getElementById('editButton').addEventListener('click', function () {
         var pListNameElement = document.getElementById('pListName');
         var currentName = pListNameElement.innerText;
 
@@ -207,24 +196,24 @@ document.addEventListener('DOMContentLoaded', () => {
         pListNameElement.style.position = 'relative';
         pListNameElement.insertBefore(input, pListNameElement.firstChild);
         console.log('set input');
-        
+
         // pListName 텍스트를 숨김
         pListNameElement.style.display = 'none';
 
         // input 바깥으로 포커스 아웃시키면 작업 취소
-        input.addEventListener('blur', function() {
+        input.addEventListener('blur', function () {
             cancelUpdatePlaylistName();
         });
 
         // ESC 키 다운 이벤트 발생 시 작업 취소
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') {
                 cancelUpdatePlaylistName();
             }
         });
-        
+
         // input에서 Enter 키다운 이벤트가 발생하면 input에 입력된 값을 받아 업데이트 작업(updatePlayListName 함수) 실행  
-        input.addEventListener('keydown', function(event) {
+        input.addEventListener('keydown', function (event) {
             if (event.key === 'Enter') {
                 updatePlayListName(input.value);
                 pListNameElement.innerText = input.value; // 텍스트 업데이트
@@ -243,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 입력 필드가 존재하고, 이를 pListName 요소의 자식 요소로서 제거
         if (input && input.parentNode === pListNameElement) {
             // setTimeout을 사용하여 비동기적으로 입력 필드를 제거
-            setTimeout(function() {
+            setTimeout(function () {
                 if (input.parentNode === pListNameElement) {
                     pListNameElement.removeChild(input); // 입력 필드 제거
                 }

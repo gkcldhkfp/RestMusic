@@ -11,6 +11,16 @@
 				integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 			<style>
+				a {
+					text-decoration-line: none;
+					color: black;
+				}
+
+				a:hover {
+					text-decoration: underline;
+					font-weight: bold;
+				}
+
 				.volume-control {
 					display: flex;
 					align-items: center;
@@ -68,11 +78,11 @@
 			<div class="d-flex justify-content-between">
 				<span>
 					<span style="float:left;" class="m-2">
-						<img id="albumImage" src="../imgs/rest_logo.png">
+						<img id="albumImage" src="../images/icon/rest_logo.png">
 					</span>
 					<span class="info ms-2">
-						<p id="music-title" class="my-1 fw-bold"></p>
-						<p id="artist" class="my-1"></p>
+						<a id="music-title" class="my-1 fw-bold" target="mainFrame"></a>
+						<a id="artist" class="my-1" target="mainFrame"></a>
 					</span>
 				</span>
 				<span>

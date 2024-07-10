@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.rest.dto.song.SongLikeDto;
-//import com.itwill.rest.dto.song.AddSongLikeDto;
-//import com.itwill.rest.service.SongChartService;
 import com.itwill.rest.service.SongService;
 
 import lombok.RequiredArgsConstructor;
