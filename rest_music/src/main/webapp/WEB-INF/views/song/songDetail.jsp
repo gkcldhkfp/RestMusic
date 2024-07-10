@@ -27,11 +27,16 @@
         <div class="m-5 ">
             <div class="p-3">
                 <div class="">
+                    <c:url var="albumDetailPage" value="/album/detail">
+                        <c:param name="albumId" value="${data.albumId}"></c:param>
+                    </c:url>
                     <c:url var="albumCover"
                         value="/images/albumcover/${data.albumImage}"></c:url>
-                    <img alt="albumCover" src="${albumCover}"
-                        class="rounded "
-                        style="display: inline-block; vertical-align: middle; left: 400px; width: 220px; height: 220px;">
+                    <a style="display: inline-block;" href="${albumDetailPage}">
+                        <img alt="albumCover" src="${albumCover}"
+                            class="rounded "
+                            style="vertical-align: middle; left: 400px; width: 220px; height: 220px;">
+                    </a>
                     <div class="ms-2"
                         style="display: inline-block; vertical-align: middle;">
                         <h2 class="mt-2">${data.songTitle}</h2>
@@ -39,9 +44,7 @@
                             가수
                         </p>
                         <p class="mt-2">
-                            <c:url var="albumDetailPage" value="/album/detail">
-                                <c:param name="albumId" value="${data.albumId}"></c:param>
-                            </c:url>
+                            
                             앨범<span class="ms-3" style="cursor: pointer;" onclick="location.href='${albumDetailPage}'" >${data.albumName}</span>
                         </p>
                         <p class="mt-2" id="genre">

@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(data.length == 0){
             console.log('댓글0개')
             htmlStr += `  <div class="card card-body my-1">
-             <div><h2>댓글이 아직 하나도 없습니다<h2></div>`;
+             <div class="text-center"><h3>댓글이 아직 하나도 없습니다<h3></div>`;
             divComments.innerHTML = htmlStr;
             return;
         }
