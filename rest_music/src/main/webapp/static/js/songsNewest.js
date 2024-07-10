@@ -1,5 +1,5 @@
 /**
- * /song/popularChart.jsp에 포함
+ * /song/newest.jsp에 포함
  */
 
 document.addEventListener("DOMContentLoaded", function() {

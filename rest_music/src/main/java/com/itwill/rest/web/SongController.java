@@ -120,4 +120,20 @@ public class SongController {
 	    
 	}
 	
+	// 최신 음악
+	@GetMapping("/newest")
+	public void showNewestSongs(Model model, HttpSession session) {
+		log.debug("showNewestSongs({})", model);
+
+		Integer id = (Integer) session.getAttribute("loginUserId");
+		log.debug("Session loginUserId: {}", id);
+		id = (id == null) ? 0 : id;
+
+		List<SongChartDto> list = songService.readNewSongs(id);
+		model.addAttribute("newSongs", list);
+		model.addAttribute("loginUserId", id);
+	}
+	
+	
+	
 }

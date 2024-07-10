@@ -216,6 +216,43 @@
             so.video_link
         order by count(l.song_id) desc
     </select>
+    
+    
+    <!-- 최신 음악 -->
+    <select id="getNewestSongs" resultType="SongChartDto">
+        select
+            s.song_id,
+            al.album_id,
+            al.album_image,
+            al.album_release_date,
+            s.title,
+            ar.artist_id,
+            ar.artist_name,
+            al.album_name,
+            count(l.song_id) as likes,
+            s.song_path,
+            s.video_link
+        from songs s
+        join albums al on s.album_id = al.album_id
+        join artist_roles role on s.song_id = role.song_id
+        join artists ar on role.artist_id = ar.artist_id
+        left join likes l on s.song_id = l.song_id
+        where role.role_id = (select role_id from role_code where role_name = '가수')
+        group by
+            s.song_id,
+            al.album_id,
+            al.album_image,
+            al.album_release_date,
+            s.title,
+            ar.artist_id,
+            ar.artist_name,
+            al.album_name,
+            s.song_path,
+            s.video_link
+        order by al.album_release_date desc
+    </select>
+    
+    
        
 </mapper>
 
