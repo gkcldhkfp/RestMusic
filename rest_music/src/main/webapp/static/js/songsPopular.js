@@ -1,5 +1,5 @@
 /**
- * popular.jsp
+ * /song/popularChart.jsp에 포함
  */
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // 특정 사용자가 특정 노래를 좋아요 했는지 여부를 서버에 요청
         const data = { songId, loginUserId };
-        console.log(data);
         axios.post('../api/isLiked', data)
             .then(response => {
                 // 서버 응답에 따라 좋아요 상태를 설정
@@ -216,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // 플레이리스트 불러오기 및 모달 표시 함수
-    function showPlayListModal(id) {
+    function showPlayListModal(id, songIds) {  // songIds를 배열로 받음
         axios.get(`../getPlayList/${id}`)
             .then(response => {
                 if (response.status === 200) {
@@ -228,11 +227,18 @@ document.addEventListener("DOMContentLoaded", function() {
                         const listElement = document.createElement('div');
                         listElement.classList.add('form-check');
                         listElement.innerHTML = `
-                            <input class="form-check-input songCheckbox" type="checkbox" value="${list.plistId}" id="playlist-${list.plistId}" data-playlist-id="${list.plistId}" />
+                            <input class="form-check-input playlist-checkbox" type="checkbox" value="${list.plistId}" id="playlist-${list.plistId}" data-playlist-id="${list.plistId}" />
                             <label class="form-check-label" for="playlist-${list.plistId}">${list.plistName}</label>
                         `;
                         playListsContainer.appendChild(listElement);
                     });
+
+                    // songIds를 hidden input으로 추가
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.id = 'selectedSongIds';
+                    hiddenInput.value = JSON.stringify(songIds);  // 배열을 JSON 문자열로 변환
+                    playListsContainer.appendChild(hiddenInput);
 
                     const selectPlayListModal = new bootstrap.Modal(document.getElementById('selectPlayList'));
                     selectPlayListModal.show();
@@ -245,23 +251,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 곡 추가 함수
     function addSongToPlaylists() {
-        const selectedPlaylists = document.querySelectorAll('#playLists .form-check-input:checked');
+        const selectedPlaylists = document.querySelectorAll('#playLists .playlist-checkbox:checked');
         const selectedPlaylistIds = Array.from(selectedPlaylists).map(checkbox => checkbox.dataset.playlistId);
-
-        // add-to-playlist-btn 클래스를 가진 버튼 중 현재 선택된 노래의 songId를 가져옵니다.
         
-        // 잘못된 코드입니다 수정하세요! 
-        // 힌트: 쿼리셀렉트ALL은 반복문 돌리고 그 안에서 체크가 됐는 지 안됐는 지 검사하고
-        // 체크된 음악번호를 배열로 추가해야함
-        const songIdElements = document.querySelectorAll('.add-to-playlist-btn.active');
-        const songIds = Array.from(songIdElements).map(btn => btn.dataset.songId); // 현재 선택된 곡의 songId 배열 생성
+        // hidden input에서 songIds를 가져옴
+        const songIdsJson = document.getElementById('selectedSongIds').value;
+        const songIds = JSON.parse(songIdsJson);  // JSON 문자열을 배열로 변환
 
         if (selectedPlaylistIds.length === 0) {
             alert('플레이리스트를 선택하세요.');
             return;
         }
 
-        if (songIds.length === 0) { // 수정된 부분: songId 배열이 비어있는지 확인
+        if (songIds.length === 0) {
             alert('곡을 선택하세요.');
             return;
         }
@@ -276,8 +278,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.log(`플레이리스트 ${plistId}에 곡 ${songId} 확인 중`);
                 // 각 플레이리스트에 곡이 이미 추가되어 있는지 확인
                 const checkPromise = axios.post(`../checkSongInPlayList`, {
-                    plistId: plistId,
-                    songId: songId
+                    plistId: parseInt(plistId),
+                    songId: parseInt(songId)
                 }).then(response => {
                     console.log(`플레이리스트 ${plistId} 응답:`, response.data);
                     if (response.data === false) { // 곡이 이미 있는 경우
@@ -293,7 +295,9 @@ document.addEventListener("DOMContentLoaded", function() {
         Promise.all(promises).then(() => {
             const addedPlaylists = selectedPlaylistIds.filter(plistId => alreadyAdded[plistId]);
             if (addedPlaylists.length > 0) {
-                alert('플레이리스트에 이미 추가된 곡입니다.');
+                alert('선택한 플레이리스트에 이미 추가된 곡입니다.');
+                const selectPlayListModal = bootstrap.Modal.getInstance(document.getElementById('selectPlayList'));
+                selectPlayListModal.hide();  
                 return;
             }
 
@@ -302,17 +306,17 @@ document.addEventListener("DOMContentLoaded", function() {
                 return songIds.map(songId => {
                     if (!alreadyAdded[plistId]) {
                         return axios.post(`../addSongToPlayList`, {
-                            plistId: plistId,
-                            songId: songId
+                            plistId: parseInt(plistId),
+                            songId: parseInt(songId)
                         });
                     }
                 }).filter(Boolean);
-            }).flat();
+            });
 
             Promise.all(addPromises).then(responses => {
                 const allSuccessful = responses.every(response => response && response.status === 200);
                 if (allSuccessful) {
-                    alert('플레이리스트에 곡이 추가되었습니다.');
+                    alert('선택한 플레이리스트에 곡이 추가되었습니다.');
                     const selectPlayListModal = bootstrap.Modal.getInstance(document.getElementById('selectPlayList'));
                     selectPlayListModal.hide();
                 }
@@ -326,6 +330,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // "전체 담기" 버튼 클릭 이벤트 핸들러
     document.getElementById('addAllToCollection').addEventListener('click', function() {
         const id = parseInt(document.querySelector('.add-to-playlist-btn').dataset.id);
+        console.log(id);
         if (id === 0) { // 로그인하지 않은 경우
             const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
             loginModal.show();
@@ -334,8 +339,12 @@ document.addEventListener("DOMContentLoaded", function() {
         // 기존의 전체 선택 모달을 숨깁니다.
         selectAllModal.hide();
 
-        // "곡 추가" 버튼이 있는 모달 창을 열게 됩니다.
-        showPlayListModal(id);  // "곡 추가" 모달 창을 엽니다.
+        // 체크된 모든 곡의 ID를 수집
+        const checkedSongs = document.querySelectorAll('.songCheckbox:checked');
+        const songIds = Array.from(checkedSongs).map(checkbox => checkbox.dataset.songId);
+
+        // "곡 추가" 모달 창을 엽니다.
+        showPlayListModal(id, songIds);  // songIds 배열을 전달
     });
 
     // 플레이리스트에 곡 추가 버튼 클릭 이벤트 핸들러
@@ -347,6 +356,8 @@ document.addEventListener("DOMContentLoaded", function() {
     addToPlaylistButtons.forEach(button => {
         button.addEventListener('click', function(event) {
             const id = parseInt(this.dataset.id);
+            const songId = this.dataset.songId;  // 버튼에서 songId를 가져옴
+            console.log(id);
             if (id === 0) { // 로그인하지 않은 경우
                 const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
                 loginModal.show();
@@ -354,7 +365,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             addToPlaylistButtons.forEach(btn => btn.classList.remove('active')); // 모든 버튼의 active 클래스 제거
             this.classList.add('active'); // 현재 클릭한 버튼에 active 클래스 추가
-            showPlayListModal(id);
+            showPlayListModal(id, [songId]);  // songId를 배열로 전달
         });
     });
 

@@ -57,7 +57,7 @@
             <tbody>
                 <c:forEach var="top" items="${topSongs}" varStatus="status">
                     <tr>
-                        <td><input type="checkbox" class="songCheckbox" /></td>
+                        <td><input type="checkbox" class="songCheckbox" data-song-id="${top.songId}" /></td>
                         <td>${status.index + 1}</td>
                         <td class="song-info"> 
                             <%-- TODO: 앨범 상세 매핑 주소로 수정 --%>
@@ -68,18 +68,18 @@
                                 <img alt="앨범표지" src="<c:url value='/images/albumcover/${top.albumImage}' />" class="img-fluid" />
                             </a>    
                             <%-- TODO: 음원 상세 매핑 주소로 수정 --%>
-	                        <c:url var="songDetailUrl" value="/song/detail">
-						        <c:param name="songId" value="${top.songId}" />
-						    </c:url>   
-						    <%-- TODO: 아티스트 상세 매핑 주소로 수정 --%>
-                            <c:url var="artistDetailUrl" value="/artist/albums">
+                            <c:url var="songDetailUrl" value="/song/detail">
+                                <c:param name="songId" value="${top.songId}" />
+                            </c:url>   
+                            <%-- TODO: 아티스트 상세 매핑 주소로 수정 --%>
+                            <c:url var="artistDetailUrl" value="/artist/songs">
                                 <c:param name="artistId" value="${top.artistId}" />
                             </c:url>
                             <div>
                                 <a href="${songDetailUrl}" style="font: inherit; color: inherit; text-decoration: none;">
-						            <span>${top.title}</span><br>
-						        </a>
-						        <a href="${artistDetailUrl}" style="font: inherit; color: gray; text-decoration: none;">
+                                    <span>${top.title}</span><br>
+                                </a>
+                                <a href="${artistDetailUrl}" style="font: inherit; color: gray; text-decoration: none;">
                                     <span>${top.artistName}</span>
                                 </a>
                             </div>                  
@@ -89,31 +89,31 @@
                             <i class="fas fa-heart ${top.likes != null && top.likes > 0 ? 'liked' : ''} heart-icon"
                                 data-song-id="${top.songId}"
                                 data-id="${loginUserId}">
-						    </i>
-						    <span class="likes-count">${top.likes != null ? top.likes : 0}</span>
-						</td>
+                            </i>
+                            <span class="likes-count">${top.likes != null ? top.likes : 0}</span>
+                        </td>
                         <td>
-						    <c:url var="songPath" value="/songs/${top.songPath}" />
-						    <a href="#" class="btn btn-primary btn-sm play-btn"
-						        data-song-path="${songPath}"
-						        data-song-id="${top.songId}"
-						        data-id="${loginUserId}">
-						        <i class="fas fa-play"></i>
-						    </a>
-						</td>
-						<td>			
+                            <c:url var="songPath" value="/songs/${top.songPath}" />
+                            <a href="#" class="btn btn-primary btn-sm play-btn"
+                                data-song-path="${songPath}"
+                                data-song-id="${top.songId}"
+                                data-id="${loginUserId}">
+                                <i class="fas fa-play"></i>
+                            </a>
+                        </td>
+                        <td>            
                             <button type="button" class="btn btn-secondary btn-sm" id="addCPList"
                                 data-id="${top.songId}">
                                 <i class="fa-solid fa-list"></i>
                             </button>
                         </td>
                         <td>
-						    <button type="button" class="btn btn-secondary btn-sm add-to-playlist-btn"
-						      data-song-id="${top.songId}"
-						      data-id="${loginUserId}">
-						      <i class="fas fa-plus"></i>
-						    </button>
-						</td>
+                            <button type="button" class="btn btn-secondary btn-sm add-to-playlist-btn"
+                              data-song-id="${top.songId}"
+                              data-id="${loginUserId}">
+                              <i class="fas fa-plus"></i>
+                            </button>
+                        </td>
                         <td>
                             <a href="${top.videoLink}" target="_blank" class="btn btn-secondary btn-sm">
                                 <i class="fas fa-video"></i>
@@ -131,7 +131,7 @@
         <!-- MP3 파일 경로를 동적으로 설정할 수 있도록 스크립트로 처리 -->
         <source id="audioSource" src="" type="audio/mpeg">
         Your browser does not support the audio element.
-        <span id="currentTime">0:00</span> / <span id="totalTime">1:00</span>
+        <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
     </audio>
     
     <!-- 세션 리스트 모달 -->
@@ -170,51 +170,51 @@
     </div>
     
     <!-- 전체 담기 모달--> <%-- TODO: 미완성 --%>
-	<div id="selectAllModal" class="modal" tabindex="-1">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-body text-center p-4">
-	                <button type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">
-	                    <i class="fas fa-times fa-3x"></i> 취소
-	                </button>
-	                <button type="button" class="btn btn-primary m-2" id="addAllToPlaylist">
-	                    <i class="fas fa-play fa-3x"></i> 전체 듣기
-	                </button>
-	                <button type="button" class="btn btn-primary m-2" id="addAllToCollection">
-	                    <i class="fas fa-plus fa-3x"></i> 전체 담기
-	                </button>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-	
-	<!-- 로그인 모달 -->
-	<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="loginModalLabel">로그인 페이지로 이동</h5>
-	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	            </div>
-	            <div class="modal-body">
-	                로그인이 필요합니다. 로그인 하시겠습니까?
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="loginCancelButton">취소</button>
-	                <button type="button" class="btn btn-primary" id="loginConfirmButton">확인</button>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-	
-	
-	<footer>
+    <div id="selectAllModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <button type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">
+                        <i class="fas fa-times fa-3x"></i> 취소
+                    </button>
+                    <button type="button" class="btn btn-primary m-2" id="addAllToPlaylist">
+                        <i class="fas fa-play fa-3x"></i> 전체 듣기
+                    </button>
+                    <button type="button" class="btn btn-primary m-2" id="addAllToCollection">
+                        <i class="fas fa-plus fa-3x"></i> 전체 담기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 로그인 모달 -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">로그인 페이지로 이동</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    로그인이 필요합니다. 로그인 하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="loginCancelButton">취소</button>
+                    <button type="button" class="btn btn-primary" id="loginConfirmButton">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <footer>
         <div class="container">
             <%@ include file="../fragments/footer.jspf" %>
         </div>
     </footer>
      
-	<script
+    <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -235,4 +235,3 @@
     
 </body>
 </html>
-
