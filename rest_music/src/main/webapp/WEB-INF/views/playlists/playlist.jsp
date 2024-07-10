@@ -42,7 +42,7 @@
                             <!-- 자바스크립트를 사용하여 총 ?곡인지 출력되는 부분 -->
                             <p class="d-none">플리 생성날짜</p>
                             <div class="mt-4">
-                                <button class="btn btn-success" data-id="${playList.pListId}"
+                                <button id="addCPListFromUPList" class="btn btn-success" data-id="${playList.pListId}"
                                     onclick="window.location.href = '/Rest/frameset/${playList.pListId}'">플레이리스트
                                     재생</button>
                             </div>
@@ -60,8 +60,8 @@
                     </div>
                     <!-- 추가할 박스 (카드) -->
                     <div class="card">
-                        <div class="card-body" id="playLists">
-                            <table class="table table-striped" style="border: 1px solid #ddd;">
+                        <div class="card-body" id="resultTable">
+                            <table class="table table-striped" style="border: 1px solid #ddd;" id="resultTable">
                                 <thead>
                                     <tr>
                                         <!-- 전체 선택 체크박스 추가 -->
@@ -72,6 +72,7 @@
                                         <th style="text-align: left; vertical-align: middle;">노래 제목</th>
                                         <th style="text-align: left; vertical-align: middle;">아티스트</th>
                                         <th style="text-align: center; vertical-align: middle;">듣기</th>
+                                        <th style="text-align: center; vertical-align: middle;">재생목록</th>
                                     </tr>
                                 </thead>
                                 <tbody id="songsTableBody"> <!-- playlist.js를 통해 플리의 음원 리스트가 삽입될 부분 -->

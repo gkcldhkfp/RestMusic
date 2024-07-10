@@ -104,6 +104,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 댓글 목록 HTML 코드
         let htmlStr = '';
+        if(data.length == 0){
+            console.log('댓글0개')
+            htmlStr += `  <div class="card card-body my-1">
+             <div class="text-center"><h3>댓글이 아직 하나도 없습니다<h3></div>`;
+            divComments.innerHTML = htmlStr;
+            return;
+        }
         for (let comment of data) {
             // 댓글 최종 수정 시간
             const modifiedTime = new Date(comment.modifiedTime).toLocaleString();

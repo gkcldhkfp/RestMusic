@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class SearchResultDto {
 	
+	private int albumId;
+	private int artistId;
 	private int songId;
 	private String albumName;
 	private String albumImage;
