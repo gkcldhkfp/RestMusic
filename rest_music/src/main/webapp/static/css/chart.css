@@ -1,0 +1,126 @@
+@charset "UTF-8";
+
+/* chart.css */
+
+/* 테이블 안의 셀 텍스트를 가운데 정렬하는 추가적인 CSS 스타일 */
+.table td,
+.table th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+ /* 링크에 마우스를 올렸을 때 색상 변경 */
+    a {
+        color: inherit; /* 부모 요소인 td의 폰트 색상을 상속받음 */
+    }
+    
+    a:hover span {
+        color: #007bff; /* Bootstrap의 기본 링크 색상 */
+    }
+
+/* 곡 정보 행의 레이아웃을 설정하는 CSS */
+.song-info {
+    display: flex; /* Flexbox를 사용하여 요소들을 행으로 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+}
+
+.song-info img {
+    margin-right: 10px; /* 이미지 오른쪽 여백 추가 */
+    flex-shrink: 0; /* 이미지가 축소되지 않도록 설정 */
+    max-width: 100px; /* 이미지 최대 너비 설정 */
+    height: auto; /* 이미지 높이 자동 조정 */
+}
+
+.song-info > div {
+    flex-grow: 1; /* 텍스트 컨테이너가 남은 공간을 채우도록 설정 */
+}
+
+/* 좋아요 아이콘 스타일 */
+.fa-heart {
+    color: black; /* 기본 색상 */
+    cursor: pointer; /* 포인터로 호버되면 커서 모양 변경 */
+    display: inline-block; /* 인라인 요소로 표시 */
+}
+
+.fa-heart.liked {
+    color: red; /* 좋아요가 눌렸을 때 빨간색으로 변경 */
+}
+
+/* 추가된 하트 아이콘 클래스 */
+.fa-heart.far {
+    font-weight: regular; /* 검은색 하트는 regular weight */
+}
+
+.fa-heart.fas {
+    font-weight: bold; /* 빨간색 하트는 bold weight */
+}
+
+/* 모달 창 중앙 정렬 및 아이콘 크기 조정 */
+.modal-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-body button {
+    margin: 10px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-body button i {
+    margin-right: 8px;
+    font-size: 32px; /* 아이콘 크기 */
+}
+
+/* 모달 창 버튼 스타일 */
+.modal-body .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.modal-body .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.modal-body button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.modal-body button:active {
+    background-color: #004085;
+    border-color: #004085;
+}
+
+/* 플레이리스트 항목 스타일 */
+.playlist-item {
+    display: block;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.playlist-item input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* 모달 바디 스크롤 설정 */
+#selectPlayList .modal-body {
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+}
+
+/* 모달 헤더, 푸터 아이콘 스타일 */
+#selectPlayList .modal-header .btn-close {
+    font-size: 1.5rem;
+}
+
+/* 모달 푸터 버튼 스타일 */
+#selectPlayList .modal-footer .btn {
+    padding: 8px 16px;
+}
+
+
