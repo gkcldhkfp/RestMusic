@@ -5,10 +5,11 @@ import lombok.Data;
 @Data
 public class ArtistSongDto {
 	private Integer artistId;
+	private String artistIds;
 	private Integer songId;
 	private Integer albumId;
 	private String albumImage;
-	private String songTitle;
+	private String title;
 	private String artistName;
 
 }

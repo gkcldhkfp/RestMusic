@@ -115,7 +115,7 @@ public class UserController {
         boolean result = userService.checkNickname(nickname);
         return ResponseEntity.ok(result ? "Y" : "N");
     }
-
+    
     @GetMapping("/signin")
     public void signIn() {
         log.debug("GET signIn()");

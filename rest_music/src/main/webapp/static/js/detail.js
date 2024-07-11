@@ -1,5 +1,5 @@
 /**
- *  detail.jsp 포함
+ *  songDetail.jsp 포함
  */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const commnetRegistForm = document.querySelector('div#commnetRegistForm')
         commnetRegistForm.classList.add('d-none');
     }
+    
+    /*console.log(writerIds);
+    console.log(writers);*/
     
     const data = { songId, loginUserId };
     let currentPage = 1;
@@ -36,12 +39,96 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         btnLike.textContent = '♡';
     }
-
+    
+    // 장르 작성 & 링크
+    const splitgenere = genre.split(',');
+    const genreSpace = document.querySelector('p#genre');
+    let genreHtml= genreSpace.innerHTML; // 기존 내용 유지
+        for(let i = 0; i < splitgenere.length; i++) {
+            const trimmedName = splitgenere[i].trim();
+            const genrePage = `../song/genreChart?genreName=${trimmedName}`;
+            
+            if (i === 0) {
+            genreHtml += `<span class='text-center ms-2' style='cursor: pointer;' onclick="location.href='${genrePage}'">
+                            ${trimmedName}
+                          </span>`;
+            } else {
+            // 이후 링크들은 쉼표와 함께 추가
+            genreHtml += `,<span class='text-center ms-2' style='cursor: pointer;' onclick="location.href='${genrePage}'">
+                            ${trimmedName}
+                          </span>`;
+        }
+    }
+    genreSpace.innerHTML = genreHtml;
+    
+    
+    // 아티스트 작성 & 링크
+    const writersSpace = document.querySelector('p#writers');
+    const splitWriters = writers.split(',');
+    const splitWriterIds = writerIds.split(',');
+    artistPageLinked(writersSpace, splitWriters, splitWriterIds);
+    
+    const composersSpace = document.querySelector('p#composers');
+    const splitComposers = composers.split(',');
+    const splitComposerIds = composerIds.split(',');
+    artistPageLinked(composersSpace, splitComposers, splitComposerIds);
+    
+    const arrangersSpace = document.querySelector('p#arrangers');
+    const splitArrangers = arrangers.split(',');
+    const splitArrangerIds = arrangerIds.split(',');
+    artistPageLinked(arrangersSpace, splitArrangers, splitArrangerIds);
+    
+    const singerNameSpace = document.querySelector('p#singerNames');
+    const splitsingerName = singerName.split(',');
+    const splitsingerIds = singerIds.split(',');
+    artistPageLinked(singerNameSpace, splitsingerName, splitsingerIds);
+    
+    
+    
+    function artistPageLinked (writersSpace, artists, artistIds) {
+    
+        const length = Math.min(artists.length, artistIds.length);
+      /*  console.log(artists.length);
+        console.log(artistIds.length);
+        console.log(length);*/
+        let linksHtml= writersSpace.innerHTML; // 기존 내용 유지
+        for(let i = 0; i < length; i++) {
+            const trimmedName = artists[i].trim();
+            const trimmedId = artistIds[i].trim();
+            console.log(trimmedName);
+            console.log(trimmedId);
+            const artistPage = `../artist/songs?artistId=${trimmedId}`;
+            
+            if (i === 0) {
+            linksHtml += `<span class='text-center ms-2' style='cursor: pointer;' onclick="location.href='${artistPage}'">
+                            ${trimmedName}
+                          </span>`;
+            } else {
+            // 이후 링크들은 쉼표와 함께 추가
+            linksHtml += `,<span class='text-center ms-2' style='cursor: pointer;' onclick="location.href='${artistPage}'">
+                            ${trimmedName}
+                          </span>`;
+            }
+        }
+        writersSpace.innerHTML = linksHtml;
+    }
+    
+    
+    function redirectToLogin() {
+        const currentUrl = window.location.href;
+        window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
+    }
+    
+    
+    
+    
 
     btnLike.addEventListener('click', () => {
     if(loginUserId == '') {
-        alert('로그인이 필요합니다');
-        return
+        if(confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")){
+            redirectToLogin();
+        }
+        return;
         }
         axios
             .put('./like', data)
@@ -61,7 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getPlayLists() {
         if(loginUserId == '' ) {
-        alert('로그인이 필요합니다');
+        if(confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")){
+            redirectToLogin();
+        }
         return
         }
         const uri = `../getPlayList/${loginUserId}`;
