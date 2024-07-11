@@ -11,15 +11,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.itwill.rest.dto.user.UserCreateDto;
+import com.itwill.rest.dto.user.UserDeactivateDto;
 import com.itwill.rest.dto.user.UserLikeDto;
 import com.itwill.rest.dto.user.UserSignInDto;
 import com.itwill.rest.dto.user.UserUpdateDto;
@@ -27,7 +30,9 @@ import com.itwill.rest.repository.User;
 import com.itwill.rest.service.MailSendService;
 import com.itwill.rest.service.UserService;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -115,7 +120,7 @@ public class UserController {
         boolean result = userService.checkNickname(nickname);
         return ResponseEntity.ok(result ? "Y" : "N");
     }
-    
+
     @GetMapping("/signin")
     public void signIn() {
         log.debug("GET signIn()");
@@ -126,23 +131,35 @@ public class UserController {
             @RequestParam(name = "target", defaultValue = "") String target,
             HttpSession session) throws IOException {
         log.debug("POST signIn({})", dto);
-
+        
+        // 사용자가 존재하는지 확인 (아이디와 비밀번호를 검증)
         User user = userService.read(dto);
-        String targetPage = "";
-        if (user != null) { // 아이디와 비밀번호가 일치하는 사용자 있는 경우
-            // 세션에 로그인 사용자 아이디를 저장
-            session.setAttribute("SESSION_ATTR_USER", user.getUserId());
-            session.setAttribute("loginUserId", user.getId());
-            
-            session.setAttribute("refresh", "Y");
-            // 로그인 성공 후 이동할 타겟 페이지
-            targetPage = (target.equals("")) ? "/" : target;
-            
-        } else { // 아이디와 비밀번호가 일치하는 사용자 없는 경우
-            targetPage = "/user/signin?result=f&target="
+        
+        // 로그인 실패한 경우
+        if (user == null) {
+            // 아이디와 비밀번호가 일치하는 사용자 없는 경우
+            return "redirect:/user/signin?result=f&target="
                     + URLEncoder.encode(target, "UTF-8");
         }
 
+        // 비활성화된 사용자 확인
+        if (!userService.checkUserIsActive(dto.getUserId())) {
+            // 사용자가 비활성 상태인 경우
+            return "redirect:/user/signin?result=inactive";
+        }
+
+        // 비활성화 기간 확인
+        if (!userService.checkDeactivationPeriod(dto.getUserId())) {
+            // 비활성화 기간이 남아있는 경우
+            return "redirect:/user/signin?result=deactivated";
+        }
+        
+        // 로그인 성공 시 세션에 로그인 사용자 아이디를 저장
+        session.setAttribute("SESSION_ATTR_USER", user.getUserId());
+        session.setAttribute("loginUserId", user.getId());
+        
+        // 로그인 성공 후 이동할 타겟 페이지
+        String targetPage = (target.equals("")) ? "/" : target;
         return "redirect:" + targetPage;
     }
     
@@ -296,6 +313,26 @@ public class UserController {
         }
     }
     
+    // 프로필 삭제
+    @DeleteMapping("/deleteProfileImage/{userId}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> deleteProfileImage(@PathVariable String userId) {
+        Map<String, Object> response = new HashMap<>(); // 응답 데이터를 저장할 Map 객체 생성
+        
+        boolean isDeleted = userService.deleteUserProfile(userId); // 서비스 레이어에서 프로필 이미지 삭제 수행
+        if (isDeleted) {
+            // 이미지 삭제가 성공하면 성공 메시지를 응답에 추가
+            response.put("success", true);
+            response.put("message", "Profile image deleted successfully");
+            return ResponseEntity.ok(response); // HTTP 상태 200 OK와 함께 응답 반환
+        } else {
+            // 이미지 삭제가 실패하면 실패 메시지를 응답에 추가
+            response.put("success", false);
+            response.put("message", "Failed to delete profile image");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response); // HTTP 상태 500 Internal Server Error와 함께 응답 반환
+        }
+    }
+    
     // 정보 수정
     @PostMapping("/update")
     public String update(UserUpdateDto dto,
@@ -320,6 +357,46 @@ public class UserController {
 
         // 업데이트가 완료되면 마이페이지로 리다이렉트합니다. (userId를 쿼리 파라미터로 전달)
         return "redirect:/user/mypage?userId=" + dto.getUserId();
+    }
+    
+    @GetMapping("/deactivateUser")
+    public String deactivateAccount(Model model, HttpSession session) {
+        // 세션에서 사용자 ID 가져오기
+        Integer id = (Integer) session.getAttribute("loginUserId");
+        if (id == null) {
+            return "redirect:/user/signin"; // 로그인 페이지로 리다이렉트
+        }
+        
+        // 사용자 정보 가져오기
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
+        
+        return "user/deactivateUser";
+    }
+    
+    @PostMapping("/deactivateUser")
+    @ResponseBody
+    public ResponseEntity<?> deactivateAccount(@RequestBody UserDeactivateDto dto, HttpSession session, HttpServletResponse response) {
+    	// 요청 바디에서 id와 password를 추출
+        Integer id = (Integer) dto.getId();
+        String password = (String) dto.getPassword();
+    	
+    	boolean result = userService.deactivateAccount(id, password);
+        
+        if (result) {
+            // 세션 삭제
+            session.invalidate();
+            
+            // 쿠키 삭제
+            Cookie cookie = new Cookie("user", null);
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+            
+            return ResponseEntity.ok().body("계정이 탈퇴되었습니다.");
+        } else {
+            return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다.");
+        }
     }
     
 }

@@ -1,5 +1,7 @@
 package com.itwill.rest.repository;
 
+import java.sql.Date;
+
 import com.itwill.rest.repository.User;
 
 import lombok.AllArgsConstructor;
@@ -19,5 +21,8 @@ public class User {
 	private String userProfile;
 	private String hintQuestion;
 	private String hintAnswer;
-
+	private Integer isActive;
+    private Date deactivatedUntil;
+	
+	
 }

@@ -51,7 +51,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
+    // '삭제' 버튼 클릭 시 프로필 이미지 삭제 요청
+    document.getElementById('btnDeleteProfile').addEventListener('click', () => {
+        const hiddenUserId = document.getElementById('hiddenUserId');
+        const profileImagePreview = document.getElementById('profileImagePreview');
+        const defaultImageUrl = '../images/profileimage/profile.jpg'; // 기본 이미지 URL
+    
+        if (hiddenUserId) {
+            const userId = hiddenUserId.value;
+    
+            axios.delete(`../user/deleteProfileImage/${userId}`)
+                .then(response => {
+                    if (response.data.success) {
+                        alert('프로필 이미지가 성공적으로 삭제되었습니다!');
+                        profileImagePreview.src = defaultImageUrl; // 기본 이미지로 변경
+                    } else {
+                        alert('프로필 이미지 삭제에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('프로필 이미지 삭제 중 오류 발생:', error);
+                    alert('이미지 삭제 중 오류가 발생했습니다.');
+                });
+        } else {
+            console.error('Required elements are missing in the HTML.');
+        }
+    });
+    
+    // 버튼 활성화/비활성화 상태 변경 함수
+    function changeButtonState() {
+        mailCheckBtn.disabled = !emailChecked;  // 이메일 검증이 완료되었는지에 따라 '인증번호 발송' 버튼 활성화/비활성화
+        verifyCodeBtn.disabled = !emailChecked || !emailVerificationCodeInput.value;  // 이메일 검증과 인증번호 입력 여부에 따라 '인증번호 확인' 버튼 활성화/비활성화
+    }
+    
     // 닉네임 관련 요소 선택
+    let nicknameChecked = false;   // 닉네임 중복 검사 상태
     const nicknameInput = document.getElementById('nickname');  // 닉네임 입력 필드
     const checkNicknameResult = document.getElementById('checkNicknameResult');  // 닉네임 유효성 검사 결과 표시 요소
 
@@ -63,8 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 닉네임 입력 필드의 값이 변경될 때마다 유효성 검사 및 중복 확인
-    nicknameInput.addEventListener('change', function() {
+    nicknameInput.addEventListener('change', function(event) {
         const nickname = this.value.trim();  // 닉네임 입력 값 가져오기
+        
+        // 닉네임 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
+        // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
+        event.target.addEventListener('input', () => {
+            checkNicknameResult.innerHTML = ''; // 오류 메시지를 지웁니다.
+        });
 
         if (nickname === '') {
             // 닉네임이 비어있는 경우
@@ -121,16 +161,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
         return emailPattern.test(email);
     }
-
-    // 버튼 활성화/비활성화 상태 변경 함수
-    function changeButtonState() {
-        mailCheckBtn.disabled = !emailChecked;  // 이메일 검증이 완료되었는지에 따라 '인증번호 발송' 버튼 활성화/비활성화
-        verifyCodeBtn.disabled = !emailChecked || !emailVerificationCodeInput.value;  // 이메일 검증과 인증번호 입력 여부에 따라 '인증번호 확인' 버튼 활성화/비활성화
-    }
-
+    
     // 이메일 입력 필드의 값이 변경될 때마다 유효성 검사 및 중복 확인
-    emailInput.addEventListener('change', function() {
+    emailInput.addEventListener('change', function(event) {
         const email = this.value.trim();  // 이메일 입력 값 가져오기
+        
+        // 이메일 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
+        // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
+        event.target.addEventListener('input', () => {
+            checkEmailResult.innerHTML = ''; // 오류 메시지를 지웁니다.
+        });
 
         if (email === '') {
             // 이메일이 비어있는 경우
@@ -215,6 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 비밀번호 입력 필드의 input 이벤트 리스너
     document.getElementById('password').addEventListener('change', checkPassword);
+    let passwordChecked = false;   // 비밀번호 유효성 검사 상태
     
     // 비밀번호 유효성 검사 함수
     function checkPassword(event) {
@@ -222,25 +263,61 @@ document.addEventListener('DOMContentLoaded', () => {
         const checkPasswordResult = document.getElementById('checkPasswordResult');  // 비밀번호 유효성 검사 결과 표시 요소
         const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;  // 비밀번호 패턴: 8자 이상의 영문 대/소문자와 숫자
 
-        // 비밀번호 필드가 비어있는 경우
-        if (password === '') {
-            checkPasswordResult.innerHTML = '';
-            checkPasswordResult.classList.remove('text-danger', 'text-success');
-        }     
-        // 비밀번호가 패턴과 일치하지 않는 경우
-        else if (!passwordPattern.test(password)) {
+        if (!passwordPattern.test(password)) {
+            passwordChecked = false;
             checkPasswordResult.innerHTML = '8자 이상의 영문 대/소문자와 숫자만 사용 가능합니다.';
             checkPasswordResult.classList.add('text-danger');
             checkPasswordResult.classList.remove('text-success');
-        }    
-        // 비밀번호가 유효한 경우
-        else {
-            checkPasswordResult.innerHTML = '유효한 비밀번호 형식입니다.';
+        } else {
+            passwordChecked = true;
+            checkPasswordResult.innerHTML = '';
+            checkPasswordResult.classList.remove('text-danger');
+        }
+        changeButtonState(); // 버튼의 활성화/비활성화 상태를 변경
+    }
+    
+    // 비밀번호 입력 필드의 input 이벤트 리스너
+    document.getElementById('confirmPassword').addEventListener('change', checkConfirmPassword);
+    let confirmPasswordChecked = false;  // 비밀번호 확인 상태
+    
+    // 비밀번호 확인 유효성 검사 함수
+    function checkConfirmPassword(event) {
+        const password = document.querySelector('input#password').value;
+        const confirmPassword = event.target.value;
+        const checkPasswordResult = document.querySelector('div#checkPasswordResult'); 
+        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        
+        // 비밀번호 확인 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
+        // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
+        event.target.addEventListener('input', () => {
+            checkPasswordResult.innerHTML = ''; // 오류 메시지를 지웁니다.
+        });
+
+        // 비밀번호 패턴이 유효하지 않은 경우
+        if (!passwordPattern.test(password)) {
+            passwordChecked = false;
+            checkPasswordResult.innerHTML = '8자 이상의 영문 대/소문자와 숫자만 사용 가능합니다.';
+            checkPasswordResult.classList.add('text-danger');
+            checkPasswordResult.classList.remove('text-success');
+            return;
+        } else if (password !== confirmPassword) {
+            // 비밀번호와 비밀번호 확인이 일치하지 않는 경우
+            confirmPasswordChecked = false;
+            checkPasswordResult.innerHTML = '비밀번호가 일치하지 않습니다.';
+            checkPasswordResult.classList.add('text-danger');
+            checkPasswordResult.classList.remove('text-success');
+            return;
+        } else {
+            // 비밀번호 패턴이 유효하고 비밀번호와 비밀번호 확인이 일치하는 경우
+            passwordChecked = true;
+            confirmPasswordChecked = true;
+            checkPasswordResult.innerHTML = '비밀번호가 일치합니다.';
             checkPasswordResult.classList.add('text-success');
             checkPasswordResult.classList.remove('text-danger');
         }
+        
     }
-
+    
     // 힌트 질문 관련 로직
     const hintQuestionInput = document.getElementById('hintQuestion');  // 힌트 질문 입력 필드
     const hintQuestionSelect = document.getElementById('hintQuestionSelect');  // 힌트 질문 선택 필드
@@ -280,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     hintAnswerInput.addEventListener('change', checkHintAnswer);
     
-    // '변경 사항 저장' 버튼 클릭 시 사용자 정보 업데이트 요청
+    // '회원 정보 변경' 버튼 클릭 시 사용자 정보 업데이트 요청
     document.getElementById('updateUserForm').addEventListener('submit', (event) => {
         event.preventDefault();  // 기본 폼 제출 동작을 방지합니다.
 
@@ -345,4 +422,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('변경 사항 저장 중 오류가 발생했습니다.');
             });
     });
+    
+    // '취소' 버튼 클릭 시 이전 페이지로 이동
+    document.querySelector('.btn-cancel').addEventListener('click', () => {
+        history.back();
+    });
+    
+    document.querySelector('#updateUserForm').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();  // Enter 키를 눌렀을 때 폼 제출을 방지합니다.
+        }
+    });
+    
 });
