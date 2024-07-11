@@ -40,7 +40,7 @@
                                 <c:param name="userId" value="${user.userId}" />
                             </c:url>
                             <a class="btn btn-outline-primary mb-2" id="updateInfoBtn" href="${userUpdate}">ID/PW 변경 (내정보 관리)
-                            </a>
+                            </a><br>
                             <!-- 이용권 구매(결제창) 페이지 이동 버튼 -->
                             <c:url var="purchasePage" value="/purchase" />
                             <a class="btn btn-outline-primary" href="${purchasePage}">이용권 구매

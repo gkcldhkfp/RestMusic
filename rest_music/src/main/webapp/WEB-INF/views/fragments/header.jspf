@@ -27,10 +27,12 @@
 						  <c:url var="chartByGenre" value="/song/genreChart" />
 						  <a class="dropdown-item" href="${chartByGenre}">장르별 차트</a>
 						</li>
+						<!-- 
 						<li>
 						  <c:url var="chartByVideo" value="/song/videoChart" />
 						  <a class="dropdown-item" href="${chartByVideo}">뮤직비디오 차트</a>
 						</li>
+						 -->
 					</ul>
 				</li>
 
@@ -41,6 +43,7 @@
 					</a>
 				</li>
 
+				<!-- 
 				<li class="nav-item dropdown  mx-2"><a
 					class="nav-link dropdown-toggle" href="/song/genre" role="button"
 					data-bs-toggle="dropdown" aria-expanded="false">장르별 음악</a>
@@ -55,13 +58,20 @@
 						<li><a class="dropdown-item" href="#">장르 8</a></li>
 					</ul>
 				</li>
-
+				 -->
+				 
 				<li class="nav-item dropdown mx-2"><a
 					class="nav-link dropdown-toggle" href="#" role="button"
 					data-bs-toggle="dropdown" aria-expanded="false">REST 앨범</a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="/album/popular">인기 앨범</a></li>
-						<li><a class="dropdown-item" href="/album/newest">최신 앨범</a></li>
+						<li>
+                          <c:url var="popularAlbum" value="/album/list/popular" />
+                          <a class="dropdown-item" href="${popularAlbum}">인기 앨범</a>
+                        </li>
+                        <li>
+                          <c:url var="newestAlbum" value="/album/list/newest" />
+                          <a class="dropdown-item" href="${newestAlbum}">최신 앨범</a>
+                        </li>
 					</ul>
 				</li>
 
@@ -88,7 +98,6 @@
 					</form>
 				</li>
 			</ul>
-			<a href="../purchase">test</a>
 
 			<!-- 로그인 안했을때 -->
 			<c:if test="${empty sessionScope.SESSION_ATTR_USER}">
