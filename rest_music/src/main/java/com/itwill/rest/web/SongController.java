@@ -66,7 +66,11 @@ public class SongController {
 	@GetMapping("/search")
 	public void songSearch(SongSearchDto dto, Model model) {
 		log.debug("dto={}",dto);
-		
+		if (dto.getKeyword().contains("--")) {
+		    String modifiedKeyword = dto.getKeyword().replace("--", "");
+		    dto.setKeyword(modifiedKeyword);
+		}
+
 		List<SearchResultDto> result = songService.searchSongs(dto);
 		
 		log.debug("result={}",result);

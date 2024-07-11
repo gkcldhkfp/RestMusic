@@ -126,7 +126,7 @@
                      </choose>
                    ) AS rnum,
                    s.album_id AS album_id,
-                   LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_id) AS artist_ids
+                   LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_ids
             FROM songs s
             JOIN albums a ON s.album_id = a.album_id
             JOIN artist_roles ar ON s.song_id = ar.song_id AND ar.role_id = 10
