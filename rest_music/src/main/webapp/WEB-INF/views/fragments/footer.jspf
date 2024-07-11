@@ -16,6 +16,7 @@
 						<!-- 여기에 세션에서 가져온 리스트가 들어갈 자리 -->
 					</div>
 					<div class="modal-footer">
+						<button id="listEmptyBtn" type="button" class="btn btn-success" style="display: none;">비우기</button>
 						<button id="modalCloseBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 					</div>
 				</div>

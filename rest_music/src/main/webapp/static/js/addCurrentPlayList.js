@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 									catch((error) => { console.log(error); });
 							}
 							// alert('선택한 앨범을 재생합니다.');
-					showAlert('선택한 앨범을 재생합니다.', 2000);
+							showAlert('선택한 앨범을 재생합니다.', 2000);
 
 						})
 						.catch((error) => console.log(error));
@@ -210,21 +210,44 @@ document.addEventListener('DOMContentLoaded', () => {
 			return;
 		}
 		console.log('mainFrame showModal 호출성공');
-		let myModal = document.querySelector('#sessionListModal');
+		let cPListModal = document.querySelector('#sessionListModal');
+		let myModal = new bootstrap.Modal(cPListModal);
 		console.log(myModal);
-		let modal = new bootstrap.Modal(myModal);
-		console.log(modal);
+
 		getCPList();
 		// Ajax요청을 보내고 모달에 태그를 작성하는 album_detail.js의 함수를 호출
-		modal.show();
+		myModal.show();
 
 		// 모달이 열릴 때 상태 업데이트
 		isModalOpen = true;
-
-		myModal.addEventListener('hidden.bs.modal', () => {
+		cPListModal.addEventListener('hidden.bs.modal', () => {
+			console.log('모달창 닫힐 때 실행.');
 			isModalOpen = false;
 		});
+
+		// 모달창 재생목록 비우기 버튼
+		const listEmptyBtn = document.querySelector('#listEmptyBtn');
+		listEmptyBtn.addEventListener('click', listEmpty);
+		function listEmpty() {
+			let result = confirm('현재 재생목록을 비우시겠습니까?');
+			if (!result) {
+				return;
+			}
+			const url = `../song/empty`
+			axios.
+				get(url).
+				then((response) => {
+					console.log(response);
+					console.log('재생목록 비우기');
+					showAlert('현재 재생목록을 비웠습니다.', 2000);
+					console.log(myModal);
+					myModal.hide();
+					parent.songFrame.location.reload();
+				}).
+				catch((error) => { console.log(error); });
+		}
 	}
+
 	// 다른 프레임에서 호출할 수 있도록 함수 노출
 	window.showModal = showModal;
 	// 챗지피티코드
@@ -259,8 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	function makeCPListElements(data) {
 		// 모달 창에 리스트 출력하기
 		let modalBody = document.getElementById('sessionListBody');
-		let modal = document.querySelector('.modal');
-		let modalCloseBtn = document.querySelectorAll('#modalCloseBtn');
 		// modal.style.display = "none";
 		modalBody.innerHTML = ''; // 모달 바디 초기화
 
@@ -270,12 +291,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		index = parseInt(sessionStorage.getItem('index'));
 		console.log(index);
-		if (data && data.length > 0) {
+		console.log(data.length);
+		let ul = document.createElement('ul');
+		ul.className = 'list-group';
+		console.log(ul);
+		if (data.length > 0) {
+			// 비우기 버튼 숨김 해제
+			document.querySelector('#listEmptyBtn').style.display = 'block';
 			// 리스트가 있을 경우 출력
-			let ul = document.createElement('ul');
-			ul.className = 'list-group';
-			console.log(ul);
-
 			for (let i = 0; i < data.length; i++) {
 				let li = document.createElement('li');
 				li.className = 'list-group-item';
@@ -287,43 +310,29 @@ document.addEventListener('DOMContentLoaded', () => {
 				ul.appendChild(li);
 				console.log(li);
 			}
-			modalBody.appendChild(ul); // 모달에 작성.
-			// if (modal.style.display !== 'block') {
-			// 	modal.style.display = 'block'; // 모달창 활성화
-			// }
-			// for (let m of modalCloseBtn) {
-			// 	// 닫기 버튼 활성화
-			// 	m.addEventListener('click', () => {
-			// 		modal.style.display = "none";
-			// 		// 포커스를 메인 프레임의 body로 이동하여 이벤트 리스너가 정상적으로 작동하도록 함
-			// 	});
-			// }
-
-			// window.onclick = function (event) {
-			// 	if (event.target == modal) {
-			// 		modal.style.display = "none";
-			// 		// 포커스를 메인 프레임의 body로 이동하여 이벤트 리스너가 정상적으로 작동하도록 함
-			// 	}
-			// }
-
 		} else {
+			console.log(data.length);
+			document.querySelector('#listEmptyBtn').style.display = 'none';
 			let li = document.createElement('li');
+			li.className = 'list-group-item';
+			li.classList.add('fw-bold');
 			li.textContent = '현재 재생목록이 없습니다.';
+			ul.appendChild(li);
 		}
 
+		modalBody.appendChild(ul);
+
 		const cPList = document.querySelectorAll('.list-group-item');
+
 		for (let i = 0; i < cPList.length; i++) {
 			cPList[i].addEventListener('click', (event) => {
 				sessionStorage.setItem('index', i);
-				getCPList();
-				// let modal = bootstrap.Modal.getInstance(document.querySelector('#sessionListModal'));
-				// modal.hide();
-				// modal.show();
+				showModal();
 				parent.songFrame.location.reload();
 			});
 		}
-
 	}
+
 
 	// 플리에 추가 기능
 	const btnAddUPList = document.querySelectorAll('#btnAddUPList');
@@ -626,14 +635,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			opacity: 0;
 			transition: opacity 0.5s ease-in-out;
 		`;
-	
+
 		document.body.appendChild(alertBox);
-	
+
 		// Fade in
 		setTimeout(() => {
 			alertBox.style.opacity = '1';
 		}, 10);
-	
+
 		// Fade out and remove
 		setTimeout(() => {
 			alertBox.style.opacity = '0';
@@ -642,14 +651,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			}, 500);
 		}, duration);
 	}
-
-
-
-
-
-
-
-
 
 
 
