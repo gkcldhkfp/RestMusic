@@ -114,13 +114,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     
+    function redirectToLogin() {
+        const currentUrl = window.location.href;
+        window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
+    }
+    
+    
     
     
 
     btnLike.addEventListener('click', () => {
     if(loginUserId == '') {
-        alert('로그인이 필요합니다');
-        return
+        if(confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")){
+            redirectToLogin();
+        }
+        return;
         }
         axios
             .put('./like', data)
@@ -140,7 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getPlayLists() {
         if(loginUserId == '' ) {
-        alert('로그인이 필요합니다');
+        if(confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")){
+            redirectToLogin();
+        }
         return
         }
         const uri = `../getPlayList/${loginUserId}`;

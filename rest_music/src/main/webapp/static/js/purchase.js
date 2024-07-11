@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //if(loginUserId == ''){
     //    loginUserId = 1;
     //}
-    const amount = 10;
+    const amount = 4400;
     const IMP = window.IMP; 
     IMP.init('imp62307542'); // 'imp12345678' 대신 실제 가맹점 식별코드를 입력하세요.
        function generateMerchantUID() {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
           pg: "html5_inicis.INIpayTest",
           pay_method: "card",
           merchant_uid: merchant_uid,   // 주문번호
-          name: "상품명",
+          name: "Rest 음악 MP3 정기결제이용권",
           amount: amount,                         // 숫자 타입
           buyer_email: "gildong@gmail.com",
           buyer_name: '홍길동',

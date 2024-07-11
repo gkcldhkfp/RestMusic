@@ -199,8 +199,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-
-
+    function redirectToLogin() {
+        const currentUrl = window.location.href;
+        window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
+    }
+    
     for (let a of btnAddPlayLists) {
         a.addEventListener('click', getPlayLists);
     }
@@ -208,7 +211,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function getPlayLists(event) {
         event.stopPropagation();
         if (loginUserId == '') { // 유저아이디
-            alert('로그인이 필요합니다');
+            if(confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")){
+            redirectToLogin();
+        }
             return;
         }
         songId = event.target.closest('tr').getAttribute('data-song-id');
