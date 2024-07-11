@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,13 +112,17 @@
                                     
                                     <br /> <span style="cursor: pointer;" onclick="location.href='${albumDetailPage}'" >${r.albumName}</span></td>
                                     
-                                    <c:url var="artistPage" value="/artist/songs">
-                                        <c:param name="artistId" value="${r.artistId}"></c:param>
-                                    </c:url>
-                                    
-                                <td><br /> <span
-                                    class="text-center fw-bold" style="cursor: pointer;"onclick="location.href='${artistPage}'">${r.singerName}</span></td>
-                                    
+                                    <td>
+                                    <br/>
+                                        <c:set var="singers" value="${fn:split(r.singerName, ',')}" />
+                                        <c:set var="artistIds" value="${fn:split(r.artistIds, ',')}" />
+                                        <c:forEach var="singer" items="${singers}" varStatus="status">
+                                        <c:url var="artistPage" value="/artist/songs">
+                                            <c:param name="artistId" value="${artistIds[status.index]}" />
+                                        </c:url>
+                                        <span class="text-center fw-bold" style="cursor: pointer;" onclick="location.href='${artistPage}'">${singer}</span>
+                                        </c:forEach>
+                                    </td>
                                 <td style="text-align: center;"><button
                                         style="background-image: url('../images/icon/play.png'); width: 50px; height: 50px; background-size: cover; background-repeat: no-repeat;"
                                         data-id="${r.songId}"

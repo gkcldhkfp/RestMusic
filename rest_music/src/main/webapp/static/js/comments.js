@@ -111,8 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
             divComments.innerHTML = htmlStr;
             return;
         }
+        console.log(data);
         for (let comment of data) {
             // 댓글 최종 수정 시간
+            console.log(comment.userId);
+            console.log(loginUserId);
             const modifiedTime = new Date(comment.modifiedTime).toLocaleString();
             htmlStr += `
             <div class="card card-body my-1">
