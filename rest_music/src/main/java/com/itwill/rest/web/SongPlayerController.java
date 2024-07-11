@@ -67,7 +67,7 @@ public class SongPlayerController {
 		log.debug("cPList = {}", cPList);
 		session.setAttribute("cPList", cPList);
 		// 재생목록을 세션에 업데이트.
-		
+
 		return ResponseEntity.ok(song);
 	}
 
@@ -88,7 +88,7 @@ public class SongPlayerController {
 		// 새로 생성한 리스트에 음악 객체를 추가.
 		session.setAttribute("cPList", cPList);
 		// 세션에 리스트를 업데이트
-		
+
 		return ResponseEntity.ok(song);
 	}
 
@@ -99,6 +99,39 @@ public class SongPlayerController {
 		log.debug("list = {}", list);
 		return ResponseEntity.ok(list);
 	}
-	
+
+	// 재생목록 비우는 매핑컨트롤러
+	@GetMapping("/song/empty")
+	@ResponseBody
+	public ResponseEntity<List<AlbumSongs>> empty(HttpSession session) {
+		session.setAttribute("cPList", null);
+		// 바로듣기 버튼 클릭 시 세션에 저장된 리스트를 지움.
+		List<AlbumSongs> cPList = new ArrayList<>();
+		// 리스트를 지웠으므로 새 리스트를 생성해줌.
+		// 새로 생성한 리스트에 음악 객체를 추가.
+		session.setAttribute("cPList", cPList);
+		// 세션에 리스트를 업데이트
+
+		return ResponseEntity.ok(cPList);
+	}
+
+	// 요청받은 songId가 세션에 있는 지 검사하는 매핑 컨트롤러
+	@GetMapping("/song/getCPList")
+	public ResponseEntity<Boolean> getCPList(@RequestParam(value = "songId") String songId, HttpSession session) {
+		AlbumSongs song = albumSongsService.selectSongBySongId(Integer.parseInt(songId));
+		log.debug("song = {}", songId);
+		// 세션에서 현재 재생목록을 가져옴.
+		List<AlbumSongs> cPList = (List<AlbumSongs>) session.getAttribute("cPList");
+
+		if(cPList == null) {
+			// cPList null인경우 그냥 false(중복된 데이터 없음.)을 리턴.
+			return ResponseEntity.ok(false);
+		}
+		// 요청받은 객체가 현재 세션에 있는 지 검사
+		boolean containsAlbumSong = cPList.contains(song);
+
+		return ResponseEntity.ok(containsAlbumSong);
+
+	}
 
 }

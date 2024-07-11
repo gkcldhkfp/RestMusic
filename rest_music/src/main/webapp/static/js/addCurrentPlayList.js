@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (!sessionStorage.getItem('isAdded')) {
 		sessionStorage.setItem('isAdded', 'N');
 	}
-
+	if(refresh ==='Y') {
+		console.log(refresh);
+		parent.songFrame.location.reload();
+	}
 	// 음원 다음 곡으로 재생 기능
 	const addCPList = document.querySelectorAll('#addCPList');
 	if (addCPList !== null) {
@@ -16,23 +19,50 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		function addToCPList(event) {
 			const id = event.target.getAttribute('data-id');
-			const url = `../song/addCurrentPlayList?songId=${id}`
-			console.log(url);
-			axios.
-				get(url).
-				then((response) => {
-					console.log(response);
-					if (sessionStorage.getItem('isAdded') === 'N') {
-						sessionStorage.setItem('index', 0);
-						sessionStorage.setItem('isAdded', 'Y');
-						parent.songFrame.location.reload();
-					}
-					// document.location.reload();
-					// alert('재생 목록에 추가되었습니다');
-					showAlert('재생 목록에 추가되었습니다', 2000);
 
+			// 받은 아이디가 이미 세션에 있는 지 검사하는 컨트롤러 호출.
+			const url1 = `../song/getCPList?songId=${id}`;
+			axios.
+				get(url1).
+				then((response) => {
+					if (!response.data) {
+						// 중복된 데이터가 없는 경우
+						addCurrentPlayList();
+						// 재생목록에 추가
+					} else {
+						// 중복된 데이터가 있는 경우
+						// 유저에게 중복되어도 추가할거냐고 물어봄
+						let result = confirm('이미 재생목록에 있는 곡입니다. 그래도 추가하시겠습니까?');
+						if (result) {
+							// 유저가 수락한 경우.
+							// 재생목록에 추가.
+							addCurrentPlayList();
+						} else {
+							// 유저가 거절한 경우
+							return;
+						}
+					}
 				}).
 				catch((error) => { console.log(error); });
+			function addCurrentPlayList() {
+				const url2 = `../song/addCurrentPlayList?songId=${id}`
+				console.log(url2);
+				axios.
+					get(url2).
+					then((response) => {
+						console.log(response);
+						if (sessionStorage.getItem('isAdded') === 'N') {
+							sessionStorage.setItem('index', 0);
+							sessionStorage.setItem('isAdded', 'Y');
+							parent.songFrame.location.reload();
+						}
+						// document.location.reload();
+						// alert('재생 목록에 추가되었습니다');
+						showAlert('재생 목록에 추가되었습니다', 2000);
+
+					}).
+					catch((error) => { console.log(error); });
+			}
 		}
 	}
 	// 음원 듣기 기능
@@ -149,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 									catch((error) => { console.log(error); });
 							}
 							// alert('선택한 앨범을 재생합니다.');
-					showAlert('선택한 앨범을 재생합니다.', 2000);
+							showAlert('선택한 앨범을 재생합니다.', 2000);
 
 						})
 						.catch((error) => console.log(error));
@@ -210,21 +240,43 @@ document.addEventListener('DOMContentLoaded', () => {
 			return;
 		}
 		console.log('mainFrame showModal 호출성공');
-		let myModal = document.querySelector('#sessionListModal');
+		let cPListModal = document.querySelector('#sessionListModal');
+		let myModal = new bootstrap.Modal(cPListModal);
 		console.log(myModal);
-		let modal = new bootstrap.Modal(myModal);
-		console.log(modal);
+
 		getCPList();
 		// Ajax요청을 보내고 모달에 태그를 작성하는 album_detail.js의 함수를 호출
-		modal.show();
+		myModal.show();
 
 		// 모달이 열릴 때 상태 업데이트
 		isModalOpen = true;
-
-		myModal.addEventListener('hidden.bs.modal', () => {
+		cPListModal.addEventListener('hidden.bs.modal', () => {
+			console.log('모달창 닫힐 때 실행.');
 			isModalOpen = false;
 		});
+
+		// 모달창 재생목록 비우기 버튼
+		const listEmptyBtn = document.querySelector('#listEmptyBtn');
+		listEmptyBtn.addEventListener('click', listEmpty);
+		function listEmpty() {
+
+			const url = `../song/empty`
+			axios.
+				get(url).
+				then((response) => {
+					console.log(response);
+					console.log('재생목록 비우기');
+					console.log(myModal);
+					sessionStorage.setItem('isAdded', 'N');
+					myModal.hide();
+					showAlert('현재 재생목록을 비웠습니다.', 2000);
+					parent.songFrame.location.reload();
+				}).
+				catch((error) => { console.log(error); });
+
+		}
 	}
+
 	// 다른 프레임에서 호출할 수 있도록 함수 노출
 	window.showModal = showModal;
 	// 챗지피티코드
@@ -259,8 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	function makeCPListElements(data) {
 		// 모달 창에 리스트 출력하기
 		let modalBody = document.getElementById('sessionListBody');
-		let modal = document.querySelector('.modal');
-		let modalCloseBtn = document.querySelectorAll('#modalCloseBtn');
 		// modal.style.display = "none";
 		modalBody.innerHTML = ''; // 모달 바디 초기화
 
@@ -270,12 +320,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		index = parseInt(sessionStorage.getItem('index'));
 		console.log(index);
-		if (data && data.length > 0) {
+		console.log(data.length);
+		let ul = document.createElement('ul');
+		ul.className = 'list-group';
+		console.log(ul);
+		if (data.length > 0) {
+			// 비우기 버튼 숨김 해제
+			document.querySelector('#listEmptyBtn').style.display = 'block';
 			// 리스트가 있을 경우 출력
-			let ul = document.createElement('ul');
-			ul.className = 'list-group';
-			console.log(ul);
-
 			for (let i = 0; i < data.length; i++) {
 				let li = document.createElement('li');
 				li.className = 'list-group-item';
@@ -287,43 +339,29 @@ document.addEventListener('DOMContentLoaded', () => {
 				ul.appendChild(li);
 				console.log(li);
 			}
-			modalBody.appendChild(ul); // 모달에 작성.
-			// if (modal.style.display !== 'block') {
-			// 	modal.style.display = 'block'; // 모달창 활성화
-			// }
-			// for (let m of modalCloseBtn) {
-			// 	// 닫기 버튼 활성화
-			// 	m.addEventListener('click', () => {
-			// 		modal.style.display = "none";
-			// 		// 포커스를 메인 프레임의 body로 이동하여 이벤트 리스너가 정상적으로 작동하도록 함
-			// 	});
-			// }
-
-			// window.onclick = function (event) {
-			// 	if (event.target == modal) {
-			// 		modal.style.display = "none";
-			// 		// 포커스를 메인 프레임의 body로 이동하여 이벤트 리스너가 정상적으로 작동하도록 함
-			// 	}
-			// }
-
 		} else {
+			console.log(data.length);
+			document.querySelector('#listEmptyBtn').style.display = 'none';
 			let li = document.createElement('li');
+			li.className = 'list-group-item';
+			li.classList.add('fw-bold');
 			li.textContent = '현재 재생목록이 없습니다.';
+			ul.appendChild(li);
 		}
 
+		modalBody.appendChild(ul);
+
 		const cPList = document.querySelectorAll('.list-group-item');
+
 		for (let i = 0; i < cPList.length; i++) {
 			cPList[i].addEventListener('click', (event) => {
 				sessionStorage.setItem('index', i);
-				getCPList();
-				// let modal = bootstrap.Modal.getInstance(document.querySelector('#sessionListModal'));
-				// modal.hide();
-				// modal.show();
+				showModal();
 				parent.songFrame.location.reload();
 			});
 		}
-
 	}
+
 
 	// 플리에 추가 기능
 	const btnAddUPList = document.querySelectorAll('#btnAddUPList');
@@ -339,8 +377,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		a.addEventListener('click', getPlayLists);
 		function getPlayLists(event) {
 			if (id == '') {
-				alert('로그인이 필요합니다.');
-				return
+				if (confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")) {
+					redirectToLogin();
+					return;
+				}
 			}
 			const uri = `../getPlayList/${id}`;
 			songId = event.target.getAttribute('data-id');
@@ -361,7 +401,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				});
 		}
 	}
-
+	function redirectToLogin() {
+		const currentUrl = window.location.href;
+		window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
+	}
 	// 앨범을 플리에 추가 기능
 	const btnAddUPListAlbum = document.querySelector('#btnAddUPListAlbum');
 	if (btnAddUPListAlbum === null) {
@@ -371,8 +414,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	btnAddUPListAlbum.addEventListener('click', getPlayListAlbum);
 	function getPlayListAlbum() {
 		if (id == '') {
-			alert('로그인이 필요합니다.');
-			return
+			if (confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")) {
+				redirectToLogin();
+				return;
+			}
 		}
 		const uri = `../getPlayList/${id}`;
 		axios
@@ -626,14 +671,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			opacity: 0;
 			transition: opacity 0.5s ease-in-out;
 		`;
-	
+
 		document.body.appendChild(alertBox);
-	
+
 		// Fade in
 		setTimeout(() => {
 			alertBox.style.opacity = '1';
 		}, 10);
-	
+
 		// Fade out and remove
 		setTimeout(() => {
 			alertBox.style.opacity = '0';
@@ -642,14 +687,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			}, 500);
 		}, duration);
 	}
-
-
-
-
-
-
-
-
 
 
 
