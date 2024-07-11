@@ -100,59 +100,73 @@
         delete from likes where song_id = #{songId} and id = #{loginUserId}
     </delete>
     
-  <select id="searchSongs" resultType="ResultDto">
+   <select id="searchSongs" resultType="ResultDto">
     <bind name="searchKeyword" value="'%' + keyword + '%'" />
-    SELECT * FROM (
-        SELECT songId, albumName, albumImage, title, singerName, releaseDate, score, rnum, album_id, artist_id
-        FROM (
+        SELECT * FROM (
+          SELECT songId, albumName, albumImage, title, singerName, releaseDate, score, rnum, album_id, artist_ids
+          FROM (
             SELECT s.song_id AS songId,
                    a.album_name AS albumName,
                    a.album_image AS albumImage,
                    s.title AS title,
-                   LISTAGG(art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS singerName,
+                   LISTAGG(DISTINCT art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS singerName,
                    a.album_release_date AS releaseDate,
                    MAX(SCORE(1)) AS score,
                    ROW_NUMBER() OVER (
-                       <choose>
-                           <when test='sortType.equals("accuracy")'>
-                               ORDER BY MAX(SCORE(1)) DESC
-                           </when>
-                           <when test='sortType.equals("recency")'>
-                               ORDER BY a.album_release_date DESC
-                           </when>
-                           <when test='sortType.equals("alphabet")'>
-                               ORDER BY s.title ASC
-                           </when>
-                       </choose>
+                     <choose>
+                       <when test='sortType.equals("accuracy")'>
+                         ORDER BY MAX(SCORE(1)) DESC
+                       </when>
+                       <when test='sortType.equals("recency")'>
+                         ORDER BY a.album_release_date DESC
+                       </when>
+                       <when test='sortType.equals("alphabet")'>
+                         ORDER BY s.title ASC
+                       </when>
+                     </choose>
                    ) AS rnum,
                    s.album_id AS album_id,
-                   art.artist_id AS artist_id
+                   LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_ids
             FROM songs s
             JOIN albums a ON s.album_id = a.album_id
             JOIN artist_roles ar ON s.song_id = ar.song_id AND ar.role_id = 10
             JOIN artists art ON ar.artist_id = art.artist_id
             WHERE 1=1
             <choose>
-                <when test='category.equals("t")'>
-                    AND CONTAINS(s.title, #{searchKeyword}, 1) > 0
-                </when>
-                <when test='category.equals("s")'>
-                    AND CONTAINS(art.artist_name, #{searchKeyword}, 1) > 0
-                </when>
-                <when test='category.equals("ts")'>
-                    AND (CONTAINS(s.title, #{searchKeyword}, 1) > 0
-                    OR CONTAINS(art.artist_name, #{searchKeyword}, 2) > 0)
-                </when>
-                <when test='category.equals("a")'>
-                    AND CONTAINS(a.album_name, #{searchKeyword}, 1) > 0
-                </when>
+              <when test='category.equals("t")'>
+                AND CONTAINS(s.title, #{searchKeyword}, 1) > 0
+              </when>
+              <when test='category.equals("s")'>
+                   AND (CONTAINS(s.title, #{keyword}, 1) > 0
+                OR s.song_id IN (
+                  SELECT DISTINCT ar2.song_id
+                  FROM artist_roles ar2
+                  JOIN artists art2 ON ar2.artist_id = art2.artist_id
+                  WHERE ar2.role_id = 10
+                  AND CONTAINS(art2.artist_name, #{searchKeyword}, 1) > 0
+                ))
+              </when>
+              <when test='category.equals("ts")'>   
+                AND (CONTAINS(s.title, #{searchKeyword}, 1) > 0
+                OR s.song_id IN (
+                  SELECT DISTINCT ar2.song_id
+                  FROM artist_roles ar2
+                  JOIN artists art2 ON ar2.artist_id = art2.artist_id
+                  WHERE ar2.role_id = 10
+                  AND CONTAINS(art2.artist_name, #{searchKeyword}, 1) > 0
+                ))
+              </when>
+              <when test='category.equals("a")'>
+                AND CONTAINS(a.album_name, #{searchKeyword}, 1) > 0
+              </when>
             </choose>
-            GROUP BY s.song_id, a.album_name, a.album_image, s.title, a.album_release_date, s.album_id, art.artist_id
+            GROUP BY s.song_id, a.album_name, a.album_image, s.title, a.album_release_date, s.album_id
+          )
+          WHERE ROWNUM &lt;= #{endRow}
         )
-        WHERE ROWNUM &lt;= #{endRow}
-    )
-    WHERE rnum >= #{startRow}
+        WHERE rnum >= #{startRow}
     </select>
+
 
     
     <!-- 좋아요 개수 확인 -->

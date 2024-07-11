@@ -262,7 +262,7 @@
         margin: 0;  /* p태그 기본 마진 제거 */
     }
     
-    
+
     </style>
 
     <!-- bootstrap js 라이브러리 -->
@@ -289,8 +289,7 @@
             window.location.href = '/Rest/album/list/popular';
         });
     });
-    
-    
+
     </script>
 
 </body>

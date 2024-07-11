@@ -5,7 +5,7 @@
   <mapper namespace="com.itwill.rest.repository.CommentDao">
   
     <select id="selectBysongId" resultType="CommentItemDto">
-        SELECT c.C_ID, c.SONG_ID, c.ID, c.C_TEXT, c.CREATED_TIME, c.MODIFIED_TIME, u.nickname
+        SELECT c.C_ID, c.SONG_ID, c.ID userId, c.C_TEXT, c.CREATED_TIME, c.MODIFIED_TIME, u.nickname
         FROM comments c
         JOIN users u ON c.ID = u.ID
         WHERE c.SONG_ID = #{songId}

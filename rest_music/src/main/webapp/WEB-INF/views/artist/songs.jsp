@@ -6,6 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
 <!DOCTYPE html>
 <html>
 
@@ -106,11 +107,11 @@
                                 <input type="checkbox" id="selectAllCheckbox">
                             </th>  -->
                             <th style="text-align: left; vertical-align: middle;">커버</th>
-                            <th style="text-align: left; vertical-align: middle;">노래 제목</th>
+                            <th style="text-align: left; vertical-align: middle; width: 60%">노래 제목</th>
                             <th style="text-align: left; vertical-align: middle;">아티스트</th>
-                            <th style="text-align: center; vertical-align: middle;">듣기</th>
-                            <th style="text-align: center; vertical-align: middle;">재생목록</th>
-                            <th style="text-align: center; vertical-align: middle;">내 리스트</th>
+                            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">듣기</th>
+                            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">재생목록</th>
+                            <th style="text-align: center; vertical-align: middle; white-space: nowrap;">내 리스트</th>
                         </tr>
                     </thead>
                     <tbody id="resultTable">
@@ -137,13 +138,23 @@
                                     <a href="${songPage}"
                                     style="color: black; text-decoration: none;"
                                     onmouseover="this.style.color='blue';"
-                                    onmouseout="this.style.color='black';">${s.songTitle}</a>
+                                    onmouseout="this.style.color='black';">${s.title}</a>
                                 </td>
-                                <td style="text-align: left; vertical-align: middle; font-size: 14px;">
-                                    <a href="${artistPage}"
-                                    style="color: black; text-decoration: none;"
-                                    onmouseover="this.style.color='blue';"
-                                    onmouseout="this.style.color='black';">${s.artistName}</a></td>
+                                <td style="text-align:left; vertical-align: middle; font-size: 14px;">
+                                    <c:forEach items="${fn:split(s.artistName, ',')}" var="artistName" varStatus="statusName">
+                                        <c:set var="artistId" value="${fn:split(s.artistIds, ',')[statusName.index]}" />
+                                        <c:url var="artistPage" value="/artist/songs">
+                                            <c:param name="artistId" value="${artistId.trim()}" />
+                                        </c:url>
+                                        <a href="${artistPage}"
+                                           style="color: black; text-decoration: none;"
+                                           onmouseover="this.style.color='blue';"
+                                           onmouseout="this.style.color='black';">
+                                            ${artistName.trim()}
+                                        </a>
+                                        <c:if test="${!statusName.last}">, </c:if>
+                                    </c:forEach>
+                                </td>
                                 <td style="text-align: center; vertical-align: middle;">
                                     <button
                                         style="background-image: url('${playImage}'); 

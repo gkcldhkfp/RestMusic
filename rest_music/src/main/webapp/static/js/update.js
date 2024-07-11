@@ -78,8 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    
-    
     // 버튼 활성화/비활성화 상태 변경 함수
     function changeButtonState() {
         mailCheckBtn.disabled = !emailChecked;  // 이메일 검증이 완료되었는지에 따라 '인증번호 발송' 버튼 활성화/비활성화

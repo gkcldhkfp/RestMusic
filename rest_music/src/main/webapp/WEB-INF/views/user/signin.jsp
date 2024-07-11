@@ -112,11 +112,21 @@
         </div>
     </div>
 
-    <c:url var="sign_in_js" value="/js/signin.js" />
-    <script src="${sign_in_js}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
-        crossorigin="anonymous"></script>
-</body>
+    <footer>
+                <!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
+                <%@ include file="../fragments/footer.jspf" %>
+            </footer>
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <c:url var="sign_in_js" value="/js/signin.js" />
+            <script src="${sign_in_js}"></script>
+            <script>
+                const refresh = '${refresh}'; // 새로고침해줭
+                const id = '${loginUserId}'; //id
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
+            <script src="/Rest/js/addCurrentPlayList.js"></script>
+        </body>
 
-</html>
+        </html>

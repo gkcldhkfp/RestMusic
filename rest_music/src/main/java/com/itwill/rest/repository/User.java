@@ -21,11 +21,8 @@ public class User {
 	private String userProfile;
 	private String hintQuestion;
 	private String hintAnswer;
-
-	
-	
-	private Integer isActive; // 추가된 필드
-    private Date deactivatedUntil; // 추가된 필드
+	private Integer isActive;
+    private Date deactivatedUntil;
 	
 	
 }

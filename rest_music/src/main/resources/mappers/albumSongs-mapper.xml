@@ -18,10 +18,10 @@
                   s.title, 
                   s.song_path, 
                   LISTAGG(DISTINCT gc.genre_name, ', ') WITHIN GROUP (ORDER BY gc.genre_name) AS genre_name,
-                  art.artist_id,
-                  art.artist_name,
-                  art.artist_image,
-                  art.artist_description,
+                  LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_id) AS artist_id,
+                  LISTAGG(DISTINCT art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_name,
+                  LISTAGG(DISTINCT art.artist_image, ', ') WITHIN GROUP (ORDER BY art.artist_image) AS artist_image,
+                  LISTAGG(DISTINCT art.artist_description, ', ') WITHIN GROUP (ORDER BY art.artist_description) AS artist_description,
                   COUNT(DISTINCT l.id) AS likes_count
               FROM 
                   albums a
@@ -37,8 +37,7 @@
               WHERE 
                   a.album_id = #{albumId} AND rc.role_id = 10
               GROUP BY 
-                  a.album_id, a.album_name, s.song_id, ts.song_id, s.title, s.song_path,
-                  art.artist_id, art.artist_name, art.artist_image, art.artist_description
+                  a.album_id, a.album_name, s.song_id, ts.song_id, s.title, s.song_path
               ORDER BY 
                   ts.song_id, s.song_id
 

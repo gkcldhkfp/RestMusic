@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.querySelector('input#password').value;
         const confirmPassword = event.target.value;
         const checkPasswordResult = document.querySelector('div#checkPasswordResult');
-    const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    	const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         
         // 비밀번호 확인 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
         // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
@@ -77,4 +77,5 @@ document.addEventListener('DOMContentLoaded', () => {
             btnSave.disabled = true;
         }
     }
+    
 });

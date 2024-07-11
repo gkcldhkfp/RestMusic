@@ -34,13 +34,20 @@ document.addEventListener('DOMContentLoaded', () => {
 			index = parseInt(newIndex);
 			sessionStorage.setItem('index', index);
 			// 세션에 업데이트
-			location.href = location.href;
+			// location.href = location.href;
+			parent.songFrame.location.reload();
 			// 새로고침
 		},
 		enumerable: true,
 		configurable: true
 	});
 
+	// songFrame의 버튼으로 mainFrame의 모달을 활성화 하기 위한 코드.
+	const showModalButton = document.querySelector('#showModalButton');
+	showModalButton.addEventListener('click', () => {
+		console.log('mainframe의 메서드 호출');
+		parent.frames['mainFrame'].showModal();
+	});
 
 	// ! JSON을 리스트로 만드는 코드는 playerPage.jsp의 아래부분에 선언함.
 	console.log('자바스크립트');
@@ -117,10 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			musicTitle.innerHTML = cPList[index].title;
 			artist.innerHTML = cPList[index].artistName;
 			// 노래 제목에 음원 상세페이지 연결
-			musicTitle.href = '/Rest/song/detail?songId='+cPList[index].songId;
+			musicTitle.href = '/Rest/song/detail?songId=' + cPList[index].songId;
 
 			// 가수에 아티스트 상세 페이지 연결
-			artist.href = '/Rest/artist/songs?artistId='+cPList[index].artistId;
+			artist.href = '/Rest/artist/songs?artistId=' + cPList[index].artistId;
 
 
 
@@ -220,13 +227,11 @@ document.addEventListener('DOMContentLoaded', () => {
 				progress.setAttribute('aria-valuenow', percentage);
 			});
 			function needToPaid() {
-				// TODO: 나중에 결제한 회원으로 바꾸어야함.
-				alert('결제하셈');
+				// const currentUrl = window.location.href;
+				if(confirm('결제가 필요합니다. 결제 페이지로 이동하시겠습니까?'));
+				parent.mainFrame.location.href = "/Rest/purchase";
+				// window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
 			}
-
-
-
-
 
 			// 정지버튼시 호출하는 함수
 			function stop() {
@@ -300,11 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 			}
 
-			// songFrame의 버튼으로 mainFrame의 모달을 활성화 하기 위한 코드.
-			document.getElementById("showModalButton").onclick = function () {
-				console.log('mainframe의 메서드 호출');
-				parent.frames['mainFrame'].showModal();
-			}
+
 
 
 
@@ -349,13 +350,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			playButton.addEventListener('mouseenter', scaleUp);
 			playButton.addEventListener('mouseleave', scaleDown);
-			
+
 			muteButton.addEventListener('mouseenter', scaleUp);
 			muteButton.addEventListener('mouseleave', scaleDown);
-			
+
 			muteIcon.addEventListener('mouseenter', scaleUp);
 			muteIcon.addEventListener('mouseleave', scaleDown);
-			
+
 			volumeSlider.addEventListener('mouseenter', scaleUp);
 			volumeSlider.addEventListener('mouseleave', scaleDown);
 
@@ -364,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				target.style.transform = "scale(1.1)";
 				target.style.transition = "all 0.5s";
 			}
-		
+
 			function scaleDown(event) {
 				target = event.target;
 				target.style.transform = "scale(1)";

@@ -359,13 +359,6 @@ public class UserController {
         return "redirect:/user/mypage?userId=" + dto.getUserId();
     }
     
-    
-    
-    
-    
-    
-    
-    
     @GetMapping("/deactivateUser")
     public String deactivateAccount(Model model, HttpSession session) {
         // 세션에서 사용자 ID 가져오기
