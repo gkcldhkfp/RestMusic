@@ -113,6 +113,7 @@
                                     <br /> <span style="cursor: pointer;" onclick="location.href='${albumDetailPage}'" >${r.albumName}</span></td>
                                     
                                     <td>
+                                    <br/>
                                         <c:set var="singers" value="${fn:split(r.singerName, ',')}" />
                                         <c:set var="artistIds" value="${fn:split(r.artistIds, ',')}" />
                                         <c:forEach var="singer" items="${singers}" varStatus="status">
