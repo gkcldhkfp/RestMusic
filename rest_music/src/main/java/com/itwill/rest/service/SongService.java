@@ -141,7 +141,7 @@ public class SongService {
 
 		List<SongChartDto> list = songDao.getAllSongs();
 		return list.stream().limit(10).toList();
-
+	}
 	// 최신 음악
 	public List<SongChartDto> readNewSongs(Integer id) {
 		log.debug("readNewSongs()");
