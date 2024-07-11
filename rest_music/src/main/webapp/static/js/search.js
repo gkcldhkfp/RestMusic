@@ -5,29 +5,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAddPlayLists = document.querySelectorAll('button.addPlayList');
 
     const playListModal = new bootstrap.Modal(document.querySelector('div#staticBackdrop'), { backdrop: 'static' });
-    
-    
+
+
     // 현재 페이지의 URL 가져오기
     const currentUrl = window.location.href;
-    
+
     // URL에서 쿼리 문자열 파싱
     const url = new URL(currentUrl);
     const params = new URLSearchParams(url.search);
-    
-    
+
+
     const btnAccuracy = document.querySelector('button#accuracy');
-    btnAccuracy.addEventListener('click', ()=> {
+    btnAccuracy.addEventListener('click', () => {
         sort('accuracy');
     })
     const btnRecency = document.querySelector('button#recency');
-    btnRecency.addEventListener('click', ()=> {
-         sort('recency');
+    btnRecency.addEventListener('click', () => {
+        sort('recency');
     })
     const btnAlphabet = document.querySelector('button#alphabet');
-    btnAlphabet.addEventListener('click', ()=>{
-         sort('alphabet');
+    btnAlphabet.addEventListener('click', () => {
+        sort('alphabet');
     })
-    
+
     let songId;
 
     let currentPage = 1;
@@ -53,15 +53,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+
     const addPlayButton = document.querySelectorAll('button#listenBtn');
-    for(let e of addPlayButton){
+    for (let e of addPlayButton) {
         e.addEventListener('click', (event) => {
             event.stopPropagation(); // 이벤트 버블링 방지
         });
     }
-    
+
     const addNextPlayButton = document.querySelectorAll('button.addNextPlay');
-    for(let e of addNextPlayButton){
+    for (let e of addNextPlayButton) {
         e.addEventListener('click', (event) => {
             event.stopPropagation(); // 이벤트 버블링 방지
         });
@@ -78,23 +79,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 100); // 100ms 후에 다시 호출되지 않으면 추가 로딩 실행
     };
-    
+
+
+
     function sort(newest) {
-        
-    // 새로운 sortType 값 설정 (예시: 'newest'로 변경)
-    let newSortType = newest;
-    
-    // 기존 sortType 값과 새로운 값 비교하여 변경
-    params.set('sortType', newSortType);  // 새로운 값으로 변경
-    
-    // 변경된 쿼리 문자열을 적용한 새로운 URL 생성
-    url.search = params.toString();
-    const newUrl = url.toString();
-    
-    // 변경된 URL로 리다이렉트
-    window.location.href = newUrl;
+
+        // 새로운 sortType 값 설정 (예시: 'newest'로 변경)
+        let newSortType = newest;
+
+        // 기존 sortType 값과 새로운 값 비교하여 변경
+        params.set('sortType', newSortType);  // 새로운 값으로 변경
+
+        // 변경된 쿼리 문자열을 적용한 새로운 URL 생성
+        url.search = params.toString();
+        const newUrl = url.toString();
+
+        // 변경된 URL로 리다이렉트
+        window.location.href = newUrl;
     }
-    
+
     // url에서 쿼리문의 마지막 파라미터 가져오기
     let lastQueryParamValue;
     for (let value of urlParams.values()) {
@@ -102,14 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // lastQueryParamValue에 따라 버튼 색 변경
-    if(lastQueryParamValue === 'accuracy'){
-        btnAccuracy.style.color = 'blue';  
-    } else if (lastQueryParamValue === 'recency'){
+    if (lastQueryParamValue === 'accuracy') {
+        btnAccuracy.style.color = 'blue';
+    } else if (lastQueryParamValue === 'recency') {
         btnRecency.style.color = 'blue';
-    } else if (lastQueryParamValue === 'alphabet'){
+    } else if (lastQueryParamValue === 'alphabet') {
         btnAlphabet.style.color = 'blue';
     };
-    
+
     function loadMoreData() {
         axios.get('./rest/search', {
             params: {
@@ -134,46 +137,54 @@ document.addEventListener('DOMContentLoaded', () => {
                     data.forEach(function(item) {
                         const songDetailsPage = `../song/detail?songId=${item.songId}`;
                         const albumDetailsPage = `../album/detail?albumId=${item.albumId}`;
-                        const artistDetailsPage = `../artist/songs?artistId=${item.artistId}`;
+                        // const artistDetailsPage = `../artist/songs?artistId=${item.artistId}`;
+
+                        const splitsingerName = item.singerName.split(',');
+                        const splitsingerIds = item.artistIds.split(',');
+                        const length = Math.min(splitsingerName.length, splitsingerIds.length);
+
+                        let singerLinksHtml = ''; // 가수들의 링크를 담을 변수
+
+                        for (let i = 0; i < length; i++) {
+                            const trimmedName = splitsingerName[i].trim();
+                            const trimmedId = splitsingerIds[i].trim();
+                            const artistPage = `../artist/songs?artistId=${trimmedId}`;
+                                singerLinksHtml += `<span class='text-center fw-bold' style='cursor: pointer;' onclick="location.href='${artistPage}'">
+                                    ${trimmedName}
+                                </span>`;
+                        }
+
                         const newRow = document.createElement('tr');
-                        //newRow.style.cursor = 'pointer';
                         newRow.setAttribute('data-song-id', item.songId);
-                        // newRow.onclick = function() { location.href = songDetailsPage; };
 
                         newRow.innerHTML = `
                             <td style="width: 118px;"><a href="${albumDetailsPage}"><img alt="albumcover" src="../images/albumcover/${item.albumImage}" 
-                             class="img-thumbnail" width="120px" height="120px"/></a></td>
-                            <td style="width:60%;"><span class="fs-4" style="cursor: pointer;" onclick="location.href='${songDetailsPage}'">${item.title}</span> <br/> <br/> 
-                            <span style="cursor: pointer;" onclick="location.href='${albumDetailsPage}'">${item.albumName}</span></td>
-                            <td><br/><span style="cursor: pointer;" onclick="location.href='${artistDetailsPage}'" class="text-center fw-bold">${item.singerName}</span></td>
-                            <td style="text-align: center;"><button data-id="${item.songId}" style="background-image: url('../images/icon/play.png'); width:50px; height:50px;
-                             background-size: cover; background-repeat: no-repeat;" id="listenBtn" class="btnListen btn mt-3"></button></td>
-                             <td style="text-align: center;"><button style="background-image: url('../images/icon/playList.png'); width: 60px; height: 60px; background-size: cover; 
-                             background-repeat: no-repeat;" data-id="${item.songId}" id="addCPList" class="btn addNextPlay mt-3"></button></td>
-                            <td style="text-align: center;"><button style="background-image: url('../images/icon/myPlayList.png'); width:55px; height:55px;
-                            background-size: cover; background-repeat: no-repeat;" class="btn addPlayList mt-3"></button></td>
+                                class="img-thumbnail" width="120px" height="120px"/></a></td>
+                            <td style="width:60%;">
+                                <span class="fs-4" style="cursor: pointer;" onclick="location.href='${songDetailsPage}'">${item.title}</span> <br/> <br/> 
+                                <span style="cursor: pointer;" onclick="location.href='${albumDetailsPage}'">${item.albumName}</span>
+                            </td>
+                            <td>
+                                <br/>
+                                ${singerLinksHtml}
+                            </td>
+                            <td style="text-align: center;">
+                                <button data-id="${item.songId}" style="background-image: url('../images/icon/play.png'); width:50px; height:50px;
+                                    background-size: cover; background-repeat: no-repeat;" id="listenBtn" class="btnListen btn mt-3"></button>
+                            </td>
+                            <td style="text-align: center;">
+                                <button style="background-image: url('../images/icon/playList.png'); width: 60px; height: 60px; background-size: cover;
+                                    background-repeat: no-repeat;" data-id="${item.songId}" id="addCPList" class="btn addNextPlay mt-3"></button>
+                            </td>
+                            <td style="text-align: center;">
+                                <button style="background-image: url('../images/icon/myPlayList.png'); width:55px; height:55px;
+                                    background-size: cover; background-repeat: no-repeat;" class="btn addPlayList mt-3"></button>
+                            </td>
                         `;
-
-                        // 새로운 행에 이벤트 리스너 추가
-                       /* const addPlayListButton = newRow.querySelector('button.addPlayList');
-                        addPlayListButton.addEventListener('click', function(e) {
-                            e.stopPropagation(); // 이벤트 버블링 방지
-                            getPlayLists(e);
-                        });
-
-                        const addPlayButton = newRow.querySelector('button#listenBtn'); // 바로듣기
-                        addPlayButton.addEventListener('click', function(e) {
-                            e.stopPropagation(); // 이벤트 버블링 방지
-                        });
-                        
-                        const addNextPlayButton = newRow.querySelector('button.addNextPlay');
-                            addNextPlayButton.addEventListener('click', (event) => {
-                                event.stopPropagation(); // 이벤트 버블링 방지
-                        });*/
-                        
 
                         // tbody에 새로운 행 추가
                         tbody.appendChild(newRow);
+
                     });
 
                     // 다음 조회를 위해 행 범위 업데이트
@@ -186,6 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error(error);
             });
     }
+
 
 
 
@@ -301,6 +313,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const paginatedPlaylists = playlistsData.slice(startIndex, endIndex);
         makePlayListElements(paginatedPlaylists);
     }
+
+
 
     function setupPagination() {
         const totalPages = Math.ceil(playlistsData.length / itemsPerPage);

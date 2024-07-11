@@ -12,9 +12,9 @@
             s.song_id, 
             al.album_id, 
             al.album_image, 
-            s.title AS song_title,
+            s.title,
             LISTAGG(a.artist_name, ', ') WITHIN GROUP (ORDER BY a.artist_name) AS artist_name,
-            LISTAGG(a.artist_id, ', ') WITHIN GROUP (ORDER BY a.artist_id) AS artist_id
+            LISTAGG(a.artist_id, ', ') WITHIN GROUP (ORDER BY a.artist_name) AS artist_ids
         FROM 
             songs s
         JOIN 

@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
         commnetRegistForm.classList.add('d-none');
     }
     
-    console.log(writerIds);
-    console.log(writers);
+    /*console.log(writerIds);
+    console.log(writers);*/
     
     const data = { songId, loginUserId };
     let currentPage = 1;
@@ -74,13 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
     artistPageLinked(composersSpace, splitComposers, splitComposerIds);
     
     const arrangersSpace = document.querySelector('p#arrangers');
-    const splitArrangers = composers.split(',');
-    const splitArrangerIds = composerIds.split(',');
+    const splitArrangers = arrangers.split(',');
+    const splitArrangerIds = arrangerIds.split(',');
     artistPageLinked(arrangersSpace, splitArrangers, splitArrangerIds);
     
     const singerNameSpace = document.querySelector('p#singerNames');
-    const splitsingerName = composers.split(',');
-    const splitsingerIds = composerIds.split(',');
+    const splitsingerName = singerName.split(',');
+    const splitsingerIds = singerIds.split(',');
     artistPageLinked(singerNameSpace, splitsingerName, splitsingerIds);
     
     
@@ -88,11 +88,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function artistPageLinked (writersSpace, artists, artistIds) {
     
         const length = Math.min(artists.length, artistIds.length);
-        
+      /*  console.log(artists.length);
+        console.log(artistIds.length);
+        console.log(length);*/
         let linksHtml= writersSpace.innerHTML; // 기존 내용 유지
         for(let i = 0; i < length; i++) {
             const trimmedName = artists[i].trim();
             const trimmedId = artistIds[i].trim();
+            console.log(trimmedName);
+            console.log(trimmedId);
             const artistPage = `../artist/songs?artistId=${trimmedId}`;
             
             if (i === 0) {
