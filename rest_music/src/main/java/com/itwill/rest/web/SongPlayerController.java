@@ -115,4 +115,23 @@ public class SongPlayerController {
 		return ResponseEntity.ok(cPList);
 	}
 
+	// 요청받은 songId가 세션에 있는 지 검사하는 매핑 컨트롤러
+	@GetMapping("/song/getCPList")
+	public ResponseEntity<Boolean> getCPList(@RequestParam(value = "songId") String songId, HttpSession session) {
+		AlbumSongs song = albumSongsService.selectSongBySongId(Integer.parseInt(songId));
+		log.debug("song = {}", songId);
+		// 세션에서 현재 재생목록을 가져옴.
+		List<AlbumSongs> cPList = (List<AlbumSongs>) session.getAttribute("cPList");
+
+		if(cPList == null) {
+			// cPList null인경우 그냥 false(중복된 데이터 없음.)을 리턴.
+			return ResponseEntity.ok(false);
+		}
+		// 요청받은 객체가 현재 세션에 있는 지 검사
+		boolean containsAlbumSong = cPList.contains(song);
+
+		return ResponseEntity.ok(containsAlbumSong);
+
+	}
+
 }

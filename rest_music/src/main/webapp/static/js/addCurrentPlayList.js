@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (!sessionStorage.getItem('isAdded')) {
 		sessionStorage.setItem('isAdded', 'N');
 	}
-
+	if(refresh ==='Y') {
+		console.log(refresh);
+		parent.songFrame.location.reload();
+	}
 	// 음원 다음 곡으로 재생 기능
 	const addCPList = document.querySelectorAll('#addCPList');
 	if (addCPList !== null) {
@@ -16,23 +19,50 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		function addToCPList(event) {
 			const id = event.target.getAttribute('data-id');
-			const url = `../song/addCurrentPlayList?songId=${id}`
-			console.log(url);
-			axios.
-				get(url).
-				then((response) => {
-					console.log(response);
-					if (sessionStorage.getItem('isAdded') === 'N') {
-						sessionStorage.setItem('index', 0);
-						sessionStorage.setItem('isAdded', 'Y');
-						parent.songFrame.location.reload();
-					}
-					// document.location.reload();
-					// alert('재생 목록에 추가되었습니다');
-					showAlert('재생 목록에 추가되었습니다', 2000);
 
+			// 받은 아이디가 이미 세션에 있는 지 검사하는 컨트롤러 호출.
+			const url1 = `../song/getCPList?songId=${id}`;
+			axios.
+				get(url1).
+				then((response) => {
+					if (!response.data) {
+						// 중복된 데이터가 없는 경우
+						addCurrentPlayList();
+						// 재생목록에 추가
+					} else {
+						// 중복된 데이터가 있는 경우
+						// 유저에게 중복되어도 추가할거냐고 물어봄
+						let result = confirm('이미 재생목록에 있는 곡입니다. 그래도 추가하시겠습니까?');
+						if (result) {
+							// 유저가 수락한 경우.
+							// 재생목록에 추가.
+							addCurrentPlayList();
+						} else {
+							// 유저가 거절한 경우
+							return;
+						}
+					}
 				}).
 				catch((error) => { console.log(error); });
+			function addCurrentPlayList() {
+				const url2 = `../song/addCurrentPlayList?songId=${id}`
+				console.log(url2);
+				axios.
+					get(url2).
+					then((response) => {
+						console.log(response);
+						if (sessionStorage.getItem('isAdded') === 'N') {
+							sessionStorage.setItem('index', 0);
+							sessionStorage.setItem('isAdded', 'Y');
+							parent.songFrame.location.reload();
+						}
+						// document.location.reload();
+						// alert('재생 목록에 추가되었습니다');
+						showAlert('재생 목록에 추가되었습니다', 2000);
+
+					}).
+					catch((error) => { console.log(error); });
+			}
 		}
 	}
 	// 음원 듣기 기능
@@ -229,22 +259,21 @@ document.addEventListener('DOMContentLoaded', () => {
 		const listEmptyBtn = document.querySelector('#listEmptyBtn');
 		listEmptyBtn.addEventListener('click', listEmpty);
 		function listEmpty() {
-			let result = confirm('현재 재생목록을 비우시겠습니까?');
-			if (!result) {
-				return;
-			}
+
 			const url = `../song/empty`
 			axios.
 				get(url).
 				then((response) => {
 					console.log(response);
 					console.log('재생목록 비우기');
-					showAlert('현재 재생목록을 비웠습니다.', 2000);
 					console.log(myModal);
+					sessionStorage.setItem('isAdded', 'N');
 					myModal.hide();
+					showAlert('현재 재생목록을 비웠습니다.', 2000);
 					parent.songFrame.location.reload();
 				}).
 				catch((error) => { console.log(error); });
+
 		}
 	}
 
@@ -348,8 +377,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		a.addEventListener('click', getPlayLists);
 		function getPlayLists(event) {
 			if (id == '') {
-				alert('로그인이 필요합니다.');
-				return
+				if (confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")) {
+					redirectToLogin();
+					return;
+				}
 			}
 			const uri = `../getPlayList/${id}`;
 			songId = event.target.getAttribute('data-id');
@@ -370,7 +401,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				});
 		}
 	}
-
+	function redirectToLogin() {
+		const currentUrl = window.location.href;
+		window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
+	}
 	// 앨범을 플리에 추가 기능
 	const btnAddUPListAlbum = document.querySelector('#btnAddUPListAlbum');
 	if (btnAddUPListAlbum === null) {
@@ -380,8 +414,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	btnAddUPListAlbum.addEventListener('click', getPlayListAlbum);
 	function getPlayListAlbum() {
 		if (id == '') {
-			alert('로그인이 필요합니다.');
-			return
+			if (confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")) {
+				redirectToLogin();
+				return;
+			}
 		}
 		const uri = `../getPlayList/${id}`;
 		axios

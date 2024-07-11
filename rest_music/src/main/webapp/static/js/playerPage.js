@@ -34,7 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			index = parseInt(newIndex);
 			sessionStorage.setItem('index', index);
 			// 세션에 업데이트
-			location.href = location.href;
+			// location.href = location.href;
+			parent.songFrame.location.reload();
 			// 새로고침
 		},
 		enumerable: true,
@@ -226,8 +227,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				progress.setAttribute('aria-valuenow', percentage);
 			});
 			function needToPaid() {
-				// TODO: 나중에 결제한 회원으로 바꾸어야함.
-				alert('결제하지 않은 회원은 1분 미리듣기만 제공됩니다.');
+				// const currentUrl = window.location.href;
+				if(confirm('결제가 필요합니다. 결제 페이지로 이동하시겠습니까?'));
+				parent.mainFrame.location.href = "/Rest/purchase";
+				// window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
 			}
 
 			// 정지버튼시 호출하는 함수
