@@ -107,7 +107,7 @@
                                 <input type="checkbox" id="selectAllCheckbox">
                             </th>  -->
                             <th style="text-align: left; vertical-align: middle;">커버</th>
-                            <th style="text-align: left; vertical-align: middle; width: 60%">노래 제목</th>
+                            <th style="text-align: left; vertical-align: middle; width: 55%">노래 제목</th>
                             <th style="text-align: left; vertical-align: middle;">아티스트</th>
                             <th style="text-align: center; vertical-align: middle; white-space: nowrap;">듣기</th>
                             <th style="text-align: center; vertical-align: middle; white-space: nowrap;">재생목록</th>

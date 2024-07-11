@@ -29,6 +29,7 @@
                 FROM artist_roles ar2 
                 WHERE ar2.song_id = s.song_id 
                 AND ar2.artist_id = #{artistId}
+                AND ar.role_id = 10
             )
         GROUP BY 
             s.song_id, al.album_id, al.album_image, s.title

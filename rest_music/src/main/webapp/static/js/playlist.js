@@ -60,6 +60,31 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (!recentSong || playlistSong.createdTime > recentSong.createdTime) {
 				recentSong = playlistSong;
 			}
+			
+			const splitsingerName = playlistSong.artistName.split(',');
+            const splitsingerIds = playlistSong.artistId.split(',');
+            const length = Math.min(splitsingerName.length, splitsingerIds.length);
+
+            let singerLinksHtml = ''; // 가수들의 링크를 담을 변수
+
+            for (let i = 0; i < length; i++) {
+                const trimmedName = splitsingerName[i].trim();
+                const trimmedId = splitsingerIds[i].trim();
+                const artistPage = `../artist/songs?artistId=${trimmedId}`;
+
+                // 첫 번째 아티스트는 반점을 붙이지 않고, 그 이후 아티스트부터는 반점과 함께 출력
+                if (i === 0) {
+                    singerLinksHtml += `<a href='${artistPage}' style="color: black; text-decoration: none;"
+                                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">
+                                        ${trimmedName}
+                                    </a>`;
+                } else {
+                    singerLinksHtml += `, <a href='${artistPage}' style="color: black; text-decoration: none;"
+                                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">
+                                        ${trimmedName}
+                                    </a>`;
+                }
+            }
 
 			console.log(playlistSong);
 			htmlStr += `
@@ -77,8 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${playlistSong.title}</a>
                 </td>
                 <td style="text-align: left; vertical-align: middle; font-size: 14px">
-                    <a href="${artistPage}" style="color: black; text-decoration: none;"
-                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${playlistSong.artistName}</a>
+                    ${singerLinksHtml}
                 </td>
                 <td style="text-align: center;">
                     <button style="background-image: url('${playImage}'); width: 40px; height: 40px; background-size: cover; background-repeat: no-repeat;"
