@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
           pg: "html5_inicis.INIpayTest",
           pay_method: "card",
           merchant_uid: merchant_uid,   // 주문번호
-          name: "Rest 음악 자유이용권 30일",
+          name: "Rest 음악 MP3 정기결제이용권",
           amount: amount,                         // 숫자 타입
           buyer_email: "gildong@gmail.com",
           buyer_name: '홍길동',
