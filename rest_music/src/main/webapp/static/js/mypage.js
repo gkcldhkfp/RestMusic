@@ -326,6 +326,13 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         passwordConfirmModal.show();
     });
+    
+    // 엔터 키를 누를 때 아무런 이벤트가 발생하지 않도록 설정합니다.
+    passwordInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    });
 
     // 확인 버튼 클릭 시 비밀번호 검증을 수행합니다.
     confirmPasswordBtn.addEventListener('click', function() {

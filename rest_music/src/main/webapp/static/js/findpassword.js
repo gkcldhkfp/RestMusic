@@ -30,6 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 아이디 검증 결과를 보여줄 요소를 선택합니다.
         const checkUseridResult = document.querySelector('div#checkUseridResult');
+        
+        // 아이디 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
+        // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
+        event.target.addEventListener('input', () => {
+            checkUseridResult.innerHTML = ''; // 오류 메시지를 지웁니다.
+        });
 
         // 아이디 입력 값이 빈 경우 에러 메시지 표시
         if (userid === '') {
@@ -58,6 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 이메일 형식 검증 함수
     function checkEmail(event) {
         const email_pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+        
+        // 이메일 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
+        // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
+        event.target.addEventListener('input', () => {
+            checkEmailResult.innerHTML = ''; // 오류 메시지를 지웁니다.
+        });
 
         // 이메일 입력 값이 빈 경우 에러 메시지 표시
         if (event.target.value === '') {

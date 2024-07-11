@@ -18,6 +18,15 @@ public interface UserDao {
     User findpassword(User user);
     void setpassword(User user);
 	int updateUser(User user);
-	int updateUserProfile(String userId, String userProfile);
+	int updateUserProfile(String userId, String userProfile); // 프로필 변경
+	int deleteUserProfile(String userId); // 프로필 삭제
+	Integer checkPassword(Integer id, String password); // 비밀번호 확인
+	int deactivateUser(Integer id); // 회원 비활성화 메서드
+    int insertDeletedUser(Integer id); // 탈퇴 회원 정보 저장 메서드
+    User selectUserById(Integer id); // 사용자 ID로 사용자 정보 조회 메서드    
+    Integer checkUserIsActive(String userId); // 회원 활성 확인 여부 메서드
+    Integer checkDeactivationPeriod(String userId); // 비활성화 기간 확인 메서드
+    
+    
 
 }

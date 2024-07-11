@@ -71,9 +71,22 @@
                 <h2>로그인</h2>
             </div>
             <form method="post" id="loginForm">
-                <c:if test="${not empty param.result and param.result eq 'f'}">
-                    <div class="text-danger text-center">아이디와 비밀번호를 확인하세요.</div>
-                </c:if>
+                <c:if test="${not empty param.result}">
+		            <c:choose>
+		                <c:when test="${param.result eq 'f'}">
+		                    <div class="text-danger text-center">아이디와 비밀번호를 확인하세요.</div>
+		                </c:when>
+		                <c:when test="${param.result eq 'inactive'}">
+		                    <div class="text-danger text-center">해당 계정은 탈퇴된 상태입니다.</div>
+		                </c:when>
+		                <c:when test="${param.result eq 'deactivated'}">
+		                    <div class="text-danger text-center">해당 계정으로 30일 동안 재가입할 수 없습니다.</div>
+		                </c:when>
+		                <c:otherwise>
+		                    <div class="text-danger text-center">알 수 없는 오류가 발생했습니다.</div>
+		                </c:otherwise>
+		            </c:choose>
+		        </c:if>   
                 <div class="mb-3">
                     <input class="form-control" 
                         type="text" name="userId" id="userId" placeholder="아이디를 입력해주세요" required />
