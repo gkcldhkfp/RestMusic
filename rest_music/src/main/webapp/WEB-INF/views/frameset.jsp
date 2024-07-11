@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Frameset Example</title>
+	<title>Rest</title>
 </head>
 <frameset rows="*,110px">
 	<frame src="./album/detail?albumId=1" name="mainFrame" id="mainFrame"/>

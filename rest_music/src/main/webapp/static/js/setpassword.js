@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnSave = document.querySelector('input#btnSave');
 
     inputPassword.addEventListener('input', checkPassword);
-    inputConfirmPassword.addEventListener('input', checkConfirmPassword);
+    inputConfirmPassword.addEventListener('change', checkConfirmPassword);
 
     // 비밀번호 입력 필드의 change 이벤트 리스너
     function checkPassword(event) {

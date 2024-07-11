@@ -27,11 +27,13 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <%@ include file="../fragments/header.jspf"%>
-        <!-- header.jspf 파일을 포함시켜 페이지 상단에 헤더 표시 -->
-    </div>
-
+    <header>
+        <div class="container-fluid">
+            <%@ include file="../fragments/header.jspf"%>
+            <!-- header.jspf 파일을 포함시켜 페이지 상단에 헤더 표시 -->
+        </div>
+    </header>
+    
     <main class="container mt-3">
         <div class="btn-group btn-group-lg mb-4" role="group"
             aria-label="Basic example">
@@ -260,7 +262,7 @@
         margin: 0;  /* p태그 기본 마진 제거 */
     }
     
-        
+
     </style>
 
     <!-- bootstrap js 라이브러리 -->
@@ -287,7 +289,6 @@
             window.location.href = '/Rest/album/list/popular';
         });
     });
-    
 
     </script>
 
