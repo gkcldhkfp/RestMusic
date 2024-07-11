@@ -134,5 +134,13 @@ public class SongService {
 	               .peek(song -> song.setId(id))
 	               .toList();
 	}
+	
+	// top10
+	public List<SongChartDto> readTopTenSongs() {
+		log.debug("readTopSongs()");
+
+		List<SongChartDto> list = songDao.getAllSongs();
+		return list.stream().limit(10).toList();
+	}
 
 }

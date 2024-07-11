@@ -1,18 +1,38 @@
 package com.itwill.rest.web;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.itwill.rest.dto.song.SongChartDto;
+import com.itwill.rest.service.SongService;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-
+@RequiredArgsConstructor
 public class HomeController {
 
+	// 의존성 주입.
+	private final SongService songService;
+	
   @GetMapping("/")
-  public String home() {
+  public String home(Model model) {
     log.debug("home()");
+    
+    // TODO: 좋아요순으로 정렬된 리스트를 가져오는 메서드를 호출.
+    // => 없을 수도 있음. 
+    List<SongChartDto> list = songService.readTopTenSongs();
+    // jsp에 쓰기 위해 model.setAttribute 메서드 사용
+    model.addAttribute("list", list);
+    // jsp에서 c:foreach 태그로 리스트를 출력함
+    
+    // 리스트 중에 10개만 사용하도록 설정
+    
     return "home";
   }
 
