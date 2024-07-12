@@ -12,5 +12,6 @@ public class ArtistAlbumDto {
 	private String albumType;
 	private Timestamp albumReleaseDate;
 	private String artistName;
+	private String artistId;
 
 }
