@@ -127,10 +127,15 @@
         
             <!-- 프로필 이미지와 버튼 -->
             <div class="profile-container">
-                <c:url var="profileImg" value="/images/profileimage/profile.jpg" />
-                <c:url var="userProfile" value="/images/profileimage/${user.userProfile}" />
-                <img id="profileImagePreview" alt="profileImg" src="${user.userProfile == null ? profileImg : userProfile}"
+                <c:url var="profileImg" value="../images/profileimage/profile.jpg" />
+                <c:url var="userProfile2" value="/images/profileimage/${user.userProfile}" />
+                <img id="profileImagePreview" alt="profileImg" src="${user.userProfile == null ? profileImg : userProfile2}"
                     class="profile-img" />
+                
+                            <!-- <c:url var="userProfile" value="file:///C:/Users/gusdn/git/REST_Music-Streaming_Website/rest_music${user.userProfile}" /> -->
+                             <!-- <img id="profileImagePreview" src="${user.userProfile == null ? 'file:///C:/Users/gusdn/git/REST_Music-Streaming_Website/rest_music/images/profileimage/default-profile.jpg' : userProfile}" alt="Profile Image" class="profile-img" />  -->
+                    
+                    
                     
                 <!-- 프로필 변경 및 삭제 버튼 -->
                 <div class="btn-group" role="group" aria-label="Profile image actions">
@@ -196,7 +201,7 @@
                 <input type="text" class="form-control" id="hintAnswer" name="hintAnswer" value="${user.hintAnswer}">
             </div>
             <div class="form-row">
-                <button type="submit" class="btn btn-primary btn-submit" id="btnSubmit">회원 정보 변경</button>
+                <button type="submit" class="btn btn-primary btn-submit" id="btnModify">회원 정보 변경</button>
                 <button type="button" class="btn btn-secondary btn-cancel" id="cancelButton">취소</button>
             </div>
         </form>
