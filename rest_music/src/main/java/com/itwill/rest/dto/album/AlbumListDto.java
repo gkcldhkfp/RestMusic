@@ -1,6 +1,5 @@
 package com.itwill.rest.dto.album;
 
-import java.time.LocalDateTime;
 
 import com.itwill.rest.repository.Album;
 
@@ -20,8 +19,8 @@ public class AlbumListDto {
 	private String albumName;
 	private String albumImage;
 	private String albumType;
-	private LocalDateTime albumReleaseDate;
-	private int likes;
+	private String albumReleaseDate;
+	private int likesCount;
 	
 	public static AlbumListDto fromEntity(Album album) {
 		return AlbumListDto.builder()
@@ -30,7 +29,7 @@ public class AlbumListDto {
 				.albumImage(album.getAlbumImage())
 				.albumType(album.getAlbumType())
 				.albumReleaseDate(album.getAlbumReleaseDate())
-				.likes(album.getLikes()) // 좋아요 개수 매핑
+				.likesCount(album.getLikesCount()) // 좋아요 개수 매핑
 				.build();
 	}
 }

@@ -106,6 +106,18 @@ create table users ( -- 회원 (컬럼 9개)
         constraint users_nickname_uq        unique (nickname) -- 닉네임 (유니크)
 );
 
+alter table users
+add (is_active number(4) default 1); -- 활성화 번호(4자리, 기본값 1) (1이면 활성, 0이면 비활성)
+
+alter table users
+add deactivated_until date; -- 비활성 만료일 (날짜)
+
+create table del_users (
+    id                                  number(4), -- 회원 번호 (4자리)
+    deleted_time                        timestamp default systimestamp,  -- 회원 탈퇴 시간 (현재 시간 - 시분초까지 표시함)
+    constraint del_users_id_fk          foreign key (id) references users (id) -- 회원 번호 (외래키)
+);
+
 create table likes ( -- 좋아요 (컬럼 2개)
         song_id                             number(5), -- 음악 번호 (5자리)
         id                                  number(4), -- 회원 번호 (4자리)

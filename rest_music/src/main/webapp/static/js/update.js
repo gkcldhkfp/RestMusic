@@ -28,13 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 })
                     .then(response => {
+                        console.log(response)
                         if (response.data.success) {
                             alert('프로필 이미지가 성공적으로 변경되었습니다!');
                             // 모달 창 닫기
                             changeProfileModal.hide();
 
                             const imageUrl = response.data.imageUrl;  // 서버로부터 받은 이미지 URL
+                            console.log(imageUrl)
                             profileImagePreview.src = imageUrl; // 변경된 이미지 URL로 미리보기 업데이트
+                            parent.mainFrame.location.reload();
                         } else {
                             alert('프로필 이미지 변경에 실패했습니다.');
                         }
@@ -78,14 +81,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
+    // 초기 상태 변수 설정
+    let nicknameChecked = false; // 닉네임 중복 검사 상태
+    let emailChecked = false; // 이메일 검증 상태
+    let authNumberChecked = false; // 인증번호 검증 상태
+    let passwordChecked = false; // 비밀번호 유효성 검사 상태
+    let confirmPasswordChecked = false; // 비밀번호 확인 상태
+    btnModify.disabled = true;
+    
     // 버튼 활성화/비활성화 상태 변경 함수
     function changeButtonState() {
         mailCheckBtn.disabled = !emailChecked;  // 이메일 검증이 완료되었는지에 따라 '인증번호 발송' 버튼 활성화/비활성화
-        verifyCodeBtn.disabled = !emailChecked || !emailVerificationCodeInput.value;  // 이메일 검증과 인증번호 입력 여부에 따라 '인증번호 확인' 버튼 활성화/비활성화
+        // verifyCodeBtn.disabled = !emailChecked || !emailVerificationCodeInput.value;  // 이메일 검증과 인증번호 입력 여부에 따라 '인증번호 확인' 버튼 활성화/비활성화
+        verifyCodeBtn.disabled = !emailChecked || emailVerificationCodeInput.value.length !== 6;  // 이메일 검증과 인증번호 입력 여부에 따라 '인증번호 확인' 버튼 활성화/비활성화
     }
     
+    // '회원 정보 변경' 버튼의 활성화/비활성화 상태를 변경
+    function changeModifyButtonState() {
+        const btnModify = document.getElementById('btnModify');
+              
+        // 모든 필요한 필드가 유효한지 확인
+        const isFormValid = nicknameChecked && 
+                            emailChecked && 
+                            authNumberChecked && 
+                            passwordChecked &&
+                            confirmPasswordChecked;
+    
+        // 버튼 상태 변경
+        if (isFormValid) {
+            btnModify.classList.remove('disabled');
+            btnModify.disabled = false;
+        } else {
+            btnModify.classList.add('disabled');
+            btnModify.disabled = true;
+        }
+    }
+     
     // 닉네임 관련 요소 선택
-    let nicknameChecked = false;   // 닉네임 중복 검사 상태
+    // let nicknameChecked = false;   // 닉네임 중복 검사 상태
     const nicknameInput = document.getElementById('nickname');  // 닉네임 입력 필드
     const checkNicknameResult = document.getElementById('checkNicknameResult');  // 닉네임 유효성 검사 결과 표시 요소
 
@@ -100,8 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     nicknameInput.addEventListener('change', function(event) {
         const nickname = this.value.trim();  // 닉네임 입력 값 가져오기
         
-        // 닉네임 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
-        // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
+        // 닉네임 입력 필드의 값이 변경될 때마다 오류 메시지를 지우고 상태를 확인합니다.
         event.target.addEventListener('input', () => {
             checkNicknameResult.innerHTML = ''; // 오류 메시지를 지웁니다.
         });
@@ -110,6 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // 닉네임이 비어있는 경우
             checkNicknameResult.textContent = '';
             checkNicknameResult.className = 'form-text';
+            nicknameChecked = false;
+            changeModifyButtonState();
             return;
         }
 
@@ -117,6 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // 닉네임 형식이 올바르지 않은 경우
             checkNicknameResult.textContent = '닉네임은 2~20자의 영문, 숫자, 한글만 사용 가능합니다';
             checkNicknameResult.className = 'form-text text-danger';
+            nicknameChecked = false;
+            changeModifyButtonState();
             return;
         }
 
@@ -135,12 +171,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     // 닉네임 검증 상태를 false로 설정
                     nicknameChecked = false;
                 }
+                changeModifyButtonState();
             })
             .catch((error) => {
                 console.error('닉네임 중복 확인 중 오류 발생:', error);
                 checkNicknameResult.textContent = '닉네임 중복 확인 중 오류가 발생했습니다.';
                 checkNicknameResult.className = 'form-text text-danger';
                 nicknameChecked = false;
+                changeModifyButtonState();
             });
     });
 
@@ -153,8 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const verifyCodeBtn = document.getElementById('verifyCodeBtn');  // 이메일 인증번호 확인 버튼
 
     let authNumber = '';  // 서버에서 받은 인증번호를 저장할 변수
-    let emailChecked = false;  // 이메일 검증 상태
-    let authNumberChecked = false;  // 인증번호 검증 상태
+    mailCheckBtn.disabled =  true;
+    verifyCodeBtn.disabled = true;
 
     // 이메일 유효성 검사 함수
     function validateEmail(email) {
@@ -163,11 +201,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // 이메일 입력 필드의 값이 변경될 때마다 유효성 검사 및 중복 확인
-    emailInput.addEventListener('change', function(event) {
+    emailInput.addEventListener('input', function(event) {
         const email = this.value.trim();  // 이메일 입력 값 가져오기
         
-        // 이메일 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
-        // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
+        // 이메일 입력 필드의 값이 변경될 때마다 오류 메시지를 지우고 상태를 확인합니다.
         event.target.addEventListener('input', () => {
             checkEmailResult.innerHTML = ''; // 오류 메시지를 지웁니다.
         });
@@ -178,6 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
             checkEmailResult.textContent = '이메일을 입력해주세요.';
             checkEmailResult.className = 'form-text text-danger';
             changeButtonState();
+            changeModifyButtonState();
             return;
         }
 
@@ -187,6 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
             checkEmailResult.textContent = '이메일 형식이 올바르지 않습니다.';
             checkEmailResult.className = 'form-text text-danger';
             changeButtonState();
+            changeModifyButtonState();
             return;
         }
 
@@ -204,6 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     checkEmailResult.className = 'form-text text-danger';
                 }
                 changeButtonState();  // 버튼 상태 업데이트
+                changeModifyButtonState();
             })
             .catch((error) => {
                 console.error('이메일 중복 확인 중 오류 발생:', error);
@@ -211,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 checkEmailResult.textContent = '이메일 중복 확인 중 오류가 발생했습니다.';
                 checkEmailResult.className = 'form-text text-danger';
                 changeButtonState();  // 버튼 상태 업데이트
+                changeModifyButtonState();
             });
     });
 
@@ -223,7 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (response.data) {
                         authNumber = response.data;  // 서버에서 받은 인증번호를 전역 변수에 저장
                         emailVerificationCodeInput.disabled = false;  // 인증번호 입력 필드를 활성화
-                        verifyCodeBtn.disabled = false;  // 인증번호 확인 버튼을 활성화
+                        emailVerificationCodeInput.addEventListener('input', changeButtonState);  // 입력 값 변경 시 버튼 상태 업데이트
+                        verifyCodeBtn.disabled = true;  // 인증번호 확인 버튼을 비활성화
                         alert('인증번호가 이메일로 발송되었습니다.');
                     } else {
                         alert('이메일 발송에 실패했습니다.');
@@ -251,34 +293,41 @@ document.addEventListener('DOMContentLoaded', () => {
             emailVerificationResult.className = 'form-text text-danger';
         }
         changeButtonState();  // 버튼 상태 업데이트
+        changeModifyButtonState();
     });
 
     // 비밀번호 입력 필드의 input 이벤트 리스너
     document.getElementById('password').addEventListener('change', checkPassword);
-    let passwordChecked = false;   // 비밀번호 유효성 검사 상태
     
     // 비밀번호 유효성 검사 함수
     function checkPassword(event) {
         const password = event.target.value;
         const checkPasswordResult = document.getElementById('checkPasswordResult');  // 비밀번호 유효성 검사 결과 표시 요소
         const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;  // 비밀번호 패턴: 8자 이상의 영문 대/소문자와 숫자
-
-        if (!passwordPattern.test(password)) {
+        
+        // 비밀번호 필드가 비어있는 경우
+        if (password === '') {
+            passwordChecked = false;
+            checkPasswordResult.innerHTML = '비밀번호를 입력해주세요.';
+            checkPasswordResult.classList.add('text-danger');
+            checkPasswordResult.classList.remove('text-success');
+        } else if (!passwordPattern.test(password)) {
+            // 비밀번호 패턴이 유효하지 않은 경우
             passwordChecked = false;
             checkPasswordResult.innerHTML = '8자 이상의 영문 대/소문자와 숫자만 사용 가능합니다.';
             checkPasswordResult.classList.add('text-danger');
             checkPasswordResult.classList.remove('text-success');
         } else {
+            // 비밀번호 패턴이 유효한 경우
             passwordChecked = true;
             checkPasswordResult.innerHTML = '';
             checkPasswordResult.classList.remove('text-danger');
         }
-        changeButtonState(); // 버튼의 활성화/비활성화 상태를 변경
+        changeModifyButtonState();
     }
     
-    // 비밀번호 입력 필드의 input 이벤트 리스너
+    // 비밀번호 확인 입력 필드의 input 이벤트 리스너
     document.getElementById('confirmPassword').addEventListener('change', checkConfirmPassword);
-    let confirmPasswordChecked = false;  // 비밀번호 확인 상태
     
     // 비밀번호 확인 유효성 검사 함수
     function checkConfirmPassword(event) {
@@ -287,15 +336,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const checkPasswordResult = document.querySelector('div#checkPasswordResult'); 
         const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         
-        // 비밀번호 확인 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
-        // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
+        // 비밀번호 확인 입력 필드의 값이 변경될 때마다 오류 메시지를 지우고 상태를 확인합니다.
         event.target.addEventListener('input', () => {
             checkPasswordResult.innerHTML = ''; // 오류 메시지를 지웁니다.
         });
 
-        // 비밀번호 패턴이 유효하지 않은 경우
-        if (!passwordPattern.test(password)) {
+        
+        // 비밀번호 확인 필드가 비어있는 경우
+        if (confirmPassword === '') {
+            confirmPasswordChecked = false;
+            checkPasswordResult.innerHTML = '비밀번호를 입력해주세요.';
+            checkPasswordResult.classList.add('text-danger');
+            checkPasswordResult.classList.remove('text-success');
+        } else if (!passwordPattern.test(password)) {
+            // 비밀번호 패턴이 유효하지 않은 경우
             passwordChecked = false;
+            confirmPasswordChecked = false;
             checkPasswordResult.innerHTML = '8자 이상의 영문 대/소문자와 숫자만 사용 가능합니다.';
             checkPasswordResult.classList.add('text-danger');
             checkPasswordResult.classList.remove('text-success');
@@ -315,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
             checkPasswordResult.classList.add('text-success');
             checkPasswordResult.classList.remove('text-danger');
         }
-        
+        changeModifyButtonState();
     }
     
     // 힌트 질문 관련 로직
@@ -335,7 +391,6 @@ document.addEventListener('DOMContentLoaded', () => {
             hintQuestionSelect.add(newOption);
             newOption.selected = true;
         }
-        hintQuestionChecked = true;
     }
     
     // 힌트 질문 선택 이벤트
@@ -421,6 +476,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('변경 사항 저장 중 오류 발생:', error);
                 alert('변경 사항 저장 중 오류가 발생했습니다.');
             });
+    });
+    
+    // 페이지 로드 시 초기 버튼 상태 설정
+    document.addEventListener('DOMContentLoaded', function() {
+        changeModifyButtonState();
     });
     
     // '취소' 버튼 클릭 시 이전 페이지로 이동
