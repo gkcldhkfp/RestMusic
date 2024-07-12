@@ -6,6 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <!-- 년, 월, 일만 출력하기 위한 JSTL의 태그 라이브러리 선언 -->
 <!DOCTYPE html>
 <html>
@@ -116,9 +117,17 @@
                                                         onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${a.albumName}</a>
                                                 </h6>
                                                 <p class="card-text mb-1" style="font-size: 0.8rem;">
-                                                    <a href="${songPage}"  
-                                                        style="color: black; text-decoration: none;"
-                                                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${a.artistName}</a>
+                                                    <c:forEach items="${fn:split(a.artistName, ',')}" var="artistName" varStatus="statusName">
+                                                        <c:set var="artistId" value="${fn:split(a.artistId, ',')[statusName.index]}" />
+                                                        <c:url var="artistPage" value="/artist/songs">
+                                                            <c:param name="artistId" value="${fn:trim(artistId)}" />
+                                                        </c:url>
+                                                        <a href="${artistPage}"  
+                                                            style="color: black; text-decoration: none;"
+                                                            onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${fn:trim(artistName)}
+                                                        </a>
+                                                        <c:if test="${!statusName.last}">, </c:if>
+                                                    </c:forEach>
                                                 </p>
                                                 <br/>
                                                 <p class="card-text mb-1" style="font-size: 0.75rem;">${a.albumType}</p>
