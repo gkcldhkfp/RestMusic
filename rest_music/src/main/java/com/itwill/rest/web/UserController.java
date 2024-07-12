@@ -173,7 +173,7 @@ public class UserController {
         return "redirect:/user/signin";
     }
     
-        // 아이디 찾기 (화면)
+    // 아이디 찾기 (화면)
     @GetMapping("/findUserId")
     public void findUserId() {
         log.debug("GET findUserId()");
