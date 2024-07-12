@@ -93,7 +93,6 @@ h3 {
     margin-top: 100px; /* 상단 여백 추가 */
 }
 
-
 /* 뮤직비디오 css */
 .video-container {
     display: flex;
@@ -118,6 +117,22 @@ iframe {
 h3 {
     margin-top: 30px;
     padding: 15px;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; /* 카드들 사이의 간격 */
+}
+
+.card-container .card {
+    flex: 1 1 calc(20% - 1rem); /* 한 행에 5개의 카드를 배치 */
+    box-sizing: border-box;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
 }
 </style>
 </head>
@@ -164,18 +179,19 @@ h3 {
         </div>
         <div class="content-container">
             <H3>Rest Top 5 차트</H3>
-            
-            <c:forEach var="l" items="${list}" varStatus="status" >
-            
-            <div>
-                <div>${status.index + 1}</div>
-                <div>${l.albumImage}</div>
-                <div>${l.artistName}</div>
-                <div>${l.title}</div>
+
+            <!-- 차트페이지에 있는 리스트를 불러옴 -->
+            <div class="card-container">
+                <c:forEach var="l" items="${list}" varStatus="status">
+                    <div class="card border-0">
+                        <p>${status.index + 1}</p>
+                        <img src="./images/albumcover/${l.albumImage}"
+                            alt="Album cover"> <small>${l.artistName}</small>
+                        <small>${l.title}</small>
+                    </div>
+                </c:forEach>
             </div>
-            
-            </c:forEach> 
-            
+
             <H3>Rest 추천 뮤직 비디오</H3>
             <!-- 뮤직 비디오 -->
             <div class="video-container">
@@ -241,57 +257,30 @@ h3 {
 
 
     <script>
-					//         let slideIndex = 0;
-					//         showSlides();
+                    let slideIndex = 0;
+                    showSlides();
 
-					//         function plusSlides(n) {
-					//           showSlides(slideIndex += n);
-					//         }
-
-					//         function currentSlide(n) {
-					//           showSlides(slideIndex = n - 1);
-					//         }
-
-					//         function showSlides() {
-					//           let slides = document.getElementsByClassName("mySlides");
-					//           let dots = document.getElementsByClassName("dot");
-					//           for (i = 0; i < slides.length; i++) {
-					//             slides[i].style.display = "none";  
-					//           }
-					//           slideIndex++;
-					//           if (slideIndex > slides.length - 1) {slideIndex = 0}
-					//           if (slideIndex <= - 1) {slideIndex = slides.length - 1}
-					//           for (i = 0; i < dots.length; i++) {
-					//             dots[i].className = dots[i].className.replace(" active", "");
-					//           } 
-					//           slides[slideIndex].style.display = "block";  
-					//           dots[slideIndex].className += " active";
-					//           setTimeout(showSlides, 4000); // 이미지가 4초에 한번씩 넘어가게
-					//         }
-					let slideIndex = 0;
-					showSlides();
-
-					function showSlides() {
-						let i;
-						let slides = document
-								.getElementsByClassName("mySlides");
-						let dots = document.getElementsByClassName("dot");
-						for (i = 0; i < slides.length; i++) {
-							slides[i].style.display = "none";
-						}
-						slideIndex++;
-						if (slideIndex > slides.length) {
-							slideIndex = 1
-						}
-						for (i = 0; i < dots.length; i++) {
-							dots[i].className = dots[i].className.replace(
-									" active", "");
-						}
-						slides[slideIndex - 1].style.display = "block";
-						dots[slideIndex - 1].className += " active";
-						setTimeout(showSlides, 2000); // Change image every 2 seconds
-					}
-				</script>
+                    function showSlides() {
+                        let i;
+                        let slides = document
+                                .getElementsByClassName("mySlides");
+                        let dots = document.getElementsByClassName("dot");
+                        for (i = 0; i < slides.length; i++) {
+                            slides[i].style.display = "none";
+                        }
+                        slideIndex++;
+                        if (slideIndex > slides.length) {
+                            slideIndex = 1
+                        }
+                        for (i = 0; i < dots.length; i++) {
+                            dots[i].className = dots[i].className.replace(
+                                    " active", "");
+                        }
+                        slides[slideIndex - 1].style.display = "block";
+                        dots[slideIndex - 1].className += " active";
+                        setTimeout(showSlides, 2000); // Change image every 2 seconds
+                    }
+                </script>
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
