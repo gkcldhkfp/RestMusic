@@ -263,6 +263,8 @@
 		const arrangerIds = '${data.arrangerIds}';
 		
 		const genre = '${data.genre}';
+        const refresh = '${refresh}';
+        // 리다이렉트 시 재생페이지를 새로고침하기 위한 코드
 	</script>
 
     <c:url var="commentsJS" value="/js/comments.js" />
