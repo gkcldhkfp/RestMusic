@@ -79,7 +79,8 @@
             <div class="container">
                 <div class="login-container">
                     <div class="login-header">
-                        <h2>로그인</h2>
+                    <img src="<c:url value='/data/logo.png'/>" alt="Rest Logo" style="height: 40px;">
+                        <h3 style="margin-top: 20px;">로그인</h3>
                     </div>
                     <form method="post" id="loginForm">
 		                <c:if test="${not empty param.result}">

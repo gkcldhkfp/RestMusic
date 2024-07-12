@@ -8,7 +8,7 @@
     <c:url var="homePage" value="/" />
     <a class="navbar-brand mx-2" href="${homePage}">
 
-        <img src="<c:url value='/data/logo.png'/>" alt="Rest Logo" style="height: 100px;">
+        <img src="<c:url value='/data/logo.png'/>" alt="Rest Logo" style="height: 70px;">
     </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -148,5 +148,13 @@
           text-decoration: none; /* 호버 시에도 밑줄 없음 */
     }    
     
-    
+    .nav-link.dropdown-toggle, .nav-link {
+        color: #2F4F4F; /* "REST" 텍스트 색상 */
+        font-weight: bold; /* 글씨 굵게 */
+    }
+
+    .nav-link.dropdown-toggle:hover, .nav-link:hover {
+        color: #1E3269; /* 호버 시 색상 유지 */
+        text-decoration: none; /* 호버 시에도 밑줄 없음 */
+    }
 </style>
