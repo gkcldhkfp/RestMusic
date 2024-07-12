@@ -87,12 +87,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let authNumberChecked = false; // 인증번호 검증 상태
     let passwordChecked = false; // 비밀번호 유효성 검사 상태
     let confirmPasswordChecked = false; // 비밀번호 확인 상태
-    btnModify.disabled = true;
+    let hintAnswerChecked = true; // 힌트 답변 유효성 검사 상태
+    btnModify.disabled = true; // 회원 정보 변경 비활성화
     
     // 버튼 활성화/비활성화 상태 변경 함수
     function changeButtonState() {
         mailCheckBtn.disabled = !emailChecked;  // 이메일 검증이 완료되었는지에 따라 '인증번호 발송' 버튼 활성화/비활성화
-        // verifyCodeBtn.disabled = !emailChecked || !emailVerificationCodeInput.value;  // 이메일 검증과 인증번호 입력 여부에 따라 '인증번호 확인' 버튼 활성화/비활성화
         verifyCodeBtn.disabled = !emailChecked || emailVerificationCodeInput.value.length !== 6;  // 이메일 검증과 인증번호 입력 여부에 따라 '인증번호 확인' 버튼 활성화/비활성화
     }
     
@@ -105,7 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             emailChecked && 
                             authNumberChecked && 
                             passwordChecked &&
-                            confirmPasswordChecked;
+                            confirmPasswordChecked &&
+                            hintAnswerChecked;
     
         // 버튼 상태 변경
         if (isFormValid) {
@@ -426,10 +427,12 @@ document.addEventListener('DOMContentLoaded', () => {
             checkHintAnswerResult.innerHTML = '힌트 답변은 50자 이하의 영문, 숫자, 한글만 사용 가능합니다.';
             checkHintAnswerResult.classList.add('text-danger');
             checkHintAnswerResult.classList.remove('text-success');
-            btnModify.disabled = true; // 버튼 비활성화
+            hintAnswerChecked = false;
+            changeModifyButtonState();
         } else {
             checkHintAnswerResult.innerHTML = ''; // 유효한 입력일 경우 오류 메시지 제거
-            btnModify.disabled = false; // 버튼 활성화
+            hintAnswerChecked = true;
+            changeModifyButtonState()
         }
     }
     
