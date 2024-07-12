@@ -150,5 +150,13 @@ public class SongService {
 		return list.stream().peek(song -> song.setId(id)).toList();
 
 	}
+	// 최신 음악 메인페이지
+	public List<SongChartDto> readNewSongsForMain() {
+		log.debug("readNewSongsForMain()");
+
+		List<SongChartDto> list = songDao.getNewestSongs();
+		return list.stream().limit(10).toList();
+
+	}
 
 }

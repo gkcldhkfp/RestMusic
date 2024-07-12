@@ -55,9 +55,9 @@
                             <div class="row g-0">
                                 <!-- 앨범 표지 부분 -->
                                 <div class="col-md-6">
-                                    <a href="details?=${a.albumId}">
+                                    <a href="../detail?albumId=${a.albumId}">
                                         <img
-                                        src="../data/${a.albumImage}.png"
+                                        src="../images/albumcover/${a.albumImage}"
                                         class="img-fluid rounded"
                                         alt="${a.albumName}">
                                     </a>
@@ -65,7 +65,7 @@
                                 <!-- 앨범 정보 부분 -->
                                 <div class="col-md-6">
                                     <div class="card-body">
-                                        <a href="details?=${a.albumId}">
+                                        <a href="../detail?albumId=${a.albumId}">
                                             <p class="card-text fw-bold">${a.albumName}</p>
                                         </a>
                                         <p class="card-text">Album
@@ -74,7 +74,7 @@
                                             class="card-text text-muted fw-bold">${a.albumType}</small>
                                         <small id="rDate" class="card-text fw-bold">${a.albumReleaseDate}</small>
                                         <p class="card-text">좋아요:
-                                            ${a.likes}</p>
+                                            ${a.likesCount}</p>
                                             
                                         <div>
                                             <button class="btn btn-primary btn-sm" id="btnLikes" data-id="${a.albumId}">
@@ -111,9 +111,9 @@
                             <div class="row g-0">
                                 <!-- 앨범 표지 부분 -->
                                 <div class="col-md-6">
-                                    <a href="details?=${a.albumId}">
+                                    <a href="../detail?albumId=${a.albumId}">
                                         <img
-                                        src="../../data/${a.albumImage}.png"
+                                        src="../../images/albumcover/${a.albumImage}"
                                         class="img-fluid rounded"
                                         alt="${a.albumName}">
                                     </a>
@@ -121,7 +121,7 @@
                                 <!-- 앨범 정보 부분 -->
                                 <div class="col-md-6">
                                     <div class="card-body">
-                                        <a href="details?=${a.albumId}">
+                                    <a href="../detail?albumId=${a.albumId}">
                                             <p class="card-text fw-bold">${a.albumName}</p>
                                         </a>
                                         <!-- 
@@ -132,7 +132,7 @@
                                             class="card-text text-muted fw-bold">${a.albumType} <br/></small>
                                         <small id="rDate" class="card-text fw-bold">${a.albumReleaseDate}</small>
                                         <p class="card-text">좋아요:
-                                            ${a.likes}</p>
+                                            ${a.likesCount}</p>
 
                                         <button
                                             class="btn btn-primary btn-sm"
@@ -169,9 +169,9 @@
                             <div class="row g-0">
                                 <!-- 앨범 표지 부분 -->
                                 <div class="col-md-6">
-                                    <a href="details?=${a.albumId}">
+                                    <a href="../detail?albumId=${a.albumId}">
                                         <img
-                                        src="../../data/${a.albumImage}.png"
+                                        src="../../images/albumcover/${a.albumImage}"
                                         class="img-fluid rounded"
                                         alt="${a.albumName}">
                                     </a>
@@ -179,7 +179,7 @@
                                 <!-- 앨범 정보 부분 -->
                                 <div class="col-md-6">
                                     <div class="card-body">
-                                        <a href="details?=${a.albumId}">
+                                    <a href="../detail?albumId=${a.albumId}">
                                             <p class="card-text fw-bold">${a.albumName}</p>
                                         </a>
                                         <p class="card-text">Album
@@ -188,7 +188,7 @@
                                             class="card-text text-muted fw-bold">${a.albumType}</small>
                                         <small id="rDate" class="card-text fw-bold">${a.albumReleaseDate}</small>
                                         <p class="card-text">좋아요:
-                                            ${a.likes}</p>
+                                            ${a.likesCount}</p>
 
                                         <button
                                             class="btn btn-primary btn-sm"
