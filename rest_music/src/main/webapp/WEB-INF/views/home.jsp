@@ -13,6 +13,8 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous" />
 <link href="./css/home.css" rel="stylesheet" />
+<!-- Google Fonts 링크 추가 -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <!-- css 불러옴 -->
 <style>
 * {
@@ -116,7 +118,6 @@ iframe {
 
 h3 {
     margin-top: 30px;
-    padding: 15px;
 }
 
 .card-container {
@@ -134,10 +135,23 @@ h3 {
     width: 100%;
     height: auto;
 }
+
+
+
+.h3-style {
+    color: black;
+    text-decoration: none;
+}
+.h3-style:hover {
+    color: black; /* 호버 시에도 검정색 */
+    text-decoration: none; /* 호버 시에도 밑줄 없음 */
+}
+
 </style>
 </head>
 <body>
     <header>
+        
         <div class="container-fluid">
             <c:set var="pageTitle" value="Rest" scope="page" />
             <%@ include file="./fragments/header.jspf"%>
@@ -167,27 +181,50 @@ h3 {
                 </a>
             </div>
 
-            <a class="prev" onclick="plusSlides(-1)">❮</a> <a
-                class="next" onclick="plusSlides(1)">❯</a>
+            
         </div>
         <br>
 
         <div style="text-align: center">
-            <span class="dot" onclick="currentSlide(1)"></span> <span
-                class="dot" onclick="currentSlide(2)"></span> <span
-                class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span> 
+            <span class="dot" onclick="currentSlide(2)"></span> 
+            <span class="dot" onclick="currentSlide(3)"></span>
         </div>
+        
         <div class="content-container">
-            <H3>Rest Top 5 차트</H3>
-
+            <a class="h3-style" href="/Rest/song/popularChart">
+                <H3>Rest Top 10 차트</H3>
+            </a>
+            
             <!-- 차트페이지에 있는 리스트를 불러옴 -->
             <div class="card-container">
-                <c:forEach var="l" items="${list}" varStatus="status">
+                <c:forEach var="l" items="${topTenList}" varStatus="status">
                     <div class="card border-0">
-                        <p>${status.index + 1}</p>
-                        <img src="./images/albumcover/${l.albumImage}"
-                            alt="Album cover"> <small>${l.artistName}</small>
-                        <small>${l.title}</small>
+                        <p style="display: none;">${status.index + 1}</p>
+                        
+                        <!-- 앨범 디테일 페이지로 이동 -->
+                        <c:url var="albumDetailUrl" value="/album/detail">
+                            <c:param name="albumId" value="${l.albumId}" />
+                        </c:url>
+                        <a href="${albumDetailUrl}" class="album-link">
+                            <img src="./images/albumcover/${l.albumImage}" alt="Album cover"> 
+                        </a>
+                        
+                        <!-- 음원 디테일 페이지로 이동 -->
+                        <c:url var="songDetailUrl" value="/song/detail">
+                            <c:param name="songId" value="${l.songId}" />
+                        </c:url>
+                        <a href="${songDetailUrl}" style="font: inherit; color: inherit; text-decoration: none;">
+                            <small>${l.title}</small>
+                        </a>
+                        
+                        <!-- 아티스트 음원 페이지로 이동 -->
+                        <c:url var="artistDetailUrl" value="/artist/songs">
+                            <c:param name="artistId" value="${l.artistId}" />
+                        </c:url>
+                        <a href="${artistDetailUrl}" style="margin-top: -5px; font: inherit; color: gray; text-decoration: none;">
+                            <small style="font-size: 0.75rem; ">${l.artistName}</small>
+                        </a>
                     </div>
                 </c:forEach>
             </div>
@@ -240,15 +277,16 @@ h3 {
             </div>
             <H3>따끈 신상 앨범</H3>
 
-            <div class="album-container">
-                <c:forEach var="album" items="${albumList}">
-                    <div class="album-card">
-                        <img src="../data/${a.albumImage}.png" class="img-fluid rounded"
-                            alt="${album.albumName}">
-                        <div class="album-info">
-                            <p class="album-name">${album.albumId}</p>
-                            <p class="artist-name">${album.artist}</p>
-                        </div>
+            <div class="card-container">
+                <c:forEach var="album" items="${albumList}" varStatus="status">
+                    <div class="card border-0">
+                        <p style="display: none;">${status.index + 1}</p>
+                        <img src="./images/albumcover/${album.albumImage}" alt="Album cover">
+                        <small>${album.albumType}</small>
+                        <small>${album.genreName}</small>
+                        <small>${album.albumName}</small>
+                        <small>${album.artistName}</small>
+                        <small>${album.title}</small>
                     </div>
                 </c:forEach>
             </div>

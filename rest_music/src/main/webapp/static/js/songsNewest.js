@@ -5,12 +5,12 @@
 document.addEventListener("DOMContentLoaded", function() {
     // 좋아요 아이콘 클릭 이벤트 핸들러
     const heartIcons = document.querySelectorAll('.heart-icon');
-
+    
     heartIcons.forEach(icon => {
         const songId = icon.dataset.songId;
         const loginUserId = parseInt(icon.dataset.id);
         let likesCountElement = icon.nextElementSibling; // 좋아요 개수를 표시하는 요소를 가져옴
-
+        
         // 특정 사용자가 특정 노래를 좋아요 했는지 여부를 서버에 요청
         const data = { songId, loginUserId };
         axios.post('../api/isLiked', data)

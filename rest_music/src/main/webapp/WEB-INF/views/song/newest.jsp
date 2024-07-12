@@ -69,6 +69,7 @@
                                    <a href="${songDetailUrl}" style="font: inherit; color: inherit; text-decoration: none;">
                                        <span>${newSong.title}</span><br>
                                    </a>
+                                   <%-- 아티스트 음원 페이지로 이동 --%>
                                    <c:forEach items="${fn:split(newSong.artistName, ',')}" var="artistName" varStatus="statusName">
                                         <c:set var="artistId" value="${fn:split(newSong.artistId, ',')[statusName.index]}" />
                                         <c:url var="artistPage" value="/artist/songs">

@@ -166,8 +166,7 @@
         )
         WHERE rnum >= #{startRow}
     </select>
-    
-      
+        
     <!-- 좋아요 개수 확인 -->
     <select id="countSongLikes" resultType="Integer">
         select count(*)

@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const imageUrl = response.data.imageUrl;  // 서버로부터 받은 이미지 URL
                             console.log(imageUrl)
                             profileImagePreview.src = imageUrl; // 변경된 이미지 URL로 미리보기 업데이트
-                            //parent.mainFrame.location.reload();
+                            // parent.mainFrame.location.reload();
                         } else {
                             alert('프로필 이미지 변경에 실패했습니다.');
                         }
