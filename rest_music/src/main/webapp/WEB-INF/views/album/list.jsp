@@ -124,10 +124,12 @@
                                         <a href="details?=${a.albumId}">
                                             <p class="card-text fw-bold">${a.albumName}</p>
                                         </a>
+                                        <!-- 
                                         <p class="card-text">Album
                                             ID: ${a.albumId}</p>
+                                         -->
                                         <small
-                                            class="card-text text-muted fw-bold">${a.albumType}</small>
+                                            class="card-text text-muted fw-bold">${a.albumType} <br/></small>
                                         <small id="rDate" class="card-text fw-bold">${a.albumReleaseDate}</small>
                                         <p class="card-text">좋아요:
                                             ${a.likes}</p>
