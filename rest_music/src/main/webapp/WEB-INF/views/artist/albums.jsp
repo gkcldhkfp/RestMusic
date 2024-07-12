@@ -36,9 +36,11 @@
         <div class="m-5 ">
             <div class="p-3">
                 <c:url var="artistCover" value="/artist/image/${artist.artistImage}" />
+                <!-- 기본값 이미지 주소 지정 -->
+                <c:url var="defaultCover" value="/images/profileimage/profile.jpg" />                
                 <c:url var="songPage" value="/artist/songs?artistId=${artist.artistId}" /> <!-- 아티스트의 곡 페이지 이동 주소 지정 -->
                 <c:url var="albumPage" value="/album/detail?albumId=${artist.artistId}" /> <!-- 아티스트의 앨범 상세 페이지 이동 주소 지정 -->
-                <img alt="artistCover" src="${artistCover}" class="rounded-circle"
+                <img alt="artistCover" src="${artist.artistImage == null ? defaultCover : artistCover}" class="rounded-circle"
                     style="display: inline-block; vertical-align: middle; left: 400px; width: 240px; height: 240px; object-fit: cover;">
                 <div class="ms-3" style="display: inline-block; vertical-align: middle;">
                     <h2 class="mt-2" style="font-weight: bold;">${artist.artistName}</h2>
@@ -72,7 +74,7 @@
                                 out.println(line + "<br>");
                             }
                         } catch (FileNotFoundException e) {
-                            out.println("파일을 찾을 수 없습니다.");
+                            out.println("등록된 정보가 없습니다.");
                         } catch (IOException e) {
                             out.println("파일을 읽을 수 없습니다.");
                         } finally {

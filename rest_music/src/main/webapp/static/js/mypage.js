@@ -28,6 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const btnAddPlaylist = document.querySelector('button#btnAddPlaylist');
     btnAddPlaylist.addEventListener('click', addPlaylist);
+    
+    // input#playlistName 엘리먼트에 keydown 이벤트 리스너 추가
+    const playlistNameInput = document.querySelector('input#playlistName');
+    playlistNameInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // 엔터 키 기본 동작(폼 제출) 막기
+            addPlaylist(); // addPlaylist 함수 호출
+        }
+    });
 
     var modal = document.getElementById('addPlaylistModal');
     const bootstrapModal = new bootstrap.Modal(modal);
@@ -78,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let htmlStr = '';
         // 플리 목록을 카운트
         let playlistCount = 0;
-        
+
         for (let playlist of data) {
             // 기본 이미지 URL 정의
             const defaultImage = '../images/icon/default.png';
@@ -107,13 +116,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                 </button>
             </div>`;
-            
+
             playlistCount++;
         }
 
         // 작성된 HTML 코드를 div 영역에 삽입.
         divPlayLists.innerHTML = htmlStr;
-        
+
         // 플리가 비어있으면 플레이리스트를 출력하는 부분에 해당 텍스트, defaultListImage 출력.
         const defaultListImage = '../images/icon/myPlayListEmpty.png';
         console.log(playlistCount);
@@ -170,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
     }
-    
+
     function getUserLike() {
         const uri = `../user/getUserLike/${id}`;
 
@@ -202,12 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let htmlStr = '';
         // 좋아요 목록을 카운트
         let likeCount = 0;
-        
+
         // 플레이 이미지
         const playImage = '../images/icon/play.png'
         // 재생목록 이미지
         const playlistImage = '../images/icon/playList.png'
-        
+
         for (let like of data) {
             // 기본 이미지 URL 정의
             const defaultImage = '../images/icon/default.png';
@@ -217,9 +226,34 @@ document.addEventListener('DOMContentLoaded', () => {
             // albumPage, songPage, artistPage로 이동할 주소 지정
             const albumPage = `/Rest/album/detail?albumId=${like.albumId}`;
             const songPage = `/Rest/song/detail?songId=${like.songId}`;
-            const artistPage = `/Rest/artist/songs?artistId=${like.artistId}`;
+            /* const artistPage = `/Rest/artist/songs?artistId=${like.artistId}`;*/
             // ${like.albumImage}가 null이면 기본 이미지 사용
             const albumImageSrc = like.albumImage ? `../images/albumcover/${like.albumImage}` : defaultImage;
+
+            const splitsingerName = like.artistName.split(',');
+            const splitsingerIds = like.artistId.split(',');
+            const length = Math.min(splitsingerName.length, splitsingerIds.length);
+
+            let singerLinksHtml = ''; // 가수들의 링크를 담을 변수
+
+            for (let i = 0; i < length; i++) {
+                const trimmedName = splitsingerName[i].trim();
+                const trimmedId = splitsingerIds[i].trim();
+                const artistPage = `../artist/songs?artistId=${trimmedId}`;
+
+                // 첫 번째 아티스트는 반점을 붙이지 않고, 그 이후 아티스트부터는 반점과 함께 출력
+                if (i === 0) {
+                    singerLinksHtml += `<a href='${artistPage}' style="color: black; text-decoration: none;"
+                                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">
+                                        ${trimmedName}
+                                    </a>`;
+                } else {
+                    singerLinksHtml += `, <a href='${artistPage}' style="color: black; text-decoration: none;"
+                                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">
+                                        ${trimmedName}
+                                    </a>`;
+                }
+            }
 
             console.log(like);
             htmlStr += `
@@ -234,8 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${like.title}</a>
                 </td>
                 <td style="text-align: left; vertical-align: middle; font-size: 14px;">
-                    <a href=${artistPage} style="color: black; text-decoration: none;"
-                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${like.artistName}</a>
+                    ${singerLinksHtml}
                 </td>
                 <td style="text-align: center;">
                     <button style="background-image: url('${playImage}'); width: 40px; height: 40px; background-size: cover; background-repeat: no-repeat;"
@@ -248,13 +281,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 </td>
             </tr>
             `;
-            
+
             likeCount++;
         }
 
         // 작성된 HTML 코드를 div 영역에 삽입.
         likeTableBody.innerHTML = htmlStr;
-        
+
         // 좋아요 목록이 비어있으면 목록 출력하는 부분에 해당 텍스트, defaultListImage 출력.
         const defaultListImage = '../images/icon/defaultList.png';
         console.log(likeCount);
