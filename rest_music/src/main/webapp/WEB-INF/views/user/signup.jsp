@@ -158,6 +158,16 @@
             </div>
         </form>
     </div>
+    <footer>
+        <!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
+        <%@ include file="../fragments/footer.jspf" %>
+    </footer>
+    <script>
+        const refresh = '${refresh}';
+        // 리다이렉트 시 재생페이지를 새로고침하기 위한 코드
+    </script>
     <script src="<%= request.getContextPath() %>/js/signup.js"></script>
+    <c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
+    <script src="${addCurrentPlayList}"></script>
 </body>
 </html>

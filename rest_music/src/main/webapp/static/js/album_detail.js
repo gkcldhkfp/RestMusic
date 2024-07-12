@@ -30,21 +30,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// 음원 재생 버튼 호버 애니메이션 등록
 	const listenBtn = document.querySelectorAll('#listenBtn');
-	for (let a of listenBtn){
-	a.addEventListener('mouseenter', scaleUp);
-	a.addEventListener('mouseleave', scaleDown);
+	for (let a of listenBtn) {
+		a.addEventListener('mouseenter', scaleUp);
+		a.addEventListener('mouseleave', scaleDown);
 	}
 	// 음원 재생목록 추가 버튼 호버 애니메이션 등록
 	const addCPList = document.querySelectorAll('#addCPList');
-	for (let a of addCPList){
-	a.addEventListener('mouseenter', scaleUp);
-	a.addEventListener('mouseleave', scaleDown);
+	for (let a of addCPList) {
+		a.addEventListener('mouseenter', scaleUp);
+		a.addEventListener('mouseleave', scaleDown);
 	}
 	// 음원 플리 추가 버튼 호버 애니메이션 등록
 	const btnAddUPList = document.querySelectorAll('#btnAddUPList');
-	for (let a of btnAddUPList){
-	a.addEventListener('mouseenter', scaleUp);
-	a.addEventListener('mouseleave', scaleDown);
+	for (let a of btnAddUPList) {
+		a.addEventListener('mouseenter', scaleUp);
+		a.addEventListener('mouseleave', scaleDown);
 	}
 
 	function scaleUp(event) {
@@ -94,10 +94,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	btnLike.addEventListener('click', () => {
 		// putmapping controller 호출. => 좋아요버튼 토글 기능임.
 		if (id == '') {
-			alert('로그인이 필요합니다.');
-			return
+			// alert('로그인이 필요합니다.');
+			// return
+			// 생성한 객체 전달
+			if (confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")) {
+				redirectToLogin();
+				return;
+			}
 		}
-		// 생성한 객체 전달
 		axios
 			.put('./like', data)
 			.then((response) => {
@@ -113,6 +117,16 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 
 	});
+
+	function redirectToLogin() {
+		const currentUrl = window.location.href;
+		window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
+	}
+
+	const singerNameSpace = document.querySelector('#singerNames');
+	const splitsingerName = singerName.split(',');
+	const splitsingerIds = singerIds.split(',');
+	artistPageLinked(singerNameSpace, splitsingerName, splitsingerIds);
 
 	/* 
 		const btnLike = document.querySelectorAll('#btnLike');

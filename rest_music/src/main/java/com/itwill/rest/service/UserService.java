@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.itwill.rest.dto.user.UserCreateDto;
@@ -157,6 +158,11 @@ public class UserService {
         }
     }
 	
+    // 프로필 삭제
+    public boolean deleteUserProfile(String userId) {
+        return userDao.deleteUserProfile(userId) > 0;
+    }
+    
 	// 정보 수정
     public int update(UserUpdateDto dto) {
         log.debug("update({})", dto);  // 로그에 전달된 UserUpdateDto 객체를 출력합니다.
@@ -181,5 +187,34 @@ public class UserService {
 
         return result;  // 업데이트 결과를 반환합니다.
     }
-
+    
+    @Transactional
+    public boolean deactivateAccount(Integer id, String password) {
+        // 비밀번호 확인
+    	Integer count = userDao.checkPassword(id, password);
+        if (count == 0) {
+            return false; // 비밀번호가 일치하지 않으면 false 반환
+        }
+        
+        // 회원 비활성화
+        userDao.deactivateUser(id);
+        
+        // 탈퇴 회원 정보 저장
+        userDao.insertDeletedUser(id);
+        
+        return true; // 비활성화 성공 시 true 반환
+    }
+    
+    public boolean checkUserIsActive(String userId) {
+        return userDao.checkUserIsActive(userId) == 1; // 1이면 활성, 0이면 비활성
+    }
+    
+    public boolean checkDeactivationPeriod(String userId) {
+        return userDao.checkDeactivationPeriod(userId) == 0; // 0이면 비활성화 기간 종료, 1이면 기간 중
+    }
+    
+    public User getUserById(Integer id) {
+        return userDao.selectUserById(id);
+    }
+    
 }

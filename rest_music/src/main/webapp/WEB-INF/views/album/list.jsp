@@ -262,7 +262,7 @@
         margin: 0;  /* p태그 기본 마진 제거 */
     }
     
-    
+
     </style>
 
     <!-- bootstrap js 라이브러리 -->
@@ -279,6 +279,9 @@
     <script src="${list_js}"></script>
     
     <script>
+	const refresh = '${refresh}'; 
+    // 리다이렉트 할 때 재생페이지를 새로고침하기위한 코드
+
     $(document).ready(function(){
         // 버튼 클릭 이벤트
         $('#btnNewest').click(function() {
@@ -289,8 +292,7 @@
             window.location.href = '/Rest/album/list/popular';
         });
     });
-    
-    
+
     </script>
 
 </body>

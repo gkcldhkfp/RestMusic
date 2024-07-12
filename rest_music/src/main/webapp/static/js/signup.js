@@ -20,13 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 비밀번호 입력 필드와 관련된 이벤트 리스너
     const inputPassword = document.querySelector('input#password');
-    inputPassword.addEventListener('change', checkPassword); // 비밀번호 변경 시 유효성 검사 함수 호출
+    // inputPassword.addEventListener('change', checkPassword); // 비밀번호 변경 시 유효성 검사 함수 호출
     inputPassword.addEventListener('input', checkPassword);  // 비밀번호 입력 시 실시간 유효성 검사
     
     // 비밀번호 확인 입력 필드와 관련된 이벤트 리스너
     const inputConfirmPassword = document.querySelector('input#confirmPassword');
     inputConfirmPassword.addEventListener('change', checkConfirmPassword); // 비밀번호 확인 시 유효성 검사 함수 호출
-    inputConfirmPassword.addEventListener('input', checkConfirmPassword);  // 비밀번호 확인 입력 시 실시간 유효성 검사
     
     // 이메일 입력 필드와 관련된 이벤트 리스너
     const inputEmail = document.querySelector('input#email');
@@ -82,6 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkUserid(event) {
         const userid = inputUserid.value;
         const checkUseridResult = document.querySelector('div#checkUseridResult');
+        
+        // 아이디 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
+        // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
+        event.target.addEventListener('input', () => {
+            checkUseridResult.innerHTML = ''; // 오류 메시지를 지웁니다.
+        });
 
         if (userid === '') {
             useridChecked = false;
@@ -98,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             checkUseridResult.classList.remove('text-success');
             return;
         }
-
+        
         const uri = `/Rest/user/checkid?userid=${userid}`; // 아이디 중복 체크 REST API URI
         axios
             .get(uri)
@@ -153,19 +158,38 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkConfirmPassword(event) {
         const password = document.querySelector('input#password').value;
         const confirmPassword = event.target.value;
-        const checkPasswordResult = document.querySelector('div#checkPasswordResult');
+        const checkPasswordResult = document.querySelector('div#checkPasswordResult'); 
+        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        
+        // 비밀번호 확인 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
+        // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
+        event.target.addEventListener('input', () => {
+            checkPasswordResult.innerHTML = ''; // 오류 메시지를 지웁니다.
+        });
 
-        if (password !== confirmPassword) {
+        // 비밀번호 패턴이 유효하지 않은 경우
+        if (!passwordPattern.test(password)) {
+            passwordChecked = false;
+            checkPasswordResult.innerHTML = '8자 이상의 영문 대/소문자와 숫자만 사용 가능합니다.';
+            checkPasswordResult.classList.add('text-danger');
+            checkPasswordResult.classList.remove('text-success');
+            return;
+        } else if (password !== confirmPassword) {
+            // 비밀번호와 비밀번호 확인이 일치하지 않는 경우
             confirmPasswordChecked = false;
             checkPasswordResult.innerHTML = '비밀번호가 일치하지 않습니다.';
             checkPasswordResult.classList.add('text-danger');
             checkPasswordResult.classList.remove('text-success');
+            return;
         } else {
+            // 비밀번호 패턴이 유효하고 비밀번호와 비밀번호 확인이 일치하는 경우
+            passwordChecked = true;
             confirmPasswordChecked = true;
             checkPasswordResult.innerHTML = '비밀번호가 일치합니다.';
             checkPasswordResult.classList.add('text-success');
             checkPasswordResult.classList.remove('text-danger');
         }
+        
         changeButtonState(); // 버튼의 활성화/비활성화 상태를 변경
     }
 
@@ -174,6 +198,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
         const email = event.target.value;
         const checkEmailResult = document.querySelector('div#checkEmailResult');
+        
+        // 이메일 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
+        // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
+        event.target.addEventListener('input', () => {
+            checkEmailResult.innerHTML = ''; // 오류 메시지를 지웁니다.
+        });
 
         if (email === '') {
             emailChecked = false;
@@ -205,6 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     checkEmailResult.classList.add('text-danger');
                     checkEmailResult.classList.remove('text-success');
                 }
+                   
                 changeButtonState(); // 버튼 활성화 여부를 변경
             })
             .catch((error) => console.log(error));
@@ -258,6 +289,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkNickname(event) {
         const nickname = inputNickname.value;
         const checkNicknameResult = document.querySelector('div#checkNicknameResult');
+        
+        // 닉네임 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
+        // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
+        event.target.addEventListener('input', () => {
+            checkNicknameResult.innerHTML = ''; // 오류 메시지를 지웁니다.
+        });
 
         if (nickname === '') {
             nicknameChecked = false;
@@ -274,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
             checkNicknameResult.classList.remove('text-success');
             return;
         }
-
+        
         const uri = `/Rest/user/checknickname?nickname=${nickname}`; // 닉네임 중복 체크 REST API URI
         axios
             .get(uri)
@@ -336,4 +373,5 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkVerificationcode() {
         btnVerifyCode.removeAttribute('disabled');
     }
+    
 });
