@@ -254,6 +254,16 @@
         </div>
     </div>
 
+    <footer>
+        <!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
+        <%@ include file="../fragments/footer.jspf" %>
+    </footer>
+
+    <script>
+        const refresh = '${refresh}';
+        // 리다이렉트 시 재생페이지를 새로고침하기 위한 코드
+    </script>
+
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -264,6 +274,7 @@
     <!-- JS 파일 지정 -->
     <c:url var="updateJS" value="/js/update.js" />
     <script src="${updateJS}"></script> 
-    
+    <c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
+    <script src="${addCurrentPlayList}"></script>
 </body>
 </html>

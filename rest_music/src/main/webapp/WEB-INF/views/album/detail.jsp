@@ -238,7 +238,8 @@
 					const singerName = '${ album.artistName }';
 					const albumId = ${ album.albumId };
 					const id = '${loginUserId}'; //id
-					const refresh = '${refresh}'; // 새로고침해줭
+					const refresh = '${refresh}';
+					// 리다이렉트 시 재생페이지를 새로고침하기 위한 코드
 				</script>
 				<c:url var="album_detail" value="/js/album_detail.js" />
 				<script src="${album_detail}"></script>
