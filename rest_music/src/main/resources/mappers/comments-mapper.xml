@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.itwill.rest.repository.CommentDao">
+  
+    <select id="selectBysongId" resultType="CommentItemDto">
+        SELECT c.C_ID, c.SONG_ID, c.ID userId, c.C_TEXT, c.CREATED_TIME, c.MODIFIED_TIME, u.nickname
+        FROM comments c
+        JOIN users u ON c.ID = u.ID
+        WHERE c.SONG_ID = #{songId}
+        ORDER BY c.MODIFIED_TIME DESC
+    </select>
+    
+    <insert id="insert">
+        insert into comments (song_id, id, c_text) values (#{songId}, #{id}, #{cText})
+    </insert>
+    
+    <delete id="deleteById">
+        delete from comments where c_id = #{cId}
+    </delete>
+    
+    <delete id="deleteBySongId">
+        delete from comments where song_id = #{songId}
+    </delete>
+    
+    <select id="selectById" resultType="comment">
+        select * from comments where c_id = #{cId}
+    </select>
+    
+    <update id="update">
+        update comments set c_text = #{cText}, modified_time = systimestamp where c_id = #{cId} 
+    </update>
+    
+    
+  </mapper>

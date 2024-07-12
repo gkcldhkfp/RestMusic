@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -116,7 +115,7 @@ public class UserController {
         boolean result = userService.checkNickname(nickname);
         return ResponseEntity.ok(result ? "Y" : "N");
     }
-
+    
     @GetMapping("/signin")
     public void signIn() {
         log.debug("GET signIn()");
@@ -134,6 +133,8 @@ public class UserController {
             // 세션에 로그인 사용자 아이디를 저장
             session.setAttribute("SESSION_ATTR_USER", user.getUserId());
             session.setAttribute("loginUserId", user.getId());
+            
+            session.setAttribute("refresh", "Y");
             // 로그인 성공 후 이동할 타겟 페이지
             targetPage = (target.equals("")) ? "/" : target;
             

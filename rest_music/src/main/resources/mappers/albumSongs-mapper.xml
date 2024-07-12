@@ -10,41 +10,69 @@
             genre => genre_name
             singer_name => artist_name
             -->
-      select a.album_id, a.album_name, 
-        s.song_id, ts.song_id as title_song, s.title, s.song_path, gc.genre_name, 
-        art.artist_id, art.artist_name, art.artist_image, art.artist_description,
-        count(l.id) as likes_count
-      from albums a
-        join songs s on a.album_id = s.album_id
-        left join song_genre sg on s.song_id = sg.song_id
-        left join genre_code gc on sg.genre_id = gc.genre_id
-        join artist_roles artr on s.song_id = artr.song_id
-        join artists art on artr.artist_id = art.artist_id
-        join role_code rc on artr.role_id = rc.role_id
-        left join title_songs ts on ts.song_id= s.song_id
-        left join likes l on l.song_id = s.song_id
-        left join album_likes al on al.album_id = a.album_id
-      where a.album_id = #{albumId} and rc.role_id = 10
-      GROUP BY a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
-        s.song_id, ts.song_id, s.title, s.lyrics, s.song_path, gc.genre_name, 
-        art.artist_name, art.artist_image, art.artist_description, art.artist_id
-      order by ts.song_id, s.song_id
+            SELECT 
+                  a.album_id, 
+                  a.album_name, 
+                  s.song_id, 
+                  ts.song_id AS song_id, 
+                  s.title, 
+                  s.song_path, 
+                  LISTAGG(DISTINCT gc.genre_name, ', ') WITHIN GROUP (ORDER BY gc.genre_name) AS genre_name,
+                  LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_id) AS artist_id,
+                  LISTAGG(DISTINCT art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_name,
+                  LISTAGG(DISTINCT art.artist_image, ', ') WITHIN GROUP (ORDER BY art.artist_image) AS artist_image,
+                  LISTAGG(DISTINCT art.artist_description, ', ') WITHIN GROUP (ORDER BY art.artist_description) AS artist_description,
+                  COUNT(DISTINCT l.id) AS likes_count
+              FROM 
+                  albums a
+                  JOIN songs s ON a.album_id = s.album_id
+                  LEFT JOIN song_genre sg ON s.song_id = sg.song_id
+                  LEFT JOIN genre_code gc ON sg.genre_id = gc.genre_id
+                  JOIN artist_roles artr ON s.song_id = artr.song_id
+                  JOIN artists art ON artr.artist_id = art.artist_id
+                  JOIN role_code rc ON artr.role_id = rc.role_id
+                  LEFT JOIN title_songs ts ON ts.song_id = s.song_id
+                  LEFT JOIN likes l ON l.song_id = s.song_id
+                  LEFT JOIN album_likes al ON al.album_id = a.album_id
+              WHERE 
+                  a.album_id = #{albumId} AND rc.role_id = 10
+              GROUP BY 
+                  a.album_id, a.album_name, s.song_id, ts.song_id, s.title, s.song_path
+              ORDER BY 
+                  ts.song_id, s.song_id
 
     </select>
 
     <select id="selectAlbumByAlbumId" resultType="AlbumSongs">
       <!-- 앨범 상세보기에서 사용하는 데이터를 가져오는 셀렉문 -->
-      select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
-          s.song_id, ts.song_id as title_song, s.title, gc.genre_name, art.artist_name, art.artist_id
-          from albums a
-            join songs s on a.album_id = s.album_id
-            join song_genre sg on s.song_id = sg.song_id
-            join genre_code gc on sg.genre_id = gc.genre_id
-            join artist_roles artr on s.song_id = artr.song_id
-            join artists art on artr.artist_id = art.artist_id
-            join role_code rc on artr.role_id = rc.role_id
-            join title_songs ts on ts.song_id= s.song_id
-          where a.album_id = #{albumId} and rc.role_id = 10
+      SELECT 
+            a.album_id, 
+            a.album_type, 
+            a.album_name, 
+            a.album_release_date, 
+            a.album_image, 
+            LISTAGG(DISTINCT s.song_id, ', ') WITHIN GROUP (ORDER BY s.song_id) AS song_id,
+            LISTAGG(DISTINCT s.title, ', ') WITHIN GROUP (ORDER BY s.title) AS title,
+            LISTAGG(DISTINCT gc.genre_name, ', ') WITHIN GROUP (ORDER BY gc.genre_name) AS genre_name,
+            LISTAGG(DISTINCT art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_name,
+            LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_id) AS artist_id
+        FROM 
+            albums a
+            JOIN songs s ON a.album_id = s.album_id
+            JOIN title_songs ts ON ts.song_id = s.song_id
+            LEFT JOIN song_genre sg ON s.song_id = sg.song_id
+            LEFT JOIN genre_code gc ON sg.genre_id = gc.genre_id
+            JOIN artist_roles artr ON s.song_id = artr.song_id
+            JOIN artists art ON artr.artist_id = art.artist_id
+            JOIN role_code rc ON artr.role_id = rc.role_id
+        WHERE 
+            a.album_id = #{albumId} AND rc.role_id = 10
+        GROUP BY 
+            a.album_id, 
+            a.album_type, 
+            a.album_name, 
+            a.album_release_date, 
+            a.album_image
       <!-- select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
         singers.singer_name,
         s.song_id, s.title, s.genre,
@@ -72,17 +100,37 @@
 
     <select id="selectSongBySongId" resultType="AlbumSongs">
       <!-- 재생하기위한 음원 정보를 가져오는 쿼리 -->
-      select a.album_id, a.album_type, a.album_name, a.album_release_date, a.album_image, 
-        art.artist_id, art.artist_name,
-        s.song_id, s.title, s.song_path, gc.genre_name
-      from albums a
-        join songs s on a.album_id = s.album_id
-        join song_genre sg on s.song_id = sg.song_id
-        join genre_code gc on sg.genre_id = gc.genre_id
-        join artist_roles artr on s.song_id = artr.song_id
-        join artists art on artr.artist_id = art.artist_id
-        join role_code rc on artr.role_id = rc.role_id
-      where s.song_id = #{song_id} and rc.role_id = 10
+      SELECT 
+            a.album_id, 
+            a.album_type, 
+            a.album_name, 
+            a.album_release_date, 
+            a.album_image, 
+            s.song_id, 
+            s.title, 
+            s.song_path,
+            LISTAGG(DISTINCT gc.genre_name, ', ') WITHIN GROUP (ORDER BY gc.genre_name) AS genre,
+            LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_id) AS artist_id,
+            LISTAGG(DISTINCT art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_name
+        FROM 
+            albums a
+            JOIN songs s ON a.album_id = s.album_id
+            LEFT JOIN song_genre sg ON s.song_id = sg.song_id
+            LEFT JOIN genre_code gc ON sg.genre_id = gc.genre_id
+            JOIN artist_roles artr ON s.song_id = artr.song_id
+            JOIN artists art ON artr.artist_id = art.artist_id
+            JOIN role_code rc ON artr.role_id = rc.role_id
+        WHERE 
+            s.song_id = #{songId} AND rc.role_id = 10
+        GROUP BY 
+            a.album_id, 
+            a.album_type, 
+            a.album_name, 
+            a.album_release_date, 
+            a.album_image,
+            s.song_id, 
+            s.title, 
+            s.song_path
     </select>
 
     <select id="songLikesCount" resultType="Integer">

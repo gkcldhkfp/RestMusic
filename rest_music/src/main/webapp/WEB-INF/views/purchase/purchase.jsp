@@ -23,10 +23,10 @@
         <div class="container text-center m-5 border p-4 rounded" style="width:900px; min-width:900px">
               <div class="row">
                 <div class="col-7 order-first">
-                  <p class="mt-2 fs-3">내용</p>
+                  <p class="mt-2 fs-3">Rest 음악 MP3 정기결제이용권</p>
                 </div>
                 <div class="col-5 order-last row">
-                    <p class="col fs-4 mt-2">10원</p>
+                    <p class="col fs-4 mt-2">4400원</p>
                   <button class="btn btn-primary btn-sm fs-3 col" title="test" id="purchase">구매</button>
                 </div>
               </div>
