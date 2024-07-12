@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let nicknameChecked = false;   // 닉네임 중복 검사 상태
     let authNumberChecked = false; // 이메일 인증번호 확인 상태
     let authNumber;                // 이메일 인증번호 저장 변수
+    let hintAnswerChecked = true; // 힌트 답변 유효성 검사 상태
 
     // 아이디 입력 필드와 관련된 이벤트 리스너
     const inputUserid = document.querySelector('input#userid');
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function changeButtonState() {
         const btnSignUp = document.querySelector('button#btnSignUp');
         // 모든 검사가 완료된 경우 버튼을 활성화
-        if (useridChecked && passwordChecked && confirmPasswordChecked && emailChecked && nicknameChecked && authNumberChecked) {
+        if (useridChecked && passwordChecked && confirmPasswordChecked && emailChecked && nicknameChecked && authNumberChecked && hintAnswerChecked) {
             btnSignUp.classList.remove('disabled');
             btnSignUp.disabled = false;
         } else {
@@ -364,11 +365,13 @@ document.addEventListener('DOMContentLoaded', () => {
             checkHintAnswerResult.innerHTML = '힌트 답변은 50자 이하의 영문, 숫자, 한글만 사용 가능합니다.';
             checkHintAnswerResult.classList.add('text-danger');
             checkHintAnswerResult.classList.remove('text-success');
-            btnSignUp.disabled = true; // 버튼 비활성화
+            hintAnswerChecked = false;
+            changeButtonState();
         } else {
             checkHintAnswerResult.innerHTML = ''; // 유효한 입력일 경우 오류 메시지 제거
-            btnSignUp.disabled = false; // 버튼 활성화
-        }
+            hintAnswerChecked = true;
+            changeButtonState();
+        } 
     }
     
     // 이벤트 리스너를 추가하여 입력 필드가 변경될 때마다 유효성 검사를 실행합니다.
