@@ -91,7 +91,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-danger">경고: 회원 탈퇴 시 30일 동안 재가입이 불가능합니다.</p>
+                    <p class="text-danger">경고: 회원 탈퇴 시 30일 동안 같은 계정으로 재가입이 불가능합니다.</p>
                     <form id="deactivateForm">
                         <!-- hidden input 필드로 사용자 ID 전달 -->
                         <input type="hidden" id="id" name="id" value="${loginUserId}">

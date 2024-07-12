@@ -32,13 +32,16 @@
     <div class="container-fluid" style="padding: 30px;">
         <div class="m-5 ">
             <div class="p-3">
+                <!-- 아티스트 이미지 주소 지정 -->
                 <c:url var="artistCover"
                     value="/artist/image/${artist.artistImage}" />
-                <!-- 아티스트 이미지 주소 지정 -->
+                <!-- 기본값 이미지 주소 지정 -->
+                <c:url var="defaultCover"
+                    value="/images/profileimage/profile.jpg" />
+                <!-- 아티스트의 앨범 페이지 이동 주소 지정 -->
                 <c:url var="albumPage"
                     value="/artist/albums?artistId=${artist.artistId}" />
-                <!-- 아티스트의 앨범 페이지 이동 주소 지정 -->
-                <img alt="artistCover" src="${artistCover}"
+                <img alt="artistCover" src="${artist.artistImage == null ? defaultCover : artistCover}"
                     class="rounded-circle"
                     style="display: inline-block; vertical-align: middle; left: 400px; width: 240px; height: 240px; object-fit: cover;">
                 <div class="ms-3"
@@ -77,7 +80,7 @@
                         		out.println(line + "<br>");
                         	}
                         } catch (FileNotFoundException e) {
-                        	out.println("파일을 찾을 수 없습니다.");
+                        	out.println("등록된 정보가 없습니다.");
                         } catch (IOException e) {
                         	out.println("파일을 읽을 수 없습니다.");
                         } finally {
@@ -107,7 +110,7 @@
                                 <input type="checkbox" id="selectAllCheckbox">
                             </th>  -->
                             <th style="text-align: left; vertical-align: middle;">커버</th>
-                            <th style="text-align: left; vertical-align: middle; width: 60%">노래 제목</th>
+                            <th style="text-align: left; vertical-align: middle; width: 55%">노래 제목</th>
                             <th style="text-align: left; vertical-align: middle;">아티스트</th>
                             <th style="text-align: center; vertical-align: middle; white-space: nowrap;">듣기</th>
                             <th style="text-align: center; vertical-align: middle; white-space: nowrap;">재생목록</th>
