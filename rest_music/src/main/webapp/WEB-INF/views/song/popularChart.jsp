@@ -53,7 +53,7 @@
 	                       <td><input type="checkbox" class="songCheckbox" data-song-id="${top.songId}" /></td>
 	                       <td>${status.index + 1}</td>
 	                       <td class="song-info">
-	                       <%-- 앨범 디테일 페이지로 이동 --%>
+	                           <%-- 앨범 디테일 페이지로 이동 --%>
 	                           <c:url var="albumDetailUrl" value="/album/detail">
 	                               <c:param name="albumId" value="${top.albumId}" />
 	                           </c:url>

@@ -7,15 +7,15 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Rest</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous" />
 <link href="./css/home.css" rel="stylesheet" />
+<!-- Google Fonts 링크 추가 -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <!-- css 불러옴 -->
- <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
 <style>
 * {
     box-sizing: border-box
@@ -118,7 +118,6 @@ iframe {
 
 h3 {
     margin-top: 30px;
-    font-size: 1.5rem;
 }
 
 .card-container {
@@ -138,6 +137,7 @@ h3 {
 }
 
 
+
 .h3-style {
     color: black;
     text-decoration: none;
@@ -145,13 +145,13 @@ h3 {
 .h3-style:hover {
     color: black; /* 호버 시에도 검정색 */
     text-decoration: none; /* 호버 시에도 밑줄 없음 */
-} 
+}
 
 </style>
 </head>
-
 <body>
     <header>
+        
         <div class="container-fluid">
             <c:set var="pageTitle" value="Rest" scope="page" />
             <%@ include file="./fragments/header.jspf"%>
@@ -162,8 +162,8 @@ h3 {
         <div class="slideshow-container mt-5" style="margin-top: 20px;">
             <div class="mySlides">
                 <div class="numbertext"></div>
-                <a href="/Rest/playlists/playlist?plistId=3"> 
-                    <img src="./data/imagee1.gif" style="width: 100%" />
+                <a href="/Rest/playlists/playlist?plistId=3"> <img
+                    src="./data/imagee1.gif" style="width: 100%" />
                 </a>
             </div>
 
@@ -180,10 +180,8 @@ h3 {
                     src="./data/imagee2.gif" style="width: 100%" />
                 </a>
             </div>
-            <!-- 
-            <a class="prev" onclick="plusSlides(-1)">❮</a> 
-            <a class="next" onclick="plusSlides(1)">❯</a>
-             -->
+
+            
         </div>
         <br>
 
@@ -194,14 +192,14 @@ h3 {
         </div>
         
         <div class="content-container">
-            <a href="/Rest/song/popularChart" class="me-1 h3-style">
+            <a class="h3-style" href="/Rest/song/popularChart">
                 <H3>Rest Top 10 차트</H3>
             </a>
+            
             <!-- 차트페이지에 있는 리스트를 불러옴 -->
             <div class="card-container">
-                <c:forEach var="l" items="${list}" varStatus="status">
+                <c:forEach var="l" items="${topTenList}" varStatus="status">
                     <div class="card border-0">
-                        <!-- 인덱스 -->
                         <p style="display: none;">${status.index + 1}</p>
                         
                         <!-- 앨범 디테일 페이지로 이동 -->
@@ -209,7 +207,7 @@ h3 {
                             <c:param name="albumId" value="${l.albumId}" />
                         </c:url>
                         <a href="${albumDetailUrl}" class="album-link">
-                            <img src="./images/albumcover/${l.albumImage}" alt="Album cover">
+                            <img src="./images/albumcover/${l.albumImage}" alt="Album cover"> 
                         </a>
                         
                         <!-- 음원 디테일 페이지로 이동 -->
@@ -220,12 +218,12 @@ h3 {
                             <small>${l.title}</small>
                         </a>
                         
-                        <!-- 아티스트 디테일 페이지로 이동 -->
+                        <!-- 아티스트 음원 페이지로 이동 -->
                         <c:url var="artistDetailUrl" value="/artist/songs">
                             <c:param name="artistId" value="${l.artistId}" />
                         </c:url>
-                        <a href="${artistDetailUrl}" style="font: inherit; color: gray; text-decoration: none;">
-                            <small style="font-size: 0.7rem">${l.artistName}</small>
+                        <a href="${artistDetailUrl}" style="margin-top: -5px; font: inherit; color: gray; text-decoration: none;">
+                            <small style="font-size: 0.75rem; ">${l.artistName}</small>
                         </a>
                     </div>
                 </c:forEach>
@@ -275,57 +273,56 @@ h3 {
                         referrerpolicy="strict-origin-when-cross-origin"
                         allowfullscreen></iframe>
                 </div>
-                
+                <br>
             </div>
-            
-            <a href="/Rest/album/list/newest" class="me-1 h3-style">
             <H3>따끈 신상 앨범</H3>
 
-            <div class="album-container">
-                <c:forEach var="l" items="${list}">
-                    <div class="album-card">
-                        <img src="../data/${a.albumImage}.png" class="img-fluid rounded"
-                            alt="${album.albumName}">
-                        <div class="album-info">
-                            <p class="album-name">${album.albumId}</p>
-                            <p class="artist-name">${album.artist}</p>
-                        </div>
+            <div class="card-container">
+                <c:forEach var="album" items="${albumList}" varStatus="status">
+                    <div class="card border-0">
+                        <p style="display: none;">${status.index + 1}</p>
+                        <img src="./images/albumcover/${album.albumImage}" alt="Album cover">
+                        <small>${album.albumType}</small>
+                        <small>${album.genreName}</small>
+                        <small>${album.albumName}</small>
+                        <small>${album.artistName}</small>
+                        <small>${album.title}</small>
                     </div>
                 </c:forEach>
             </div>
-        </div>
-    </main>
+        
+        </main>
 
 
     <script>
-			let slideIndex = 0;
-			showSlides();
+                    let slideIndex = 0;
+                    showSlides();
 
-			function showSlides() {
-				let i;
-				let slides = document
-						.getElementsByClassName("mySlides");
-				let dots = document.getElementsByClassName("dot");
-				for (i = 0; i < slides.length; i++) {
-					slides[i].style.display = "none";
-				}
-				slideIndex++;
-				if (slideIndex > slides.length) {
-					slideIndex = 1
-				}					for (i = 0; i < dots.length; i++) {
-					dots[i].className = dots[i].className.replace(
-							" active", "")						
-				}
-				slides[slideIndex - 1].style.display = "block";
-				dots[slideIndex - 1].className += " active";
-				setTimeout(showSlides, 2000); // Change image every 2 seconds
-			}
-	</script>
-    
-    <script>
-        const refresh = '${refresh}';
-        // 리다이렉트 시 재생페이지를 새로고침하기 위한 코드
-    </script>
+                    function showSlides() {
+                        let i;
+                        let slides = document
+                                .getElementsByClassName("mySlides");
+                        let dots = document.getElementsByClassName("dot");
+                        for (i = 0; i < slides.length; i++) {
+                            slides[i].style.display = "none";
+                        }
+                        slideIndex++;
+                        if (slideIndex > slides.length) {
+                            slideIndex = 1
+                        }
+                        for (i = 0; i < dots.length; i++) {
+                            dots[i].className = dots[i].className.replace(
+                                    " active", "");
+                        }
+                        slides[slideIndex - 1].style.display = "block";
+                        dots[slideIndex - 1].className += " active";
+                        setTimeout(showSlides, 2000); // Change image every 2 seconds
+                    }
+                </script>
+            <script>
+                const refresh = '${refresh}';
+                // 리다이렉트 시 재생페이지를 새로고침하기 위한 코드
+            </script>
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
