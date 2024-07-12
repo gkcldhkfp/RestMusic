@@ -5,12 +5,12 @@
 document.addEventListener("DOMContentLoaded", function() {
     // 좋아요 아이콘 클릭 이벤트 핸들러
     const heartIcons = document.querySelectorAll('.heart-icon');
-    
+
     heartIcons.forEach(icon => {
         const songId = icon.dataset.songId;
         const loginUserId = parseInt(icon.dataset.id);
         let likesCountElement = icon.nextElementSibling; // 좋아요 개수를 표시하는 요소를 가져옴
-        
+
         // 특정 사용자가 특정 노래를 좋아요 했는지 여부를 서버에 요청
         const data = { songId, loginUserId };
         axios.post('../api/isLiked', data)
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         loginModal.show();
                         return;
                     }
-                
+
                     let likesCount = parseInt(likesCountElement.textContent); // 현재 좋아요 개수를 가져옴
 
                     if (icon.classList.contains('liked')) { // 이미 좋아요 상태인 경우
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
     });
     
-    // 곡 재생 버튼 클릭 이벤트 핸들러
+    /*// 곡 재생 버튼 클릭 이벤트 핸들러
     const playButtons = document.querySelectorAll('.play-btn');
     const audioPlayer = document.getElementById('audioPlayer');
     const audioSource = document.getElementById('audioSource');
@@ -180,8 +180,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             }
         });
-    });
-
+    });*/
+    
     // 전체 선택 체크박스 이벤트 핸들러
     const selectAllCheckbox = document.getElementById('selectAllCheckbox');
     const songCheckboxes = document.querySelectorAll('.songCheckbox');
@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
-
+    
     // "전체 듣기" 버튼 클릭 이벤트 핸들러
     // document.getElementById('addAllToPlaylist').addEventListener('click', function() {
         // 전체 듣기 기능 구현
@@ -221,15 +221,30 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (response.status === 200) {
                     const playLists = response.data;
                     const playListsContainer = document.getElementById('playLists');
-                    playListsContainer.innerHTML = ''; // 기존 내용을 지움.
+                    playListsContainer.innerHTML = ''; // 기존 내용을 지움
 
                     playLists.forEach(list => {
+                        const defaultImage = '../images/icon/default.png';
+                        const albumImageSrc = list.albumImage ? `../images/albumcover/${list.albumImage}` : defaultImage;
+
                         const listElement = document.createElement('div');
-                        listElement.classList.add('form-check');
+                        listElement.classList.add('playlist-item', 'd-flex', 'align-items-center', 'mb-2');
                         listElement.innerHTML = `
-                            <input class="form-check-input playlist-checkbox" type="checkbox" value="${list.plistId}" id="playlist-${list.plistId}" data-playlist-id="${list.plistId}" />
-                            <label class="form-check-label" for="playlist-${list.plistId}">${list.plistName}</label>
-                        `;
+                            <div class="form-check">
+                                <input class="form-check-input playlist-checkbox" type="checkbox"
+                                    value="${list.plistId}" id="playlist-${list.plistId}" data-playlist-id="${list.plistId}">
+                            </div>
+                            <div class="playlist-button-container">
+                                <button class="playList btn btn-outline-success w-100" data-id="${list.plistId}">
+                                    <div class="d-flex align-items-center">
+                                        <div class="playlist-image">
+                                            <img src="${albumImageSrc}" alt="Album cover" class="rounded">
+                                        </div>
+                                        <div class="playlist-name"> ${list.plistName} </div>
+                                    </div>
+                                </button>
+                            </div>
+                          `;
                         playListsContainer.appendChild(listElement);
                     });
 
@@ -253,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function addSongToPlaylists() {
         const selectedPlaylists = document.querySelectorAll('#playLists .playlist-checkbox:checked');
         const selectedPlaylistIds = Array.from(selectedPlaylists).map(checkbox => checkbox.dataset.playlistId);
-        
+
         // hidden input에서 songIds를 가져옴
         const songIdsJson = document.getElementById('selectedSongIds').value;
         const songIds = JSON.parse(songIdsJson);  // JSON 문자열을 배열로 변환
@@ -297,7 +312,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (addedPlaylists.length > 0) {
                 alert('선택한 플레이리스트에 이미 추가된 곡입니다.');
                 const selectPlayListModal = bootstrap.Modal.getInstance(document.getElementById('selectPlayList'));
-                selectPlayListModal.hide();  
+                selectPlayListModal.hide();
                 return;
             }
 
@@ -349,7 +364,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // 플레이리스트에 곡 추가 버튼 클릭 이벤트 핸들러
     const saveButton = document.getElementById('btnAddSong');
     saveButton.addEventListener('click', addSongToPlaylists);
-    
+
     // 플레이리스트 추가 버튼 클릭 이벤트 핸들러
     const addToPlaylistButtons = document.querySelectorAll('.add-to-playlist-btn');
     addToPlaylistButtons.forEach(button => {
