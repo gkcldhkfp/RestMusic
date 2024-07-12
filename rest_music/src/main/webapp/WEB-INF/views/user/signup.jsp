@@ -94,8 +94,8 @@
 
             <div class="mb-3">
                 <input type="password" id="password" name="password" class="form-control" 
-                placeholder="비밀번호를 입력해주세요" required pattern="^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$" 
-                title="8자 이상의 영문 대/소문자와 숫자를 포함해야 합니다.">
+                placeholder="비밀번호를 입력해주세요" required pattern="^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,30}$" 
+                title="8자~30자의 영문 대/소문자와 숫자를 포함해야 합니다.">
             </div>
 
             <div class="mb-3">
@@ -145,8 +145,8 @@
             </div>
 
             <div class="mb-3">
-                <input type="text" id="hintAnswer" name="hintAnswer" class="form-control" 
-                placeholder="힌트 답변을 입력해주세요">
+                <input type="text" id="hintAnswer" name="hintAnswer" class="form-control" placeholder="힌트 답변을 입력해주세요">
+                <div id="checkHintAnswerResult" class="form-text"></div>
             </div>
 
             <div class="d-grid mb-3">

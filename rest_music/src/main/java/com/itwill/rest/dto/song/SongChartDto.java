@@ -18,7 +18,7 @@ public class SongChartDto {
 	private String albumImage; // 앨범 표지
 	private Date albumReleaseDate; // 앨범 발매일
 	private String title; // 노래 제목
-	private Integer artistId; // 아티스트 번호
+	private String artistId; // 아티스트 번호 (문자열로 바꿈)
 	private String artistName; // 아티스트 이름
 	private String albumName; // 앨범 이름
 	private Integer likes; // 좋아요 개수

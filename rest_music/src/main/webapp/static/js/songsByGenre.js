@@ -96,105 +96,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 icon.style.color = 'black';
             });
     });
-    
-    // 곡 재생 버튼 클릭 이벤트 핸들러
-    const playButtons = document.querySelectorAll('.play-btn');
-    const audioPlayer = document.getElementById('audioPlayer');
-    const audioSource = document.getElementById('audioSource');
-    const currentTimeSpan = document.getElementById('currentTime');
-    const totalTimeSpan = document.getElementById('totalTime');
-    
-    playButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const songPath = button.dataset.songPath;
-            const id = parseInt(button.dataset.id);
-    
-            // 로그인 상태 확인
-            if (!id) {
-                // 로그인하지 않은 상태일 경우
-                alert("1분 미리듣기가 제공됩니다.");
-                audioSource.src = songPath;
-                audioPlayer.load();
-                audioPlayer.play();
-    
-                // 총 재생 시간을 60초로 설정하고, 오디오의 duration을 60초로 설정합니다.
-                audioPlayer.addEventListener('loadedmetadata', function() {
-                    audioPlayer.currentTime = 0;  // 현재 시간 초기화
-                    audioPlayer.duration = 60;   // 60초로 설정
-                    totalTimeSpan.textContent = "1:00"; // 총 재생 시간 표시 (1:00)
-                });
-    
-                // 현재 재생 시간을 업데이트하는 함수
-                const updateCurrentTime = () => {
-                    const seconds = Math.floor(audioPlayer.currentTime);
-                    currentTimeSpan.textContent = `0:${seconds.toString().padStart(2, '0')}`; // 현재 시간 표시
-                };
-    
-                // `timeupdate` 이벤트를 사용하여 현재 시간 출력
-                audioPlayer.addEventListener('timeupdate', updateCurrentTime);
-    
-                // 1분 후 로그인 모달을 표시하고 오디오를 멈추고 초기화합니다.
-                setTimeout(function() {
-                    audioPlayer.pause();
-                    audioPlayer.currentTime = 0;  // 현재 시간 초기화
-                    alert("로그인 후 전체 곡을 들을 수 있습니다.");
-                    // 로그인 모달을 띄우기 위한 코드
-                    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-                    loginModal.show();
-                    // `timeupdate` 이벤트 리스너를 제거합니다.
-                    audioPlayer.removeEventListener('timeupdate', updateCurrentTime);
-                }, 60000);  // 60,000ms = 1분
-                
-                // 마우스로 재생 시간을 스크롤할 때의 동작을 제어
-                audioPlayer.addEventListener('seeking', function(event) {
-                    // 만약 스크롤한 시간이 1분을 초과하면 1분으로 강제로 제한
-                    if (audioPlayer.currentTime > 60) {
-                        audioPlayer.currentTime = 60;
-                    }
-                });
-    
-                audioPlayer.addEventListener('timeupdate', function() {
-                    // 현재 시간이 1분을 초과하면 1분으로 강제로 제한
-                    if (audioPlayer.currentTime >= 60) {
-                        audioPlayer.currentTime = 60;
-                    }
-                });
-    
-            } else {
-                // 로그인한 상태일 경우
-                audioSource.src = songPath;
-                audioPlayer.load();
-                audioPlayer.play();
-    
-                // 총 재생 시간을 실제 오디오 파일의 길이로 설정합니다.
-                audioPlayer.addEventListener('loadedmetadata', function() {
-                    const totalDuration = Math.floor(audioPlayer.duration);
-                    const minutes = Math.floor(totalDuration / 60);
-                    const seconds = Math.floor(totalDuration % 60);
-                    totalTimeSpan.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`; // 총 재생 시간 표시
-                });
-    
-                // 현재 재생 시간을 업데이트하는 함수
-                const updateCurrentTime = () => {
-                    const minutes = Math.floor(audioPlayer.currentTime / 60);
-                    const seconds = Math.floor(audioPlayer.currentTime % 60);
-                    currentTimeSpan.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`; // 현재 시간 표시
-                };
-    
-                // `timeupdate` 이벤트를 사용하여 현재 시간 출력
-                audioPlayer.addEventListener('timeupdate', updateCurrentTime);
-                
-                // 오디오의 currentTime을 0초에서 끝까지 이동 가능하게 설정
-                audioPlayer.removeEventListener('seeking', function(event) {
-                    // 아무 것도 하지 않음
-                });
-                audioPlayer.removeEventListener('timeupdate', function() {
-                    // 아무 것도 하지 않음
-                });
-            }
-        });
-    });
 
     // 전체 선택 체크박스 이벤트 핸들러
     const selectAllCheckbox = document.getElementById('selectAllCheckbox');
@@ -221,13 +122,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // "전체 듣기" 버튼 클릭 이벤트 핸들러
-    // document.getElementById('addAllToPlaylist').addEventListener('click', function() {
-        // 전체 듣기 기능 구현
-        // alert('전체 듣기 버튼 클릭');
-        // selectAllModal.hide();
-    // });
-
     // 플레이리스트 불러오기 및 모달 표시 함수
     function showPlayListModal(id, songIds) {  // songIds를 배열로 받음
         axios.get(`../getPlayList/${id}`)
@@ -235,15 +129,30 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (response.status === 200) {
                     const playLists = response.data;
                     const playListsContainer = document.getElementById('playLists');
-                    playListsContainer.innerHTML = ''; // 기존 내용을 지움.
+                    playListsContainer.innerHTML = ''; // 기존 내용을 지움
 
                     playLists.forEach(list => {
+                        const defaultImage = '../images/icon/default.png';
+                        const albumImageSrc = list.albumImage ? `../images/albumcover/${list.albumImage}` : defaultImage;
+
                         const listElement = document.createElement('div');
-                        listElement.classList.add('form-check');
+                        listElement.classList.add('playlist-item', 'd-flex', 'align-items-center', 'mb-2');
                         listElement.innerHTML = `
-                            <input class="form-check-input playlist-checkbox" type="checkbox" value="${list.plistId}" id="playlist-${list.plistId}" data-playlist-id="${list.plistId}" />
-                            <label class="form-check-label" for="playlist-${list.plistId}">${list.plistName}</label>
-                        `;
+                            <div class="form-check">
+                                <input class="form-check-input playlist-checkbox" type="checkbox"
+                                    value="${list.plistId}" id="playlist-${list.plistId}" data-playlist-id="${list.plistId}">
+                            </div>
+                            <div class="playlist-button-container">
+                                <button class="playList btn btn-outline-success w-100" data-id="${list.plistId}">
+                                    <div class="d-flex align-items-center">
+                                        <div class="playlist-image">
+                                            <img src="${albumImageSrc}" alt="Album cover" class="rounded">
+                                        </div>
+                                        <div class="playlist-name"> ${list.plistName} </div>
+                                    </div>
+                                </button>
+                            </div>
+                          `;
                         playListsContainer.appendChild(listElement);
                     });
 

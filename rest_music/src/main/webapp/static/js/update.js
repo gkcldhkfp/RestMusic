@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const imageUrl = response.data.imageUrl;  // 서버로부터 받은 이미지 URL
                             console.log(imageUrl)
                             profileImagePreview.src = imageUrl; // 변경된 이미지 URL로 미리보기 업데이트
-                            parent.mainFrame.location.reload();
+                            // parent.mainFrame.location.reload();
                         } else {
                             alert('프로필 이미지 변경에 실패했습니다.');
                         }
@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkPassword(event) {
         const password = event.target.value;
         const checkPasswordResult = document.getElementById('checkPasswordResult');  // 비밀번호 유효성 검사 결과 표시 요소
-        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;  // 비밀번호 패턴: 8자 이상의 영문 대/소문자와 숫자
+        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/;  // 비밀번호 패턴: 8자 이상의 영문 대/소문자와 숫자
         
         // 비밀번호 필드가 비어있는 경우
         if (password === '') {
@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (!passwordPattern.test(password)) {
             // 비밀번호 패턴이 유효하지 않은 경우
             passwordChecked = false;
-            checkPasswordResult.innerHTML = '8자 이상의 영문 대/소문자와 숫자만 사용 가능합니다.';
+            checkPasswordResult.innerHTML = '비밀번호는 8자~30자의 영문 대/소문자와 숫자를 포함해야 합니다.';
             checkPasswordResult.classList.add('text-danger');
             checkPasswordResult.classList.remove('text-success');
         } else {
@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.querySelector('input#password').value;
         const confirmPassword = event.target.value;
         const checkPasswordResult = document.querySelector('div#checkPasswordResult'); 
-        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/;
         
         // 비밀번호 확인 입력 필드의 값이 변경될 때마다 오류 메시지를 지우고 상태를 확인합니다.
         event.target.addEventListener('input', () => {
@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 비밀번호 패턴이 유효하지 않은 경우
             passwordChecked = false;
             confirmPasswordChecked = false;
-            checkPasswordResult.innerHTML = '8자 이상의 영문 대/소문자와 숫자만 사용 가능합니다.';
+            checkPasswordResult.innerHTML = '비밀번호는 8자~30자의 영문 대/소문자와 숫자를 포함해야 합니다.';
             checkPasswordResult.classList.add('text-danger');
             checkPasswordResult.classList.remove('text-success');
             return;
@@ -404,13 +404,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     hintQuestionSelect.addEventListener('change', checkHintQuestion);
 
-    // 힌트 답변 입력 이벤트
+    // 힌트 답변 유효성 검사 및 기본값 설정 함수
     function checkHintAnswer(event) {
-        if (event.target.value.trim() === '') {
-            hintAnswerInput.value = 'null';  // 기본값 설정
+        const hintAnswerInput = event.target;
+        const checkHintAnswerResult = document.querySelector('div#checkHintAnswerResult');
+        
+        // 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
+        hintAnswerInput.addEventListener('input', () => {
+            checkHintAnswerResult.innerHTML = ''; // 오류 메시지를 지웁니다.
+            checkHintAnswerResult.classList.remove('text-danger');
+        });
+    
+        // 입력 필드가 비어있으면 기본값을 'null'로 설정합니다.
+        if (hintAnswerInput.value.trim() === '') {
+            hintAnswerInput.value = 'null'; // 기본값 설정
+            return;
+        }
+        
+        // 힌트 답변이 0~50자 범위 내의 영문, 숫자, 한글만 포함하는지 검사합니다.
+        if (!/^[a-zA-Z0-9가-힣]{0,50}$/.test(hintAnswerInput.value)) {
+            checkHintAnswerResult.innerHTML = '힌트 답변은 50자 이하의 영문, 숫자, 한글만 사용 가능합니다.';
+            checkHintAnswerResult.classList.add('text-danger');
+            checkHintAnswerResult.classList.remove('text-success');
+            btnModify.disabled = true; // 버튼 비활성화
+        } else {
+            checkHintAnswerResult.innerHTML = ''; // 유효한 입력일 경우 오류 메시지 제거
+            btnModify.disabled = false; // 버튼 활성화
         }
     }
-    hintAnswerInput.addEventListener('change', checkHintAnswer);
+    
+    // 이벤트 리스너를 추가하여 입력 필드가 변경될 때마다 유효성 검사를 실행합니다.
+    const hintAnswerInputField = document.querySelector('#hintAnswer');
+    hintAnswerInputField.addEventListener('input', checkHintAnswer);
     
     // '회원 정보 변경' 버튼 클릭 시 사용자 정보 업데이트 요청
     document.getElementById('updateUserForm').addEventListener('submit', (event) => {
@@ -440,11 +465,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         const password = document.getElementById('password').value;
-        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/;
         // 비밀번호가 입력되었지만 유효하지 않은 경우
         if (password !== '' && !passwordPattern.test(password)) {
             event.preventDefault();
-            alert('유효하지 않은 비밀번호 형식입니다. 8자 이상의 영문 대/소문자와 숫자를 사용해주세요.');
+            alert('유효하지 않은 비밀번호 형식입니다. 비밀번호는 8자~30자의 영문 대/소문자와 숫자를 포함해야 합니다.');
             return;
         }
         
