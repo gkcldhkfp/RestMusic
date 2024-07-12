@@ -281,7 +281,10 @@ h3 {
                         setTimeout(showSlides, 2000); // Change image every 2 seconds
                     }
                 </script>
-
+            <script>
+                const refresh = '${refresh}';
+                // 리다이렉트 시 재생페이지를 새로고침하기 위한 코드
+            </script>
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -290,5 +293,7 @@ h3 {
 
     <c:url var="home_js" value="/js/home.js" />
     <script src="${home_js}"></script>
+    <c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
+    <script src="${addCurrentPlayList}"></script>
 </body>
 </html>

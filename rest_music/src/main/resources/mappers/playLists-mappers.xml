@@ -61,8 +61,8 @@
     s.title,
     s.album_id,
     al.album_image,
-    ar.artist_id,
-    ar.artist_name
+    LISTAGG(ar.artist_id, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_id,
+    LISTAGG(ar.artist_name, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_name
     FROM
     playlists pl
     JOIN playlist_songs ps ON pl.p_list_id = ps.p_list_id
@@ -71,7 +71,10 @@
     JOIN artist_roles arr ON s.song_id = arr.song_id
     JOIN artists ar ON arr.artist_id = ar.artist_id
     WHERE
-    pl.p_list_id = #{pListId} and arr.role_id = 10
+    pl.p_list_id = #{pListId}
+    AND arr.role_id = 10
+    GROUP BY
+    pl.p_list_id, pl.p_list_name, ps.song_id, ps.created_time, s.title, s.album_id, al.album_image
     ORDER BY
     ps.created_time DESC
     </select>

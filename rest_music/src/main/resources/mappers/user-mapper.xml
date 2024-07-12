@@ -41,8 +41,8 @@
     s.song_id,
     s.album_id,
     s.title,
-    ar.artist_id,
-    ar.artist_name,
+    LISTAGG(ar.artist_id, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_id,
+    LISTAGG(ar.artist_name, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_name,
     al.album_name
     FROM
     likes l
@@ -51,7 +51,9 @@
     JOIN artist_roles arr ON s.song_id = arr.song_id
     JOIN artists ar ON arr.artist_id = ar.artist_id
     WHERE
-    l.id = #{id} and arr.role_id = 10
+    l.id = #{id} and arr.role_id = 10 
+    GROUP BY
+    al.album_image, s.song_id, s.album_id, s.title, al.album_name
     ORDER BY
     s.title
     </select>
@@ -79,10 +81,17 @@
     
     <!-- 프로필 변경 -->
     <update id="updateUserProfile">
-    update users
-    set
-       user_profile = #{userProfile}
-    where user_id = #{userId}
+        update users
+        set
+           user_profile = #{userProfile}
+        where user_id = #{userId}
+    </update>
+    
+    <!-- 프로필 삭제 -->
+    <update id="deleteUserProfile">
+        update users
+        set user_profile = null
+        where user_id = #{userId}
     </update>
     
     <!-- 회원 정보 수정 -->
@@ -97,6 +106,47 @@
             hint_answer = #{hintAnswer}
         where user_id = #{userId}
     </update>
+    
+    <!-- 사용자 ID로 사용자 정보 조회 -->
+    <select id="selectUserById" resultType="User">
+        select * from users
+        where id = #{id}
+    </select>
+    
+    <!-- 회원 비활성화 -->
+    <update id="deactivateUser">
+        update users 
+        set is_active = 0,
+            deactivated_until = sysdate + interval '30' day
+        where id = #{id}
+    </update>
+    
+    <!-- 탈퇴 회원 정보 저장 -->
+    <insert id="insertDeletedUser">
+        insert into del_users (id) 
+        values (#{id})
+    </insert>
+    
+    <!-- 비밀번호 확인 -->
+    <select id="checkPassword" resultType="integer">
+        select count(*) 
+        from users 
+        where id = #{id} and password = #{password}
+    </select>
+    
+    <!-- 활성 사용자 확인 -->
+    <select id="checkUserIsActive" resultType="integer">
+        select count(*)
+        from users
+        where user_id = #{userId} and is_active = 1
+    </select>
+     
+    <!-- 로그인 시 비활성화 기간 확인 -->
+    <select id="checkDeactivationPeriod" resultType="integer">
+        select count(*)
+        from users
+        where user_id = #{userId} and deactivated_until > sysdate
+    </select>
     
     
 </mapper>
