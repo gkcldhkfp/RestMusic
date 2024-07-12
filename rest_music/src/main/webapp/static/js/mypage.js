@@ -28,6 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const btnAddPlaylist = document.querySelector('button#btnAddPlaylist');
     btnAddPlaylist.addEventListener('click', addPlaylist);
+    
+    // input#playlistName 엘리먼트에 keydown 이벤트 리스너 추가
+    const playlistNameInput = document.querySelector('input#playlistName');
+    playlistNameInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // 엔터 키 기본 동작(폼 제출) 막기
+            addPlaylist(); // addPlaylist 함수 호출
+        }
+    });
 
     var modal = document.getElementById('addPlaylistModal');
     const bootstrapModal = new bootstrap.Modal(modal);
