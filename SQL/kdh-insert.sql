@@ -57,7 +57,7 @@ insert into albums (album_name, album_image, album_type, album_release_date)
     values ('4.5', '10cm-tight.jpg', '싱글', TO_DATE('2020-09-22', 'YYYY-MM-DD'));
 
 insert into albums (album_name, album_image, album_type, album_release_date) 
-    values ('방에 모기가 있어 (4.4)', '방에 모기가 있어 (4.4).jpg', '싱글', TO_DATE('2019-08-06', 'YYYY-MM-DD'));
+    values ('방에 모기가 있어 (4.4)', '방에 모기가 있어 (4.4)', '싱글', TO_DATE('2019-08-06', 'YYYY-MM-DD'));
     
 insert into albums (album_name, album_image, album_type, album_release_date) 
     values ('4.1', '10cm-4.1.jpg', '싱글', TO_DATE('2018-08-23', 'YYYY-MM-DD'));
@@ -120,8 +120,8 @@ insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
 -- 10cm 4.4 앨범 노래
 insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
     values ((select album_id from albums where album_name = '4.5'),
-    '방에 모기가 있어 (Do You Think Of Me?)', '방에 모기가 있어 (Do You Think Of Me?).mp3', 
-    '방에 모기가 있어 (Do You Think Of Me?).txt', 
+    '방에 모기가 있어 (Do You Think Of Me)', '방에 모기가 있어 (Do You Think Of Me).mp3', 
+    '방에 모기가 있어 (Do You Think Of Me).txt', 
     'https://www.youtube.com/embed/d5cV86Sa6k0?si=CobQrt8ZujUkF8II');
     
 -- 10cm 4.1 앨범 노래
@@ -217,7 +217,7 @@ values((select album_id from albums where album_name = '4.5'),
 -- 10cm 4.4
 insert into title_songs(album_id, song_id) 
 values((select album_id from albums where album_name = '방에 모기가 있어 (4.4)'),
-    (select song_id from songs where title='방에 모기가 있어 (Do You Think Of Me?)'));
+    (select song_id from songs where title='방에 모기가 있어 (Do You Think Of Me)'));
     
 -- 10cm 4.1
 insert into title_songs(album_id, song_id) 
@@ -271,9 +271,9 @@ INSERT INTO song_genre (song_id, genre_id)
 
 -- 10cm 4.4 장르
 INSERT INTO song_genre (song_id, genre_id)
-        VALUES ((select song_id from songs where title='방에 모기가 있어 (Do You Think Of Me?)'), 80);
+        VALUES ((select song_id from songs where title='방에 모기가 있어 (Do You Think Of Me)'), 80);
 INSERT INTO song_genre (song_id, genre_id)
-        VALUES ((select song_id from songs where title='방에 모기가 있어 (Do You Think Of Me?)'), 90);
+        VALUES ((select song_id from songs where title='방에 모기가 있어 (Do You Think Of Me)'), 90);
 
 -- 10cm 4.1 장르
 INSERT INTO song_genre (song_id, genre_id)
@@ -428,42 +428,42 @@ insert into artist_roles (artist_id, song_id, role_id)
 -- 10cm 4.4 앨범 아티스트 역할
 insert into artist_roles (artist_id, song_id, role_id) 
     values ((select artist_id from artists where artist_name = '10cm'),
-    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
     10);
     
 insert into artist_roles (artist_id, song_id, role_id) 
     values ((select artist_id from artists where artist_name = '10cm'),
-    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
     20);
 
 insert into artist_roles (artist_id, song_id, role_id) 
     values ((select artist_id from artists where artist_name = '10cm'),
-    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
     30);
 
 insert into artist_roles (artist_id, song_id, role_id) 
     values ((select artist_id from artists where artist_name = '10cm'),
-    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
     40);
     
 insert into artist_roles (artist_id, song_id, role_id) 
     values ((select artist_id from artists where artist_name = '이요한'),
-    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
     40);    
     
 insert into artist_roles (artist_id, song_id, role_id) 
     values ((select artist_id from artists where artist_name = '성수용'),
-    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
     40);
     
 insert into artist_roles (artist_id, song_id, role_id) 
     values ((select artist_id from artists where artist_name = '이윤혁'),
-    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
     40);
 
 insert into artist_roles (artist_id, song_id, role_id) 
     values ((select artist_id from artists where artist_name = '방인재'),
-    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
     40);
 
 -- 10cm 4.1 앨범 아티스트 역할
