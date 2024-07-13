@@ -57,7 +57,7 @@ insert into albums (album_name, album_image, album_type, album_release_date)
     values ('4.5', '10cm-tight.jpg', '싱글', TO_DATE('2020-09-22', 'YYYY-MM-DD'));
 
 insert into albums (album_name, album_image, album_type, album_release_date) 
-    values ('방에 모기가 있어 (4.4)', '방에 모기가 있어 (4.4)', '싱글', TO_DATE('2019-08-06', 'YYYY-MM-DD'));
+    values ('방에 모기가 있어 (4.4)', '방에 모기가 있어 (4.4).jpg', '싱글', TO_DATE('2019-08-06', 'YYYY-MM-DD'));
     
 insert into albums (album_name, album_image, album_type, album_release_date) 
     values ('4.1', '10cm-4.1.jpg', '싱글', TO_DATE('2018-08-23', 'YYYY-MM-DD'));
