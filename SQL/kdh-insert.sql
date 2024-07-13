@@ -55,6 +55,12 @@ insert into albums (album_name, album_image, album_type, album_release_date)
  
 insert into albums (album_name, album_image, album_type, album_release_date) 
     values ('4.5', '10cm-tight.jpg', '싱글', TO_DATE('2020-09-22', 'YYYY-MM-DD'));
+
+insert into albums (album_name, album_image, album_type, album_release_date) 
+    values ('방에 모기가 있어 (4.4)', '방에 모기가 있어 (4.4)', '싱글', TO_DATE('2019-08-06', 'YYYY-MM-DD'));
+    
+insert into albums (album_name, album_image, album_type, album_release_date) 
+    values ('4.1', '10cm-4.1.jpg', '싱글', TO_DATE('2018-08-23', 'YYYY-MM-DD'));
  
 insert into albums (album_name, album_image, album_type, album_release_date) 
     values ('The 3rd EP', '10cm-The3rdEP.jpg', '미니', TO_DATE('2021-11-11', 'YYYY-MM-DD'));
@@ -110,7 +116,21 @@ insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
     values ((select album_id from albums where album_name = '4.5'),
     'Tight', '10cm-Tight.mp3', '10cm-Tight.txt', 
     'https://www.youtube.com/embed/-xm5GpFwHw4?si=2dCUVlQWCZsl1kip');
+
+-- 10cm 4.4 앨범 노래
+insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
+    values ((select album_id from albums where album_name = '4.5'),
+    '방에 모기가 있어 (Do You Think Of Me?)', '방에 모기가 있어 (Do You Think Of Me?).mp3', 
+    '방에 모기가 있어 (Do You Think Of Me?).txt', 
+    'https://www.youtube.com/embed/d5cV86Sa6k0?si=CobQrt8ZujUkF8II');
     
+-- 10cm 4.1 앨범 노래
+insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
+    values ((select album_id from albums where album_name = '4.5'),
+    '매트리스', '매트리스.mp3', '매트리스.txt', 
+    'https://www.youtube.com/embed/seNNCbiXTSY?si=1u-8OsNLZ7GGP6wA');
+    
+        
 -- 10cm The 3rd ep 노래
 insert into songs (album_id, title, song_path, lyrics, video_link) --title song
     values ((select album_id from albums where album_name = 'The 3rd EP'),
@@ -194,6 +214,16 @@ insert into title_songs(album_id, song_id)
 values((select album_id from albums where album_name = '4.5'),
     (select song_id from songs where title='Tight'));
     
+-- 10cm 4.4
+insert into title_songs(album_id, song_id) 
+values((select album_id from albums where album_name = '방에 모기가 있어 (4.4)'),
+    (select song_id from songs where title='방에 모기가 있어 (Do You Think Of Me?)'));
+    
+-- 10cm 4.1
+insert into title_songs(album_id, song_id) 
+values((select album_id from albums where album_name = '4.1'),
+    (select song_id from songs where title='매트리스'));
+    
 -- 10cm The 3rd ep
 insert into title_songs(album_id, song_id) 
 values((select album_id from albums where album_name = 'The 3rd EP'),
@@ -238,6 +268,18 @@ INSERT INTO song_genre (song_id, genre_id)
         VALUES ((select song_id from songs where title='Tight'), 80);
 INSERT INTO song_genre (song_id, genre_id)
         VALUES ((select song_id from songs where title='Tight'), 90);
+
+-- 10cm 4.4 장르
+INSERT INTO song_genre (song_id, genre_id)
+        VALUES ((select song_id from songs where title='방에 모기가 있어 (Do You Think Of Me?)'), 80);
+INSERT INTO song_genre (song_id, genre_id)
+        VALUES ((select song_id from songs where title='방에 모기가 있어 (Do You Think Of Me?)'), 90);
+
+-- 10cm 4.1 장르
+INSERT INTO song_genre (song_id, genre_id)
+        VALUES ((select song_id from songs where title='매트리스'), 80);
+INSERT INTO song_genre (song_id, genre_id)
+        VALUES ((select song_id from songs where title='매트리스'), 90);
 
 -- 10cm The 3rd ep 장르
 DECLARE
@@ -382,6 +424,90 @@ insert into artist_roles (artist_id, song_id, role_id)
     values ((select artist_id from artists where artist_name = '박문치'),
     (select song_id from songs where title = 'Tight'),
     40);
+
+-- 10cm 4.4 앨범 아티스트 역할
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    10);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    20);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    30);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    40);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '이요한'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    40);    
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '성수용'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    40);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '이윤혁'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    40);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '방인재'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me?)'),
+    40);
+
+-- 10cm 4.1 앨범 아티스트 역할
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '매트리스'),
+    10);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '매트리스'),
+    20);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '매트리스'),
+    30);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '매트리스'),
+    40);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '이요한'),
+    (select song_id from songs where title = '매트리스'),
+    40);    
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '성수용'),
+    (select song_id from songs where title = '매트리스'),
+    40);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '이윤혁'),
+    (select song_id from songs where title = '매트리스'),
+    40);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '방인재'),
+    (select song_id from songs where title = '매트리스'),
+    40);
+    
+
 -- 10cm The 3rd ep앨범 아티스트 역할
 DECLARE
     v_album_id albums.album_id%TYPE;
