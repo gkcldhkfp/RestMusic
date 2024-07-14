@@ -12,11 +12,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Album {
+	private String songId;
 	private Integer albumId;
+	private String title;
+	private String songPath;
+	private String lyrics;
+	private String videoLink;
+	private String genreName;
+
 	private String albumName;
-	private String albumImage;
 	private String albumType;
-    private LocalDateTime albumReleaseDate;
-	private int likes; // 좋아요 개수 필드 추가.
+	private String albumReleaseDate;
+	private String albumImage;
+
+	private String artistId;
+	private String artistName;
+
+	private String titleSong;
+
+	private Integer likesCount;
 }
 
