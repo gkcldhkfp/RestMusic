@@ -537,7 +537,7 @@ values (3,
 -- 16번
 insert into songs (album_id, title, song_path, lyrics)
 values (3,
-        'Kenzi - 막달려가 (feat.스카이민혁)',
+        '막달려가 (feat.스카이민혁)',
         'Kenzi - 막달려가 (feat.스카이민혁).mp3',
         'kenzi_막달려가_lyrics.txt'
         );
