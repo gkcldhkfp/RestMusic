@@ -112,7 +112,7 @@
 									</table>
 									<div id="like">
 										<button id="btnLike" title="앨범 좋아요" class="btn fs-3"">♡</button>
-									<button id=" btnListenAlbum" title="앨범 재생" class="btn intro ms-1" style="background-image: url('../images/icon/play.png'); 
+										<button id="btnListenAlbum" title="앨범 재생" class="btn intro ms-1" style="background-image: url('../images/icon/play.png'); 
                                 width: 45px; height: 45px; background-size: cover; background-repeat: no-repeat;"
 											data-id="${album.albumId}"></button>
 										<button id="btnAddCPListAlbum" title="앨범을 재생목록에 추가" class="btn intro ms-3" style="background-image: url('../images/icon/playList.png'); 
