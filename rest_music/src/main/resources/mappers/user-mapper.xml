@@ -41,8 +41,8 @@
     s.song_id,
     s.album_id,
     s.title,
-    LISTAGG(ar.artist_id, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_id,
-    LISTAGG(ar.artist_name, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_name,
+    LISTAGG(DISTINCT ar.artist_id, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_id,
+    LISTAGG(DISTINCT ar.artist_name, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_name,
     al.album_name
     FROM
     likes l
