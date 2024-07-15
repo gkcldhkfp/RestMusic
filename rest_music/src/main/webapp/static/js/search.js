@@ -149,7 +149,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             const trimmedName = splitsingerName[i].trim();
                             const trimmedId = splitsingerIds[i].trim();
                             const artistPage = `../artist/songs?artistId=${trimmedId}`;
-                                singerLinksHtml += `<span class='text-center fw-bold' style='cursor: pointer;' onclick="location.href='${artistPage}'">
+                                singerLinksHtml += `<span class='text-center fw-bold' style='cursor: pointer;' 
+                                onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" 
+                                onclick="location.href='${artistPage}'">
                                     ${trimmedName}
                                 </span>`;
                         }
@@ -161,8 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             <td style="width: 118px;"><a href="${albumDetailsPage}"><img alt="albumcover" src="../images/albumcover/${item.albumImage}" 
                                 class="img-thumbnail" width="120px" height="120px"/></a></td>
                             <td style="width:60%;">
-                                <span class="fs-4" style="cursor: pointer;" onclick="location.href='${songDetailsPage}'">${item.title}</span> <br/> <br/> 
-                                <span style="cursor: pointer;" onclick="location.href='${albumDetailsPage}'">${item.albumName}</span>
+                                <span class="fs-4" style="cursor: pointer;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" onclick="location.href='${songDetailsPage}'">${item.title}</span> <br/> <br/> 
+                                <span style="cursor: pointer;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" onclick="location.href='${albumDetailsPage}'">${item.albumName}</span>
                             </td>
                             <td>
                                 <br/>
