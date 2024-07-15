@@ -15,13 +15,15 @@
 		crossorigin="anonymous" />
 	<link rel="stylesheet" href="<c:url value='/css/chart.css' />"> <!-- 외부 CSS 파일 링크 -->
 	
+	<link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
+	
 	<style>
 	   .button_rbox {
 		  display: flex;
 		  flex-wrap: wrap;
 		  gap: 10px;
 		}
-
+		
 		.btn-genre {
 		  font-size: 14px;
 		  color: #333;
@@ -41,7 +43,9 @@
 		  outline: none;
 		}
 		
-		.btn-genre.active {
+		.btn-genre.active,
+		.btn-genre.active:hover,
+		.btn-genre.active:focus {
 		  color: #fff;
 		  background-color: #00cd3c;
 		  border-color: #00cd3c;
@@ -95,7 +99,7 @@
 	<link
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
 		rel="stylesheet" />
-	<link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
+	
 	
 </head>
 <body>

@@ -28,11 +28,11 @@ a:hover span {
     font: inherit;
     text-decoration: none;
     color: inherit;
-  }
+}
 
-  .album-name:hover {
+.album-name:hover {
     color: #007bff; /* 원하는 색상 코드로 변경하세요 */
-  }
+}
 
 /* 곡 정보 행의 레이아웃을 설정하는 CSS */
 .song-info {

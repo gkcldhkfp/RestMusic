@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
     // 페이지 로드 시 현재 선택된 장르에 해당하는 버튼 활성화
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(location.search);
     const currentGenre = urlParams.get('genreName') || '전체';
     const activeButton = document.querySelector(`.genre-btn[data-genre-name="${currentGenre}"]`);
     if (activeButton) {
