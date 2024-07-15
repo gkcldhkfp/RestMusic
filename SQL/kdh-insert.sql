@@ -1,6 +1,6 @@
 --------------- 아티스트
 insert into artists (artist_image, artist_name, artist_description) 
-    values ('10cm.jpg', '10cm', '10cm.txt');
+    values ('권정열.jpg', '10cm', '권정열.txt');
     
 insert into artists (artist_image, artist_name, artist_description) 
     values ('이요한.jpg', '이요한', '이요한.txt');
