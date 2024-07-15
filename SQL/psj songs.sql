@@ -37,7 +37,7 @@ values (61, 'Blueming',
 
 insert into songs (album_id, title, song_path, lyrics, video_link)
 values (61, 'Love poem',
-'Love poem_Love poem_아이유',
+'Love poem_Love poem_아이유.mp3',
 'Love poem_Love poem.txt',
 'https://www.youtube.com/embed/iOKRYIMhaDk?si=GrX2NBvfwTeflTsA');
 
@@ -115,7 +115,7 @@ values (64, 'DINOSAUR',
 
 insert into songs (album_id, title, song_path, lyrics, video_link)
 values (64, 'MY DARLING', 
-'SUMMER EPISODE_MY DARLING_AKMU (악뮤)',
+'SUMMER EPISODE_MY DARLING_AKMU (악뮤).mp3',
 'SUMMER EPISODE_MY DARLING.txt',
 'https://www.youtube.com/embed/8Oz7DG76ibY?si=v2zM_PO9Hb2ZWCMc');
 ----------------------------------------------------------------------------------------------------------------------------

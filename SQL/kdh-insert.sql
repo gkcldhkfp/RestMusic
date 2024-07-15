@@ -1,6 +1,6 @@
 --------------- 아티스트
 insert into artists (artist_image, artist_name, artist_description) 
-    values ('10cm.jpg', '10cm', '10cm.txt');
+    values ('권정열.jpg', '10cm', '권정열.txt');
     
 insert into artists (artist_image, artist_name, artist_description) 
     values ('이요한.jpg', '이요한', '이요한.txt');
@@ -57,7 +57,7 @@ insert into albums (album_name, album_image, album_type, album_release_date)
     values ('4.5', '10cm-tight.jpg', '싱글', TO_DATE('2020-09-22', 'YYYY-MM-DD'));
 
 insert into albums (album_name, album_image, album_type, album_release_date) 
-    values ('방에 모기가 있어 (4.4)', '방에 모기가 있어 (4.4)', '싱글', TO_DATE('2019-08-06', 'YYYY-MM-DD'));
+    values ('방에 모기가 있어 (4.4)', '방에 모기가 있어 (4.4).jpg', '싱글', TO_DATE('2019-08-06', 'YYYY-MM-DD'));
     
 insert into albums (album_name, album_image, album_type, album_release_date) 
     values ('4.1', '10cm-4.1.jpg', '싱글', TO_DATE('2018-08-23', 'YYYY-MM-DD'));
@@ -119,14 +119,14 @@ insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
 
 -- 10cm 4.4 앨범 노래
 insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
-    values ((select album_id from albums where album_name = '4.5'),
+    values ((select album_id from albums where album_name = '방에 모기가 있어 (4.4)'),
     '방에 모기가 있어 (Do You Think Of Me)', '방에 모기가 있어 (Do You Think Of Me).mp3', 
     '방에 모기가 있어 (Do You Think Of Me).txt', 
     'https://www.youtube.com/embed/d5cV86Sa6k0?si=CobQrt8ZujUkF8II');
     
 -- 10cm 4.1 앨범 노래
 insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
-    values ((select album_id from albums where album_name = '4.5'),
+    values ((select album_id from albums where album_name = '4.1'),
     '매트리스', '매트리스.mp3', '매트리스.txt', 
     'https://www.youtube.com/embed/seNNCbiXTSY?si=1u-8OsNLZ7GGP6wA');
     
