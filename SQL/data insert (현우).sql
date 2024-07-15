@@ -72,103 +72,103 @@ select * from albums;
 --------------------------------------SONGS 테이블----------------------------------------------------------
 -------------------------That’s What I Like----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (1, 'That’s What I Like', '24K Magic_That’s What I Like_Bruno Mars.mp3', '24K Magic_That’s What I Like_lyrics.txt', 'https://www.youtube.com/watch?v=PMivT7MJ41M');
+values ((SELECT album_id FROM albums WHERE album_name = '24K Magic'), 'That’s What I Like', '24K Magic_That’s What I Like_Bruno Mars.mp3', '24K Magic_That’s What I Like_lyrics.txt', 'https://www.youtube.com/watch?v=PMivT7MJ41M');
 
 -------------------------Chandelier----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (2, 'Chandelier', '1000 Forms Of Fear_Chandelier_Sia.mp3', '1000 Forms Of Fear_Chandelier_lyrics.txt', 'https://www.youtube.com/watch?v=2vjPBrBU-TM');
+values ((SELECT album_id FROM albums WHERE album_name = '1000 Forms Of Fear'), 'Chandelier', '1000 Forms Of Fear_Chandelier_Sia.mp3', '1000 Forms Of Fear_Chandelier_lyrics.txt', 'https://www.youtube.com/watch?v=2vjPBrBU-TM');
 
 -------------------------Blank Space----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (3, 'Blank Space', '1989_Blank Space_Taylor Swift.mp3', '1989_Blank Space_lyrics.txt', 'https://www.youtube.com/watch?v=e-ORhEE9VVg');
+values ((SELECT album_id FROM albums WHERE album_name = '1989'), 'Blank Space', '1989_Blank Space_Taylor Swift.mp3', '1989_Blank Space_lyrics.txt', 'https://www.youtube.com/watch?v=e-ORhEE9VVg');
 
 -------------------------A Thousand Years----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (4, 'A Thousand Years', 'A Thousand Years_A Thousand Years_Christina Perri.mp3', 'A Thousand Years_A Thousand Years_lyrics.txt', 'https://www.youtube.com/watch?v=rtOvBOTyX00');
+values ((SELECT album_id FROM albums WHERE album_name = 'A Thousand Years'), 'A Thousand Years', 'A Thousand Years_A Thousand Years_Christina Perri.mp3', 'A Thousand Years_A Thousand Years_lyrics.txt', 'https://www.youtube.com/watch?v=rtOvBOTyX00');
 
 -------------------------A Whole New World (End Title)----------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (5, 'A Whole New World (End Title)', 'Aladdin_A Whole New World (End Title)_ZAYN, Zhavia.mp3', 'Aladdin_A Whole New World (End Title)_lyrics.txt', 'https://www.youtube.com/watch?v=eitDnP0_83k');
+values ((SELECT album_id FROM albums WHERE album_name = 'Aladdin'), 'A Whole New World (End Title)', 'Aladdin_A Whole New World (End Title)_ZAYN, Zhavia.mp3', 'Aladdin_A Whole New World (End Title)_lyrics.txt', 'https://www.youtube.com/watch?v=eitDnP0_83k');
 
 -------------------------Speechless----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (5, 'Speechless', 'Aladdin_Speechless_Naomi Scott.mp3', 'Aladdin_Speechless_lyrics.txt', 'https://www.youtube.com/watch?v=mw5VIEIvuMI');
+values ((SELECT album_id FROM albums WHERE album_name = 'Aladdin'), 'Speechless', 'Aladdin_Speechless_Naomi Scott.mp3', 'Aladdin_Speechless_lyrics.txt', 'https://www.youtube.com/watch?v=mw5VIEIvuMI');
 
 -------------------------Dancing Queen----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (6, 'Dancing Queen', 'Arrival_Dancing Queen_ABBA.mp3', 'Arrival_Dancing Queen_lyrics.txt', 'https://www.youtube.com/watch?v=xFrGuyw1V8s');
+values ((SELECT album_id FROM albums WHERE album_name = 'Arrival'), 'Dancing Queen', 'Arrival_Dancing Queen_ABBA.mp3', 'Arrival_Dancing Queen_lyrics.txt', 'https://www.youtube.com/watch?v=xFrGuyw1V8s');
 
 -------------------------Baby One More Time----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (7, 'Baby One More Time', 'Baby One More Time_Baby One More Time_Britney Spears.mp3', 'Baby One More Time_Baby One More Time_lyrics.txt', 'https://www.youtube.com/watch?v=C-u5WLJ9Yk4');
+values ((SELECT album_id FROM albums WHERE album_name = 'Baby One More Time'), 'Baby One More Time', 'Baby One More Time_Baby One More Time_Britney Spears.mp3', 'Baby One More Time_Baby One More Time_lyrics.txt', 'https://www.youtube.com/watch?v=C-u5WLJ9Yk4');
 
 -------------------------Because of You----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (8, 'Because of You', 'Breakaway_Because of You_Kelly Clarkson.mp3', 'Breakaway_Because of You_lyrics.txt', 'https://www.youtube.com/watch?v=Ra-Om7UMSJc');
+values ((SELECT album_id FROM albums WHERE album_name = 'Breakaway'), 'Because of You', 'Breakaway_Because of You_Kelly Clarkson.mp3', 'Breakaway_Because of You_lyrics.txt', 'https://www.youtube.com/watch?v=Ra-Om7UMSJc');
 
 -------------------------I Really Like You----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (9, 'I Really Like You', 'Emotion_I Really Like You_Carly Rae Jepsen.mp3', 'Emotion_I Really Like You_lyrics.txt', 'https://www.youtube.com/watch?v=qV5lzRHrGeg');
+values ((SELECT album_id FROM albums WHERE album_name = 'Emotion'), 'I Really Like You', 'Emotion_I Really Like You_Carly Rae Jepsen.mp3', 'Emotion_I Really Like You_lyrics.txt', 'https://www.youtube.com/watch?v=qV5lzRHrGeg');
 
 -------------------------Flashlight----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (10, 'Flashlight', 'Flashlight_Flashlight_Jessie J.mp3', 'Flashlight_Flashlight_lyrics.txt', 'https://www.youtube.com/watch?v=DzwkcbTQ7ZE');
+values ((SELECT album_id FROM albums WHERE album_name = 'Flashlight'), 'Flashlight', 'Flashlight_Flashlight_Jessie J.mp3', 'Flashlight_Flashlight_lyrics.txt', 'https://www.youtube.com/watch?v=DzwkcbTQ7ZE');
 
 -------------------------Into the Unknown----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (11, 'Into the Unknown', 'Frozen 2_Into the Unknown_Idina Menzel, AURORA.mp3', 'Frozen 2_Into the Unknown_Idina Menzel_lyrics.txt', 'https://www.youtube.com/watch?v=gIOyB9ZXn8s');
+values ((SELECT album_id FROM albums WHERE album_name = 'Frozen 2'), 'Into the Unknown', 'Frozen 2_Into the Unknown_Idina Menzel, AURORA.mp3', 'Frozen 2_Into the Unknown_Idina Menzel_lyrics.txt', 'https://www.youtube.com/watch?v=gIOyB9ZXn8s');
 
 -------------------------Show Yourself----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (11, 'Show Yourself', 'Frozen 2_Show Yourself_Idina Menzel, Evan Rachel Wood.mp3', 'Frozen 2_Show Yourself_lyrics.txt', 'https://www.youtube.com/watch?v=nrZxwPwmgrw');
+values ((SELECT album_id FROM albums WHERE album_name = 'Frozen 2'), 'Show Yourself', 'Frozen 2_Show Yourself_Idina Menzel, Evan Rachel Wood.mp3', 'Frozen 2_Show Yourself_lyrics.txt', 'https://www.youtube.com/watch?v=nrZxwPwmgrw');
 
 -------------------------Call Me Maybe----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (12, 'Call Me Maybe', 'Kiss_Call Me Maybe_Carly Rae Jepsen.mp3', 'Kiss_Call Me Maybe_lyrics.txt', 'https://www.youtube.com/watch?v=fWNaR-rxAic');
+values ((SELECT album_id FROM albums WHERE album_name = 'Kiss'), 'Call Me Maybe', 'Kiss_Call Me Maybe_Carly Rae Jepsen.mp3', 'Kiss_Call Me Maybe_lyrics.txt', 'https://www.youtube.com/watch?v=fWNaR-rxAic');
 
 -------------------------She's So Gone----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (13, 'She''s So Gone', 'Lemonade Mouth_She''s So Gone_Naomi Scott.mp3', 'Lemonade Mouth_She''s So Gone_lyrics.txt', 'https://www.youtube.com/watch?v=xnAc-rgvJTA');
+values ((SELECT album_id FROM albums WHERE album_name = 'Lemonade Mouth'), 'She''s So Gone', 'Lemonade Mouth_She''s So Gone_Naomi Scott.mp3', 'Lemonade Mouth_She''s So Gone_lyrics.txt', 'https://www.youtube.com/watch?v=xnAc-rgvJTA');
 
 -------------------------Cruel Summer----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (14, 'Cruel Summer', 'Lover_Cruel Summer_Taylor Swift.mp3', 'Lover_Cruel Summer_lyrics.txt', 'https://www.youtube.com/watch?v=ic8j13piAhQ');
+values ((SELECT album_id FROM albums WHERE album_name = 'Lover'), 'Cruel Summer', 'Lover_Cruel Summer_Taylor Swift.mp3', 'Lover_Cruel Summer_lyrics.txt', 'https://www.youtube.com/watch?v=ic8j13piAhQ');
 
 -------------------------One Last Time----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (15, 'One Last Time', 'My Everything_One Last Time_Ariana Grande.mp3', 'My Everything_One Last Time_lyrics.txt', 'https://www.youtube.com/watch?v=Wg92RrNhB8s');
+values ((SELECT album_id FROM albums WHERE album_name = 'My Everything'), 'One Last Time', 'My Everything_One Last Time_Ariana Grande.mp3', 'My Everything_One Last Time_lyrics.txt', 'https://www.youtube.com/watch?v=Wg92RrNhB8s');
 
 -------------------------Problem----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (15, 'Problem', 'My Everything_Problem_Ariana Grande.mp3', 'My Everything_Problem_lyrics.txt', 'https://www.youtube.com/watch?v=iS1g8G_njx8');
+values ((SELECT album_id FROM albums WHERE album_name = 'My Everything'), 'Problem', 'My Everything_Problem_Ariana Grande.mp3', 'My Everything_Problem_lyrics.txt', 'https://www.youtube.com/watch?v=iS1g8G_njx8');
 
 -------------------------Outside----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (16, 'Outside', 'Outside_Outside_Calvin Harris, Ellie Goulding.mp3', 'Outside_Outside_lyrics.txt', 'https://www.youtube.com/watch?v=J9NQFACZYEU');
+values ((SELECT album_id FROM albums WHERE album_name = 'Outside'), 'Outside', 'Outside_Outside_Calvin Harris, Ellie Goulding.mp3', 'Outside_Outside_lyrics.txt', 'https://www.youtube.com/watch?v=J9NQFACZYEU');
 
 -------------------------2002----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (17, '2002', 'Speak Your Mind_2002_Anne Marie.mp3', 'Speak Your Mind_2002_lyrics.txt', 'https://www.youtube.com/watch?v=Il-an3K9pjg');
+values ((SELECT album_id FROM albums WHERE album_name = 'Speak Your Mind'), '2002', 'Speak Your Mind_2002_Anne Marie.mp3', 'Speak Your Mind_2002_lyrics.txt', 'https://www.youtube.com/watch?v=Il-an3K9pjg');
 
 -------------------------Good Time----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (18, 'Good Time', 'The Midsummer Station_Good Time_Owl City.mp3', 'The Midsummer Station_Good Time_lyrics.txt', 'https://www.youtube.com/watch?v=H7HmzwI67ec');
+values ((SELECT album_id FROM albums WHERE album_name = 'The Midsummer Station'), 'Good Time', 'The Midsummer Station_Good Time_Owl City.mp3', 'The Midsummer Station_Good Time_lyrics.txt', 'https://www.youtube.com/watch?v=H7HmzwI67ec');
 
 -------------------------Attention----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (19, 'Attention', 'Voicenotes_Attention_Charlie Puth.mp3', 'Voicenotes_Attention_lyrics.txt', 'https://www.youtube.com/watch?v=nfs8NYg7yQM');
+values ((SELECT album_id FROM albums WHERE album_name = 'Voicenotes'), 'Attention', 'Voicenotes_Attention_Charlie Puth.mp3', 'Voicenotes_Attention_lyrics.txt', 'https://www.youtube.com/watch?v=nfs8NYg7yQM');
 
 -------------------------Whatever----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (20, 'Whatever', 'Whatever_Whatever_Kygo, Ava Max.mp3', 'Whatever_Whatever_lyrics.txt', 'https://www.youtube.com/watch?v=ZDZiXmCl4pk');
+values ((SELECT album_id FROM albums WHERE album_name = 'Whatever'), 'Whatever', 'Whatever_Whatever_Kygo, Ava Max.mp3', 'Whatever_Whatever_lyrics.txt', 'https://www.youtube.com/watch?v=ZDZiXmCl4pk');
 
 -------------------------When I Get Old----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (21, 'When I Get Old', 'When I Get Old_When I Get Old_Christopher, 청하.mp3', 'When I Get Old_When I Get Old_lyrics.txt', 'https://www.youtube.com/watch?v=Ua3aNDJE_Cg');
+values ((SELECT album_id FROM albums WHERE album_name = 'When I Get Old'), 'When I Get Old', 'When I Get Old_When I Get Old_Christopher, 청하.mp3', 'When I Get Old_When I Get Old_lyrics.txt', 'https://www.youtube.com/watch?v=Ua3aNDJE_Cg');
 
 -------------------------Domino----------------------------------------------------------------------------
 insert into songs (album_id, title, song_path, lyrics, video_link)
-values (22, 'Domino', 'Who You Are_Domino_Jessie J.mp3', 'Who You Are_Domino_lyrics.txt', 'https://www.youtube.com/watch?v=UJtB55MaoD0');
+values ((SELECT album_id FROM albums WHERE album_name = 'Who You Are'), 'Domino', 'Who You Are_Domino_Jessie J.mp3', 'Who You Are_Domino_lyrics.txt', 'https://www.youtube.com/watch?v=UJtB55MaoD0');
 
 commit;
 select * from songs;
@@ -176,103 +176,103 @@ select * from songs;
 --------------------------------------TITLE_SONGS 테이블----------------------------------------------------------
 -------------------------That’s What I Like----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (1, 1);
+values ((SELECT album_id FROM albums WHERE album_name = '24K Magic'), (SELECT song_id FROM songs WHERE title = 'That’s What I Like'));
 
 -------------------------Chandelier----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (2, 2);
+values ((SELECT album_id FROM albums WHERE album_name = '1000 Forms Of Fear'), (SELECT song_id FROM songs WHERE title = 'Chandelier'));
 
 -------------------------Blank Space----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (3, 3);
+values ((SELECT album_id FROM albums WHERE album_name = '1989'), (SELECT song_id FROM songs WHERE title = 'Blank Space'));
 
 -------------------------A Thousand Years----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (4, 4);
+values ((SELECT album_id FROM albums WHERE album_name = 'A Thousand Years'), (SELECT song_id FROM songs WHERE title = 'A Thousand Years'));
 
 -------------------------A Whole New World (End Title)------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (5, 5);
+values ((SELECT album_id FROM albums WHERE album_name = 'Aladdin'), (SELECT song_id FROM songs WHERE title = 'A Whole New World (End Title)'));
 
 -------------------------Speechless----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (5, 6);
+values ((SELECT album_id FROM albums WHERE album_name = 'Aladdin'), (SELECT song_id FROM songs WHERE title = 'Speechless'));
 
 -------------------------Dancing Queen----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (6, 7);
+values ((SELECT album_id FROM albums WHERE album_name = 'Arrival'), (SELECT song_id FROM songs WHERE title = 'Dancing Queen'));
 
 -------------------------Baby One More Time----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (7, 8);
+values ((SELECT album_id FROM albums WHERE album_name = 'Baby One More Time'), (SELECT song_id FROM songs WHERE title = 'Baby One More Time'));
 
 -------------------------Because of You----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (8, 9);
+values ((SELECT album_id FROM albums WHERE album_name = 'Breakaway'), (SELECT song_id FROM songs WHERE title = 'Because of You'));
 
 -------------------------I Really Like You----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (9, 10);
+values ((SELECT album_id FROM albums WHERE album_name = 'Emotion'), (SELECT song_id FROM songs WHERE title = 'I Really Like You'));
 
 -------------------------Flashlight----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (10, 11);
+values ((SELECT album_id FROM albums WHERE album_name = 'Flashlight'), (SELECT song_id FROM songs WHERE title = 'Flashlight'));
 
 -------------------------Into the Unknown----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (11, 12);
+values ((SELECT album_id FROM albums WHERE album_name = 'Frozen 2'), (SELECT song_id FROM songs WHERE title = 'Into the Unknown'));
 
 -------------------------Show Yourself----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (11, 13);
+values ((SELECT album_id FROM albums WHERE album_name = 'Frozen 2'), (SELECT song_id FROM songs WHERE title = 'Show Yourself'));
 
 -------------------------Call Me Maybe----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (12, 14);
+values ((SELECT album_id FROM albums WHERE album_name = 'Kiss'), (SELECT song_id FROM songs WHERE title = 'Call Me Maybe'));
 
 -------------------------She's So Gone----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (13, 15);
+values ((SELECT album_id FROM albums WHERE album_name = 'Lemonade Mouth'), (SELECT song_id FROM songs WHERE title = 'She''s So Gone'));
 
 -------------------------Cruel Summer----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (14, 16);
+values ((SELECT album_id FROM albums WHERE album_name = 'Lover'), (SELECT song_id FROM songs WHERE title = 'Cruel Summer'));
 
 -------------------------One Last Time----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (15, 17);
+values ((SELECT album_id FROM albums WHERE album_name = 'My Everything'), (SELECT song_id FROM songs WHERE title = 'One Last Time'));
 
 -------------------------Problem----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (15, 18);
+values ((SELECT album_id FROM albums WHERE album_name = 'My Everything'), (SELECT song_id FROM songs WHERE title = 'Problem'));
 
 -------------------------Outside----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (16, 19);
+values ((SELECT album_id FROM albums WHERE album_name = 'Outside'), (SELECT song_id FROM songs WHERE title = 'Outside'));
 
 -------------------------2002----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (17, 20);
+values ((SELECT album_id FROM albums WHERE album_name = 'Speak Your Mind'), (SELECT song_id FROM songs WHERE title = '2002'));
 
 -------------------------Good Time----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (18, 21);
+values ((SELECT album_id FROM albums WHERE album_name = 'The Midsummer Station'), (SELECT song_id FROM songs WHERE title = 'Good Time'));
 
 -------------------------Attention----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (19, 22);
+values ((SELECT album_id FROM albums WHERE album_name = 'Voicenotes'), (SELECT song_id FROM songs WHERE title = 'Attention'));
 
 -------------------------Whatever----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (20, 23);
+values ((SELECT album_id FROM albums WHERE album_name = 'Whatever'), (SELECT song_id FROM songs WHERE title = 'Whatever'));
 
 -------------------------When I Get Old----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (21, 24);
+values ((SELECT album_id FROM albums WHERE album_name = 'When I Get Old'), (SELECT song_id FROM songs WHERE title = 'When I Get Old'));
 
 -------------------------Domino----------------------------------------------------------------------------
 insert into title_songs (album_id, song_id)
-values (22, 25);
+values ((SELECT album_id FROM albums WHERE album_name = 'Who You Are'), (SELECT song_id FROM songs WHERE title = 'Domino'));
 
 commit;
 select * from title_songs;
@@ -581,595 +581,595 @@ select * from artists;
 -------------------------That’s What I Like----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (1, 1, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Bruno Mars'), (SELECT song_id FROM songs WHERE title = 'That’s What I Like'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (2, 1, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'James Fauntleroy'), (SELECT song_id FROM songs WHERE title = 'That’s What I Like'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (2, 1, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'James Fauntleroy'), (SELECT song_id FROM songs WHERE title = 'That’s What I Like'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (3, 1, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Philip Lawrence'), (SELECT song_id FROM songs WHERE title = 'That’s What I Like'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (3, 1, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Philip Lawrence'), (SELECT song_id FROM songs WHERE title = 'That’s What I Like'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (4, 1, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jeremy Reeves'), (SELECT song_id FROM songs WHERE title = 'That’s What I Like'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (4, 1, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jeremy Reeves'), (SELECT song_id FROM songs WHERE title = 'That’s What I Like'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (5, 1, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jonathan Yip'), (SELECT song_id FROM songs WHERE title = 'That’s What I Like'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (5, 1, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jonathan Yip'), (SELECT song_id FROM songs WHERE title = 'That’s What I Like'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (6, 1, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ray Romulus'), (SELECT song_id FROM songs WHERE title = 'That’s What I Like'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (6, 1, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ray Romulus'), (SELECT song_id FROM songs WHERE title = 'That’s What I Like'), 30);
 
 -------------------------Chandelier----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (7, 2, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Sia'), (SELECT song_id FROM songs WHERE title = 'Chandelier'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (7, 2, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Sia'), (SELECT song_id FROM songs WHERE title = 'Chandelier'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (7, 2, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Sia'), (SELECT song_id FROM songs WHERE title = 'Chandelier'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 2, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jesse Shatkin'), (SELECT song_id FROM songs WHERE title = 'Chandelier'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 2, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jesse Shatkin'), (SELECT song_id FROM songs WHERE title = 'Chandelier'), 30);
 
 -------------------------Blank Space----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (9, 3, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Taylor Swift'), (SELECT song_id FROM songs WHERE title = 'Blank Space'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (9, 3, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Taylor Swift'), (SELECT song_id FROM songs WHERE title = 'Blank Space'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (9, 3, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Taylor Swift'), (SELECT song_id FROM songs WHERE title = 'Blank Space'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (10, 3, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Max Martin'), (SELECT song_id FROM songs WHERE title = 'Blank Space'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (10, 3, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Max Martin'), (SELECT song_id FROM songs WHERE title = 'Blank Space'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (11, 3, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Shellback'), (SELECT song_id FROM songs WHERE title = 'Blank Space'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (11, 3, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Shellback'), (SELECT song_id FROM songs WHERE title = 'Blank Space'), 30);
 
 -------------------------A Thousand Years----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (12, 4, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Christina Perri'), (SELECT song_id FROM songs WHERE title = 'A Thousand Years'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (12, 4, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Christina Perri'), (SELECT song_id FROM songs WHERE title = 'A Thousand Years'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (12, 4, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Christina Perri'), (SELECT song_id FROM songs WHERE title = 'A Thousand Years'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (13, 4, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'David Hodges'), (SELECT song_id FROM songs WHERE title = 'A Thousand Years'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (13, 4, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'David Hodges'), (SELECT song_id FROM songs WHERE title = 'A Thousand Years'), 30);
 
 -------------------------A Whole New World (End Title)------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (14, 5, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'ZAYN'), (SELECT song_id FROM songs WHERE title = 'A Whole New World (End Title)'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (15, 5, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Zhavia'), (SELECT song_id FROM songs WHERE title = 'A Whole New World (End Title)'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (16, 5, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Alan Menken'), (SELECT song_id FROM songs WHERE title = 'A Whole New World (End Title)'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (17, 5, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Tim Rice'), (SELECT song_id FROM songs WHERE title = 'A Whole New World (End Title)'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (18, 5, 40);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Steve Wright'), (SELECT song_id FROM songs WHERE title = 'A Whole New World (End Title)'), 40);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (19, 5, 40);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Chandru'), (SELECT song_id FROM songs WHERE title = 'A Whole New World (End Title)'), 40);
 
 -------------------------Speechless----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (20, 6, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Naomi Scott'), (SELECT song_id FROM songs WHERE title = 'Speechless'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (16, 6, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Alan Menken'), (SELECT song_id FROM songs WHERE title = 'Speechless'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (21, 6, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Benj Pasek'), (SELECT song_id FROM songs WHERE title = 'Speechless'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (21, 6, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Benj Pasek'), (SELECT song_id FROM songs WHERE title = 'Speechless'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (22, 6, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Justin Paul'), (SELECT song_id FROM songs WHERE title = 'Speechless'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (22, 6, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Justin Paul'), (SELECT song_id FROM songs WHERE title = 'Speechless'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (23, 6, 40);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Michael Kosarin'), (SELECT song_id FROM songs WHERE title = 'Speechless'), 40);
 
 -------------------------Dancing Queen----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (24, 7, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'ABBA'), (SELECT song_id FROM songs WHERE title = 'Dancing Queen'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (25, 7, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Bjorn Ulvaeus'), (SELECT song_id FROM songs WHERE title = 'Dancing Queen'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (25, 7, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Bjorn Ulvaeus'), (SELECT song_id FROM songs WHERE title = 'Dancing Queen'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (25, 7, 40);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Bjorn Ulvaeus'), (SELECT song_id FROM songs WHERE title = 'Dancing Queen'), 40);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (26, 7, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Benny Andersson'), (SELECT song_id FROM songs WHERE title = 'Dancing Queen'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (26, 7, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Benny Andersson'), (SELECT song_id FROM songs WHERE title = 'Dancing Queen'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (26, 7, 40);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Benny Andersson'), (SELECT song_id FROM songs WHERE title = 'Dancing Queen'), 40);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (27, 7, 40);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Sven Olof Walldoff'), (SELECT song_id FROM songs WHERE title = 'Dancing Queen'), 40);
 
 -------------------------Baby One More Time----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (28, 8, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Britney Spears'), (SELECT song_id FROM songs WHERE title = 'Baby One More Time'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (10, 8, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Max Martin'), (SELECT song_id FROM songs WHERE title = 'Baby One More Time'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (10, 8, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Max Martin'), (SELECT song_id FROM songs WHERE title = 'Baby One More Time'), 30);
 
 -------------------------Because of You----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (29, 9, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Kelly Clarkson'), (SELECT song_id FROM songs WHERE title = 'Because of You'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (29, 9, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Kelly Clarkson'), (SELECT song_id FROM songs WHERE title = 'Because of You'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (29, 9, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Kelly Clarkson'), (SELECT song_id FROM songs WHERE title = 'Because of You'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (13, 9, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'David Hodges'), (SELECT song_id FROM songs WHERE title = 'Because of You'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (13, 9, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'David Hodges'), (SELECT song_id FROM songs WHERE title = 'Because of You'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (13, 9, 40);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'David Hodges'), (SELECT song_id FROM songs WHERE title = 'Because of You'), 40);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (30, 9, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ben Moody'), (SELECT song_id FROM songs WHERE title = 'Because of You'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (30, 9, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ben Moody'), (SELECT song_id FROM songs WHERE title = 'Because of You'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (31, 9, 40);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'David Campbell'), (SELECT song_id FROM songs WHERE title = 'Because of You'), 40);
 
 -------------------------I Really Like You----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (32, 10, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Carly Rae Jepsen'), (SELECT song_id FROM songs WHERE title = 'I Really Like You'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (32, 10, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Carly Rae Jepsen'), (SELECT song_id FROM songs WHERE title = 'I Really Like You'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (32, 10, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Carly Rae Jepsen'), (SELECT song_id FROM songs WHERE title = 'I Really Like You'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (33, 10, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Peter Svensson'), (SELECT song_id FROM songs WHERE title = 'I Really Like You'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (33, 10, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Peter Svensson'), (SELECT song_id FROM songs WHERE title = 'I Really Like You'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (34, 10, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jacob Kasher'), (SELECT song_id FROM songs WHERE title = 'I Really Like You'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (34, 10, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jacob Kasher'), (SELECT song_id FROM songs WHERE title = 'I Really Like You'), 30);
 
 -------------------------Flashlight----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (35, 11, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jessie J'), (SELECT song_id FROM songs WHERE title = 'Flashlight'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (36, 11, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Sam Smith'), (SELECT song_id FROM songs WHERE title = 'Flashlight'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (36, 11, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Sam Smith'), (SELECT song_id FROM songs WHERE title = 'Flashlight'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (37, 11, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jason Moore'), (SELECT song_id FROM songs WHERE title = 'Flashlight'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (37, 11, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jason Moore'), (SELECT song_id FROM songs WHERE title = 'Flashlight'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (7, 11, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Sia'), (SELECT song_id FROM songs WHERE title = 'Flashlight'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (7, 11, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Sia'), (SELECT song_id FROM songs WHERE title = 'Flashlight'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (38, 11, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Christian Guzman'), (SELECT song_id FROM songs WHERE title = 'Flashlight'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (38, 11, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Christian Guzman'), (SELECT song_id FROM songs WHERE title = 'Flashlight'), 30);
 
 -------------------------Into the Unknown----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (39, 12, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Idina Menzel'), (SELECT song_id FROM songs WHERE title = 'Into the Unknown'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (40, 12, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'AURORA'), (SELECT song_id FROM songs WHERE title = 'Into the Unknown'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (41, 12, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Robert Lopez'), (SELECT song_id FROM songs WHERE title = 'Into the Unknown'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (41, 12, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Robert Lopez'), (SELECT song_id FROM songs WHERE title = 'Into the Unknown'), 30);
 
 -------------------------Show Yourself----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (39, 13, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Idina Menzel'), (SELECT song_id FROM songs WHERE title = 'Show Yourself'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (42, 13, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Evan Rachel Wood'), (SELECT song_id FROM songs WHERE title = 'Show Yourself'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (41, 13, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Robert Lopez'), (SELECT song_id FROM songs WHERE title = 'Show Yourself'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (41, 13, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Robert Lopez'), (SELECT song_id FROM songs WHERE title = 'Show Yourself'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (43, 13, 40);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Dave Metzger'), (SELECT song_id FROM songs WHERE title = 'Show Yourself'), 40);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (44, 13, 40);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Stephen Oremus'), (SELECT song_id FROM songs WHERE title = 'Show Yourself'), 40);
 
 -------------------------Call Me Maybe----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (32, 14, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Carly Rae Jepsen'), (SELECT song_id FROM songs WHERE title = 'Call Me Maybe'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (32, 14, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Carly Rae Jepsen'), (SELECT song_id FROM songs WHERE title = 'Call Me Maybe'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (32, 14, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Carly Rae Jepsen'), (SELECT song_id FROM songs WHERE title = 'Call Me Maybe'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (45, 14, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Josh Ramsay'), (SELECT song_id FROM songs WHERE title = 'Call Me Maybe'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (45, 14, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Josh Ramsay'), (SELECT song_id FROM songs WHERE title = 'Call Me Maybe'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 14, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Tavish Crowe'), (SELECT song_id FROM songs WHERE title = 'Call Me Maybe'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 14, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Tavish Crowe'), (SELECT song_id FROM songs WHERE title = 'Call Me Maybe'), 30);
 
 -------------------------She's So Gone----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (20, 15, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Naomi Scott'), (SELECT song_id FROM songs WHERE title = 'She''s So Gone'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 15, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Matthew Tishler'), (SELECT song_id FROM songs WHERE title = 'She''s So Gone'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 15, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Matthew Tishler'), (SELECT song_id FROM songs WHERE title = 'She''s So Gone'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 15, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Matthew Tishler'), (SELECT song_id FROM songs WHERE title = 'She''s So Gone'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 15, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Matthew Tishler'), (SELECT song_id FROM songs WHERE title = 'She''s So Gone'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (48, 15, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Maria Christensen'), (SELECT song_id FROM songs WHERE title = 'She''s So Gone'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (48, 15, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Maria Christensen'), (SELECT song_id FROM songs WHERE title = 'She''s So Gone'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (49, 15, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Shane Stevens'), (SELECT song_id FROM songs WHERE title = 'She''s So Gone'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (49, 15, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Shane Stevens'), (SELECT song_id FROM songs WHERE title = 'She''s So Gone'), 30);
 
 -------------------------Cruel Summer----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (9, 16, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Taylor Swift'), (SELECT song_id FROM songs WHERE title = 'Cruel Summer'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (9, 16, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Taylor Swift'), (SELECT song_id FROM songs WHERE title = 'Cruel Summer'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (9, 16, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Taylor Swift'), (SELECT song_id FROM songs WHERE title = 'Cruel Summer'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (50, 16, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jack Antonoff'), (SELECT song_id FROM songs WHERE title = 'Cruel Summer'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (50, 16, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jack Antonoff'), (SELECT song_id FROM songs WHERE title = 'Cruel Summer'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (51, 16, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Annie Clark'), (SELECT song_id FROM songs WHERE title = 'Cruel Summer'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (51, 16, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Annie Clark'), (SELECT song_id FROM songs WHERE title = 'Cruel Summer'), 30);
 
 -------------------------One Last Time----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (52, 17, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ariana Grande'), (SELECT song_id FROM songs WHERE title = 'One Last Time'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (53, 17, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'David Guetta'), (SELECT song_id FROM songs WHERE title = 'One Last Time'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (53, 17, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'David Guetta'), (SELECT song_id FROM songs WHERE title = 'One Last Time'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (54, 17, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Carl Falk'), (SELECT song_id FROM songs WHERE title = 'One Last Time'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (54, 17, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Carl Falk'), (SELECT song_id FROM songs WHERE title = 'One Last Time'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (55, 17, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Giorgio Tuinfort'), (SELECT song_id FROM songs WHERE title = 'One Last Time'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (55, 17, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Giorgio Tuinfort'), (SELECT song_id FROM songs WHERE title = 'One Last Time'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (56, 17, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Rami Yacoub'), (SELECT song_id FROM songs WHERE title = 'One Last Time'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (56, 17, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Rami Yacoub'), (SELECT song_id FROM songs WHERE title = 'One Last Time'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (57, 17, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Savan Kotecha'), (SELECT song_id FROM songs WHERE title = 'One Last Time'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (57, 17, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Savan Kotecha'), (SELECT song_id FROM songs WHERE title = 'One Last Time'), 30);
 
 -------------------------Problem----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (52, 18, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ariana Grande'), (SELECT song_id FROM songs WHERE title = 'Problem'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (10, 18, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Max Martin'), (SELECT song_id FROM songs WHERE title = 'Problem'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (10, 18, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Max Martin'), (SELECT song_id FROM songs WHERE title = 'Problem'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (57, 18, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Savan Kotecha'), (SELECT song_id FROM songs WHERE title = 'Problem'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (57, 18, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Savan Kotecha'), (SELECT song_id FROM songs WHERE title = 'Problem'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (58, 18, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ilya'), (SELECT song_id FROM songs WHERE title = 'Problem'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (58, 18, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ilya'), (SELECT song_id FROM songs WHERE title = 'Problem'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (59, 18, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Iggy Azalea'), (SELECT song_id FROM songs WHERE title = 'Problem'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (59, 18, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Iggy Azalea'), (SELECT song_id FROM songs WHERE title = 'Problem'), 30);
 
 -------------------------Outside----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (60, 19, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Calvin Harris'), (SELECT song_id FROM songs WHERE title = 'Outside'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (60, 19, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Calvin Harris'), (SELECT song_id FROM songs WHERE title = 'Outside'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (60, 19, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Calvin Harris'), (SELECT song_id FROM songs WHERE title = 'Outside'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (61, 19, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ellie Goulding'), (SELECT song_id FROM songs WHERE title = 'Outside'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (61, 19, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ellie Goulding'), (SELECT song_id FROM songs WHERE title = 'Outside'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (61, 19, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ellie Goulding'), (SELECT song_id FROM songs WHERE title = 'Outside'), 30);
 
 -------------------------2002----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (62, 20, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Anne Marie'), (SELECT song_id FROM songs WHERE title = '2002'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (62, 20, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Anne Marie'), (SELECT song_id FROM songs WHERE title = '2002'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (62, 20, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Anne Marie'), (SELECT song_id FROM songs WHERE title = '2002'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (63, 20, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ed Sheeran'), (SELECT song_id FROM songs WHERE title = '2002'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (63, 20, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ed Sheeran'), (SELECT song_id FROM songs WHERE title = '2002'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (64, 20, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Julia Michaels'), (SELECT song_id FROM songs WHERE title = '2002'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (64, 20, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Julia Michaels'), (SELECT song_id FROM songs WHERE title = '2002'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (65, 20, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Steve Mac'), (SELECT song_id FROM songs WHERE title = '2002'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (65, 20, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Steve Mac'), (SELECT song_id FROM songs WHERE title = '2002'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (66, 20, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Benjamin Levin'), (SELECT song_id FROM songs WHERE title = '2002'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (66, 20, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Benjamin Levin'), (SELECT song_id FROM songs WHERE title = '2002'), 30);
 
 -------------------------Good Time----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (67, 21, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Owl City'), (SELECT song_id FROM songs WHERE title = 'Good Time'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (68, 21, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Matthew Thiessen'), (SELECT song_id FROM songs WHERE title = 'Good Time'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (68, 21, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Matthew Thiessen'), (SELECT song_id FROM songs WHERE title = 'Good Time'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (69, 21, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Adam Young'), (SELECT song_id FROM songs WHERE title = 'Good Time'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (69, 21, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Adam Young'), (SELECT song_id FROM songs WHERE title = 'Good Time'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (70, 21, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Brian Lee'), (SELECT song_id FROM songs WHERE title = 'Good Time'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (70, 21, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Brian Lee'), (SELECT song_id FROM songs WHERE title = 'Good Time'), 30);
 
 -------------------------Attention----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (71, 22, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Charlie Puth'), (SELECT song_id FROM songs WHERE title = 'Attention'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (71, 22, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Charlie Puth'), (SELECT song_id FROM songs WHERE title = 'Attention'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (71, 22, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Charlie Puth'), (SELECT song_id FROM songs WHERE title = 'Attention'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (34, 22, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jacob Kasher'), (SELECT song_id FROM songs WHERE title = 'Attention'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (34, 22, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jacob Kasher'), (SELECT song_id FROM songs WHERE title = 'Attention'), 30);
 
 -------------------------Whatever----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (72, 23, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Kygo'), (SELECT song_id FROM songs WHERE title = 'Whatever'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (72, 23, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Kygo'), (SELECT song_id FROM songs WHERE title = 'Whatever'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (72, 23, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Kygo'), (SELECT song_id FROM songs WHERE title = 'Whatever'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (73, 23, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Ava Max'), (SELECT song_id FROM songs WHERE title = 'Whatever'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (74, 23, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Shakira'), (SELECT song_id FROM songs WHERE title = 'Whatever'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (74, 23, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Shakira'), (SELECT song_id FROM songs WHERE title = 'Whatever'), 30);
 
 -------------------------When I Get Old----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (75, 24, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Christopher'), (SELECT song_id FROM songs WHERE title = 'When I Get Old'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (75, 24, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Christopher'), (SELECT song_id FROM songs WHERE title = 'When I Get Old'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (76, 24, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = '청하'), (SELECT song_id FROM songs WHERE title = 'When I Get Old'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (77, 24, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Dag Holtan Hartwig'), (SELECT song_id FROM songs WHERE title = 'When I Get Old'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (78, 24, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jeppe Nissen'), (SELECT song_id FROM songs WHERE title = 'When I Get Old'), 30);
 
 -------------------------Domino----------------------------------------------------------------------------
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (35, 25, 10);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jessie J'), (SELECT song_id FROM songs WHERE title = 'Domino'), 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (10, 25, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Max Martin'), (SELECT song_id FROM songs WHERE title = 'Domino'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (10, 25, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Max Martin'), (SELECT song_id FROM songs WHERE title = 'Domino'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (79, 25, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Claude Kelly'), (SELECT song_id FROM songs WHERE title = 'Domino'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (79, 25, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Claude Kelly'), (SELECT song_id FROM songs WHERE title = 'Domino'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (80, 25, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jessica Cornish'), (SELECT song_id FROM songs WHERE title = 'Domino'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (80, 25, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Jessica Cornish'), (SELECT song_id FROM songs WHERE title = 'Domino'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (81, 25, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Lukasz Gottwald'), (SELECT song_id FROM songs WHERE title = 'Domino'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (81, 25, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Lukasz Gottwald'), (SELECT song_id FROM songs WHERE title = 'Domino'), 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (82, 25, 20);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Henry Walter'), (SELECT song_id FROM songs WHERE title = 'Domino'), 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (82, 25, 30);
+values ((SELECT artist_id FROM artists WHERE artist_name = 'Henry Walter'), (SELECT song_id FROM songs WHERE title = 'Domino'), 30);
 
 
 commit;
@@ -1178,103 +1178,103 @@ select * from artist_roles;
 --------------------------------------SONG_GENRE 테이블----------------------------------------------------------
 -------------------------That’s What I Like----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (1, 20);
+values ((SELECT song_id FROM songs WHERE title = 'That’s What I Like'), 20);
 
 -------------------------Chandelier----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (2, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Chandelier'), 20);
 
 -------------------------Blank Space----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (3, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Blank Space'), 20);
 
 -------------------------A Thousand Years----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (4, 20);
+values ((SELECT song_id FROM songs WHERE title = 'A Thousand Years'), 20);
 
 -------------------------A Whole New World (End Title)------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (5, 70);
+values ((SELECT song_id FROM songs WHERE title = 'A Whole New World (End Title)'), 70);
 
 -------------------------Speechless----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (6, 70);
+values ((SELECT song_id FROM songs WHERE title = 'Speechless'), 70);
 
 -------------------------Dancing Queen----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (7, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Dancing Queen'), 20);
 
 -------------------------Baby One More Time----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (8, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Baby One More Time'), 20);
 
 -------------------------Because of You----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (9, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Because of You'), 20);
 
 -------------------------I Really Like You----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (10, 20);
+values ((SELECT song_id FROM songs WHERE title = 'I Really Like You'), 20);
 
 -------------------------Flashlight----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (11, 70);
+values ((SELECT song_id FROM songs WHERE title = 'Flashlight'), 70);
 
 -------------------------Into the Unknown----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (12, 70);
+values ((SELECT song_id FROM songs WHERE title = 'Into the Unknown'), 70);
 
 -------------------------Show Yourself----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (13, 70);
+values ((SELECT song_id FROM songs WHERE title = 'Show Yourself'), 70);
 
 -------------------------Call Me Maybe----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (14, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Call Me Maybe'), 20);
 
 -------------------------She's So Gone----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (15, 70);
+values ((SELECT song_id FROM songs WHERE title = 'She''s So Gone'), 70);
 
 -------------------------Cruel Summer----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (16, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Cruel Summer'), 20);
 
 -------------------------One Last Time----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (17, 20);
+values ((SELECT song_id FROM songs WHERE title = 'One Last Time'), 20);
 
 -------------------------Problem----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (18, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Problem'), 20);
 
 -------------------------Outside----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (19, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Outside'), 20);
 
 -------------------------2002----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (20, 20);
+values ((SELECT song_id FROM songs WHERE title = '2002'), 20);
 
 -------------------------Good Time----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (21, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Good Time'), 20);
 
 -------------------------Attention----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (22, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Attention'), 20);
 
 -------------------------Whatever----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (23, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Whatever'), 20);
 
 -------------------------When I Get Old----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (24, 20);
+values ((SELECT song_id FROM songs WHERE title = 'When I Get Old'), 20);
 
 -------------------------Domino----------------------------------------------------------------------------
 insert into song_genre (song_id, genre_id)
-values (25, 20);
+values ((SELECT song_id FROM songs WHERE title = 'Domino'), 20);
 
 commit;
 select * from song_genre;
