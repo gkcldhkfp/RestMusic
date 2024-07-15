@@ -18,7 +18,7 @@
         rel="stylesheet" 
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
         crossorigin="anonymous" />
-        
+    <link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->   
     <style>
     img:hover {
         filter: brightness(80%);
@@ -34,7 +34,7 @@
     </header>
     
     <div class="container" style="padding: 30px;">
-        <div class="m-5 ">
+        <div class="m-3 ">
             <div class="p-3">
                 <c:url var="artistCover" value="/artist/image/${artist.artistImage}" />
                 <!-- 기본값 이미지 주소 지정 -->
@@ -114,7 +114,7 @@
                                             <div class="card-body"> <!-- 상하 패딩 줄임 -->
                                                 <h6 class="card-title mb-1">
                                                     <a href="${albumPage}" style="color: black; text-decoration: none; font-weight: bold; font-size: 0.9rem;"
-                                                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${a.albumName}</a>
+                                                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" class="fs-6">${a.albumName}</a>
                                                 </h6>
                                                 <p class="card-text mb-1" style="font-size: 0.8rem;">
                                                     <c:forEach items="${fn:split(a.artistName, ',')}" var="artistName" varStatus="statusName">
@@ -122,7 +122,7 @@
                                                         <c:url var="artistPage" value="/artist/songs">
                                                             <c:param name="artistId" value="${fn:trim(artistId)}" />
                                                         </c:url>
-                                                        <a href="${artistPage}"  
+                                                        <a href="${artistPage}"  class="fs-6"
                                                             style="color: black; text-decoration: none;"
                                                             onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${fn:trim(artistName)}
                                                         </a>
@@ -130,8 +130,8 @@
                                                     </c:forEach>
                                                 </p>
                                                 <br/>
-                                                <p class="card-text mb-1" style="font-size: 0.75rem;">${a.albumType}</p>
-                                                <p class="card-text" style="color:gray; font-size: 0.75rem;">
+                                                <p class="card-text mb-1 fs-6" style="font-size: 0.75rem;">${a.albumType}</p>
+                                                <p class="card-text fs-6" style="color:gray; font-size: 0.75rem;">
                                                     <fmt:formatDate value="${a.albumReleaseDate}" pattern="yyyy-MM-dd" />
                                                 </p>
                                             </div>

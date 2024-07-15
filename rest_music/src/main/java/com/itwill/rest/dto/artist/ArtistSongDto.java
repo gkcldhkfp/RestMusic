@@ -8,6 +8,7 @@ public class ArtistSongDto {
 	private String artistIds;
 	private Integer songId;
 	private Integer albumId;
+	private String albumName;
 	private String albumImage;
 	private String title;
 	private String artistName;

@@ -11,7 +11,7 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     rel="stylesheet"
     crossorigin="anonymous" />
-
+<link href="<c:url value='/css/common.css' />" rel="stylesheet"> <!-- 공통 CSS 파일 포함 -->
 <style>
 .form-find-id {
     max-width: 400px;
@@ -20,12 +20,13 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    
 }
 
 .form-find-id .form-find-id-heading {
     text-align: center;
-    margin-bottom: 20px;
-    font-weight: bold;
+
 }
 
 .form-find-id .form-control {
@@ -78,7 +79,8 @@
     <div class="container">
         <form class="form-find-id" method="post"
             action="<%=request.getContextPath()%>/user/findUserId">
-            <h2 class="form-find-id-heading">아이디 찾기</h2>
+            <img src="<c:url value='/data/logo.png'/>" alt="Rest Logo" style="height: 40px;">
+            <h3 style="margin-top: 20px; margin-bottom: 15px; font-size:1.6rem;">아이디 찾기</h3>
             <c:if
                 test="${not empty param.result and param.result eq 'f'}">
                 <div class="text-danger">일치하는 정보가 없습니다.</div>

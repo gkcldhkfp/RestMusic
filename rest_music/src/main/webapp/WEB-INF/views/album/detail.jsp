@@ -75,7 +75,7 @@
 					<%@ include file="../fragments/header.jspf" %>
 				</header>
 				<main>
-					<div class="mt-2 card">
+					<div class="container mt-2 card">
 						<div class="card-header">
 							<section>
 								<div class="fw-bold">"${album.albumName}" 앨범정보</div>

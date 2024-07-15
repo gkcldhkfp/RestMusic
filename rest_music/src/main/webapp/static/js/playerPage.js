@@ -228,9 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 			function needToPaid() {
 				// const currentUrl = window.location.href;
-				if(confirm('결제가 필요합니다. 결제 페이지로 이동하시겠습니까?'));
-				parent.mainFrame.location.href = "/Rest/purchase";
-				// window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
+				if(confirm('결제가 필요합니다. 결제 페이지로 이동하시겠습니까?')){
+    				parent.mainFrame.location.href = "/Rest/purchase";
+    				// window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
+				}
 			}
 
 			// 정지버튼시 호출하는 함수
