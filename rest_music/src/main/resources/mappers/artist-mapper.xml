@@ -13,8 +13,8 @@
             al.album_id, 
             al.album_image, 
             s.title,
-            LISTAGG(a.artist_name, ', ') WITHIN GROUP (ORDER BY a.artist_name) AS artist_name,
-            LISTAGG(a.artist_id, ', ') WITHIN GROUP (ORDER BY a.artist_name) AS artist_ids
+            LISTAGG(DISTINCT a.artist_name, ', ') WITHIN GROUP (ORDER BY a.artist_name) AS artist_name,
+            LISTAGG(DISTINCT a.artist_id, ', ') WITHIN GROUP (ORDER BY a.artist_name) AS artist_ids
         FROM 
             songs s
         JOIN 
@@ -38,18 +38,34 @@
     </select>
     
     <select id="selectAlbumsByArtistId" resultType="ArtistAlbumDto">
-        SELECT DISTINCT 
-        a.album_id, 
-        a.album_name, 
-        a.album_image, 
-        a.album_type, 
-        a.album_release_date, 
-        art.artist_name
-        FROM albums a
+SELECT DISTINCT 
+            a.album_id, 
+            a.album_name, 
+            a.album_image, 
+            a.album_type, 
+            a.album_release_date, 
+            (SELECT LISTAGG(DISTINCT art2.artist_name, ', ') WITHIN GROUP (ORDER BY art2.artist_name)
+             FROM artists art2 
+             JOIN artist_roles ar2 ON art2.artist_id = ar2.artist_id
+             JOIN songs s2 ON ar2.song_id = s2.song_id
+             JOIN title_songs ts ON s2.song_id = ts.song_id
+             WHERE s2.album_id = a.album_id 
+             AND ar2.role_id = 10) as artist_name,
+             (SELECT LISTAGG(DISTINCT art2.artist_id, ', ') WITHIN GROUP (ORDER BY art2.artist_name)
+             FROM artists art2 
+             JOIN artist_roles ar2 ON art2.artist_id = ar2.artist_id
+             JOIN songs s2 ON ar2.song_id = s2.song_id
+             JOIN title_songs ts ON s2.song_id = ts.song_id
+             WHERE s2.album_id = a.album_id 
+             AND ar2.role_id = 10) as artist_id
+        FROM 
+            albums a
         JOIN songs s ON a.album_id = s.album_id
         JOIN artist_roles ar ON s.song_id = ar.song_id
         JOIN artists art ON ar.artist_id = art.artist_id
-        WHERE ar.artist_id = #{artistId}
-        ORDER BY a.album_release_date DESC
+        WHERE 
+            ar.artist_id = #{artistId}
+        ORDER BY 
+            a.album_release_date DESC
     </select>
 </mapper>

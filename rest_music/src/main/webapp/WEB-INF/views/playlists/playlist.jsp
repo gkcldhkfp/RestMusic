@@ -11,6 +11,12 @@
                 crossorigin="anonymous" />
             <link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
             <title>Playlist</title>
+            
+            <style>
+            img:hover {
+                filter: brightness(80%);
+            }
+    </style>
         </head>
 
         <body>
@@ -21,7 +27,7 @@
                 </div>
             </header>
 
-            <div class="container-fluid">
+            <div class="container">
                 <div class="m-5">
                     <h2 style="font-weight: bold;">플레이리스트</h2>
                     <hr>

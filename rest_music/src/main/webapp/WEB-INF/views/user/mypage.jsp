@@ -21,7 +21,7 @@
                 </div>
             </header>
 
-            <div class="container-fluid">
+            <div class="container">
                 <div class="m-5">
                     <h2 style="font-weight: bold;">마이페이지</h2>
                     <hr>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <br>
-                    <h2 style="font-size: 1.2rem; text-align : center;">플레이리스트</h2>
+                    <h2 style="font-size: 1.2rem; text-align : center; font-weight: bold;">플레이리스트</h2>
                     <hr>
                     <!-- 추가할 박스 (카드) -->
                     <div class="card">
@@ -62,7 +62,7 @@
                             data-bs-toggle="modal" data-bs-target="#addPlaylistModal">플레이리스트 추가</button>
                     </div>
                     <br>
-                    <h2 id="userLikesSection" style="font-size: 1.2rem; text-align : center;">좋아요 누른 곡</h2>
+                    <h2 id="userLikesSection" style="font-size: 1.2rem; text-align : center; font-weight: bold;">좋아요 누른 곡</h2>
                     <hr>
                     <!-- 추가할 박스 (카드) -->
                     <div class="card">

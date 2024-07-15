@@ -166,9 +166,7 @@
         )
         WHERE rnum >= #{startRow}
     </select>
-
-
-    
+        
     <!-- 좋아요 개수 확인 -->
     <select id="countSongLikes" resultType="Integer">
         select count(*)
@@ -178,110 +176,144 @@
     
     <!-- TOP30 -->
     <select id="getAllSongs" resultType="SongChartDto">
-        select
+        WITH unique_artists AS (
+            SELECT
+                s.song_id,
+                LISTAGG(distinct ar.artist_id, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_id,
+                LISTAGG(DISTINCT ar.artist_name, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_name
+            FROM songs s
+            JOIN artist_roles role ON s.song_id = role.song_id
+            JOIN artists ar ON role.artist_id = ar.artist_id
+            WHERE role.role_id = (SELECT role_id FROM role_code WHERE role_name = '가수')
+            GROUP BY s.song_id
+        )
+        SELECT
             s.song_id,
             al.album_id,
             al.album_image,
             s.title,
-            ar.artist_id,
-            ar.artist_name,
+            ua.artist_id AS artist_id,
+            ua.artist_name AS artist_name,
             al.album_name,
-            count(l.song_id) as likes,
+            COUNT(l.song_id) AS likes,
             s.song_path,
             s.video_link
-        from songs s
-        join albums al on s.album_id = al.album_id
-        join artist_roles role on s.song_id = role.song_id
-        join artists ar on role.artist_id = ar.artist_id
-        left join likes l on s.song_id = l.song_id
-        where role.role_id = (select role_id from role_code where role_name = '가수')
-        group by
+        FROM songs s
+        JOIN albums al ON s.album_id = al.album_id
+        JOIN unique_artists ua ON s.song_id = ua.song_id
+        LEFT JOIN likes l ON s.song_id = l.song_id
+        GROUP BY
             s.song_id,
             al.album_id,
             al.album_image,
             s.title,
-            ar.artist_id,
-            ar.artist_name,
+            ua.artist_id,
+            ua.artist_name,
             al.album_name,
             s.song_path,
             s.video_link
-        order by count(l.song_id) desc
+        ORDER BY COUNT(l.song_id) DESC
     </select>
 
     <!-- 장르별 차트 -->
     <select id="getSongsByGenre" resultType="SongChartDto">
-        select
+        WITH unique_artists AS (
+            SELECT
+                so.song_id,
+                LISTAGG(DISTINCT ar.artist_id, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_id,
+                LISTAGG(DISTINCT ar.artist_name, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_name
+            FROM songs so
+            JOIN artist_roles role ON so.song_id = role.song_id
+            JOIN artists ar ON role.artist_id = ar.artist_id
+            JOIN song_genre sg ON so.song_id = sg.song_id
+            WHERE sg.genre_id = (SELECT genre_id FROM genre_code WHERE genre_name = #{genreName})
+            AND role.role_id = (SELECT role_id FROM role_code WHERE role_name = '가수')
+            GROUP BY so.song_id
+        )
+        SELECT
             so.song_id,
             gc.genre_name,
             al.album_id,
             al.album_image,
             so.title,
-            ar.artist_id,
-            ar.artist_name,
+            ua.artist_id AS artist_id,
+            ua.artist_name AS artist_name,
             al.album_name,
-            count(l.song_id) as likes,
+            COUNT(l.song_id) AS likes,
             so.song_path,
             so.video_link
-        from songs so
-        join albums al on so.album_id = al.album_id
-        join song_genre sg on so.song_id = sg.song_id
-        join genre_code gc on sg.genre_id = gc.genre_id
-        join artist_roles role on so.song_id = role.song_id
-        join artists ar on role.artist_id = ar.artist_id
-        left join likes l on so.song_id = l.song_id
-        where sg.genre_id = (select genre_id from genre_code where genre_name = #{genreName})
-        and role.role_id = (select role_id from role_code where role_name = '가수')
-        group by
+        FROM songs so
+        JOIN albums al ON so.album_id = al.album_id
+        JOIN song_genre sg ON so.song_id = sg.song_id
+        JOIN genre_code gc ON sg.genre_id = gc.genre_id
+        JOIN unique_artists ua ON so.song_id = ua.song_id
+        LEFT JOIN likes l ON so.song_id = l.song_id
+        GROUP BY
             so.song_id,
             gc.genre_name,
             al.album_id,
             al.album_image,
             so.title,
-            ar.artist_id,
-            ar.artist_name,
+            ua.artist_id,
+            ua.artist_name,
             al.album_name,
             so.song_path,
             so.video_link
-        order by count(l.song_id) desc
+        ORDER BY COUNT(l.song_id) DESC
     </select>
-    
-    
+      
     <!-- 최신 음악 -->
     <select id="getNewestSongs" resultType="SongChartDto">
-        select
+        WITH unique_artists AS (
+            SELECT
+                s.song_id,
+                LISTAGG(distinct ar.artist_id, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_id,
+                LISTAGG(DISTINCT ar.artist_name, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_name
+            FROM songs s
+            JOIN artist_roles role ON s.song_id = role.song_id
+            JOIN artists ar ON role.artist_id = ar.artist_id
+            WHERE role.role_id = (SELECT role_id FROM role_code WHERE role_name = '가수')
+            GROUP BY s.song_id
+        )
+        SELECT
             s.song_id,
             al.album_id,
             al.album_image,
             al.album_release_date,
             s.title,
-            ar.artist_id,
-            ar.artist_name,
+            ua.artist_id AS artist_id,
+            ua.artist_name AS artist_name,
             al.album_name,
-            count(l.song_id) as likes,
+            COUNT(l.song_id) AS likes,
             s.song_path,
             s.video_link
-        from songs s
-        join albums al on s.album_id = al.album_id
-        join artist_roles role on s.song_id = role.song_id
-        join artists ar on role.artist_id = ar.artist_id
-        left join likes l on s.song_id = l.song_id
-        where role.role_id = (select role_id from role_code where role_name = '가수')
-        group by
+        FROM songs s
+        JOIN albums al ON s.album_id = al.album_id
+        JOIN unique_artists ua ON s.song_id = ua.song_id
+        LEFT JOIN likes l ON s.song_id = l.song_id
+        GROUP BY
             s.song_id,
             al.album_id,
             al.album_image,
             al.album_release_date,
             s.title,
-            ar.artist_id,
-            ar.artist_name,
+            ua.artist_id,
+            ua.artist_name,
             al.album_name,
             s.song_path,
             s.video_link
         order by al.album_release_date desc
     </select>
     
+    <!-- 페이지와 페이지 크기를 이용해 노래 목록을 가져오는 쿼리 -->
+    <select id="findSongs" resultType="SongChartDto">
+         SELECT * FROM (
+            SELECT a.*, ROW_NUMBER() OVER (ORDER BY a.song_Id) AS rn 
+            FROM songs a
+        ) WHERE rn BETWEEN #{offset} AND #{end}
+    </select>
     
-       
+      
 </mapper>
 
 

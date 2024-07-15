@@ -23,7 +23,7 @@
 <body>
     <%@ include file="../fragments/header.jspf"%>
 
-    <div class="container-fluid" style="padding: 80px;">
+    <div class="container">
 
         <div class="m-5 ">
             <div class="p-3">
@@ -46,7 +46,9 @@
                         </p>
                         <p class="mt-2">
                             
-                            앨범<span class="ms-3" style="cursor: pointer;" onclick="location.href='${albumDetailPage}'" >${data.albumName}</span>
+                            앨범<span class="ms-3" style="cursor: pointer;" 
+                            onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" 
+                            onclick="location.href='${albumDetailPage}'" >${data.albumName}</span>
                         </p>
                         <p class="mt-2" id="genre">
                             장르

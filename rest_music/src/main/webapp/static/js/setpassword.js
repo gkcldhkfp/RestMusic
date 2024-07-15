@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkPassword(event) {
         const password = event.target.value;
         const checkPasswordResult = document.querySelector('div#checkPasswordResult');
-        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/;
 
         if (!passwordPattern.test(password)) {
             passwordChecked = false;
-            checkPasswordResult.innerHTML = '8자 이상의 영문 대/소문자와 숫자만 사용 가능합니다.';
+            checkPasswordResult.innerHTML = '비밀번호는 8자~30자의 영문 대/소문자와 숫자를 포함해야 합니다.';
             checkPasswordResult.classList.add('text-danger');
             checkPasswordResult.classList.remove('text-success');
         } else {
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.querySelector('input#password').value;
         const confirmPassword = event.target.value;
         const checkPasswordResult = document.querySelector('div#checkPasswordResult');
-    	const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    	const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/;
         
         // 비밀번호 확인 입력 필드의 텍스트가 변경될 때마다 오류 메시지를 지웁니다.
         // 수정된 부분: 입력 필드의 값이 변경되면 오류 메시지를 지우고 상태를 확인합니다.
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 비밀번호 패턴이 유효하지 않은 경우
         if (!passwordPattern.test(password)) {
             passwordChecked = false;
-            checkPasswordResult.innerHTML = '8자 이상의 영문 대/소문자와 숫자만 사용 가능합니다.';
+            checkPasswordResult.innerHTML = '비밀번호는 8자~30자의 영문 대/소문자와 숫자를 포함해야 합니다.';
             checkPasswordResult.classList.add('text-danger');
             checkPasswordResult.classList.remove('text-success');
             return;
