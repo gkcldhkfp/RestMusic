@@ -40,7 +40,7 @@
     </header>
 
     <div class="container" style="padding: 30px;">
-        <div class="m-5 ">
+        <div class="m-3 ">
             <div class="p-3">
                 <!-- 아티스트 이미지 주소 지정 -->
                 <c:url var="artistCover"
@@ -149,13 +149,19 @@
                                     <img src="${albumImage}" width="80px" height="80px">
                                     </a>
                                 </td>
-                                <td style="text-align: left; vertical-align: middle; font-size: 14px;">
+                                <td style="text-align: left; vertical-align: middle; font-size: 14px;" class="fs-6">
                                     <a href="${songPage}"
                                     style="color: black; text-decoration: none;"
                                     onmouseover="this.style.color='blue';"
-                                    onmouseout="this.style.color='black';">${s.title}</a>
+                                    onmouseout="this.style.color='black';">${s.title}</a><br>
+                                    <span style="display: inline-block; margin-top: 5px;"> <!-- 여기서 margin-top 값을 조정하여 간격을 조절 -->
+                                    <a href="${albumPage}"
+                                    style="color: gray; text-decoration: none;"
+                                    onmouseover="this.style.color='blue';"
+                                    onmouseout="this.style.color='gray';">${s.albumName}</a>
+                                    </span>
                                 </td>
-                                <td style="text-align:left; vertical-align: middle; font-size: 14px;">
+                                <td style="text-align:left; vertical-align: middle; font-size: 14px;" class="fs-6">
                                     <c:forEach items="${fn:split(s.artistName, ',')}" var="artistName" varStatus="statusName">
                                         <c:set var="artistId" value="${fn:split(s.artistIds, ',')[statusName.index]}" />
                                         <c:url var="artistPage" value="/artist/songs">

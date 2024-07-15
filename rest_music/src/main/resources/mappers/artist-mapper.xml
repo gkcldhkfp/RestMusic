@@ -12,6 +12,7 @@
             s.song_id, 
             al.album_id, 
             al.album_image, 
+            al.album_name,
             s.title,
             LISTAGG(DISTINCT a.artist_name, ', ') WITHIN GROUP (ORDER BY a.artist_name) AS artist_name,
             LISTAGG(DISTINCT a.artist_id, ', ') WITHIN GROUP (ORDER BY a.artist_name) AS artist_ids
@@ -32,7 +33,7 @@
                 AND ar.role_id = 10
             )
         GROUP BY 
-            s.song_id, al.album_id, al.album_image, s.title
+            s.song_id, al.album_id, al.album_image, al.album_name, s.title
         ORDER BY 
             s.title
     </select>

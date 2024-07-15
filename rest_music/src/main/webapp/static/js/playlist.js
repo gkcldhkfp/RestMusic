@@ -97,11 +97,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         <img alt="songImg" src="${albumImageSrc}" width="80px" height="80px">
                     </a>
                 </td>
-                <td style="text-align: left; vertical-align: middle; font-size: 14px;">
+                <td style="text-align: left; vertical-align: middle; font-size: 14px;" class="fs-6">
                     <a href="${songPage}" style="color: black; text-decoration: none;"
-                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${playlistSong.title}</a>
+                        onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';">${playlistSong.title}</a><br>
+                    <span style="display: inline-block; margin-top: 5px;">
+                    <a href="${albumPage}" style="color: gray; text-decoration: none;"
+                    onmouseover="this.style.color='blue';" onmouseout="this.style.color='gray';">${playlistSong.albumName}</a>
+                    </span>
                 </td>
-                <td style="text-align: left; vertical-align: middle; font-size: 14px">
+                <td style="text-align: left; vertical-align: middle; font-size: 14px" class="fs-6">
                     ${singerLinksHtml}
                 </td>
                 <td style="text-align: center;">
