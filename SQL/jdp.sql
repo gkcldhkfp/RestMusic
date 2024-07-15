@@ -13,6 +13,12 @@ insert into songs (album_id, title, song_path, lyrics) values ((select album_id 
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'GET UP'), 'Get Up', 'NewJeans - Get Up.mp3', 'NewJeans - Get Up.txt');
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'GET UP'), 'ASAP', 'NewJeans - ASAP.mp3', 'NewJeans - ASAP.txt');
 
+-- 타이틀 곡 정보 삽입
+-- NewJeans 뉴진스	GET UP
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'GET UP'), (select song_id from songs where title='Super Shy'));
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'GET UP'), (select song_id from songs where title='ETA'));
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'GET UP'), (select song_id from songs where title='Cool With You'));
+
 
 -- 새로 생성된 song_id를 7로 가정
 
@@ -64,8 +70,6 @@ insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Gigi'), (select song_id from songs where title='ASAP'), 30); -- 작사가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '250'), (select song_id from songs where title='ASAP'), 40); -- 편곡가
 
--- 타이틀 곡 정보 삽입
-insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'GET UP'), (select song_id from songs where title='Super Shy')); -- album_id는 "밤양갱" 앨범의 ID, song_id는 새로 추가된 곡의 ID
 
 
 
@@ -84,6 +88,12 @@ insert into albums (album_name, album_image, album_type, album_release_date) val
 -- 곡 정보 삽입
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'midas touch'), 'midas touch', 'kiss of life - midas touch.mp3', 'kiss of life - midas touch.txt');
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'midas touch'), 'nothing', 'kiss of life - nothing.mp3', 'kiss of life - nothing.txt');
+
+-- 타이틀 곡 정보 삽입
+
+-- kissOfLife 키스오브라이프	midas touch
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'midas touch'), (select song_id from songs where title='midas touch'));
+
 
 
 -- 새로 생성된 song_id를 101부터 가정
@@ -144,6 +154,11 @@ insert into song_genre (song_id, genre_id) values ((select song_id from songs wh
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='monsters_intro'), 30);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='stuck in the middle'), 10);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='stuck in the middle_remix'), 30);
+
+-- 타이틀 곡 정보 삽입
+
+-- babymonster 베이비몬스터	babymons7er
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'babymons7er'), (select song_id from songs where title='sheesh'));
 
 -- 아티스트 정보 삽입 (베이비몬스터와 작사가 작곡가 편곡가)
 insert into artists (artist_name, artist_image, artist_description) values ('babymonster', 'babymonster.jpg', 'babymonster.txt');
@@ -216,6 +231,11 @@ insert into song_genre (song_id, genre_id) values ((select song_id from songs wh
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='midnight fiction'), 30);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='lucky girl syndrome'), 30);
 
+-- 타이틀 곡 정보 삽입
+
+-- illit 아일릿 	super real me
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'super real me'), (select song_id from songs where title='magnetic'));
+
 
 -- 아티스트 정보 삽입 (아일릿과 작사가 작곡가 편곡가)
 insert into artists (artist_name, artist_image, artist_description) values ('illit', 'illit.jpg', 'illit.txt');
@@ -276,6 +296,11 @@ insert into song_genre (song_id, genre_id) values ((select song_id from songs wh
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='overflow'), 30);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='한걸음'), 30);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='up 2 me'), 30);
+
+-- 타이틀 곡 정보 삽입
+
+-- viviz 비비지		versus
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'versus'), (select song_id from songs where title='maniac'));
 
 
 -- 아티스트 정보 삽입 (비비지와 작사가 작곡가 편곡가)
@@ -341,6 +366,12 @@ insert into songs (album_id, title, song_path, lyrics) values ((select album_id 
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'armageddon'), 'live my life', 'aespa - live my life.mp3', 'aespa - live my life.txt');
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'armageddon'), '목소리', 'aespa - 목소리.mp3', 'aespa - 목소리.txt');
 
+-- 타이틀 곡 정보 삽입
+
+-- aespa 에스파		armageddon
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'armageddon'), (select song_id from songs where title='supernova'));
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'armageddon'), (select song_id from songs where title='armageddon'));
+
 -- 새로 생성된 song_id를 119부터128
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='supernova'), 30);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='armageddon'), 30);
@@ -378,10 +409,7 @@ insert into artists (artist_name, artist_image, artist_description) values ('이
 insert into artists (artist_name, artist_image, artist_description) values ('밍지션', 'profile.jpg', '');
 
 
---  (select album_id from albums where album_name = 'armageddon')
---  (select song_id from songs where title='maniac')
 
---  (select artist_id from artists where artist_name = '밍지션')
 
 -- 새로 생성된 artist_id가  134 aespa, 135 KENZIE, 136 Dem Jointz, 137 방혜현, 138 EJAE, 139 No Identity, 140 조윤경, 141 Ludwig Lindell, 142 Caesar, Loui, 143 이은화, 144 Mike Daley
 -- 145 강은정 146 Daniel Davidsen 147 PhD 148 문설리  149 Stian Nyhammer Olsen   150 Mola    151 Gil Lewis    152 Leslie    153 Edvard Forre Erfjord   154 이오늘   155 밍지션

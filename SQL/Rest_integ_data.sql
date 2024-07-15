@@ -1,5 +1,10 @@
 --- 앨범---------------------------------------------------------------------------
 
+
+--  (select album_id from albums where album_name = 'armageddon')
+--  (select song_id from songs where title='maniac')
+--  (select artist_id from artists where artist_name = 'Kenzi')
+
 insert into albums (album_name, album_image, album_type, album_release_date)
 values ('What Time!', 
         'what_time_album_image.png', 
@@ -527,6 +532,9 @@ insert into artists (artist_name)
 values ('DumbAss');
 
 insert into artists (artist_name)
+values ('GAXILLIC');
+
+insert into artists (artist_name)
 values ('현서 (HYUN SEO)');
 
 insert into artists (artist_name)
@@ -537,31 +545,12 @@ values ('Wolfgang Pander');
 
 --아티스트 7번까지
 
--- What time! (Feat.DumbAss)
---kenzi
-insert into artist_roles (artist_id, song_id, role_id)
-values (1, 1, 10);
-insert into artist_roles (artist_id, song_id, role_id)
-values (1, 1, 20);
-insert into artist_roles (artist_id, song_id, role_id)
-values (1, 1, 30);
 
---DumbAss
-insert into artist_roles (artist_id, song_id, role_id)
-values (4, 1, 20);
-insert into artist_roles (artist_id, song_id, role_id)
-values (4, 1, 30);
-
---GAXILLIC
-insert into artist_roles (artist_id, song_id, role_id)
-values (4, 1, 20);
-insert into artist_roles (artist_id, song_id, role_id)
-values (4, 1, 40);
 
 -- 음원의 참여 아티스트 데이터 삽입
 -- 아티스트번호 8번부터
-insert into artists (artist_name, artist_image, artist_description)
-values ('아이유', '아이유아티스트사진.png', '아이유_설명.txt');
+-- insert into artists (artist_name, artist_image, artist_description)
+-- values ('아이유', '아이유아티스트사진.png', '아이유_설명.txt');
 insert into artists (artist_name)
 values ('임수호');
 insert into artists (artist_name)
@@ -648,10 +637,11 @@ values ('TYRAN');
 -- 음원의 참여 아티스트 데이터 삽입
 -- 아티스트 46번
 insert into artists (artist_name, artist_image, artist_description)
-values ('볼빨간 사춘기', '볼빨간사춘기아티스트사진.png', 'bol4_설명.txt');
+values ('볼빨간사춘기2', '볼빨간사춘기아티스트사진.png', 'bol4_설명.txt');
 
+-- 47
 insert into artists (artist_name)
-values ('바닐라맨');
+values ('바닐라맨2');
 
 insert into artists (artist_name)
 values ('황종하');
@@ -700,7 +690,7 @@ values ('이민수', '이민수.jpg');
 
 --58
 insert into artists (artist_name)
-values ('김희원');
+values ('김희원2');
 
 
 --59
@@ -725,63 +715,85 @@ values ('시황', '시황.jpg', '시황.txt');
 
 
 -- 아티스트 역할코드 등록-----------------------------------------------------
+
+-- What time! (Feat.DumbAss)
+--kenzi
+insert into artist_roles (artist_id, song_id, role_id)
+values ((select artist_id from artists where artist_name = 'Kenzi'), 1, 10);
+insert into artist_roles (artist_id, song_id, role_id)
+values ((select artist_id from artists where artist_name = 'Kenzi'), 1, 20);
+insert into artist_roles (artist_id, song_id, role_id)
+values ((select artist_id from artists where artist_name = 'Kenzi'), 1, 30);
+
+--DumbAss
+insert into artist_roles (artist_id, song_id, role_id)
+values ((select artist_id from artists where artist_name = 'DumbAss'), 1, 20);
+insert into artist_roles (artist_id, song_id, role_id)
+values ((select artist_id from artists where artist_name = 'DumbAss'), 1, 30);
+
+--GAXILLIC
+insert into artist_roles (artist_id, song_id, role_id)
+values ((select artist_id from artists where artist_name = 'GAXILLIC'), 1, 20);
+insert into artist_roles (artist_id, song_id, role_id)
+values ((select artist_id from artists where artist_name = 'GAXILLIC'), 1, 40);
+
 -- 좋겠어 (Feat.HYUN SEO)
 --kenzi
 insert into artist_roles (artist_id, song_id, role_id)
-values (1, 2, 10); 
+values ((select artist_id from artists where artist_name = 'Kenzi'), 2, 10); 
 insert into artist_roles (artist_id, song_id, role_id)
-values (1, 2, 20); 
+values ((select artist_id from artists where artist_name = 'Kenzi'), 2, 20); 
 insert into artist_roles (artist_id, song_id, role_id)
-values (1, 2, 30); 
+values ((select artist_id from artists where artist_name = 'Kenzi'), 2, 30); 
 
 --현서 (HYUN SEO)
 insert into artist_roles (artist_id, song_id, role_id)
-values (5, 2, 20); 
+values ((select artist_id from artists where artist_name = '현서 (HYUN SEO)'), 2, 20); 
 insert into artist_roles (artist_id, song_id, role_id)
-values (5, 2, 30); 
+values ((select artist_id from artists where artist_name = '현서 (HYUN SEO)'), 2, 30); 
 
 -- Tmlm
 insert into artist_roles (artist_id, song_id, role_id)
-values (6, 2, 20); 
+values ((select artist_id from artists where artist_name = 'Tmlm'), 2, 20); 
 insert into artist_roles (artist_id, song_id, role_id)
-values (6, 2, 40); 
+values ((select artist_id from artists where artist_name = 'Tmlm'), 2, 40); 
 
 -- Ice (Feat.PLHN)
 -- kenzi
 insert into artist_roles (artist_id, song_id, role_id)
-values (1, 3, 10); 
+values ((select artist_id from artists where artist_name = 'Kenzi'), 3, 10); 
 insert into artist_roles (artist_id, song_id, role_id)
-values (1, 3, 20); 
+values ((select artist_id from artists where artist_name = 'Kenzi'), 3, 20); 
 insert into artist_roles (artist_id, song_id, role_id)
-values (1, 3, 30); 
+values ((select artist_id from artists where artist_name = 'Kenzi'), 3, 30); 
 
 -- PLHN
 insert into artist_roles (artist_id, song_id, role_id)
-values (2, 3, 20); 
+values ((select artist_id from artists where artist_name = 'PLHN'), 3, 20); 
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (2, 3, 30); 
+values ((select artist_id from artists where artist_name = 'PLHN'), 3, 30); 
 
 -- Placcebo Beats
 insert into artist_roles (artist_id, song_id, role_id)
-values (3, 3, 20); 
+values ((select artist_id from artists where artist_name = 'Placcebo Beats'), 3, 20); 
 insert into artist_roles (artist_id, song_id, role_id)
-values (3, 3, 40); 
+values ((select artist_id from artists where artist_name = 'Placcebo Beats'), 3, 40); 
 
 -- Promise (약속)
 -- kenzi
 insert into artist_roles (artist_id, song_id, role_id)
-values (1, 4, 10); 
+values ((select artist_id from artists where artist_name = 'Kenzi'), 4, 10); 
 insert into artist_roles (artist_id, song_id, role_id)
-values (1, 4, 20); 
+values ((select artist_id from artists where artist_name = 'Kenzi'), 4, 20); 
 insert into artist_roles (artist_id, song_id, role_id)
-values (1, 4, 30); 
+values ((select artist_id from artists where artist_name = 'Kenzi'), 4, 30); 
 
 -- Wolfgang Pander
 insert into artist_roles (artist_id, song_id, role_id)
-values (7, 4, 20); 
+values ((select artist_id from artists where artist_name = 'Wolfgang Pander'), 4, 20); 
 insert into artist_roles (artist_id, song_id, role_id)
-values (7, 4, 40); 
+values ((select artist_id from artists where artist_name = 'Wolfgang Pander'), 4, 40); 
 
 
 
@@ -793,7 +805,7 @@ values (7, 4, 40);
 -- 8번부터
 -- 8번이 아이유
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 5, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 5, 10);
 insert into artist_roles (artist_id, song_id, role_id)
 values (9, 5, 20);
 insert into artist_roles (artist_id, song_id, role_id)
@@ -803,7 +815,7 @@ values (11, 5, 20);
 insert into artist_roles (artist_id, song_id, role_id)
 values (12, 5, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 5, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 5, 30);
 insert into artist_roles (artist_id, song_id, role_id)
 values (9, 5, 40);
 insert into artist_roles (artist_id, song_id, role_id)
@@ -813,7 +825,7 @@ values (12, 5, 40);
 
 -- 6번 Flu
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 6, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 6, 10);
 insert into artist_roles (artist_id, song_id, role_id)
 values (13, 6, 20);
 insert into artist_roles (artist_id, song_id, role_id)
@@ -837,25 +849,25 @@ values (13, 6, 40);
 
 -- 7번 Coin
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 7, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 7, 10);
 insert into artist_roles (artist_id, song_id, role_id)
 values (21, 7, 20);
 insert into artist_roles (artist_id, song_id, role_id)
 values (22, 7, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 7, 20);
+values ((select artist_id from artists where artist_name = '아이유'), 7, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 7, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 7, 30);
 insert into artist_roles (artist_id, song_id, role_id)
 values (21, 7, 40);
 
 -- 8번 봄 안녕 봄
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 8, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 8, 10);
 insert into artist_roles (artist_id, song_id, role_id)
 values (23, 8, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 8, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 8, 30);
 insert into artist_roles (artist_id, song_id, role_id)
 values (25, 8, 40);
 insert into artist_roles (artist_id, song_id, role_id)
@@ -865,7 +877,7 @@ values (20, 8, 40);
 
 -- 9번 Celebrity
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 9, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 9, 10);
 insert into artist_roles (artist_id, song_id, role_id)
 values (20, 9, 20);
 insert into artist_roles (artist_id, song_id, role_id)
@@ -873,13 +885,13 @@ values (25, 9, 20);
 insert into artist_roles (artist_id, song_id, role_id)
 values (26, 9, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 9, 20);
+values ((select artist_id from artists where artist_name = '아이유'), 9, 20);
 insert into artist_roles (artist_id, song_id, role_id)
 values (27, 9, 20);
 insert into artist_roles (artist_id, song_id, role_id)
 values (28, 9, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 9, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 9, 30);
 insert into artist_roles (artist_id, song_id, role_id)
 values (25, 9, 40);
 insert into artist_roles (artist_id, song_id, role_id)
@@ -889,7 +901,7 @@ values (20, 9, 40);
 
 -- 10번 돌림노래
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 10, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 10, 10);
 insert into artist_roles (artist_id, song_id, role_id)
 values (31, 10, 10);
 
@@ -903,16 +915,16 @@ insert into artist_roles (artist_id, song_id, role_id)
 values (32, 10, 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 10, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 10, 30);
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 10, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 10, 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values (29, 10, 40);
 
 -- 11번 빈 컵
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 11, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 11, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values (33, 11, 20);
@@ -920,29 +932,29 @@ insert into artist_roles (artist_id, song_id, role_id)
 values (34, 11, 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 11, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 11, 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values (33, 11, 40);
 
 -- 12번 아이와 나의 바다
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 12, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 12, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values (35, 12, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (36, 12, 20);
+values ((select artist_id from artists where artist_name = '김희원'), 12, 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 12, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 12, 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values (35, 12, 40);
 
 -- 13번 어푸
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 13, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 13, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values (37, 13, 20);
@@ -950,7 +962,7 @@ insert into artist_roles (artist_id, song_id, role_id)
 values (38, 13, 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 13, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 13, 30);
 insert into artist_roles (artist_id, song_id, role_id)
 values (37, 13, 30);
 
@@ -959,7 +971,7 @@ values (38, 13, 40);
 
 -- 14번 에필로그
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 14, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 14, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values (39, 14, 20);
@@ -971,7 +983,7 @@ insert into artist_roles (artist_id, song_id, role_id)
 values (42, 14, 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (8, 14, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 14, 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values (39, 14, 40);
@@ -1012,136 +1024,136 @@ values (1, 16, 40);
 -- 볼사 Red Planet
 -- 우주를 줄게 17번
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 17, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 17, 10);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 17, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 17, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 17, 20);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 17, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 17, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 17, 30);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 17, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 17, 40);
 
 -- 싸운날 18번
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 18, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 18, 10);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 18, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 18, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 18, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 18, 30);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 18, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 18, 40);
 
 -- You(=I) 19번
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 19, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 19, 10);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 19, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 19, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 19, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 19, 30);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 19, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 19, 40);
 
 -- 심술 20번
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 20, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 20, 10);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 20, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 20, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 20, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 20, 30);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 20, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 20, 40);
 
 -- 나만 안되는 연애 21번
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 21, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 21, 10);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 21, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 21, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 21, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 21, 30);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 21, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 21, 40);
 
 -- 초콜릿 22번
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 22, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 22, 10);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 22, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 22, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 22, 20);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 22, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 22, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 22, 30);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 22, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 22, 40);
 
 -- 프리지아 23번
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 23, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 23, 10);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 23, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 23, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 23, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 23, 30);
 insert into artist_roles (artist_id, song_id, role_id)
 values (48, 23, 40);
 
 -- X Song 24번
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 24, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 24, 10);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 24, 20);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 24, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 24, 30);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 24, 30);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 24, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 24, 40);
 
 -- 반지 25번
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 25, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 25, 10);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 25, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 25, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 25, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 25, 30);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 25, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 25, 40);
 
 -- 사랑에 빠졌을 때 26번
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 26, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 26, 10);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 26, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 26, 20);
 insert into artist_roles (artist_id, song_id, role_id)
-values (46, 26, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 26, 30);
 insert into artist_roles (artist_id, song_id, role_id)
-values (47, 26, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 26, 40);
 
 
 -- artist_roles 데이터 추가(DB 통합할때 album_id, song_id 확인 및 설정 주의!)
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 가수(아이유)
-values (49, 27, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 27, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (49, 28, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 28, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (49, 29, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 29, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (49, 30, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 30, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (49, 31, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 31, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (49, 42, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 42, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (49, 33, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 33, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (49, 34, 10);
+values ((select artist_id from artists where artist_name = '아이유'), 34, 10);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 blueming 작곡(아이유, 이종훈, 이채규)
-values (49, 27, 20);
+values ((select artist_id from artists where artist_name = '아이유'), 27, 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values (52, 27, 20);
@@ -1150,7 +1162,7 @@ insert into artist_roles (artist_id, song_id, role_id)
 values (53, 27, 20);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 blueming 작사(아이유)
-values (49, 27, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 27, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 blueming 편곡(이종훈, 이채규)
 values (52, 27, 40);
@@ -1162,7 +1174,7 @@ insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 love 
 values (52, 28, 20);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 love poem 작사(아이유)
-values (49, 28, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 28, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 love poem 편곡(적재, 홍소진)
 values (54, 28, 40);
@@ -1174,16 +1186,16 @@ insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 unluc
 values (56, 29, 20);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 unlucky 작사(아이유)
-values (49, 29, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 29, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 unlucky 편곡(제휘)
 values (56, 29, 40);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 그 사람 작곡(아이유)
-values (49, 30, 20);
+values ((select artist_id from artists where artist_name = '아이유'), 30, 20);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 그 사람 작사(아이유)
-values (49, 30, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 30, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 그 사람 편곡(적재)
 values (54, 30, 40);
@@ -1192,16 +1204,16 @@ insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 시�
 values (57, 31, 20);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 시간의 바깥 작사(아이유)
-values (49, 31, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 31, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 시간의 바깥 편곡(이민수)
 values (57, 31, 40);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 자장가 작곡(김희원)
-values (58, 32, 20);
+values ((select artist_id from artists where artist_name = '김희원'), 32, 20);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 자장가 작사(아이유)
-values (49, 32, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 32, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- Love poem 앨범 자장가 편곡(홍소진)
 values (55, 32, 40);
@@ -1210,64 +1222,64 @@ insert into artist_roles (artist_id, song_id, role_id) -- 삐삐 앨범 삐삐 �
 values (52, 33, 20);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 삐삐 앨범 삐삐 작사(아이유)
-values (49, 33, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 33, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 삐삐 앨범 삐삐 편곡(이채규)
 values (53, 33, 40);
 ----------------------------------------------------------------------------------------------------------------------------
 insert into artist_roles (artist_id, song_id, role_id) -- 밤편지 앨범 밤편지 작곡(김희원, 제휘)
-values (58, 34, 20);
+values ((select artist_id from artists where artist_name = '김희원'), 34, 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values (56, 34, 20);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 밤편지 앨범 밤편지 작사(아이유)
-values (49, 34, 30);
+values ((select artist_id from artists where artist_name = '아이유'), 34, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 밤편지 앨범 밤편지 편곡(김희원, 제휘)
-values (58, 34, 40);
+values ((select artist_id from artists where artist_name = '김희원'), 34, 40);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values (56, 34, 40);
 ----------------------------------------------------------------------------------------------------------------------------
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 가수(볼빨간사춘기)
-values (50, 35, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 35, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (50, 36, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 36, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (50, 37, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 37, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (50, 38, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 38, 10);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (50, 39, 10);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 39, 10);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 별 보러 갈래 작곡(볼빨간사춘기, 바닐라맨)
-values (50, 35, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 35, 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (59, 35, 20);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 35, 20);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 별 보러 갈래 작사(볼빨간사춘기)
-values (50, 35, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 35, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 별 보러 갈래 편곡(바닐라맨)
-values (59, 35, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 35, 40);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 나만 봄 작곡(볼빨간사춘기, 바닐라맨)
-values (50, 36, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 36, 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (59, 36, 20);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 36, 20);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 나만 봄 작사(볼빨간사춘기)
-values (50, 36, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 36, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 나만 봄 편곡(바닐라맨)
-values (59, 36, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 36, 40);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 나들이 갈까 작곡(낯선아이)
 values (60, 37, 20);
@@ -1276,28 +1288,28 @@ insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기
 values (60, 37, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 나들이 갈까 편곡(바닐라맨)
-values (59, 37, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 37, 40);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 mermaid 작곡(볼빨간사춘기)
-values (50, 38, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 38, 20);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 mermaid 작사(볼빨간사춘기)
-values (50, 38, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 38, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 mermaid 편곡(바닐라맨)
-values (50, 38, 40);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 38, 40);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 Seattle Alone 작곡(볼빨간사춘기, 바닐라맨)
-values (50, 39, 20);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 39, 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
-values (59, 39, 20);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 39, 20);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 Seattle Alone 작사(볼빨간사춘기)
-values (50, 39, 30);
+values ((select artist_id from artists where artist_name = '볼빨간사춘기'), 39, 30);
 
 insert into artist_roles (artist_id, song_id, role_id) -- 사춘기집Ⅰ 꽃기운 앨범 Seattle Alone 편곡(바닐라맨)
-values (59, 39, 40);
+values ((select artist_id from artists where artist_name = '바닐라맨'), 39, 40);
 ----------------------------------------------------------------------------------------------------------------------------
 insert into artist_roles (artist_id, song_id, role_id) -- SUMMER EPISODE 앨범 가수(AKMU악뮤)
 values (51, 40, 10);
@@ -1437,7 +1449,7 @@ insert into song_genre (song_id, genre_id) values ((select song_id from songs wh
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='레이디버드'), 80); -- 인디음악
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='초록을 거머쥔 우리는'), 80);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='여름가을겨울 봄.'), 80);
-insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='슬픔이여안녕')(select song_id from songs where title='Tight'), 80);
+insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='슬픔이여안녕'), 80);
 
 --잔나비 전설
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='나의 기쁨 나의 노래 (Intro)'), 80); -- 인디음악
@@ -1618,6 +1630,12 @@ insert into songs (album_id, title, song_path, lyrics) values ((select album_id 
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'GET UP'), 'Get Up', 'NewJeans - Get Up.mp3', 'NewJeans - Get Up.txt');
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'GET UP'), 'ASAP', 'NewJeans - ASAP.mp3', 'NewJeans - ASAP.txt');
 
+-- 타이틀 곡 정보 삽입
+-- NewJeans 뉴진스	GET UP
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'GET UP'), (select song_id from songs where title='Super Shy'));
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'GET UP'), (select song_id from songs where title='ETA'));
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'GET UP'), (select song_id from songs where title='Cool With You'));
+
 
 -- 새로 생성된 song_id를 7로 가정
 
@@ -1669,8 +1687,6 @@ insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Gigi'), (select song_id from songs where title='ASAP'), 30); -- 작사가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '250'), (select song_id from songs where title='ASAP'), 40); -- 편곡가
 
--- 타이틀 곡 정보 삽입
-insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'GET UP'), (select song_id from songs where title='Super Shy')); -- album_id는 "밤양갱" 앨범의 ID, song_id는 새로 추가된 곡의 ID
 
 
 
@@ -1689,6 +1705,12 @@ insert into albums (album_name, album_image, album_type, album_release_date) val
 -- 곡 정보 삽입
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'midas touch'), 'midas touch', 'kiss of life - midas touch.mp3', 'kiss of life - midas touch.txt');
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'midas touch'), 'nothing', 'kiss of life - nothing.mp3', 'kiss of life - nothing.txt');
+
+-- 타이틀 곡 정보 삽입
+
+-- kissOfLife 키스오브라이프	midas touch
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'midas touch'), (select song_id from songs where title='midas touch'));
+
 
 
 -- 새로 생성된 song_id를 101부터 가정
@@ -1749,6 +1771,11 @@ insert into song_genre (song_id, genre_id) values ((select song_id from songs wh
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='monsters_intro'), 30);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='stuck in the middle'), 10);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='stuck in the middle_remix'), 30);
+
+-- 타이틀 곡 정보 삽입
+
+-- babymonster 베이비몬스터	babymons7er
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'babymons7er'), (select song_id from songs where title='sheesh'));
 
 -- 아티스트 정보 삽입 (베이비몬스터와 작사가 작곡가 편곡가)
 insert into artists (artist_name, artist_image, artist_description) values ('babymonster', 'babymonster.jpg', 'babymonster.txt');
@@ -1821,6 +1848,11 @@ insert into song_genre (song_id, genre_id) values ((select song_id from songs wh
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='midnight fiction'), 30);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='lucky girl syndrome'), 30);
 
+-- 타이틀 곡 정보 삽입
+
+-- illit 아일릿 	super real me
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'super real me'), (select song_id from songs where title='magnetic'));
+
 
 -- 아티스트 정보 삽입 (아일릿과 작사가 작곡가 편곡가)
 insert into artists (artist_name, artist_image, artist_description) values ('illit', 'illit.jpg', 'illit.txt');
@@ -1872,15 +1904,20 @@ insert into albums (album_name, album_image, album_type, album_release_date) val
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'versus'), 'maniac', 'viviz - maniac.mp3', 'viviz - maniac.txt');
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'versus'), 'untie', 'viviz - untie.mp3', 'viviz - untie.txt');
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'versus'), 'overflow', 'viviz - overflow.mp3', 'viviz - overflow.txt');
-insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'versus'), '한걸음', 'viviz - 한걸음.mp3', 'viviz - 한걸음.txt');
+insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'versus'), 'viviz - 한걸음', 'viviz - 한걸음.mp3', 'viviz - 한걸음.txt');
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'versus'), 'up 2 me', 'viviz - up 2 me.mp3', 'viviz - up 2 me.txt');
 
 -- 새로 생성된 song_id를 114부터118
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='maniac'), 30);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='untie'), 30);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='overflow'), 30);
-insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='한걸음'), 30);
+insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='viviz - 한걸음'), 30);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='up 2 me'), 30);
+
+-- 타이틀 곡 정보 삽입
+
+-- viviz 비비지		versus
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'versus'), (select song_id from songs where title='maniac'));
 
 
 -- 아티스트 정보 삽입 (비비지와 작사가 작곡가 편곡가)
@@ -1915,10 +1952,10 @@ insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'BYMORE'), (select song_id from songs where title='overflow'), 20); -- 작곡가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'BYMORE'), (select song_id from songs where title='overflow'), 40); -- 편곡가
 
-insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'viviz'), (select song_id from songs where title='한걸음'), 10); -- 가수
-insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '정하리'), (select song_id from songs where title='한걸음'), 30); -- 작사가
-insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Freek Mulder'), (select song_id from songs where title='한걸음'), 20); -- 작곡가
-insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Freek Mulder'), (select song_id from songs where title='한걸음'), 40); -- 편곡가
+insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'viviz'), (select song_id from songs where title='viviz - 한걸음'), 10); -- 가수
+insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '정하리'), (select song_id from songs where title='viviz - 한걸음'), 30); -- 작사가
+insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Freek Mulder'), (select song_id from songs where title='viviz - 한걸음'), 20); -- 작곡가
+insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Freek Mulder'), (select song_id from songs where title='viviz - 한걸음'), 40); -- 편곡가
 
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'viviz'), (select song_id from songs where title='up 2 me'), 10); -- 가수
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'danke'), (select song_id from songs where title='up 2 me'), 30); -- 작사가
@@ -1946,6 +1983,12 @@ insert into songs (album_id, title, song_path, lyrics) values ((select album_id 
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'armageddon'), 'live my life', 'aespa - live my life.mp3', 'aespa - live my life.txt');
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'armageddon'), '목소리', 'aespa - 목소리.mp3', 'aespa - 목소리.txt');
 
+-- 타이틀 곡 정보 삽입
+
+-- aespa 에스파		armageddon
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'armageddon'), (select song_id from songs where title='supernova'));
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'armageddon'), (select song_id from songs where title='armageddon'));
+
 -- 새로 생성된 song_id를 119부터128
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='supernova'), 30);
 insert into song_genre (song_id, genre_id) values ((select song_id from songs where title='armageddon'), 30);
@@ -1965,9 +2008,9 @@ insert into artists (artist_name, artist_image, artist_description) values ('Dem
 insert into artists (artist_name, artist_image, artist_description) values ('방혜현', 'profile.jpg', '');
 insert into artists (artist_name, artist_image, artist_description) values ('EJAE', 'profile.jpg', '');
 insert into artists (artist_name, artist_image, artist_description) values ('No Identity', 'profile.jpg', '');
-insert into artists (artist_name, artist_image, artist_description) values ('조윤경', 'profile.jpg', '');
+insert into artists (artist_name, artist_image, artist_description) values ('조윤경2', 'profile.jpg', '');
 insert into artists (artist_name, artist_image, artist_description) values ('Ludwig Lindell', 'profile.jpg', '');
-insert into artists (artist_name, artist_image, artist_description) values ('Caesar & Loui', 'profile.jpg', '');
+insert into artists (artist_name, artist_image, artist_description) values ('Caesar, Loui', 'profile.jpg', '');
 insert into artists (artist_name, artist_image, artist_description) values ('이은화', 'profile.jpg', '');
 insert into artists (artist_name, artist_image, artist_description) values ('Mike Daley', 'profile.jpg', '');
 insert into artists (artist_name, artist_image, artist_description) values ('강은정', 'profile.jpg', '');
@@ -1986,9 +2029,9 @@ insert into artists (artist_name, artist_image, artist_description) values ('밍
 --  (select album_id from albums where album_name = 'armageddon')
 --  (select song_id from songs where title='maniac')
 
---  (select artist_id from artists where artist_name = '밍지션')
+--  (select artist_id from artists where artist_name = '조윤경')
 
--- 새로 생성된 artist_id가  134 aespa, 135 KENZIE, 136 Dem Jointz, 137 방혜현, 138 EJAE, 139 No Identity, 140 조윤경, 141 Ludwig Lindell, 142 Caesar & Loui, 143 이은화, 144 Mike Daley
+-- 새로 생성된 artist_id가  134 aespa, 135 KENZIE, 136 Dem Jointz, 137 방혜현, 138 EJAE, 139 No Identity, 140 조윤경, 141 Ludwig Lindell, 142 Caesar, Loui, 143 이은화, 144 Mike Daley
 -- 145 강은정 146 Daniel Davidsen 147 PhD 148 문설리  149 Stian Nyhammer Olsen   150 Mola    151 Gil Lewis    152 Leslie    153 Edvard Forre Erfjord   154 이오늘   155 밍지션
 
 
@@ -2007,7 +2050,7 @@ insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'aespa'), (select song_id from songs where title='set the tone'), 10); -- 가수
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '조윤경'), (select song_id from songs where title='set the tone'), 30); -- 작사가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Ludwig Lindell'), (select song_id from songs where title='set the tone'), 20); -- 작곡가
-insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Caesar & Loui'), (select song_id from songs where title='set the tone'), 40); -- 편곡가
+insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Caesar, Loui'), (select song_id from songs where title='set the tone'), 40); -- 편곡가
 
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'aespa'), (select song_id from songs where title='mine'), 10); -- 가수
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '이은화'), (select song_id from songs where title='mine'), 30); -- 작사가
@@ -2044,3 +2087,598 @@ insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '이오늘'), (select song_id from songs where title='목소리'), 30); -- 작사가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '밍지션'), (select song_id from songs where title='목소리'), 20); -- 작곡가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '밍지션'), (select song_id from songs where title='목소리'), 40); -- 편곡가
+
+
+--------- 동환이꺼
+
+--------------- 아티스트
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('권정열.jpg', '10cm', '권정열.txt');
+    
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('이요한.jpg', '이요한', '이요한.txt');
+
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('성수용.jpg', '성수용', '성수용.txt');
+
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('이윤혁.jpg', '이윤혁', '이윤혁.txt');
+    
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('박기훈.jpg', '박기훈', '박기훈.txt');
+    
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('인재.jpg', '인재', '인재.txt');
+    
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('박준규.jpg', '박준규', '박준규.txt');
+    
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('방인재.jpg', '방인재', '방인재.txt'); 
+    
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('NODAY.jpg', 'NODAY', 'NODAY.txt');
+
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('이아일.jpg', '이아일', '이아일.txt');
+
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('박문치.jpg', '박문치', '박문치.txt');
+
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('달총 (CHEEZE).jpg', '달총 (CHEEZE)', '달총 (CHEEZE).txt');
+    
+    
+
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('장범준.jpg', '장범준', '장범준.txt');
+
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('이규형.jpg', '이규형', '이규형.txt');
+    
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('전영호.jpg', '전영호', '전영호.txt');
+
+insert into artists (artist_image, artist_name, artist_description) 
+    values ('황인현.jpg', '황인현', '황인현.txt');
+
+--------------- 앨범
+insert into albums (album_name, album_image, album_type, album_release_date) 
+    values ('4.0', '10cm-4.0.jpg', '정규', TO_DATE('2017-09-01', 'YYYY-MM-DD'));
+ 
+insert into albums (album_name, album_image, album_type, album_release_date) 
+    values ('4.5', '10cm-tight.jpg', '싱글', TO_DATE('2020-09-22', 'YYYY-MM-DD'));
+
+insert into albums (album_name, album_image, album_type, album_release_date) 
+    values ('방에 모기가 있어 (4.4)', '방에 모기가 있어 (4.4).jpg', '싱글', TO_DATE('2019-08-06', 'YYYY-MM-DD'));
+    
+insert into albums (album_name, album_image, album_type, album_release_date) 
+    values ('4.1', '10cm-4.1.jpg', '싱글', TO_DATE('2018-08-23', 'YYYY-MM-DD'));
+ 
+insert into albums (album_name, album_image, album_type, album_release_date) 
+    values ('The 3rd EP', '10cm-The3rdEP.jpg', '미니', TO_DATE('2021-11-11', 'YYYY-MM-DD'));
+ 
+ insert into albums (album_name, album_image, album_type, album_release_date) 
+    values ('장범준 3집', '장범준3집.jpg', '정규', TO_DATE('2019-03-21', 'YYYY-MM-DD'));
+
+--------------- 노래들
+-- 10cm-4.0 앨범 노래
+    
+insert into songs (album_id, title, song_path, lyrics, video_link) --title song
+    values ((select album_id from albums where album_name = '4.0'),
+    '폰서트', '폰서트.mp3', '폰서트.txt', 
+    'https://www.youtube.com/embed/mOo8bVzN9M8?si=kA9lzRqtUi8VRJzj');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link) --title song
+    values ((select album_id from albums where album_name = '4.0'),
+    'Help', '10cm-Help.mp3', '10cm-Help.txt', 
+    'https://www.youtube.com/embed/LnT9LmmlLXw?si=HI_5GlY2XMUlw1ym');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)
+    values ((select album_id from albums where album_name = '4.0'),
+    'Everything', 'Everything.mp3', 'Everything.txt', 
+    'https://www.youtube.com/embed/DOFojbxXShY?si=qCgbxJbQQjcro_Iy');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)
+    values ((select album_id from albums where album_name = '4.0'),
+    'pet', 'pet.mp3', 'pet.txt', 
+    'https://www.youtube.com/embed/F4K1mMDlsj0?si=QtKvLNKyVp7d_Qm5');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)
+    values ((select album_id from albums where album_name = '4.0'),
+    '별자리', '별자리.mp3', '별자리.txt', 
+    'https://www.youtube.com/embed/Pq6ImHFTBro?si=MxUgZawvdvZkov61');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)
+    values ((select album_id from albums where album_name = '4.0'),
+    'Hotel room', 'Hotel room.mp3', 'Hotel room.txt', 
+    'https://www.youtube.com/embed/wGTekU9hHyE?si=vgkZfEb8PaQwLp1Z');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)
+    values ((select album_id from albums where album_name = '4.0'),
+    'Island', '10cm-Island.mp3', '10cm-Island.txt', 
+    'https://www.youtube.com/embed/NhOv5blQn8w?si=0HhMJbJmVB-3dfEi');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)
+    values ((select album_id from albums where album_name = '4.0'),
+    '일시정지', 'pause.mp3', 'pause.txt', 
+    'X');
+
+-- 10cm 4.5 앨범 노래
+insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
+    values ((select album_id from albums where album_name = '4.5'),
+    'Tight', '10cm-Tight.mp3', '10cm-Tight.txt', 
+    'https://www.youtube.com/embed/-xm5GpFwHw4?si=2dCUVlQWCZsl1kip');
+
+-- 10cm 4.4 앨범 노래
+insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
+    values ((select album_id from albums where album_name = '방에 모기가 있어 (4.4)'),
+    '방에 모기가 있어 (Do You Think Of Me)', '방에 모기가 있어 (Do You Think Of Me).mp3', 
+    '방에 모기가 있어 (Do You Think Of Me).txt', 
+    'https://www.youtube.com/embed/d5cV86Sa6k0?si=CobQrt8ZujUkF8II');
+    
+-- 10cm 4.1 앨범 노래
+insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
+    values ((select album_id from albums where album_name = '4.1'),
+    '매트리스', '매트리스.mp3', '매트리스.txt', 
+    'https://www.youtube.com/embed/seNNCbiXTSY?si=1u-8OsNLZ7GGP6wA');
+    
+        
+-- 10cm The 3rd ep 노래
+insert into songs (album_id, title, song_path, lyrics, video_link) --title song
+    values ((select album_id from albums where album_name = 'The 3rd EP'),
+    '어제 너는 나를 버렸어', '어제 너는 나를 버렸어.mp3', '어제 너는 나를 버렸어.txt', 
+    'https://www.youtube.com/embed/bYleMOXKggY?si=U-YAaOLfe36tCmvM');
+
+insert into songs (album_id, title, song_path, lyrics, video_link) --title song
+    values ((select album_id from albums where album_name = 'The 3rd EP'),
+    '가진다는 말은 좀 그렇지', '가진다는 말은 좀 그렇지.mp3', '가진다는 말은 좀 그렇지.txt', 
+    'https://www.youtube.com/embed/TUo_XGiPmvI?si=BAdD_bPQWcC5_oaj');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)
+    values ((select album_id from albums where album_name = 'The 3rd EP'),
+    '열심히 할게', '열심히 할게.mp3', '열심히 할게.txt', 
+    'https://www.youtube.com/embed/z2WRu2hLngg?si=ywsZi8utEu1mlZUP');
+
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)
+    values ((select album_id from albums where album_name = 'The 3rd EP'),
+    'Condition', 'Condition.mp3', 'Condition.txt', 
+    'https://www.youtube.com/embed/1FVySfPnLIU?si=ofooK0NzjkygXbFB');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)
+    values ((select album_id from albums where album_name = 'The 3rd EP'),
+    'Please Don''t Stop Your Singing', 'Please Don''t Stop Your Singing.mp3', 'Please Don''t Stop Your Singing.txt', 
+    'https://www.youtube.com/embed/z2WRu2hLngg?si=dr70QcJvbL1VMsxc');
+    
+    
+-- 장범준 3집 노래
+insert into songs (album_id, title, song_path, lyrics, video_link)  -- title song
+    values ((select album_id from albums where album_name = '장범준 3집'),
+    '당신과는 천천히', '당신과는 천천히.mp3', '당신과는 천천히.txt', 
+    'https://www.youtube.com/embed/EAVp84B888U?si=Z1sEAFJ9_BubgKxp');
+
+insert into songs (album_id, title, song_path, lyrics, video_link)  -- title song
+    values ((select album_id from albums where album_name = '장범준 3집'),
+    '노래방에서', '노래방에서.mp3', '노래방에서.txt', 
+    'x');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)  
+    values ((select album_id from albums where album_name = '장범준 3집'),
+    '일산으로', '일산으로.mp3', '일산으로.txt', 
+    'x');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)  
+    values ((select album_id from albums where album_name = '장범준 3집'),
+    '그모습 그대로', '그모습 그대로.mp3', '그모습 그대로.txt', 
+    'x');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)  
+    values ((select album_id from albums where album_name = '장범준 3집'),
+    '엄마 용돈 좀 보내주세요', '엄마 용돈 좀 보내주세요.mp3', '엄마 용돈 좀 보내주세요.txt', 
+    'x');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)  
+    values ((select album_id from albums where album_name = '장범준 3집'),
+    '이밤', '이밤.mp3', '이밤.txt', 
+    'x');
+    
+insert into songs (album_id, title, song_path, lyrics, video_link)  
+    values ((select album_id from albums where album_name = '장범준 3집'),
+    '왜', '왜.mp3', '왜.txt', 
+    'x');
+
+insert into songs (album_id, title, song_path, lyrics, video_link)  
+    values ((select album_id from albums where album_name = '장범준 3집'),
+    '상상속에서', '상상속에서.mp3', '상상속에서.txt', 
+    'x');
+    
+---------------타이틀 송 
+-- 10cm 4.0
+insert into title_songs(album_id, song_id) 
+values((select album_id from albums where album_name = '4.0'),
+    (select song_id from songs where title='폰서트'));
+insert into title_songs(album_id, song_id) 
+values((select album_id from albums where album_name = '4.0'),
+    (select song_id from songs where title='Help'));
+
+-- 10cm 4.5
+insert into title_songs(album_id, song_id) 
+values((select album_id from albums where album_name = '4.5'),
+    (select song_id from songs where title='Tight'));
+    
+-- 10cm 4.4
+insert into title_songs(album_id, song_id) 
+values((select album_id from albums where album_name = '방에 모기가 있어 (4.4)'),
+    (select song_id from songs where title='방에 모기가 있어 (Do You Think Of Me)'));
+    
+-- 10cm 4.1
+insert into title_songs(album_id, song_id) 
+values((select album_id from albums where album_name = '4.1'),
+    (select song_id from songs where title='매트리스'));
+    
+-- 10cm The 3rd ep
+insert into title_songs(album_id, song_id) 
+values((select album_id from albums where album_name = 'The 3rd EP'),
+    (select song_id from songs where title='가진다는 말은 좀 그렇지'));
+    
+insert into title_songs(album_id, song_id) 
+values((select album_id from albums where album_name = 'The 3rd EP'),
+    (select song_id from songs where title='어제 너는 나를 버렸어'));
+    
+-- 장범준 3집
+insert into title_songs(album_id, song_id) 
+values((select album_id from albums where album_name = '장범준 3집'),
+    (select song_id from songs where title='당신과는 천천히'));
+
+insert into title_songs(album_id, song_id) 
+values((select album_id from albums where album_name = '장범준 3집'),
+    (select song_id from songs where title='노래방에서'));
+
+--------------- 노래 장르
+-- 10cm 4.0 장르
+DECLARE
+    v_album_id albums.album_id%TYPE;
+BEGIN
+    -- 특정 앨범 타이틀의 album_id를 가져옵니다.
+    SELECT album_id INTO v_album_id
+    FROM albums
+    WHERE album_name = '4.0';
+    -- 해당 album_id를 가진 모든 노래에 대해 song_genre 테이블에 데이터를 삽입합니다.
+    FOR song_rec IN (SELECT song_id FROM songs WHERE album_id = v_album_id) LOOP
+        INSERT INTO song_genre (song_id, genre_id)
+        VALUES (song_rec.song_id, 90);
+        INSERT INTO song_genre (song_id, genre_id)
+        VALUES (song_rec.song_id, 80);
+    END LOOP;
+END;
+/
+delete from song_genre where song_id = (select song_id from songs where title='Help') 
+    and genre_id = 80;
+
+-- 10cm 4.5 장르
+INSERT INTO song_genre (song_id, genre_id)
+        VALUES ((select song_id from songs where title='Tight'), 80);
+INSERT INTO song_genre (song_id, genre_id)
+        VALUES ((select song_id from songs where title='Tight'), 90);
+
+-- 10cm 4.4 장르
+INSERT INTO song_genre (song_id, genre_id)
+        VALUES ((select song_id from songs where title='방에 모기가 있어 (Do You Think Of Me)'), 80);
+INSERT INTO song_genre (song_id, genre_id)
+        VALUES ((select song_id from songs where title='방에 모기가 있어 (Do You Think Of Me)'), 90);
+
+-- 10cm 4.1 장르
+INSERT INTO song_genre (song_id, genre_id)
+        VALUES ((select song_id from songs where title='매트리스'), 80);
+INSERT INTO song_genre (song_id, genre_id)
+        VALUES ((select song_id from songs where title='매트리스'), 90);
+
+-- 10cm The 3rd ep 장르
+DECLARE
+    v_album_id albums.album_id%TYPE;
+BEGIN
+    -- 특정 앨범 타이틀의 album_id를 가져옵니다.
+    SELECT album_id INTO v_album_id
+    FROM albums
+    WHERE album_name = 'The 3rd EP';
+    -- 해당 album_id를 가진 모든 노래에 대해 song_genre 테이블에 데이터를 삽입합니다.
+    FOR song_rec IN (SELECT song_id FROM songs WHERE album_id = v_album_id) LOOP
+        INSERT INTO song_genre (song_id, genre_id)
+        VALUES (song_rec.song_id, 10);
+        INSERT INTO song_genre (song_id, genre_id)
+        VALUES (song_rec.song_id, 80);
+    END LOOP;
+END;
+/
+-- 장범준 3집 장르
+DECLARE
+    v_album_id albums.album_id%TYPE;
+BEGIN
+    -- 특정 앨범 타이틀의 album_id를 가져옵니다.
+    SELECT album_id INTO v_album_id
+    FROM albums
+    WHERE album_name = '장범준 3집';
+    -- 해당 album_id를 가진 모든 노래에 대해 song_genre 테이블에 데이터를 삽입합니다.
+    FOR song_rec IN (SELECT song_id FROM songs WHERE album_id = v_album_id) LOOP
+        INSERT INTO song_genre (song_id, genre_id)
+        VALUES (song_rec.song_id, 100);
+    END LOOP;
+END;
+/
+--------------- 노래별 아티스트 역할 추가 
+-- 10cm 4.0앨범 아티스트 역할
+DECLARE
+    v_album_id albums.album_id%TYPE;
+BEGIN
+    -- 특정 앨범 타이틀의 album_id를 가져옵니다.
+    SELECT album_id INTO v_album_id
+    FROM albums
+    WHERE album_name = '4.0';
+    -- 해당 album_id를 가진 모든 노래에 대해 song_genre 테이블에 데이터를 삽입합니다.
+    FOR song_rec IN (SELECT song_id FROM songs WHERE album_id = v_album_id) LOOP
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '10cm'), song_rec.song_id, 10);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '10cm'), song_rec.song_id, 20);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '10cm'), song_rec.song_id, 30);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '10cm'), song_rec.song_id, 40);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '이요한'), song_rec.song_id, 40);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '성수용'), song_rec.song_id, 40);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '이윤혁'), song_rec.song_id, 40);
+        
+    END LOOP;
+END;
+/
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '박기훈'),
+    (select song_id from songs where title = 'pet'),
+    40);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '인재'),
+    (select song_id from songs where title = '별자리'),
+    40);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '인재'),
+    (select song_id from songs where title = 'Help'),
+    40);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '박준규'),
+    (select song_id from songs where title = 'Hotel room'),
+    40);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '인재'),
+    (select song_id from songs where title = 'Island'),
+    40);
+    
+-- 10cm 4.5앨범 아티스트 역할
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = 'Tight'),
+    10);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = 'Tight'),
+    30);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = 'NODAY'),
+    (select song_id from songs where title = 'Tight'),
+    30);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '이아일'),
+    (select song_id from songs where title = 'Tight'),
+    30);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '박문치'),
+    (select song_id from songs where title = 'Tight'),
+    30);    
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '달총 (CHEEZE)'),
+    (select song_id from songs where title = 'Tight'),
+    30);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '이아일'),
+    (select song_id from songs where title = 'Tight'),
+    20);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '박문치'),
+    (select song_id from songs where title = 'Tight'),
+    20);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = 'NODAY'),
+    (select song_id from songs where title = 'Tight'),
+    20);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '박문치'),
+    (select song_id from songs where title = 'Tight'),
+    40);
+
+-- 10cm 4.4 앨범 아티스트 역할
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
+    10);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
+    20);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
+    30);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
+    40);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '이요한'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
+    40);    
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '성수용'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
+    40);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '이윤혁'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
+    40);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '방인재'),
+    (select song_id from songs where title = '방에 모기가 있어 (Do You Think Of Me)'),
+    40);
+
+-- 10cm 4.1 앨범 아티스트 역할
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '매트리스'),
+    10);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '매트리스'),
+    20);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '매트리스'),
+    30);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '10cm'),
+    (select song_id from songs where title = '매트리스'),
+    40);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '이요한'),
+    (select song_id from songs where title = '매트리스'),
+    40);    
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '성수용'),
+    (select song_id from songs where title = '매트리스'),
+    40);
+    
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '이윤혁'),
+    (select song_id from songs where title = '매트리스'),
+    40);
+
+insert into artist_roles (artist_id, song_id, role_id) 
+    values ((select artist_id from artists where artist_name = '방인재'),
+    (select song_id from songs where title = '매트리스'),
+    40);
+    
+
+-- 10cm The 3rd ep앨범 아티스트 역할
+DECLARE
+    v_album_id albums.album_id%TYPE;
+BEGIN
+    -- 특정 앨범 타이틀의 album_id를 가져옵니다.
+    SELECT album_id INTO v_album_id
+    FROM albums
+    WHERE album_name = 'The 3rd EP';
+    -- 해당 album_id를 가진 모든 노래에 대해 song_genre 테이블에 데이터를 삽입합니다.
+    FOR song_rec IN (SELECT song_id FROM songs WHERE album_id = v_album_id) LOOP
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '10cm'), song_rec.song_id, 10);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '10cm'), song_rec.song_id, 20);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '10cm'), song_rec.song_id, 30);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '10cm'), song_rec.song_id, 40);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '이요한'), song_rec.song_id, 40);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '성수용'), song_rec.song_id, 40);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '이윤혁'), song_rec.song_id, 40);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '방인재'), song_rec.song_id, 40);
+    END LOOP;
+END;
+/
+-- 장범준 3집 앨범 아티스트 역할
+DECLARE
+    v_album_id albums.album_id%TYPE;
+BEGIN
+    -- 특정 앨범 타이틀의 album_id를 가져옵니다.
+    SELECT album_id INTO v_album_id
+    FROM albums
+    WHERE album_name = '장범준 3집';
+    -- 해당 album_id를 가진 모든 노래에 대해 song_genre 테이블에 데이터를 삽입합니다.
+    FOR song_rec IN (SELECT song_id FROM songs WHERE album_id = v_album_id) LOOP
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '장범준'), song_rec.song_id, 10);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '장범준'), song_rec.song_id, 20);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '장범준'), song_rec.song_id, 30);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '장범준'), song_rec.song_id, 40);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '이규형'), song_rec.song_id, 40);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '전영호'), song_rec.song_id, 40);
+        
+        INSERT INTO artist_roles (artist_id, song_id, role_id)
+        VALUES ((select artist_id from artists where artist_name = '황인현'), song_rec.song_id, 40);
+        
+    END LOOP;
+END;
+/
+
+
+
+
+commit;
+    
+    
+    
+    
+    
+    
