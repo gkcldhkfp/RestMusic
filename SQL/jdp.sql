@@ -361,7 +361,7 @@ insert into title_songs (album_id, song_id) values ((select album_id from albums
 -- 에스파(aespa) 노래 데이터 삽입
 -- 앨범 정보 삽입
 -- [정규] 댄스,발라드,알앤비
--- 수록곡10 supernova, amargeddon, set the tone, mine, licorice, bahama, long chat, prologue, live my life, 목소리
+-- 수록곡10 supernova_댄스, amargeddon_댄스, set the tone_댄스, mine_댄스, licorice_댄스, bahama_댄스, long chat_댄스, prologue_알앤비, live my life_댄스, 목소리_발라드
 
 insert into albums (album_name, album_image, album_type, album_release_date) values ('armageddon', 'armageddon.jpg', '정규', '2024-05-27');
 
