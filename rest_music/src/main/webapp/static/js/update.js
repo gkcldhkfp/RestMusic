@@ -133,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 닉네임 입력 필드의 값이 변경될 때마다 유효성 검사 및 중복 확인
     nicknameInput.addEventListener('change', function(event) {
         const nickname = this.value.trim();  // 닉네임 입력 값 가져오기
+        const currentUserNickname = this.getAttribute('value'); // 현재 사용자의 닉네임
         
         // 닉네임 입력 필드의 값이 변경될 때마다 오류 메시지를 지우고 상태를 확인합니다.
         event.target.addEventListener('input', () => {
@@ -144,6 +145,16 @@ document.addEventListener('DOMContentLoaded', () => {
             checkNicknameResult.textContent = '';
             checkNicknameResult.className = 'form-text';
             nicknameChecked = false;
+            changeModifyButtonState();
+            return;
+        }
+        
+        // 현재 사용자의 닉네임과 동일한 경우
+        if (nickname === currentUserNickname) {
+            nicknameChecked = true;
+            checkNicknameResult.textContent = '사용 가능한 닉네임입니다.';
+            checkNicknameResult.className = 'form-text text-success';
+            changeButtonState();
             changeModifyButtonState();
             return;
         }
@@ -202,8 +213,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // 이메일 입력 필드의 값이 변경될 때마다 유효성 검사 및 중복 확인
-    emailInput.addEventListener('input', function(event) {
+    emailInput.addEventListener('change', function(event) {
         const email = this.value.trim();  // 이메일 입력 값 가져오기
+        const currentUserEmail = this.getAttribute('value'); // 현재 사용자의 이메일
         
         // 이메일 입력 필드의 값이 변경될 때마다 오류 메시지를 지우고 상태를 확인합니다.
         event.target.addEventListener('input', () => {
@@ -225,6 +237,16 @@ document.addEventListener('DOMContentLoaded', () => {
             emailChecked = false;
             checkEmailResult.textContent = '이메일 형식이 올바르지 않습니다.';
             checkEmailResult.className = 'form-text text-danger';
+            changeButtonState();
+            changeModifyButtonState();
+            return;
+        }
+        
+        // 현재 사용자의 이메일과 동일한 경우
+        if (email == currentUserEmail) {
+            emailChecked = true;
+            checkEmailResult.textContent = '사용 가능한 이메일입니다.';
+            checkEmailResult.className = 'form-text text-success';
             changeButtonState();
             changeModifyButtonState();
             return;

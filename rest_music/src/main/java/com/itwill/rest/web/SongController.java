@@ -118,7 +118,7 @@ public class SongController {
 	            : songService.readSongsByGenre(genreName, id);
 	    
 	    model.addAttribute("genreSongs", list);
-	    model.addAttribute("genres", Arrays.asList("전체", "OST", "댄스", "발라드", "팝", "힙합"));
+	    model.addAttribute("genres", Arrays.asList("전체", "발라드", "팝", "댄스/일렉", "알앤비", "힙합", "트로트", "OST", "인디", "포크/블루스", "록/메탈" ));
 	    model.addAttribute("loginUserId", id);
 	    return "/song/genreChart";
 	    
@@ -138,6 +138,13 @@ public class SongController {
 		model.addAttribute("loginUserId", id);
 	}
 	
+	// 무한 스크롤을 위해 새로운 노래 데이터를 반환하는 메서드
+    @GetMapping("/api/songs")
+    @ResponseBody
+    public List<SongChartDto> getSongs(@RequestParam int page) {
+        int pageSize = 10; // 페이지당 불러올 노래 개수
+        return songService.getSongs(page, pageSize);
+    }
 	
 	
 }
