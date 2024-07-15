@@ -51,6 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('플레이리스트 이름을 입력하세요.');
             return;
         }
+        
+        if (plistName.length > 20) {
+            alert('플레이리스트 이름은 20자 이하여야 합니다.');
+            return;
+        }
 
         const data = { id, plistName };
         console.log(data);

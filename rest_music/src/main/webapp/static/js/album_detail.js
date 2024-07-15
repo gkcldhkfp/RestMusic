@@ -125,8 +125,92 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const singerNameSpace = document.querySelector('#singerNames');
 	const splitsingerName = singerName.split(',');
-	const splitsingerIds = singerIds.split(',');
-	artistPageLinked(singerNameSpace, splitsingerName, splitsingerIds);
+	const splitsingerId = singerId.split(',');
+	artistPageLinked(singerNameSpace, splitsingerName, splitsingerId);
+
+
+	// 장르 작성 & 링크
+	const splitgenere = genreName.split(',');
+	const genreSpace = document.querySelector('#genre');
+	let genreHtml = genreSpace.innerHTML; // 기존 내용 유지
+	for (let i = 0; i < splitgenere.length; i++) {
+		const trimmedName = splitgenere[i].trim();
+		const genrePage = `../song/genreChart?genreName=${trimmedName}`;
+
+		if (i === 0) {
+			genreHtml += `<span class='text-center' style='cursor: pointer;' onclick="location.href='${genrePage}'"
+			onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
+  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">${trimmedName}</span>`;
+		} else {
+			// 이후 링크들은 쉼표와 함께 추가
+			genreHtml += `, <span class='text-center' style='cursor: pointer;' onclick="location.href='${genrePage}'"
+			onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
+  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">${trimmedName}</span>`;
+		}
+	}
+	genreSpace.innerHTML = genreHtml;
+
+	// 타이틀곡 작성 & 링크
+	const titleSongSpace = document.querySelector('#titleSong');
+	const splittitleSong = titleSong.split(',');
+	const splittitleSongId = titleSongId.split(',');
+	// console.log(splittitleSong);
+	// console.log(splittitleSongId);
+	let titleSongHtml = titleSongSpace.innerHTML; // 기존 내용 유지
+	for (let i = 0; i < splittitleSong.length; i++) {
+		const trimmedName = splittitleSong[i].trim();
+		const trimmedId = splittitleSongId[i].trim();
+		const songPage = `../song/detail?songId=${trimmedId}`;
+
+		if (i === 0) {
+			titleSongHtml += `<span class='text-center' style='cursor: pointer;' onclick="location.href='${songPage}'"
+			onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
+  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">${trimmedName}</span>`;
+		} else {
+			// 이후 링크들은 쉼표와 함께 추가
+			titleSongHtml += `, <span class='text-center' style='cursor: pointer;' onclick="location.href='${songPage}'"
+			onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
+  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">${trimmedName}</span>`;
+		}
+	}
+	titleSongSpace.innerHTML = titleSongHtml;
+
+
+
+	function artistPageLinked(writersSpace, artists, artistIds) {
+
+		const length = Math.min(artists.length, artistIds.length);
+		/*  console.log(artists.length);
+			console.log(artistIds.length);
+			console.log(length);*/
+		let linksHtml = writersSpace.innerHTML; // 기존 내용 유지
+		for (let i = 0; i < length; i++) {
+			const trimmedName = artists[i].trim();
+			const trimmedId = artistIds[i].trim();
+			console.log(trimmedName);
+			console.log(trimmedId);
+			const artistPage = `../artist/songs?artistId=${trimmedId}`;
+
+			if (i === 0) {
+				linksHtml += `<span class='text-center' style='cursor: pointer;' 
+					onclick="location.href='${artistPage}'"
+					onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
+					onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">
+    ${trimmedName}
+					</span>`;
+								} else {
+									// 이후 링크들은 쉼표와 함께 추가
+									linksHtml += `, <span class='text-center' style='cursor: pointer;' 
+						onclick="location.href='${artistPage}'"
+						onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
+						onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">
+							${trimmedName}
+					</span>`;
+			}
+		}
+		writersSpace.innerHTML = linksHtml;
+
+	}
 
 	/* 
 		const btnLike = document.querySelectorAll('#btnLike');
