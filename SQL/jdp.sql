@@ -16,7 +16,6 @@ insert into songs (album_id, title, song_path, lyrics) values ((select album_id 
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'GET UP'), 'Get Up', 'NewJeans - Get Up.mp3', 'NewJeans - Get Up.txt');
 insert into songs (album_id, title, song_path, lyrics) values ((select album_id from albums where album_name = 'GET UP'), 'ASAP', 'NewJeans - ASAP.mp3', 'NewJeans - ASAP.txt');
 
-
 -- 새로 생성된 song_id를 7로 가정
 
 -- 곡 장르 정보 삽입
@@ -36,10 +35,7 @@ insert into artists (artist_name, artist_image, artist_description) values ('250
 insert into artists (artist_name, artist_image, artist_description) values ('임성빈', 'profile.jpg', '');
 insert into artists (artist_name, artist_image, artist_description) values ('freekind', 'profile.jpg', '');
 
-
-
 -- 새로 생성된 artist_id가 11 NewJeans, 12 FRNK, 13 Gigi, 14 FrankieScoca, 15 250, 16 임성빈, 17 freekind
-
 
 -- 아티스트 역할 정보 삽입
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'NewJeans'), (select song_id from songs where title='New Jeans'), 10); -- 가수
@@ -68,7 +64,14 @@ insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '250'), (select song_id from songs where title='ASAP'), 40); -- 편곡가
 
 -- 타이틀 곡 정보 삽입
-insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'GET UP'), (select song_id from songs where title='Super Shy')); -- album_id는 "밤양갱" 앨범의 ID, song_id는 새로 추가된 곡의 ID
+
+-- NewJeans 뉴진스	GET UP
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'GET UP'), (select song_id from songs where title='Super Shy'));
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'GET UP'), (select song_id from songs where title='ETA'));
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'GET UP'), (select song_id from songs where title='Cool With You'));
+
+
+
 
 
 
@@ -100,8 +103,6 @@ insert into artists (artist_name, artist_image, artist_description) values ('Ayu
 insert into artists (artist_name, artist_image, artist_description) values ('P.K (NU_BOUNCE)', 'profile.jpg', '');
 
 
-
-
 -- 새로 생성된 artist_id가 101 kissOfLife, 102 미아, 103 조윤경, 104 Strawberrybananaclub, 105 Ayushy (THE HUB), 106 P.K (NU_BOUNCE)
 
 -- 아티스트 역할 정보 삽입 songId 101부터 102
@@ -114,6 +115,13 @@ insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Ayushy (THE HUB)'), (select song_id from songs where title='nothing'), 30); -- 작사가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'P.K (NU_BOUNCE)'), (select song_id from songs where title='nothing'), 20); -- 작곡가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'P.K (NU_BOUNCE)'), (select song_id from songs where title='nothing'), 40); -- 편곡가
+
+-- 타이틀 곡 정보 삽입
+
+-- kissOfLife 키스오브라이프	midas touch
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'midas touch'), (select song_id from songs where title='midas touch'));
+
+
 
 
 
@@ -195,6 +203,16 @@ insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'DEE.P'), (select song_id from songs where title='stuck in the middle_remix'), 20); -- 작곡가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Dan Whittemore'), (select song_id from songs where title='stuck in the middle_remix'), 40); -- 편곡가
 
+-- 타이틀 곡 정보 삽입
+
+-- babymonster 베이비몬스터	babymons7er
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'babymons7er'), (select song_id from songs where title='sheesh'));
+
+
+
+
+
+
 
 
 -- 아일릿(illit) 노래 데이터 삽입
@@ -254,6 +272,14 @@ insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Stint'), (select song_id from songs where title='lucky girl syndrome'), 30); -- 작사가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Alna Hofmeyr'), (select song_id from songs where title='lucky girl syndrome'), 20); -- 작곡가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'Alna Hofmeyr'), (select song_id from songs where title='lucky girl syndrome'), 40); -- 편곡가
+
+-- 타이틀 곡 정보 삽입
+
+-- illit 아일릿 	super real me
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'super real me'), (select song_id from songs where title='magnetic'));
+
+
+
 
 
 
@@ -320,6 +346,15 @@ insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'danke'), (select song_id from songs where title='up 2 me'), 30); -- 작사가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'YOUNGWOO'), (select song_id from songs where title='up 2 me'), 20); -- 작곡가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = 'YOUNGWOO'), (select song_id from songs where title='up 2 me'), 40); -- 편곡가
+
+-- 타이틀 곡 정보 삽입
+
+-- viviz 비비지		versus
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'versus'), (select song_id from songs where title='maniac'));
+
+
+
+
 
 
 
@@ -440,3 +475,14 @@ insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '이오늘'), (select song_id from songs where title='목소리'), 30); -- 작사가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '밍지션'), (select song_id from songs where title='목소리'), 20); -- 작곡가
 insert into artist_roles (artist_id, song_id, role_id) values ((select artist_id from artists where artist_name = '밍지션'), (select song_id from songs where title='목소리'), 40); -- 편곡가
+
+
+-- 타이틀 곡 정보 삽입
+
+-- aespa 에스파		armageddon
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'armageddon'), (select song_id from songs where title='supernova'));
+insert into title_songs (album_id, song_id) values ((select album_id from albums where album_name = 'armageddon'), (select song_id from songs where title='armageddon'));
+
+
+
+
