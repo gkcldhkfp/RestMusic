@@ -2,6 +2,8 @@ package com.itwill.rest.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.itwill.rest.dto.playlists.AddSongToPlayListDto;
 import com.itwill.rest.dto.song.SongChartDto;
 import com.itwill.rest.dto.song.SongDetailDto;
@@ -34,5 +36,9 @@ public interface SongDao {
 	
 	// 최신 음악
 	List<SongChartDto> getNewestSongs();
+	
+	// 페이지와 페이지 크기를 이용해 노래 목록을 가져오는 메서드
+	List<SongChartDto> findSongs(@Param("offset") int offset, @Param("end") int end);
+	
 	
 }

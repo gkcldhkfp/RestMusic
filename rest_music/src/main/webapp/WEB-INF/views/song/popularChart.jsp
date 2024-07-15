@@ -95,47 +95,62 @@
 	                       </td>
 	                       <td>
 	                           <c:url var="songPath" value="/songs/${top.songPath}" />
-	                           <a href="#" class="btn btn-primary btn-sm play-btn"
-	                               id="listenBtn"
-	                               data-song-path="${songPath}"
-	                               data-song-id="${top.songId}"
-	                               data-id="${top.songId}">
-	                               <i class="fas fa-play"></i>
-	                           </a>
+                                <c:url var="play" value="/images/icon/play.png" />
+                                <button class="btn btn-primary btn-sm play-btn icon-button" 
+                                    id="listenBtn"
+                                    data-song-path="${songPath}" 
+                                    data-song-id="${top.songId}" 
+                                    data-id="${top.songId}">
+                                    <img alt="듣기" src="${play}" />
+                                </button>
 	                       </td>
 	                       <td>
-	                           <button type="button" class="btn btn-secondary btn-sm" id="addCPList"
-	                               data-id="${top.songId}">
-	                               <i class="fa-solid fa-list"></i>
-	                           </button>
+	                           <c:url var="playList" value="/images/icon/playList.png" />
+                                <button type="button" class="icon-button" id="addCPList"
+                                    data-id="${top.songId}">
+                                <img alt="재생목록" src="${playList}" />
+                                </button>
 	                       </td>
 	                       <td>
-	                           <button type="button" class="btn btn-secondary btn-sm add-to-playlist-btn"
-	                               data-song-id="${top.songId}"
-	                               data-id="${loginUserId}">
-	                               <i class="fas fa-plus"></i>
-	                           </button>
+	                           <c:url var="myPlayList" value="/images/icon/myPlayList.png" />
+                                <button type="button" class="btn btn-secondary btn-sm add-to-playlist-btn icon-button" 
+                                    data-song-id="${top.songId}" 
+                                    data-id="${loginUserId}">
+                                <img alt="담기" src="${myPlayList}" />
+                                </button>
 	                       </td>
 	                       <td>
-	                           <a href="${top.videoLink}" target="_blank" class="btn btn-secondary btn-sm">
-	                               <i class="fas fa-video"></i>
-	                           </a>
+	                           <a href="${top.videoLink}" target="_blank" class="icon-button video-link">
+                                <i class="fas fa-video"></i>
+                                </a>
 	                       </td>
 	                   </tr>
 	               </c:forEach>
 	           </tbody>
 	       </table>
-	   </div>
+        </div>
     </main>
     
-    <!-- 재생할 MP3 오디오 태그 -->
-    <!-- <audio id="audioPlayer" controls> -->
-        <!-- MP3 파일 경로를 동적으로 설정할 수 있도록 스크립트로 처리 -->
-    <!--   <source id="audioSource" src="" type="audio/mpeg">
-        Your browser does not support the audio element.
-        <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
-    </audio>
-     --> 
+    
+    <!-- 플로팅 버튼 그룹 -->
+    <div id="floatingButtonGroup" class="floating-button-group d-none">
+        <div class="selected-count mb-2">0개 선택됨</div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-primary btn-sm play-selected">
+                <c:url var="play" value="/images/icon/play.png" />
+                <img src="${play}" alt="듣기" class="btn-icon"> 듣기
+            </button>
+            <button type="button" class="btn btn-primary btn-sm add-to-playlist">
+                <c:url var="playList" value="/images/icon/playList.png" />
+                <img src="${playList}" alt="재생목록" class="btn-icon"> 재생목록
+            </button>
+            <button type="button" class="btn btn-primary btn-sm add-to-my-list">
+                <c:url var="myPlayList" value="/images/icon/myPlayList.png" />                       
+                <img src="${myPlayList}" alt="담기" class="btn-icon"> 담기
+            </button>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm deselect-all mt-2">선택 해제</button>
+    </div>
         
     <!-- 플레이리스트 모달 -->
     <div class="modal fade" id="selectPlayList" tabindex="-1" aria-labelledby="selectPlayListLabel" aria-hidden="true">
@@ -154,22 +169,6 @@
                    <button type="button" id="btnAddSong" class="btn btn-primary">곡 추가</button>
                </div>
            </div>
-        </div>
-    </div>
-    
-    <!-- 전체 담기 모달-->
-    <div id="selectAllModal" class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body text-center p-4">
-                    <button type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">
-                        <i class="fas fa-times fa-3x"></i> 취소
-                    </button>
-                    <button type="button" class="btn btn-primary m-2" id="addAllToCollection">
-                        <i class="fas fa-plus fa-3x"></i> 전체 담기
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
     

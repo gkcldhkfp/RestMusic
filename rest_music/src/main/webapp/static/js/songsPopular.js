@@ -83,31 +83,109 @@ document.addEventListener("DOMContentLoaded", function() {
             });
     });
     
-    // 전체 선택 체크박스 이벤트 핸들러
-    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    // 플로팅 버튼 그룹 요소 선택
     const songCheckboxes = document.querySelectorAll('.songCheckbox');
-    const selectAllModal = new bootstrap.Modal(document.getElementById('selectAllModal'), {});
+    const floatingButtonGroup = document.getElementById('floatingButtonGroup');
+    const selectedCountDisplay = floatingButtonGroup.querySelector('.selected-count');
+    const deselectAllButton = floatingButtonGroup.querySelector('.deselect-all');
+    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
 
-    // 전체 선택 체크박스 이벤트 핸들러
+    // 버튼 그룹 업데이트 함수
+    function updateButtonGroup() {
+        const checkedBoxes = document.querySelectorAll('.songCheckbox:checked');
+        const checkedCount = checkedBoxes.length;
+        
+        if (checkedCount > 0) {
+            floatingButtonGroup.classList.remove('d-none');
+            selectedCountDisplay.textContent = `${checkedCount}개 선택됨`;
+        } else {
+            floatingButtonGroup.classList.add('d-none');
+        }
+    }
+
+    // 개별 체크박스 이벤트 리스너
+    songCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateButtonGroup);
+    });
+
+    // 선택 해제 버튼 이벤트 리스너
+    deselectAllButton.addEventListener('click', function() {
+        songCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        selectAllCheckbox.checked = false; // 전체 선택 체크박스 해제
+        updateButtonGroup();
+    });
+
+    // 전체 선택 체크박스 이벤트 리스너
     selectAllCheckbox.addEventListener('change', function() {
         const isChecked = selectAllCheckbox.checked;
         songCheckboxes.forEach(checkbox => {
             checkbox.checked = isChecked;
         });
-        if (isChecked) {
-            selectAllModal.show();
+        updateButtonGroup();
+    });
+
+    // 듣기 버튼 클릭 이벤트
+    floatingButtonGroup.querySelector('.play-selected').addEventListener('click', function() {
+        const selectedSongs = Array.from(document.querySelectorAll('.songCheckbox:checked')).map(checkbox => checkbox.dataset.songId);
+        if (selectedSongs.length > 0) {
+            const firstSongId = selectedSongs[0];
+            const playBtn = document.querySelector(`.play-btn[data-song-id="${firstSongId}"]`);
+            if (playBtn) {
+                playBtn.click();
+            }
         }
     });
 
-    // 각 곡 체크박스 이벤트 핸들러
-    songCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            if (!this.checked) {
-                selectAllCheckbox.checked = false;
-            }
-        });
+    // 재생목록에 추가 버튼 클릭 이벤트
+    floatingButtonGroup.querySelector('.add-to-playlist').addEventListener('click', function() {
+        const selectedSongs = Array.from(document.querySelectorAll('.songCheckbox:checked')).map(checkbox => checkbox.dataset.songId);
+        if (selectedSongs.length > 0) {
+            selectedSongs.forEach(songId => {
+                const addToPlaylistBtn = document.querySelector(`#addCPList[data-id="${songId}"]`);
+                if (addToPlaylistBtn) {
+                    addToPlaylistBtn.click();
+                }
+            });
+        }
     });
+
+    // 담기 버튼 클릭 이벤트
+    floatingButtonGroup.querySelector('.add-to-my-list').addEventListener('click', function() {
+        const selectedSongs = Array.from(document.querySelectorAll('.songCheckbox:checked')).map(checkbox => checkbox.dataset.songId);
+        if (selectedSongs.length > 0) {
+            // 첫 번째 선택된 곡의 버튼에서 id를 가져옵니다.
+            const firstSongButton = document.querySelector(`.add-to-playlist-btn[data-song-id="${selectedSongs[0]}"]`);
+            const id = parseInt(firstSongButton.dataset.id);
+            console.log(id);
     
+            if (id === 0) { // 로그인하지 않은 경우
+                const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                loginModal.show();
+                return;
+            }
+    
+            showPlayListModal(id, selectedSongs);
+    
+            // 모든 곡이 추가된 후 실행될 함수
+            function afterAddingAllSongs() {
+                // 1. 플로팅 그룹 숨기기
+                floatingButtonGroup.classList.add('d-none');
+    
+                // 2. 모든 체크박스 해제 (전체 선택 체크박스 포함)
+                document.querySelectorAll('.songCheckbox:checked, #selectAllCheckbox:checked').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+    
+            }
+    
+            // 모든 곡 추가 후 실행
+            afterAddingAllSongs();
+        }
+    });
+
+
     // 플레이리스트 불러오기 및 모달 표시 함수
     function showPlayListModal(id, songIds) {  // songIds를 배열로 받음
         axios.get(`../getPlayList/${id}`)
@@ -116,11 +194,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     const playLists = response.data;
                     const playListsContainer = document.getElementById('playLists');
                     playListsContainer.innerHTML = ''; // 기존 내용을 지움
-
+    
                     playLists.forEach(list => {
                         const defaultImage = '../images/icon/default.png';
                         const albumImageSrc = list.albumImage ? `../images/albumcover/${list.albumImage}` : defaultImage;
-
+    
                         const listElement = document.createElement('div');
                         listElement.classList.add('playlist-item', 'd-flex', 'align-items-center', 'mb-2');
                         listElement.innerHTML = `
@@ -141,14 +219,14 @@ document.addEventListener("DOMContentLoaded", function() {
                           `;
                         playListsContainer.appendChild(listElement);
                     });
-
+    
                     // songIds를 hidden input으로 추가
                     const hiddenInput = document.createElement('input');
                     hiddenInput.type = 'hidden';
                     hiddenInput.id = 'selectedSongIds';
                     hiddenInput.value = JSON.stringify(songIds);  // 배열을 JSON 문자열로 변환
                     playListsContainer.appendChild(hiddenInput);
-
+    
                     const selectPlayListModal = new bootstrap.Modal(document.getElementById('selectPlayList'));
                     selectPlayListModal.show();
                 }
@@ -162,27 +240,27 @@ document.addEventListener("DOMContentLoaded", function() {
     function addSongToPlaylists() {
         const selectedPlaylists = document.querySelectorAll('#playLists .playlist-checkbox:checked');
         const selectedPlaylistIds = Array.from(selectedPlaylists).map(checkbox => checkbox.dataset.playlistId);
-        
+    
         // hidden input에서 songIds를 가져옴
         const songIdsJson = document.getElementById('selectedSongIds').value;
         const songIds = JSON.parse(songIdsJson);  // JSON 문자열을 배열로 변환
-
+    
         if (selectedPlaylistIds.length === 0) {
             alert('플레이리스트를 선택하세요.');
             return;
         }
-
+    
         if (songIds.length === 0) {
             alert('곡을 선택하세요.');
             return;
         }
-
+    
         const alreadyAdded = {};
         const promises = [];
-
+    
         selectedPlaylistIds.forEach(plistId => {
             alreadyAdded[plistId] = false;
-
+    
             songIds.forEach(songId => {
                 console.log(`플레이리스트 ${plistId}에 곡 ${songId} 확인 중`);
                 // 각 플레이리스트에 곡이 이미 추가되어 있는지 확인
@@ -200,16 +278,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 promises.push(checkPromise);
             });
         });
-
+    
         Promise.all(promises).then(() => {
             const addedPlaylists = selectedPlaylistIds.filter(plistId => alreadyAdded[plistId]);
             if (addedPlaylists.length > 0) {
                 alert('선택한 플레이리스트에 이미 추가된 곡입니다.');
                 const selectPlayListModal = bootstrap.Modal.getInstance(document.getElementById('selectPlayList'));
-                selectPlayListModal.hide();  
+                selectPlayListModal.hide();
                 return;
             }
-
+    
             // 곡이 추가되지 않은 플레이리스트에 추가
             const addPromises = selectedPlaylistIds.flatMap(plistId => {
                 return songIds.map(songId => {
@@ -221,13 +299,26 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 }).filter(Boolean);
             });
-
+    
             Promise.all(addPromises).then(responses => {
                 const allSuccessful = responses.every(response => response && response.status === 200);
                 if (allSuccessful) {
                     alert('선택한 플레이리스트에 곡이 추가되었습니다.');
                     const selectPlayListModal = bootstrap.Modal.getInstance(document.getElementById('selectPlayList'));
                     selectPlayListModal.hide();
+                    
+                    // 체크박스 해제 및 플로팅 버튼 숨기기
+                    document.querySelectorAll('.songCheckbox:checked, #selectAllCheckbox:checked').forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                    floatingButtonGroup.classList.add('d-none');
+    
+                    // 모달 배경을 어둡게 하지 않도록 설정
+                    const modalBackdrop = document.querySelector('.modal-backdrop');
+                    if (modalBackdrop) {
+                        modalBackdrop.style.opacity = '0';
+                    }
+                    
                 }
             }).catch(error => {
                 console.error('플레이리스트에 곡 추가 중 오류가 발생했습니다:', error);
@@ -235,25 +326,6 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
     }
-
-    // "전체 담기" 버튼 클릭 이벤트 핸들러
-    document.getElementById('addAllToCollection').addEventListener('click', function() {
-        const id = parseInt(document.querySelector('.add-to-playlist-btn').dataset.id);
-        if (id === 0) { // 로그인하지 않은 경우
-            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-            loginModal.show();
-            return;
-        }
-        // 기존의 전체 선택 모달을 숨깁니다.
-        selectAllModal.hide();
-
-        // 체크된 모든 곡의 ID를 수집
-        const checkedSongs = document.querySelectorAll('.songCheckbox:checked');
-        const songIds = Array.from(checkedSongs).map(checkbox => checkbox.dataset.songId);
-
-        // "곡 추가" 모달 창을 엽니다.
-        showPlayListModal(id, songIds);  // songIds 배열을 전달
-    });
 
     // 플레이리스트에 곡 추가 버튼 클릭 이벤트 핸들러
     const saveButton = document.getElementById('btnAddSong');
@@ -275,12 +347,12 @@ document.addEventListener("DOMContentLoaded", function() {
             showPlayListModal(id, [songId]);  // songId를 배열로 전달
         });
     });
-
+    
     // 모달 창이 나와도 다른 버튼들을 클릭할 수 있게 설정
     document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
         backdrop.style.pointerEvents = 'none';
     });
-
+    
     // 로그인 모달
     const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
     const loginConfirmButton = document.getElementById('loginConfirmButton');
@@ -294,5 +366,6 @@ document.addEventListener("DOMContentLoaded", function() {
     loginCancelButton.addEventListener('click', function() {
         loginModal.hide();
     });
-
+    
 });
+

@@ -305,6 +305,14 @@
         order by al.album_release_date desc
     </select>
     
+    <!-- 페이지와 페이지 크기를 이용해 노래 목록을 가져오는 쿼리 -->
+    <select id="findSongs" resultType="SongChartDto">
+         SELECT * FROM (
+            SELECT a.*, ROW_NUMBER() OVER (ORDER BY a.song_Id) AS rn 
+            FROM songs a
+        ) WHERE rn BETWEEN #{offset} AND #{end}
+    </select>
+    
       
 </mapper>
 
