@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
 <!DOCTYPE html>
 
 <html>
@@ -299,9 +300,15 @@ h3 {
                         <img src="./images/albumcover/${album.albumImage}" alt="Album cover">
                         <small>${album.albumType}</small>
                         <small>${album.genreName}</small>
-                        <small>${album.albumName}</small>
+                        <c:url var="albumPage" value="/album/detail?albumId=${album.albumId}" />
+                        <a href="${albumPage}">
+                            <small>${album.albumName}</small>
+                        </a>
                         <small>${album.artistName}</small>
-                        <small>${album.title}</small>
+                        <c:url var="songPage" value="/song/detail?songId=${album.songId}" />
+                        <a href="${songPage}">
+                            <small>${album.title}</small>
+                        </a>
                     </div>
                 </c:forEach>
             </div>
