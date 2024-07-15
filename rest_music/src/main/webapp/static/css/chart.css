@@ -55,6 +55,54 @@
     font-weight: bold; /* 빨간색 하트는 bold weight */
 }
 
+.add-to-playlist-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+}
+
+.add-to-playlist-btn img {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-button {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  cursor: pointer;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 1 !important;
+}
+
+.icon-button img {
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+}
+
+.icon-button:hover {
+  opacity: 0.7;
+}
+
+.icon-button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 테이블 셀 정렬 */
+td {
+  vertical-align: middle;
+  text-align: center;
+}
+
 /* 모달 창 중앙 정렬 및 아이콘 크기 조정 */
 .modal-body {
     display: flex;
@@ -187,6 +235,78 @@
 /* 모달 푸터 버튼 스타일 */
 #selectPlayList .modal-footer .btn {
     padding: 8px 16px;
+}
+
+.floating-button-group {
+    position: fixed;
+    bottom: 80px;  /* 더보기 토글 위로 이동 */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #007bff;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.floating-button-group .btn-group .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+.floating-button-group .btn-group .btn:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.selected-count {
+    color: white;
+    font-weight: bold;
+}
+
+.btn-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.deselect-all {
+    width: 100%;
+}
+
+.toggle-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;  /* 플로팅 버튼 그룹보다 낮은 z-index */
+}
+
+.toggle-button {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.toggle-button:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.toggle-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    transition: transform 0.3s;
+}
+
+.toggle-button.active .toggle-icon {
+    transform: rotate(180deg);
 }
 
 
