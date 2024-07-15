@@ -16,6 +16,41 @@
 	<link rel="stylesheet" href="<c:url value='/css/chart.css' />"> <!-- 외부 CSS 파일 링크 -->
 	
 	<style>
+	   .button_rbox {
+		  display: flex;
+		  flex-wrap: wrap;
+		  gap: 10px;
+		}
+
+		.btn-genre {
+		  font-size: 14px;
+		  color: #333;
+		  border: 1px solid #d7d7d7;
+		  background-color: #fff;
+		  border-radius: 18px;
+		  padding: 7px 15px;
+		  transition: all 0.2s ease;
+		  cursor: pointer;
+		}
+		
+		.btn-genre:hover {
+		  background-color: #f0f0f0;
+		}
+		
+		.btn-genre:focus {
+		  outline: none;
+		}
+		
+		.btn-genre.active {
+		  color: #fff;
+		  background-color: #00cd3c;
+		  border-color: #00cd3c;
+		}
+		
+		.btn-genre.active:hover {
+		  background-color: #00b534; /* 활성화 상태에서 호버 시 약간 더 어두운 녹색 */
+		}
+	
 		#noChartMessage {
 		    background-color: #f0f2f5; /* 배경색을 좀 더 부드러운 톤으로 변경 */
 		    border-radius: 10px;
@@ -60,7 +95,11 @@
 	<link
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
 		rel="stylesheet" />
+<<<<<<< HEAD
+	<link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
+=======
     <link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
+>>>>>>> refs/heads/develop
 </head>
 <body>
 	<header>
@@ -75,9 +114,9 @@
 	       <c:url var="genreSongsUrl" value="/song/genreChart" />
 	       <form id="genreForm" method="get" action="${genreSongsUrl}">
 	           <%-- 장르 목록 설정 --%>
-	           <div class="d-flex justify-content-start mb-3">
+	           <div class="d-flex justify-content-start mb-3 button_rbox">
 	               <c:forEach var="genre" items="${genres}">
-	                   <button type="button" class="btn btn-outline-primary me-2 genre-btn"
+	                   <button type="button" class="btn btn-genre me-2 genre-btn"
 	                       data-genre-name="${genre}">${genre}</button>
 	               </c:forEach>
 	           </div>

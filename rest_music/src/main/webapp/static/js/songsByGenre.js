@@ -18,8 +18,22 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 location.href = `../song/genreChart?genreName=${genreName}`; // 다른 장르 버튼 클릭 시 해당 URL로 이동
             }
+            
+            // 모든 버튼에서 'active' 클래스 제거
+            genreButtons.forEach(btn => btn.classList.remove('active'));
+    
+            // 클릭된 버튼에 'active' 클래스 추가
+            this.classList.add('active');
         });
     });
+    
+    // 페이지 로드 시 현재 선택된 장르에 해당하는 버튼 활성화
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentGenre = urlParams.get('genreName') || '전체';
+    const activeButton = document.querySelector(`.genre-btn[data-genre-name="${currentGenre}"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
     
     if (rows.length === 0) {
         // 테이블에 데이터가 없는 경우
