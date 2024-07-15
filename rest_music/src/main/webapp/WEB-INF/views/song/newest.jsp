@@ -48,87 +48,21 @@
                         <th>뮤비</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <c:forEach var="newSong" items="${newSongs}" varStatus="status">
-                        <tr>
-                            <td><input type="checkbox" class="songCheckbox" data-song-id="${newSong.songId}" /></td>
-                            <td>${status.index + 1}</td>
-                            <td class="song-info">
-                            <%-- 앨범 디테일 페이지로 이동 --%>
-                                <c:url var="albumDetailUrl" value="/album/detail">
-                                    <c:param name="albumId" value="${newSong.albumId}" />
-                                </c:url>
-                                <a href="${albumDetailUrl}" class="album-link">
-                                    <img alt="앨범표지" src="<c:url value='/images/albumcover/${newSong.albumImage}' />" class="img-fluid" />
-                                </a>
-                                <%-- 음원 디테일 페이지로 이동 --%>
-                                <c:url var="songDetailUrl" value="/song/detail">
-                                    <c:param name="songId" value="${newSong.songId}" />
-                                </c:url> 
-                                <div>
-                                    <a href="${songDetailUrl}" style="font: inherit; color: inherit; text-decoration: none;">
-                                        <span>${newSong.title}</span><br>
-                                    </a>
-                                    <%-- 아티스트 음원 페이지로 이동 --%>
-                                    <c:forEach items="${fn:split(newSong.artistName, ',')}" var="artistName" varStatus="statusName">
-                                        <c:set var="artistId" value="${fn:split(newSong.artistId, ',')[statusName.index]}" />
-                                        <c:url var="artistPage" value="/artist/songs">
-                                            <c:param name="artistId" value="${artistId.trim()}" />
-                                        </c:url>
-                                        <a href="${artistPage}"
-                                            style="color: gray; text-decoration: none;"
-                                            onmouseover="this.style.color='blue';"
-                                            onmouseout="this.style.color='gray';">
-                                            ${artistName.trim()}
-                                        </a>
-                                        <c:if test="${!statusName.last}">, </c:if>
-                                    </c:forEach>
-                                </div>
-                            </td>
-                            <td>${newSong.albumName}</td>
-                            <td>
-                                <i class="fas fa-heart ${newSong.likes != null && newSong.likes > 0 ? 'liked' : ''} heart-icon"
-                                    data-song-id="${newSong.songId}"
-                                    data-id="${loginUserId}">
-                                </i>
-                                <span class="likes-count">${newSong.likes != null ? newSong.likes : 0}</span>
-                            </td>
-                            <td>
-                                <c:url var="songPath" value="/songs/${newSong.songPath}" />
-								<c:url var="play" value="/images/icon/play.png" />
-								<button class="btn btn-primary btn-sm play-btn icon-button" 
-								    id="listenBtn"
-								    data-song-path="${songPath}" 
-								    data-song-id="${newSong.songId}" 
-								    data-id="${newSong.songId}">
-								    <img alt="듣기" src="${play}" />
-								</button>
-                            </td>
-							<td>
-                                <c:url var="playList" value="/images/icon/playList.png" />
-                                <button type="button" class="icon-button" id="addCPList"
-                                    data-id="${newSong.songId}">
-								<img alt="재생목록" src="${playList}" />
-								</button>
-                            </td>
-                            <td>
-                                <c:url var="myPlayList" value="/images/icon/myPlayList.png" />
-                                <button type="button" class="btn btn-secondary btn-sm add-to-playlist-btn icon-button" 
-                                    data-song-id="${newSong.songId}" 
-                                    data-id="${loginUserId}">
-                                <img alt="담기" src="${myPlayList}" />
-                                </button>
-                            </td>
-                            <td>
-                                <a href="${newSong.videoLink}" target="_blank" class="icon-button video-link">
-                                <i class="fas fa-video"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+                <tbody id="songTableBody">
+                <!-- 노래 목록이 동적으로 추가될 곳 -->
+            </tbody>
+            </table> 
+            <div class="toggle-container">
+                <button id="toggleButton" class="toggle-button">
+                    더보기
+                    <svg class="toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+            </div>
         </div>
+        <!-- 무한 스크롤 감지용 div -->
+        <div id="scrollDetector" class="d-none"></div>
     </main>
     
     <!-- 플로팅 버튼 그룹 -->
