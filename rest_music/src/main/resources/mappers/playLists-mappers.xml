@@ -54,6 +54,7 @@
     s.title,
     s.album_id,
     al.album_image,
+    al.album_name,
     LISTAGG(DISTINCT ar.artist_id, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_id,
     LISTAGG(DISTINCT ar.artist_name, ', ') WITHIN GROUP (ORDER BY ar.artist_name) AS artist_name
     FROM
@@ -67,7 +68,7 @@
     pl.p_list_id = #{pListId}
     AND arr.role_id = 10
     GROUP BY
-    pl.p_list_id, pl.p_list_name, ps.song_id, ps.created_time, s.title, s.album_id, al.album_image
+    pl.p_list_id, pl.p_list_name, ps.song_id, ps.created_time, s.title, s.album_id, al.album_image, al.album_name
     ORDER BY
     ps.created_time DESC
     </select>
