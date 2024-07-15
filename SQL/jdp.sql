@@ -1,6 +1,7 @@
 -- 뉴진스 노래 데이터 삽입
 
 -- 앨범 정보 삽입
+-- [EP] 댄스
 insert into albums (album_name, album_image, album_type, album_release_date) values ('GET UP', 'GET_UP_cover.jpg', 'EP', '2023-07-21');
 
 -- 새로 생성된 album_id를 4로 가정
