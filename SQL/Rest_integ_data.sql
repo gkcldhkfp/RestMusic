@@ -916,8 +916,6 @@ values (32, 10, 20);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values ((select artist_id from artists where artist_name = '아이유'), 10, 30);
-insert into artist_roles (artist_id, song_id, role_id)
-values ((select artist_id from artists where artist_name = '아이유'), 10, 30);
 
 insert into artist_roles (artist_id, song_id, role_id)
 values (29, 10, 40);
