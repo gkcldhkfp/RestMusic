@@ -24,6 +24,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Font Awesome 불러옴 -->
+    <link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
 </head>
 
 <body>

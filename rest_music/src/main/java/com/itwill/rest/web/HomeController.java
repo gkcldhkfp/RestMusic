@@ -39,7 +39,7 @@ public class HomeController {
     // 리스트 중에 10개만 사용하도록 설정
     
     // 최신 앨범을 불러오는 서비스 메서드 호출
-    List<Album> albumList = albumService.selectOrderByDate();
+    List<Album> albumList = albumService.selectOrderByDate().stream().limit(10).toList();;
     // 최신 음악 리스트 가져오기
     model.addAttribute("albumList", albumList);
     

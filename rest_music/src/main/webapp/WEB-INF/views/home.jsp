@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="UTF-8" />
@@ -13,16 +14,21 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous" />
 <link href="./css/home.css" rel="stylesheet" />
-<!-- Google Fonts 링크 추가 -->
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
 <!-- css 불러옴 -->
 <style>
+@font-face {
+    font-family: 'MICEGothic Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
 * {
     box-sizing: border-box
 }
 
 body {
-    font-family: Verdana, sans-serif;
+    font-family: 'MICEGothic Bold', Verdana, sans-serif;
     margin: 0
 }
 
@@ -89,35 +95,25 @@ img {
 
 .content-container {
     margin: 0 350px; /* 양쪽 여백 추가 */
+
 }
+
+
 
 h3 {
     margin-top: 100px; /* 상단 여백 추가 */
+    font-size: 1.5rem !important; /* 글씨 크기*/
 }
 
-/* 뮤직비디오 css */
+/* 뮤직비디오*/
 .video-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px; /* 동영상들 사이의 간격 */
     justify-content: center;
     padding: 20px; /* 컨테이너 패딩 */
-}
-
-.music-video-item {
-    flex: 0 0 20%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-iframe {
-    width: 100%;
-    height: 200px;
-}
-
-h3 {
-    margin-top: 30px;
+    margin-top: 0px; /* 상단 간격 추가 */
+    margin-bottom: 0px; /* 하단 간격 추가 */
 }
 
 .card-container {
@@ -136,13 +132,37 @@ h3 {
     height: auto;
 }
 
-
-
 .h3-style {
     color: black;
     text-decoration: none;
+    
 }
+
 .h3-style:hover {
+    color: black; /* 호버 시에도 검정색 */
+    text-decoration: none; /* 호버 시에도 밑줄 없음 */
+}
+
+
+.hov-anim-box .animated {
+  display: none
+}
+
+.hov-anim-box:hover .animated {
+  display: inline
+}
+
+.hov-anim-box:hover .static {
+  display: none
+}
+
+.mv {
+    font-size: 0.7rem;
+    color: black; /* 호버 시에도 검정색 */
+    text-decoration: none; /* 호버 시에도 밑줄 없음 */
+}
+
+.mv:hover {
     color: black; /* 호버 시에도 검정색 */
     text-decoration: none; /* 호버 시에도 밑줄 없음 */
 }
@@ -159,6 +179,7 @@ h3 {
     </header>
 
     <main>
+        <!-- 메인 페이지 슬라이드 -->
         <div class="slideshow-container mt-5" style="margin-top: 20px;">
             <div class="mySlides">
                 <div class="numbertext"></div>
@@ -179,25 +200,27 @@ h3 {
                 <a href="/Rest/playlists/playlist?plistId=16"> <img
                     src="./data/imagee2.gif" style="width: 100%" />
                 </a>
-            </div>
-
-            
+            </div>  
         </div>
         <br>
-
+        
+        <!-- 슬라이드 하단 점 3개 -->
         <div style="text-align: center">
             <span class="dot" onclick="currentSlide(1)"></span> 
             <span class="dot" onclick="currentSlide(2)"></span> 
             <span class="dot" onclick="currentSlide(3)"></span>
         </div>
+        <br>
+        <br>
         
-        <div class="content-container">
+        <!-- 메인컨텐츠 -->
+        <div class="content-container"> <!-- content-container : 양쪽 여백 추가 -->
             <a class="h3-style" href="/Rest/song/popularChart">
                 <H3>Rest Top 10 차트</H3>
             </a>
             
             <!-- 차트페이지에 있는 리스트를 불러옴 -->
-            <div class="card-container">
+            <div class="card-container"> <!-- 5개씩 끊어서 최대 10개 보여주는 css -->
                 <c:forEach var="l" items="${topTenList}" varStatus="status">
                     <div class="card border-0">
                         <p style="display: none;">${status.index + 1}</p>
@@ -227,54 +250,46 @@ h3 {
                         </a>
                     </div>
                 </c:forEach>
+                
             </div>
-
+                <br><br>
+                
             <H3>Rest 추천 뮤직 비디오</H3>
             <!-- 뮤직 비디오 -->
-            <div class="video-container">
-                <!-- 동적으로 로드될 내용 -->
-                <div class="music-video-item" style="flex: 0 0 19%;">
-                    <iframe width="100%" height="200"
-                        src="https://www.youtube.com/embed/A4S8zl50AdM?si=Nc7iF09hFPY5nd_G"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen></iframe>
+            <div class="card-container">
+                <div class="card hov-anim-box">
+                    <a href="https://youtu.be/ft70sAYrFyY?si=gnVhPHq5naMqW4EX" target='_blank'>
+                        <img src="./images/mv/bubbleGum.gif" alt="" class="animated">
+                        <img src="./images/mv/bubbleGum.png" alt="" class="static">
+                        <div>
+                            <a class="mv">NewJeans - Bubble Gum</a>
+                        </div>
+                    </a>
                 </div>
-                <div class="music-video-item" style="flex: 0 0 19%;">
-                    <iframe width="100%" height="200"
-                        src="https://www.youtube.com/embed/vnS_jn2uibs?si=oFTTqTsRplOwnqeg"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen></iframe>
+            
+                <div class="card hov-anim-box">
+                    <a href="https://youtu.be/phuiiNCxRMg?si=dMeMkG3EofAT0rup" target='_blank'>
+                        <img src="./images/mv/supernova.gif" alt="" class="animated">
+                        <img src="./images/mv/supernova.png" alt="" class="static">
+                        <div>
+                            <a class="mv">에스파 - Supernova</a>
+                        </div>
+                    </a>
                 </div>
-                <div class="music-video-item" style="flex: 0 0 19%;">
-                    <iframe width="100%" height="200"
-                        src="https://www.youtube.com/embed/lSD_L-xic9o?si=Pml36hgvZTYR-tgL"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen></iframe>
+                
+                <div class="card hov-anim-box">
+                    <a href="https://youtu.be/BS7tz2rAOSA?si=bGPZ4UBjD4vwAEyV" target='_blank'>
+                        <img src="./images/mv/day6.gif" alt="" class="animated">
+                        <img src="./images/mv/day6.png" alt="" class="static">
+                        <div>
+                            <a class="mv">DAY6 - 예뻤어</a>
+                        </div>
+                    </a>
                 </div>
-                <div class="music-video-item" style="flex: 0 0 19%;">
-                    <iframe width="100%" height="200"
-                        src="https://www.youtube.com/embed/DpKI0zDPqRQ?si=mC74Z8MKaaZSFF2W"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen></iframe>
-                </div>
-                <div class="music-video-item" style="flex: 0 0 19%;">
-                    <iframe width="100%" height="200"
-                        src="https://www.youtube.com/embed/ic8j13piAhQ?si=l7WymyJhXhinfOWF"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen></iframe>
-                </div>
-                <br>
+                
             </div>
+            <br>
+            
             <H3>따끈 신상 앨범</H3>
 
             <div class="card-container">
@@ -290,8 +305,8 @@ h3 {
                     </div>
                 </c:forEach>
             </div>
-        
-        </main>
+        </div>    
+    </main>
 
 
     <script>
@@ -318,6 +333,8 @@ h3 {
                         dots[slideIndex - 1].className += " active";
                         setTimeout(showSlides, 2000); // Change image every 2 seconds
                     }
+                    
+                
                 </script>
             <script>
                 const refresh = '${refresh}';

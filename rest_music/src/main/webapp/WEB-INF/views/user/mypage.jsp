@@ -10,6 +10,7 @@
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
                 integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
                 crossorigin="anonymous" />
+            <link href="<c:url value='/css/common.css' />" rel="stylesheet"> <!-- 공통 CSS 파일 포함 -->
         </head>
 
         <body>
@@ -20,7 +21,7 @@
                 </div>
             </header>
 
-            <div class="container-fluid">
+            <div class="container">
                 <div class="m-5">
                     <h2 style="font-weight: bold;">마이페이지</h2>
                     <hr>
@@ -48,7 +49,7 @@
                         </div>
                     </div>
                     <br>
-                    <h2 style="font-size: 1.2rem; text-align : center;">플레이리스트</h2>
+                    <h2 style="font-size: 1.2rem; text-align : center; font-weight: bold;">플레이리스트</h2>
                     <hr>
                     <!-- 추가할 박스 (카드) -->
                     <div class="card">
@@ -61,7 +62,7 @@
                             data-bs-toggle="modal" data-bs-target="#addPlaylistModal">플레이리스트 추가</button>
                     </div>
                     <br>
-                    <h2 id="userLikesSection" style="font-size: 1.2rem; text-align : center;">좋아요 누른 곡</h2>
+                    <h2 id="userLikesSection" style="font-size: 1.2rem; text-align : center; font-weight: bold;">좋아요 누른 곡</h2>
                     <hr>
                     <!-- 추가할 박스 (카드) -->
                     <div class="card">

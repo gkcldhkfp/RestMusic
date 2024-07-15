@@ -19,6 +19,16 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous" />
+
+<link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
+
+    
+    <style>
+    img:hover {
+        filter: brightness(80%);
+    }
+    </style>
+
 </head>
 
 <body>
@@ -29,8 +39,8 @@
         </div>
     </header>
 
-    <div class="container-fluid" style="padding: 30px;">
-        <div class="m-5 ">
+    <div class="container" style="padding: 30px;">
+        <div class="m-3 ">
             <div class="p-3">
                 <!-- 아티스트 이미지 주소 지정 -->
                 <c:url var="artistCover"
@@ -39,7 +49,7 @@
                 <c:url var="defaultCover"
                     value="/images/profileimage/profile.jpg" />
                 <!-- 아티스트의 앨범 페이지 이동 주소 지정 -->
-                <c:url var="albumPage"
+                <c:url var="artistAlbumPage"
                     value="/artist/albums?artistId=${artist.artistId}" />
                 <img alt="artistCover" src="${artist.artistImage == null ? defaultCover : artistCover}"
                     class="rounded-circle"
@@ -52,7 +62,7 @@
                             class="btn ms-1"
                             style="border-radius: 5px; background-color: #007bff; color: white;">곡</button>
                         <button id="albumButton" class="btn ms-1"
-                            onclick="window.location.href = '${albumPage}';"
+                            onclick="window.location.href = '${artistAlbumPage}';"
                             onmouseover="this.style.color='#0056b3'"
                             onmouseout="this.style.color='black'">앨범</button>
                     </div>
@@ -134,16 +144,24 @@
                                     <input type="checkbox" class="songCheckbox" data-songId="${s.songId}">
                                 </td>   -->
                                 <td style="text-align: left; vertical-align: middle; font-size: 14px;">
-                                    <img src="${albumImage}"
-                                    width="80px" height="80px">
+                                    <c:url var="albumPage" value="/album/detail?albumId=${s.albumId}" />
+                                    <a href="${albumPage}">
+                                    <img src="${albumImage}" width="80px" height="80px">
+                                    </a>
                                 </td>
-                                <td style="text-align: left; vertical-align: middle; font-size: 14px;">
+                                <td style="text-align: left; vertical-align: middle; font-size: 14px;" class="fs-6">
                                     <a href="${songPage}"
                                     style="color: black; text-decoration: none;"
                                     onmouseover="this.style.color='blue';"
-                                    onmouseout="this.style.color='black';">${s.title}</a>
+                                    onmouseout="this.style.color='black';">${s.title}</a><br>
+                                    <span style="display: inline-block; margin-top: 5px;"> <!-- 여기서 margin-top 값을 조정하여 간격을 조절 -->
+                                    <a href="${albumPage}"
+                                    style="color: gray; text-decoration: none;"
+                                    onmouseover="this.style.color='blue';"
+                                    onmouseout="this.style.color='gray';">${s.albumName}</a>
+                                    </span>
                                 </td>
-                                <td style="text-align:left; vertical-align: middle; font-size: 14px;">
+                                <td style="text-align:left; vertical-align: middle; font-size: 14px;" class="fs-6">
                                     <c:forEach items="${fn:split(s.artistName, ',')}" var="artistName" varStatus="statusName">
                                         <c:set var="artistId" value="${fn:split(s.artistIds, ',')[statusName.index]}" />
                                         <c:url var="artistPage" value="/artist/songs">

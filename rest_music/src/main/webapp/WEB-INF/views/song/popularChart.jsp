@@ -19,6 +19,7 @@
     <link
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
         rel="stylesheet" />
+    <link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
 </head>
 <body>
     <header>
@@ -85,8 +86,15 @@
                                     </c:forEach>
 	                           </div>
 	                       </td>
-	                       <td>${top.albumName}</td>
-	                       <td>
+						   <td>
+						      <c:url var="albumDetailUrl" value="/album/detail">
+									<c:param name="albumId" value="${top.albumId}" />
+								</c:url>
+								<a href="${albumDetailUrl}" class="album-link">
+								    <span class="album-name">${top.albumName}</span>
+								</a>
+						    </td>
+							<td>
 	                           <i class="fas fa-heart ${top.likes != null && top.likes > 0 ? 'liked' : ''} heart-icon"
 	                               data-song-id="${top.songId}"
 	                               data-id="${loginUserId}">

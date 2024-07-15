@@ -10,6 +10,7 @@
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
 				integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+            <link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
 			<style>
 				a {
 					text-decoration-line: none;
@@ -151,9 +152,7 @@
 					<div class="volume-slider">
 						<input type="range" min="0" max="1" step="0.1" value="0.5" class="form-range" id="volumeSlider">
 					</div>
-					<button id="showModalButton" class="btn btn-outline-success">
-						현재재생목록
-					</button>
+						<img style="cursor: pointer; width: 70px; height: 70px;"  id="showModalButton" alt="현재재생목록" src="/Rest/images/icon/CPList.png" >
 				</div>
 			</div>
 			</div>
@@ -179,7 +178,7 @@
 				// 로그인한 아이디 정보 전달
 				const id = '${loginUserId}'; //id
 				// 모델에서 전달받은 JSON 데이터
-				var cPListJson = '${cPList}';
+				var cPListJson = `${cPList}`;
 
 				// cPList를 JavaScript 객체로 파싱 (JSON 문자열을 객체로 변환)
 				var cPList = JSON.parse(cPListJson);

@@ -27,6 +27,12 @@ values (2, 'OST', 70);
 insert into genre_code (code_id, genre_name, genre_id)
 values (2, '인디', 80);
 
+insert into genre_code (code_id, genre_name, genre_id)
+values (2, '포크/블루스', 90);
+
+insert into genre_code (code_id, genre_name, genre_id)
+values (2, '록/메탈', 100);
+
 select * from genre_code order by genre_id;
 
 insert into albums (album_name, album_image, album_type, album_release_date)
