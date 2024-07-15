@@ -10,6 +10,7 @@
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
                 integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
                 crossorigin="anonymous" />
+            <link href="<c:url value='/css/common.css' />" rel="stylesheet"> <!-- 공통 CSS 파일 포함 -->
             <style>
                 .login-container {
                     max-width: 400px;
@@ -23,10 +24,6 @@
                 .login-header {
                     text-align: center;
                     margin-bottom: 20px;
-                }
-
-                .login-header h2 {
-                    font-weight: bold;
                 }
 
                 .btn-primary {
@@ -53,7 +50,7 @@
 
                 .form-text {
                     color: #6c757d;
-                    font-size: 0.9em;
+                    font-size: 0.8em;
                 }
 
                 .form-check-label {

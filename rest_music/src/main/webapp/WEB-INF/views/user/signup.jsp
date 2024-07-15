@@ -12,14 +12,16 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="<c:url value='/css/common.css' />" rel="stylesheet"> <!-- 공통 CSS 파일 포함 -->
     <style>
         .form-signup {
             max-width: 400px;
-            padding: 15px;
+            padding: 20px;
             margin: 50px auto;
             border: 1px solid #ddd;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         .form-signup .form-signup-heading {
             text-align: center;
@@ -34,7 +36,7 @@
             font-size: 14px;
             border: 1px solid #ccc; 
         }
-        .form-signup .form-control:focus {
+        .form-signup .form-control h3 {
             z-index: 2;
             border-color: #6c757d; 
         }
@@ -73,6 +75,14 @@
             background-color: #b3b3b3;
             border-color: #b3b3b3;
         }
+        
+        .form-signup h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+       .font-weight: bold;
+            margin-top: 20px;
     </style>
 </head>
 <body>
@@ -84,7 +94,9 @@
 
     <div class="container">
         <form class="form-signup" id="signupForm">
-            <h2 class="form-signup-heading">회원가입</h2>
+            <img src="<c:url value='/data/logo.png'/>" alt="Rest Logo" style="height: 40px;">
+            <h3 style="margin-top: 20px;">회원가입</h3>
+
             <div class="input-group mb-3">
                 <input type="text" id="userid" name="userId" class="form-control" 
                 placeholder="아이디를 입력해주세요" required autofocus pattern="^[a-z0-9]{5,20}$" 

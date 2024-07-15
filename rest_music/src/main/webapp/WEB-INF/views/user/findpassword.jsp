@@ -12,14 +12,16 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous" />
+<link href="<c:url value='/css/common.css' />" rel="stylesheet"> <!-- 공통 CSS 파일 포함 -->
 <style>
 .form-find-password {
     max-width: 400px;
     padding: 15px;
-    margin: 50px auto;
+    margin: 30px auto;
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .form-find-password .form-find-password-heading {
@@ -65,7 +67,7 @@
 .btn-outline-secondary:hover {
     background-color: #6c757d;
     color: #fff;
-}
+    
 </style>
 </head>
 <body>
@@ -77,7 +79,8 @@
 
     <div class="container">
         <form class="form-find-password" method="post" action="<%= request.getContextPath() %>/user/findpassword">
-            <h2 class="form-find-password-heading">비밀번호 찾기</h2>
+            <img src="<c:url value='/data/logo.png'/>" alt="Rest Logo" style="height: 40px;">
+            <h3 style="margin-top: 20px; margin-bottom: 15px; font-size:1.6rem;">비밀번호 찾기</h3>
             <% if ("f".equals(request.getParameter("result"))) { %>
                 <div class="text-danger">일치하는 정보가 없습니다.</div>
             <% } %>
