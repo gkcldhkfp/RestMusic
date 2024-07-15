@@ -20,7 +20,7 @@
                 </div>
             </header>
 
-            <div class="container-fluid">
+            <div class="container">
                 <div class="m-5">
                     <h2 style="font-weight: bold;">플레이리스트</h2>
                     <hr>

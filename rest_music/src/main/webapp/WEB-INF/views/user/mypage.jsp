@@ -20,7 +20,7 @@
                 </div>
             </header>
 
-            <div class="container-fluid">
+            <div class="container">
                 <div class="m-5">
                     <h2 style="font-weight: bold;">마이페이지</h2>
                     <hr>

@@ -29,7 +29,7 @@
         </div>
     </header>
 
-    <div class="container-fluid" style="padding: 30px;">
+    <div class="container" style="padding: 30px;">
         <div class="m-5 ">
             <div class="p-3">
                 <!-- 아티스트 이미지 주소 지정 -->
