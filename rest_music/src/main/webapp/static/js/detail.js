@@ -49,12 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const genrePage = `../song/genreChart?genreName=${trimmedName}`;
             
             if (i === 0) {
-            genreHtml += `<span class='text-center ms-2' style='cursor: pointer;' onclick="location.href='${genrePage}'">
+            genreHtml += `<span class='text-center ms-2' style='cursor: pointer;' onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" 
+                            onclick="location.href='${genrePage}'">
                             ${trimmedName}
                           </span>`;
             } else {
             // 이후 링크들은 쉼표와 함께 추가
-            genreHtml += `,<span class='text-center ms-2' style='cursor: pointer;' onclick="location.href='${genrePage}'">
+            genreHtml += `,<span class='text-center ms-2' style='cursor: pointer;' onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';"
+                             onclick="location.href='${genrePage}'">
                             ${trimmedName}
                           </span>`;
         }
@@ -95,17 +97,19 @@ document.addEventListener('DOMContentLoaded', () => {
         for(let i = 0; i < length; i++) {
             const trimmedName = artists[i].trim();
             const trimmedId = artistIds[i].trim();
-            console.log(trimmedName);
-            console.log(trimmedId);
             const artistPage = `../artist/songs?artistId=${trimmedId}`;
             
             if (i === 0) {
-            linksHtml += `<span class='text-center ms-2' style='cursor: pointer;' onclick="location.href='${artistPage}'">
+            linksHtml += `<span class='text-center ms-2' style='cursor: pointer;' 
+            onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" 
+            onclick="location.href='${artistPage}'">
                             ${trimmedName}
                           </span>`;
             } else {
             // 이후 링크들은 쉼표와 함께 추가
-            linksHtml += `,<span class='text-center ms-2' style='cursor: pointer;' onclick="location.href='${artistPage}'">
+            linksHtml += `,<span class='text-center ms-2' style='cursor: pointer;' 
+            onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" 
+            onclick="location.href='${artistPage}'">
                             ${trimmedName}
                           </span>`;
             }

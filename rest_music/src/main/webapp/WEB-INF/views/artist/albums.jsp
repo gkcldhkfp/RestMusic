@@ -33,7 +33,7 @@
         </div>
     </header>
     
-    <div class="container-fluid" style="padding: 30px;">
+    <div class="container" style="padding: 30px;">
         <div class="m-5 ">
             <div class="p-3">
                 <c:url var="artistCover" value="/artist/image/${artist.artistImage}" />
