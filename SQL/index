@@ -1,6 +1,8 @@
 -- score 위해 필요
 -- Title 컬럼에 텍스트 인덱스 생성
-CREATE INDEX song_title_idx ON songs(title) INDEXTYPE IS CTXSYS.CONTEXT;
+-- CREATE INDEX song_title_idx ON songs(title) INDEXTYPE IS CTXSYS.CONTEXT;
+-- 어떤 단어도 불용어 처리하지 않는 인덱스 생성
+CREATE INDEX song_title_idx ON songs(title) INDEXTYPE IS CTXSYS.CONTEXT PARAMETERS('STOPLIST CTXSYS.EMPTY_STOPLIST');
 
 -- Artist_name 컬럼에 텍스트 인덱스 생성
 CREATE INDEX artist_name_idx ON artists(artist_name) INDEXTYPE IS CTXSYS.CONTEXT;
