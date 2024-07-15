@@ -14,93 +14,89 @@
 		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
 		crossorigin="anonymous" />
 	<link rel="stylesheet" href="<c:url value='/css/chart.css' />"> <!-- 외부 CSS 파일 링크 -->
-	
 	<link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
-	
-	<style>
-	   .button_rbox {
-		  display: flex;
-		  flex-wrap: wrap;
-		  gap: 10px;
-		}
-		
-		.btn-genre {
-		  font-size: 14px;
-		  color: #333;
-		  border: 1px solid #d7d7d7;
-		  background-color: #fff;
-		  border-radius: 18px;
-		  padding: 7px 15px;
-		  transition: all 0.2s ease;
-		  cursor: pointer;
-		}
-		
-		.btn-genre:hover {
-		  background-color: #f0f0f0;
-		}
-		
-		.btn-genre:focus {
-		  outline: none;
-		}
-		
-		.btn-genre.active,
-		.btn-genre.active:hover,
-		.btn-genre.active:focus {
-		  color: #fff;
-		  background-color: #00cd3c;
-		  border-color: #00cd3c;
-		}
-		
-		.btn-genre.active:hover {
-		  background-color: #00b534; /* 활성화 상태에서 호버 시 약간 더 어두운 녹색 */
-		}
-	
-		#noChartMessage {
-		    background-color: #f0f2f5; /* 배경색을 좀 더 부드러운 톤으로 변경 */
-		    border-radius: 10px;
-		    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		    transition: all 0.3s ease;
-		    margin: 20px auto; /* 상하 여백 20px, 좌우 여백 자동으로 설정하여 중앙 정렬 */
-		    padding: 60px 30px; /* 내부 여백 증가 */
-		    width: 100%; /* 부모 요소의 너비에 맞게 설정 */
-		    max-width: 1140px; /* 테이블 컨테이너의 최대 너비와 동일하게 설정 */
-		    min-height: 50vh;
-		    display: flex;
-		    flex-direction: column;
-		    justify-content: center;
-		    align-items: center;
-		    box-sizing: border-box; /* 패딩과 보더를 너비에 포함시킴 */
-		}
-		
-		#noChartMessage:hover {
-		    transform: translateY(-5px);
-		    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-		}
-		
-		#noChartMessage h3 {
-		    color: #3a4a5b; /* 더 진한 색상으로 변경 */
-		    font-weight: 600;
-		    margin-bottom: 20px;
-		    font-size: 2em; /* 글자 크기 증가 */
-		}
-		
-		#noChartMessage p {
-		    color: #5a6a7b; /* 본문 텍스트 색상 조정 */
-		    font-size: 1.3em; /* 글자 크기 증가 */
-		}
-		
-		@media (max-height: 600px) {
-		    #noChartMessage {
-		        min-height: 300px;
-		    }
-		}
-	</style>
-	
 	<link
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-		rel="stylesheet" />
-	
-	
+		rel="stylesheet" />	
+	<style>
+       .container .button_rbox {
+		    display: flex;
+		    flex-wrap: wrap;
+		    gap: 10px;
+		}
+		
+		.container .btn-genre {
+		    font-size: 14px;
+		    color: #333;
+		    border: 1px solid #d7d7d7;
+		    background-color: #fff;
+		    border-radius: 20px;
+		    padding: 8px 16px;
+		    transition: all 0.2s ease;
+		    cursor: pointer;
+		    font-weight: 500;
+		}
+		
+		.container .btn-genre:hover {
+		    background-color: #f0f0f0;
+		}
+		
+		.container .btn-genre:focus {
+		    outline: none;
+		}
+		
+		.container .btn-genre.active,
+		.container .btn-genre.active:hover,
+		.container .btn-genre.active:focus {
+		    color: #fff !important;
+		    background-color: #00cd3c !important;
+		    border-color: #00cd3c !important;
+		}
+		
+		.container .btn-genre.active:hover {
+		    background-color: #00b534 !important;
+		}
+    
+        #noChartMessage {
+            background-color: #f0f2f5; /* 배경색을 좀 더 부드러운 톤으로 변경 */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin: 20px auto; /* 상하 여백 20px, 좌우 여백 자동으로 설정하여 중앙 정렬 */
+            padding: 60px 30px; /* 내부 여백 증가 */
+            width: 100%; /* 부모 요소의 너비에 맞게 설정 */
+            max-width: 1140px; /* 테이블 컨테이너의 최대 너비와 동일하게 설정 */
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box; /* 패딩과 보더를 너비에 포함시킴 */
+        }
+        
+        #noChartMessage:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        #noChartMessage h3 {
+            color: #3a4a5b; /* 더 진한 색상으로 변경 */
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 2em; /* 글자 크기 증가 */
+        }
+        
+        #noChartMessage p {
+            color: #5a6a7b; /* 본문 텍스트 색상 조정 */
+            font-size: 1.3em; /* 글자 크기 증가 */
+        }
+        
+        @media (max-height: 600px) {
+            #noChartMessage {
+                min-height: 300px;
+            }
+        }
+    </style>
 </head>
 <body>
 	<header>
