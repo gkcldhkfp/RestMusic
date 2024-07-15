@@ -85,7 +85,14 @@
                                     </c:forEach>
                                 </div>
                             </td>
-                            <td>${newSong.albumName}</td>
+                            <td>
+                              <c:url var="albumDetailUrl" value="/album/detail">
+                                    <c:param name="albumId" value="${newSong.albumId}" />
+                                </c:url>
+                                <a href="${albumDetailUrl}" class="album-link">
+                                    <span class="album-name">${newSong.albumName}</span>
+                                </a>
+                            </td>
                             <td>
                                 <i class="fas fa-heart ${newSong.likes != null && newSong.likes > 0 ? 'liked' : ''} heart-icon"
                                     data-song-id="${newSong.songId}"
