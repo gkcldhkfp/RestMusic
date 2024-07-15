@@ -119,7 +119,7 @@ insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
 
 -- 10cm 4.4 앨범 노래
 insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
-    values ((select album_id from albums where album_name = '4.5'),
+    values ((select album_id from albums where album_name = '방에 모기가 있어 (4.4)'),
     '방에 모기가 있어 (Do You Think Of Me)', '방에 모기가 있어 (Do You Think Of Me).mp3', 
     '방에 모기가 있어 (Do You Think Of Me).txt', 
     'https://www.youtube.com/embed/d5cV86Sa6k0?si=CobQrt8ZujUkF8II');
