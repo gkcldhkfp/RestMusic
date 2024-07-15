@@ -126,7 +126,7 @@ insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
     
 -- 10cm 4.1 앨범 노래
 insert into songs (album_id, title, song_path, lyrics, video_link) -- title song
-    values ((select album_id from albums where album_name = '4.5'),
+    values ((select album_id from albums where album_name = '4.1'),
     '매트리스', '매트리스.mp3', '매트리스.txt', 
     'https://www.youtube.com/embed/seNNCbiXTSY?si=1u-8OsNLZ7GGP6wA');
     
