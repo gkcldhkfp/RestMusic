@@ -158,5 +158,12 @@ public class SongService {
 		return list.stream().limit(10).toList();
 
 	}
+	
+	// 페이지와 페이지 크기를 받아 해당 페이지의 노래 목록을 반환하는 메서드
+	public List<SongChartDto> getSongs(int page, int pageSize) {
+        int offset = (page - 1) * pageSize + 1; // OFFSET 구간의 시작
+        int end = offset + pageSize - 1; // OFFSET 구간의 끝
+        return songDao.findSongs(offset, end);
+    }
 
 }
