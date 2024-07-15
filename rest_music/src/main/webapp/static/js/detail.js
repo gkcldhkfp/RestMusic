@@ -97,8 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         for(let i = 0; i < length; i++) {
             const trimmedName = artists[i].trim();
             const trimmedId = artistIds[i].trim();
-            console.log(trimmedName);
-            console.log(trimmedId);
             const artistPage = `../artist/songs?artistId=${trimmedId}`;
             
             if (i === 0) {
