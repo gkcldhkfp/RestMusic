@@ -7,16 +7,32 @@
 .table th {
     text-align: center;
     vertical-align: middle;
+    padding: 12px 8px; /* 셀 패딩 조정 */
 }
 
- /* 링크에 마우스를 올렸을 때 색상 변경 */
-    a {
-        color: inherit; /* 부모 요소인 td의 폰트 색상을 상속받음 */
-    }
-    
-    a:hover span {
-        color: #007bff; /* Bootstrap의 기본 링크 색상 */
-    }
+/* 테이블 행 높이 조정 */
+.table tr {
+  height: 60px;
+}
+
+/* 링크에 마우스를 올렸을 때 색상 변경 */
+a {
+    color: inherit; /* 부모 요소인 td의 폰트 색상을 상속받음 */
+}
+
+a:hover span {
+    color: #007bff; /* Bootstrap의 기본 링크 색상 */
+}
+
+.album-link {
+    font: inherit;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .album-name:hover {
+    color: #007bff; /* 원하는 색상 코드로 변경하세요 */
+  }
 
 /* 곡 정보 행의 레이아웃을 설정하는 CSS */
 .song-info {
@@ -40,6 +56,7 @@
     color: black; /* 기본 색상 */
     cursor: pointer; /* 포인터로 호버되면 커서 모양 변경 */
     display: inline-block; /* 인라인 요소로 표시 */
+    font-size: 1.5em; /* 아이콘 크기 조정 */
 }
 
 .fa-heart.liked {
@@ -55,18 +72,29 @@
     font-weight: bold; /* 빨간색 하트는 bold weight */
 }
 
+/* 체크박스 크기 조정 */
+.songCheckbox, #selectAllCheckbox {
+    width: 15px;
+    height: 15px;
+}
+
+/* 뮤비 아이콘 크기 조정 */
+.video-link i {
+    font-size: 24px; /* 크기를 원하는 대로 조절 */
+}
+
 .add-to-playlist-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   padding: 0;
 }
 
 .add-to-playlist-btn img {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
 }
 
 .icon-button {
@@ -77,14 +105,14 @@
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 30px !important;
-  height: 30px !important;
+  width: 36px !important;
+  height: 36px !important;
   line-height: 1 !important;
 }
 
 .icon-button img {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   pointer-events: none;
 }
 
@@ -162,11 +190,13 @@ td {
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  padding-left: 2.5em;
+  margin-bottom: 0;
 }
 
 .form-check-input {
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.8em;
+  height: 1.8em;
   margin-top: 0;
   vertical-align: middle;
   background-color: #fff;
@@ -249,6 +279,7 @@ td {
     z-index: 1000;
 }
 
+
 .floating-button-group .btn-group .btn {
     font-size: 0.9rem;
     padding: 0.5rem 1rem;
@@ -309,4 +340,7 @@ td {
     transform: rotate(180deg);
 }
 
-
+/* 듣기, 담기, 뮤비 아이콘 크기 조정 (버튼 안에 있는 경우) */
+.btn-sm i {
+  font-size: 1.2em;
+}
