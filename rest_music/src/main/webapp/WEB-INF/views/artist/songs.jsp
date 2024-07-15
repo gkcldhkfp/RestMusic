@@ -39,7 +39,7 @@
                 <c:url var="defaultCover"
                     value="/images/profileimage/profile.jpg" />
                 <!-- 아티스트의 앨범 페이지 이동 주소 지정 -->
-                <c:url var="albumPage"
+                <c:url var="artistAlbumPage"
                     value="/artist/albums?artistId=${artist.artistId}" />
                 <img alt="artistCover" src="${artist.artistImage == null ? defaultCover : artistCover}"
                     class="rounded-circle"
@@ -52,7 +52,7 @@
                             class="btn ms-1"
                             style="border-radius: 5px; background-color: #007bff; color: white;">곡</button>
                         <button id="albumButton" class="btn ms-1"
-                            onclick="window.location.href = '${albumPage}';"
+                            onclick="window.location.href = '${artistAlbumPage}';"
                             onmouseover="this.style.color='#0056b3'"
                             onmouseout="this.style.color='black'">앨범</button>
                     </div>
@@ -134,8 +134,10 @@
                                     <input type="checkbox" class="songCheckbox" data-songId="${s.songId}">
                                 </td>   -->
                                 <td style="text-align: left; vertical-align: middle; font-size: 14px;">
-                                    <img src="${albumImage}"
-                                    width="80px" height="80px">
+                                    <c:url var="albumPage" value="/album/detail?albumId=${s.albumId}" />
+                                    <a href="${albumPage}">
+                                    <img src="${albumImage}" width="80px" height="80px">
+                                    </a>
                                 </td>
                                 <td style="text-align: left; vertical-align: middle; font-size: 14px;">
                                     <a href="${songPage}"

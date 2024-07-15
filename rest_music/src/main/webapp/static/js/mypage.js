@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
             htmlStr += `
             <tr>
                 <td style="text-align: left; vertical-align: middle;">
-                    <a href="${albumPage}"><a href="${albumPage}">
+                    <a href="${albumPage}">
                         <img alt="songImg" src="${albumImageSrc}" width="80px" height="80px">
                     </a>
                 </td>
