@@ -28,7 +28,7 @@
     </header>
 
     <main>
-        <div class="container mt-5"
+        <div class="container mt-5 p-4  "
             style="max-width: 1440px; min-width: 1000px">
 
             <c:url var="songSearchPage" value="/song/search" />
@@ -107,10 +107,12 @@
                                 </td>
                                     
                                 <td style="width: 60%; "><span
-                                    class="fs-4" style="cursor: pointer;" onclick="location.href='${songDetailsPage}'">${r.title}</span> <br />
+                                    class="fs-4" style="cursor: pointer;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" 
+                                    onclick="location.href='${songDetailsPage}'">${r.title}</span> <br />
                                     
                                     
-                                    <br /> <span style="cursor: pointer;" onclick="location.href='${albumDetailPage}'" >${r.albumName}</span></td>
+                                    <br /> <span style="cursor: pointer;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" 
+                                    onclick="location.href='${albumDetailPage}'" >${r.albumName}</span></td>
                                     
                                     <td>
                                     <br/>
@@ -120,7 +122,8 @@
                                         <c:url var="artistPage" value="/artist/songs">
                                             <c:param name="artistId" value="${artistIds[status.index]}" />
                                         </c:url>
-                                        <span class="text-center fw-bold" style="cursor: pointer;" onclick="location.href='${artistPage}'">${singer}</span>
+                                        <span class="text-center fw-bold" style="cursor: pointer;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" 
+                                        onclick="location.href='${artistPage}'">${singer}</span>
                                         </c:forEach>
                                     </td>
                                 <td style="text-align: center;"><button
