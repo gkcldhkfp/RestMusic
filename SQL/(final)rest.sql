@@ -35,37 +35,6 @@ create table songs ( -- 음악 (컬럼 7개)
 
 );
 
-create table song_genre (
-    song_id number(4) references songs (song_id),
-    genre_id number(4) references genre_code (genre_id)
-);
-
-create table title_songs ( -- 타이틀 곡 (컬럼 2개)
-        album_id                            number(4), -- 앨범 번호 (4자리)
-        song_id                             number(5), -- 음악 번호 (5자리)
-        constraint title_songs_album_id_fk  foreign key (album_id) references albums (album_id), -- 앨범 번호 (외래키)
-        constraint title_songs_song_id_fk   foreign key (song_id) references songs (song_id) -- 음악 번호 (외래키)
-
-);
-
-create table artists ( -- 아티스트 (컬럼 4개)
-        artist_id                           number(4) generated as identity, -- 아티스트 번호 (4자리, 자동 생성)
-        artist_name                         varchar2(20 char) not null, -- 아티스트 이름 (20글자, 낫 널)
-        artist_image                        varchar2(100), -- 아티스트 이미지 (100바이트)
-        artist_description                  varchar2(100), -- 아티스트 설명 (100바이트) (나무위키) 이 적혀져있는 txt파일 경로
-       constraint artists_artist_id_pk      primary key (artist_id) -- 아티스트 번호 (고유키)
-        
-);
-
-create table artist_roles ( -- 아티스트 참여 음원 (컬럼 3개)
-    artist_id                                  number(4), -- 아티스트 번호 (4자리)
-    song_id                                    number(5), -- 음악 번호 (5자리)
-    role_id                                    number(4), -- 역할 번호 (4자리)
-    constraint artist_roles_artist_id_fk       foreign key (artist_id) references artists (artist_id), -- 아티스트 번호 (외래키)
-    constraint artist_roles_song_id_fk         foreign key (song_id) references songs (song_id), -- 음악 번호 (외래키)
-    constraint artist_roles_role_id_fk         foreign key (role_id) references role_code (role_id) -- 역할 번호 (외래키)
-);
-
 create table code_master ( -- 코드 마스터 (컬럼 2개)
     code_id                                 number(4), -- 코드 번호 (4자리) (자동 생성 아님)
     code_name                               varchar2(20 char) not null, -- 코드 네임 (20글자, 낫 널)
@@ -90,6 +59,40 @@ create table genre_code ( -- 장르 코드 (컬럼 3개)
     constraint genre_code_genre_id_pk       primary key (genre_id) -- 장르 번호 (고유키)
 );
  
+
+create table song_genre (
+    song_id number(4) references songs (song_id),
+    genre_id number(4) references genre_code (genre_id)
+);
+
+create table title_songs ( -- 타이틀 곡 (컬럼 2개)
+        album_id                            number(4), -- 앨범 번호 (4자리)
+        song_id                             number(5), -- 음악 번호 (5자리)
+        constraint title_songs_album_id_fk  foreign key (album_id) references albums (album_id), -- 앨범 번호 (외래키)
+        constraint title_songs_song_id_fk   foreign key (song_id) references songs (song_id) -- 음악 번호 (외래키)
+
+);
+
+create table artists ( -- 아티스트 (컬럼 4개)
+        artist_id                           number(4) generated as identity, -- 아티스트 번호 (4자리, 자동 생성)
+        artist_name                         varchar2(40 char) not null, -- 아티스트 이름 (20글자, 낫 널)
+        artist_image                        varchar2(100), -- 아티스트 이미지 (100바이트)
+        artist_description                  varchar2(100), -- 아티스트 설명 (100바이트) (나무위키) 이 적혀져있는 txt파일 경로
+       constraint artists_artist_id_pk      primary key (artist_id) -- 아티스트 번호 (고유키)
+        
+);
+
+create table artist_roles ( -- 아티스트 참여 음원 (컬럼 3개)
+    artist_id                                  number(4), -- 아티스트 번호 (4자리)
+    song_id                                    number(5), -- 음악 번호 (5자리)
+    role_id                                    number(4), -- 역할 번호 (4자리)
+    constraint artist_roles_artist_id_fk       foreign key (artist_id) references artists (artist_id), -- 아티스트 번호 (외래키)
+    constraint artist_roles_song_id_fk         foreign key (song_id) references songs (song_id), -- 음악 번호 (외래키)
+    constraint artist_roles_role_id_fk         foreign key (role_id) references role_code (role_id) -- 역할 번호 (외래키)
+);
+
+
+
 create table users ( -- 회원 (컬럼 9개)
         id number(4)                        generated as identity, -- 회원 번호 (4자리, 자동 생성)
         user_name                           varchar2(20 char) not null, --  회원 이름 (20글자, 낫 널)

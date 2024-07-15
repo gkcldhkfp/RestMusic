@@ -199,6 +199,7 @@
             <div class="mb-3">
                 <label for="hintAnswer" class="form-label">힌트 답변</label>
                 <input type="text" class="form-control" id="hintAnswer" name="hintAnswer" value="${user.hintAnswer}">
+                <div id="checkHintAnswerResult" class="form-text"></div>
             </div>
             <div class="form-row">
                 <button type="submit" class="btn btn-primary btn-submit" id="btnModify">회원 정보 변경</button>

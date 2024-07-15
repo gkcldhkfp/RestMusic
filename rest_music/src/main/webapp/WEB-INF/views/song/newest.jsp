@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,7 @@
         </div>
     </header>
     
-<main>
+    <main>
         <div class="container my-3">
             <div class="d-flex justify-content-start mb-3 d-none"></div>
         </div>
@@ -63,18 +64,25 @@
                                <%-- 음원 디테일 페이지로 이동 --%>
                                <c:url var="songDetailUrl" value="/song/detail">
                                    <c:param name="songId" value="${newSong.songId}" />
-                               </c:url>
-                               <%-- 아티스트 음원 페이지로 이동 --%>
-                               <c:url var="artistDetailUrl" value="/artist/songs">
-                                   <c:param name="artistId" value="${newSong.artistId}" />
-                               </c:url>
+                               </c:url> 
                                <div>
                                    <a href="${songDetailUrl}" style="font: inherit; color: inherit; text-decoration: none;">
                                        <span>${newSong.title}</span><br>
                                    </a>
-                                   <a href="${artistDetailUrl}" style="font: inherit; color: gray; text-decoration: none;">
-                                       <span>${newSong.artistName}</span>
-                                   </a>
+                                   <%-- 아티스트 음원 페이지로 이동 --%>
+                                   <c:forEach items="${fn:split(newSong.artistName, ',')}" var="artistName" varStatus="statusName">
+                                        <c:set var="artistId" value="${fn:split(newSong.artistId, ',')[statusName.index]}" />
+                                        <c:url var="artistPage" value="/artist/songs">
+                                            <c:param name="artistId" value="${artistId.trim()}" />
+                                        </c:url>
+                                        <a href="${artistPage}"
+                                           style="color: gray; text-decoration: none;"
+                                           onmouseover="this.style.color='blue';"
+                                           onmouseout="this.style.color='gray';">
+                                            ${artistName.trim()}
+                                        </a>
+                                        <c:if test="${!statusName.last}">, </c:if>
+                                    </c:forEach>
                                </div>
                            </td>
                            <td>${newSong.albumName}</td>
@@ -120,14 +128,31 @@
        </div>
     </main>
     
-    <!-- 재생할 MP3 오디오 태그 -->
-    <audio id="audioPlayer" controls>
-        <!-- MP3 파일 경로를 동적으로 설정할 수 있도록 스크립트로 처리 -->
-        <source id="audioSource" src="" type="audio/mpeg">
+    <!-- 재생할 MP3 오디오 태그
+     <audio id="audioPlayer" controls> 
+         MP3 파일 경로를 동적으로 설정할 수 있도록 스크립트로 처리
+       <source id="audioSource" src="" type="audio/mpeg">
         Your browser does not support the audio element.
         <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
     </audio>
-        
+     --> 
+     
+    <!-- 세션 리스트 모달
+      <div class="modal fade" id="sessionListModal" tabindex="-1" aria-labelledby="sessionListModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sessionListModalLabel">현재 재생 목록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="modalCloseBtn"></button>
+                </div>
+                <div class="modal-body" id="sessionListBody">
+                    <!-- 여기에 재생 목록이 동적으로 추가됩니다
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+    
     <!-- 플레이리스트 모달 -->
     <div class="modal fade" id="selectPlayList" tabindex="-1" aria-labelledby="selectPlayListLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -138,7 +163,7 @@
                </div>
                <div class="modal-body">
                    <!-- 플레이리스트 체크박스 목록이 여기에 동적으로 추가됩니다 -->
-                   <div id="playLists"></div>
+                   <div id="playLists" class="playlist-container"></div>
                </div>
                <div class="modal-footer">
                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>

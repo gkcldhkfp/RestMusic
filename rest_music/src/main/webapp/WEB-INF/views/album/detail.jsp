@@ -17,7 +17,8 @@
 						margin-left: 20px;
 					}
 
-					a {
+					a,
+					p {
 						text-decoration-line: none;
 						color: black;
 					}
@@ -47,7 +48,7 @@
 						padding: 20px;
 					}
 
-					/* 너는 챗지피티를 믿어?  */
+					/* 너는 챗지피티를	 믿어?  */
 					#songPlayerContainer {
 						display: none;
 						position: fixed;
@@ -95,7 +96,9 @@
 										</tr>
 										<tr>
 											<td>아티스트</td>
-											<td class="intro"><a id="singerNames">${album.artistName}</a></td>
+											<td id="singerNames" class="intro">
+
+											</td>
 										</tr>
 										<tr>
 											<td>발매일</td>
@@ -103,16 +106,16 @@
 										</tr>
 										<tr>
 											<td>장르</td>
-											<td class="intro">${album.genreName}</td>
+											<td id="genre" class="intro"></td>
 										</tr>
 										<tr style="text-align: left;">
 											<td>타이틀 곡</td>
-											<td class="intro"><a href="/Rest/song/detail?songId=${album.songId}">${album.title}</a></td>
+											<td id="titleSong" class="intro"></td>
 										</tr>
 									</table>
 									<div id="like">
 										<button id="btnLike" title="앨범 좋아요" class="btn fs-3"">♡</button>
-									<button id=" btnListenAlbum" title="앨범 재생" class="btn intro ms-1" style="background-image: url('../images/icon/play.png'); 
+										<button id="btnListenAlbum" title="앨범 재생" class="btn intro ms-1" style="background-image: url('../images/icon/play.png'); 
                                 width: 45px; height: 45px; background-size: cover; background-repeat: no-repeat;"
 											data-id="${album.albumId}"></button>
 										<button id="btnAddCPListAlbum" title="앨범을 재생목록에 추가" class="btn intro ms-3" style="background-image: url('../images/icon/playList.png'); 
@@ -162,8 +165,9 @@
 													<c:url var="artistPage" value="/artist/songs">
 														<c:param name="artistId" value="${artistId[status.index]}" />
 													</c:url>
-													<span class="text-center fw-bold" style="cursor: pointer;"
-														onclick="location.href='${artistPage}'">${singer}</span>
+													<span class="text-center" style="cursor: pointer;" onclick="location.href='${artistPage}'"
+														onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
+														onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">${singer}</span>
 												</c:forEach>
 
 											</td>
@@ -236,15 +240,21 @@
 				<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 				<script>
 					const singerName = '${ album.artistName }';
+					const singerId = '${ album.artistId }';
+
+					const genreName = '${album.genreName}';
+					const titleSong = '${album.title}';
+					const titleSongId = '${album.songId}';
+
 					const albumId = ${ album.albumId };
 					const id = '${loginUserId}'; //id
 					const refresh = '${refresh}';
 					// 리다이렉트 시 재생페이지를 새로고침하기 위한 코드
 				</script>
-				<c:url var="album_detail" value="/js/album_detail.js" />
-				<script src="${album_detail}"></script>
 				<c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
 				<script src="${addCurrentPlayList}"></script>
+				<c:url var="album_detail" value="/js/album_detail.js" />
+				<script src="${album_detail}"></script>
 
 
 			</body>
