@@ -38,8 +38,8 @@
     
     <main class="container mt-3">
         <div class="container d-flex justify-content-start mb-3 button_rbox" >
-            <button type="button" class="btn btn-sort me-2 sort-btn" id="btnNewest">최신앨범</button>
             <button type="button" class="btn btn-sort me-2 sort-btn" id="btnPopular">인기앨범</button>
+            <button type="button" class="btn btn-sort me-2 sort-btn" id="btnNewest">최신앨범</button>
         </div>
 
 
