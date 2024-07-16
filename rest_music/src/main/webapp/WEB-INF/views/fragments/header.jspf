@@ -15,7 +15,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg header-container">
+<nav class="navbar navbar-expand-xl header-container">
     <div class="container-fluid">
     <c:url var="homePage" value="/" />
     <a class="navbar-brand mx-2" href="${homePage}">
@@ -29,111 +29,110 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown mx-2">
-                    <a
-                       class="nav-link dropdown-toggle" href="#" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">REST 차트</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                          <c:url var="popularSongs" value="/song/popularChart" />
-                          <a class="dropdown-item" href="${popularSongs}">TOP 30</a>
-                        </li>
-                        <li>
-                          <c:url var="chartByGenre" value="/song/genreChart" />
-                          <a class="dropdown-item" href="${chartByGenre}">장르별 차트</a>
-                        </li>
-                        <!-- 
-                        <li>
-                          <c:url var="chartByVideo" value="/song/videoChart" />
-                          <a class="dropdown-item" href="${chartByVideo}">뮤직비디오 차트</a>
-                        </li>
-                         -->
-                    </ul>
-                </li>
-
-
-                <li class="nav-item mx-2">
-                    <c:url var="newestSongs" value="/song/newest" />
-                    <a class="nav-link" aria-current="page" href="${newestSongs}">최신 음악</a>
-                </li>
-
-
-                <!-- 
-                <li class="nav-item dropdown  mx-2"><a
-                    class="nav-link dropdown-toggle" href="/song/genre" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">장르별 음악</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">장르 1</a></li>
-                        <li><a class="dropdown-item" href="#">장르 2</a></li>
-                        <li><a class="dropdown-item" href="#">장르 3</a></li>
-                        <li><a class="dropdown-item" href="#">장르 4</a></li>
-                        <li><a class="dropdown-item" href="#">장르 5</a></li>
-                        <li><a class="dropdown-item" href="#">장르 6</a></li>
-                        <li><a class="dropdown-item" href="#">장르 7</a></li>
-                        <li><a class="dropdown-item" href="#">장르 8</a></li>
-                    </ul>
-                </li>
-                 -->
-                 
-                <li class="nav-item dropdown mx-2"><a
-                    class="nav-link dropdown-toggle" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">REST 앨범</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                          <c:url var="popularAlbum" value="/album/list/popular" />
-                          <a class="dropdown-item" href="${popularAlbum}">인기 앨범</a>
-                        </li>
-                        <li>
-                          <c:url var="newestAlbum" value="/album/list/newest" />
-                          <a class="dropdown-item" href="${newestAlbum}">최신 앨범</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="ms-2">
-                    <c:url var="songSearchPage" value="/song/search" />
-                    <form method="get" action="${songSearchPage}">
-                        <div class="row">
-                            <div class="col-3">
-                                <select class="form-control" name="category">
-                                    <option value="t">제목</option>
-                                    <option value="s">가수</option>
-                                    <option value="ts">제목+가수</option>
-                                    <option value="a">앨범명</option>
-                                </select>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown mx-2">
+                        <a
+                           class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">REST 차트</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                              <c:url var="popularSongs" value="/song/popularChart" />
+                              <a class="dropdown-item" href="${popularSongs}">TOP 30</a>
+                            </li>
+                            <li>
+                              <c:url var="chartByGenre" value="/song/genreChart" />
+                              <a class="dropdown-item" href="${chartByGenre}">장르별 차트</a>
+                            </li>
+                            <!-- 
+                            <li>
+                              <c:url var="chartByVideo" value="/song/videoChart" />
+                              <a class="dropdown-item" href="${chartByVideo}">뮤직비디오 차트</a>
+                            </li>
+                             -->
+                        </ul>
+                    </li>
+    
+    
+                    <li class="nav-item mx-2">
+                        <c:url var="newestSongs" value="/song/newest" />
+                        <a class="nav-link" aria-current="page" href="${newestSongs}">최신 음악</a>
+                    </li>
+    
+    
+                    <!-- 
+                    <li class="nav-item dropdown  mx-2"><a
+                        class="nav-link dropdown-toggle" href="/song/genre" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">장르별 음악</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">장르 1</a></li>
+                            <li><a class="dropdown-item" href="#">장르 2</a></li>
+                            <li><a class="dropdown-item" href="#">장르 3</a></li>
+                            <li><a class="dropdown-item" href="#">장르 4</a></li>
+                            <li><a class="dropdown-item" href="#">장르 5</a></li>
+                            <li><a class="dropdown-item" href="#">장르 6</a></li>
+                            <li><a class="dropdown-item" href="#">장르 7</a></li>
+                            <li><a class="dropdown-item" href="#">장르 8</a></li>
+                        </ul>
+                    </li>
+                     -->
+                     
+                    <li class="nav-item dropdown mx-2"><a
+                        class="nav-link dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">REST 앨범</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                              <c:url var="popularAlbum" value="/album/list/popular" />
+                              <a class="dropdown-item" href="${popularAlbum}">인기 앨범</a>
+                            </li>
+                            <li>
+                              <c:url var="newestAlbum" value="/album/list/newest" />
+                              <a class="dropdown-item" href="${newestAlbum}">최신 앨범</a>
+                            </li>
+                        </ul>
+                    </li>
+    
+                    <li class="nav-item ms-2 me-3">
+                        <c:url var="songSearchPage" value="/song/search" />
+                        <form class="d-flex" role="search" method="get" action="${songSearchPage}">
+                            <div class="row g-1">
+                                <div class="col-3">
+                                    <select class="form-control" name="category">
+                                        <option value="t">제목</option>
+                                        <option value="s">가수</option>
+                                        <option value="ts">제목+가수</option>
+                                        <option value="a">앨범명</option>
+                                    </select>
+                                </div>
+                                <div class="col-7">
+                                    <input class="form-control" type="text" name="keyword" placeholder="검색어" required />
+                                </div>
+                                <div class="col-2">
+                                    <input type="submit" class="btn btn-outline-secondary" value="검색">
+                                </div>
+                                <input name="sortType" class='d-none' value="accuracy"/>
                             </div>
-                            <div class="col-7">
-                                <input class="form-control" type="text" name="keyword" placeholder="검색어" required />
-                            </div>
-                            <input name="sortType" class='d-none' value="accuracy"/>
-                            <div class="col-2">
-                                <input type="submit" class="btn btn-outline-secondary" value="검색">
-                            </div>
-                        </div>
-                    </form>
-                </li>
-            </ul>
+                        </form>
+                    </li>
+                </ul>
 
-
-            <!-- 로그인 안했을때 -->
-            <c:if test="${empty sessionScope.SESSION_ATTR_USER}">
-                <c:url var="signInPage" value="/user/signin" />
-                <a style="font-size: 0.8rem " class="me-3 link-style" href="${signInPage}">로그인</a>
-                <c:url var="signupPage" value="/user/signup" />
-                <a style="font-size: 0.8rem" class="me-3 link-style" href="${signupPage}">회원가입</a>
-            </c:if>
-
-            <!-- 로그인 했을때 -->
-            <c:if test="${not empty sessionScope.SESSION_ATTR_USER}">
-                <div style="font-size: 0.8rem">
-                    <c:out value="${sessionScope.SESSION_ATTR_USER}" /> 님 환영합니다🌼 &nbsp;
-                </div>
-                <c:url var="signOutPage" value="/user/signout" />
-                <a style="font-size: 0.8rem" class="me-3 link-style" href="${signOutPage}">로그아웃</a>
-                <c:url var="myPage" value="/user/mypage?userId=${sessionScope.SESSION_ATTR_USER}" />
-                <a style="font-size: 0.8rem" class="me-3 link-style" href="${myPage}">마이페이지</a>
-            </c:if>
+                <!-- 로그인 안했을때 -->
+                <c:if test="${empty sessionScope.SESSION_ATTR_USER}">
+                    <c:url var="signInPage" value="/user/signin" />
+                    <a style="font-size: 0.8rem " class="me-3 link-style" href="${signInPage}">로그인</a>
+                    <c:url var="signupPage" value="/user/signup" />
+                    <a style="font-size: 0.8rem" class="me-3 link-style" href="${signupPage}">회원가입</a>
+                </c:if>
+    
+                <!-- 로그인 했을때 -->
+                <c:if test="${not empty sessionScope.SESSION_ATTR_USER}">
+                    <div style="font-size: 0.8rem">
+                        <c:out value="${sessionScope.SESSION_ATTR_USER}" /> 님 환영합니다🌼 &nbsp;
+                    </div>
+                    <c:url var="signOutPage" value="/user/signout" />
+                    <a style="font-size: 0.8rem" class="me-3 link-style" href="${signOutPage}">로그아웃</a>
+                    <c:url var="myPage" value="/user/mypage?userId=${sessionScope.SESSION_ATTR_USER}" />
+                    <a style="font-size: 0.8rem" class="me-3 link-style" href="${myPage}">마이페이지</a>
+                </c:if>
         </div>
     </div>
 </nav>

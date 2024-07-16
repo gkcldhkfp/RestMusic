@@ -123,7 +123,7 @@
 										<button id="btnAddCPListAlbum" title="앨범을 재생목록에 추가" class="btn intro ms-3" style="background-image: url('../images/icon/playList.png'); 
                                 width: 60px; height: 60px; background-size: cover; background-repeat: no-repeat;"
 											data-id="${album.albumId}"></button>
-										<button id="btnAddUPListAlbum" class="intro btn" class="btn mx-4" title="앨범을 내 리스트에 담기" style="background-image: url('../images/icon/myPlayList.png'); 
+										<button id="btnAddUPListAlbum" class="d-none intro btn" class="btn mx-4" title="앨범을 내 리스트에 담기" style="background-image: url('../images/icon/myPlayList.png'); 
                                 width: 50px; height: 50px; background-size: cover; background-repeat: no-repeat;"
 											data-id="${album.albumId}"></button>
 									</div>
