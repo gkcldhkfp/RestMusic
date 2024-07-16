@@ -28,11 +28,17 @@ a:hover span {
     font: inherit;
     text-decoration: none;
     color: inherit;
-  }
+}
 
-  .album-name:hover {
+.album-name:hover {
     color: #007bff; /* 원하는 색상 코드로 변경하세요 */
-  }
+}
+
+.album-cover {
+    width: 60px; /* 이미지의 가로 크기를 조절합니다. */
+    height: 60px; /* 이미지의 세로 크기를 조절합니다. */
+    object-fit: cover; /* 이미지 비율 유지 */
+}
 
 /* 곡 정보 행의 레이아웃을 설정하는 CSS */
 .song-info {
@@ -73,9 +79,9 @@ a:hover span {
 }
 
 /* 체크박스 크기 조정 */
-.songCheckbox, #selectAllCheckbox {
-    width: 15px;
-    height: 15px;
+.songCheckbox, #selectAllCheckbox  {
+    width: 20px !important;
+    height: 20px !important;
 }
 
 /* 뮤비 아이콘 크기 조정 */
@@ -195,8 +201,8 @@ td {
 }
 
 .form-check-input {
-  width: 1.8em;
-  height: 1.8em;
+  width: 1.8em !important;
+  height: 1.8em !important;
   margin-top: 0;
   vertical-align: middle;
   background-color: #fff;

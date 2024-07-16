@@ -4,4 +4,6 @@ public interface PurchaseDao {
 	
 	Integer PurchaseSuccess (Integer loginUserId);
 
+	Integer isPurchaseUser (Integer id);
+
 }

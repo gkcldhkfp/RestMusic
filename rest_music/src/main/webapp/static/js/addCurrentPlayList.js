@@ -4,67 +4,83 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
 	if (!sessionStorage.getItem('isAdded')) {
-		sessionStorage.setItem('isAdded', 'N');
-	}
-	if(refresh ==='Y') {
-		console.log(refresh);
-		parent.songFrame.location.reload();
-	}
-	// 음원 다음 곡으로 재생 기능
-	const addCPList = document.querySelectorAll('#addCPList');
-	if (addCPList !== null) {
-		for (let a of addCPList) {
-			console.log(a);
-			a.addEventListener('click', addToCPList);
-		}
-		function addToCPList(event) {
-			const id = event.target.getAttribute('data-id');
-
-			// 받은 아이디가 이미 세션에 있는 지 검사하는 컨트롤러 호출.
-			const url1 = `../song/getCPList?songId=${id}`;
-			axios.
-				get(url1).
-				then((response) => {
-					if (!response.data) {
-						// 중복된 데이터가 없는 경우
-						addCurrentPlayList();
-						// 재생목록에 추가
-					} else {
-						// 중복된 데이터가 있는 경우
-						// 유저에게 중복되어도 추가할거냐고 물어봄
-						let result = confirm('이미 재생목록에 있는 곡입니다. 그래도 추가하시겠습니까?');
-						if (result) {
-							// 유저가 수락한 경우.
-							// 재생목록에 추가.
-							addCurrentPlayList();
-						} else {
-							// 유저가 거절한 경우
-							return;
-						}
-					}
-				}).
-				catch((error) => { console.log(error); });
-			function addCurrentPlayList() {
-				const url2 = `../song/addCurrentPlayList?songId=${id}`
-				console.log(url2);
-				axios.
-					get(url2).
-					then((response) => {
-						console.log(response);
-						if (sessionStorage.getItem('isAdded') === 'N') {
-							sessionStorage.setItem('index', 0);
-							sessionStorage.setItem('isAdded', 'Y');
-							parent.songFrame.location.reload();
-						}
-						// document.location.reload();
-						// alert('재생 목록에 추가되었습니다');
-						showAlert('재생 목록에 추가되었습니다', 2000);
-
-					}).
-					catch((error) => { console.log(error); });
-			}
-		}
-	}
+        sessionStorage.setItem('isAdded', 'N');
+    }
+    
+    if(refresh ==='Y') {
+        console.log(refresh);
+        parent.songFrame.location.reload();
+    }
+    
+    // 음원 다음 곡으로 재생 기능
+    const addCPList = document.querySelectorAll('#addCPList');
+    if (addCPList !== null) {
+        for (let a of addCPList) {
+            console.log(a);
+            a.addEventListener('click', addToCPList);
+            // 새로운 커스텀 이벤트 리스너 추가(차트에서 여러 곡 재생목록에 담기 위해 사용)
+            a.addEventListener('customAddToPlaylist', customAddToCPList);
+        }
+    }
+    
+    function addToCPList(event) {
+        const id = event.target.getAttribute('data-id');
+        checkAndAddToPlaylist(id, false);
+    }
+    
+    function customAddToCPList(event) {
+        const id = event.target.getAttribute('data-id');
+        checkAndAddToPlaylist(id, true);
+    }
+    
+    function checkAndAddToPlaylist(id, skipConfirm) {
+        // 받은 아이디가 이미 세션에 있는 지 검사하는 컨트롤러 호출.
+        const url1 = `../song/getCPList?songId=${id}`;
+        axios.get(url1)
+            .then((response) => {
+                if (!response.data || skipConfirm) {
+                    // 중복된 데이터가 없는 경우 또는 확인을 건너뛰는 경우
+                    addCurrentPlayList(id);
+                } else {
+                    // 중복된 데이터가 있는 경우
+                    // 유저에게 중복되어도 추가할거냐고 물어봄
+                    let result = confirm('이미 재생목록에 있는 곡입니다. 그래도 추가하시겠습니까?');
+                    if (result) {
+                        // 유저가 수락한 경우.
+                // 재생목록에 추가.
+                        addCurrentPlayList(id);
+                    } else {
+               // 유저가 거절한 경우
+               return;
+            }
+                }
+            })
+            .catch((error) => { console.log(error); });
+    }
+    
+    function addCurrentPlayList(id) {
+        const url2 = `../song/addCurrentPlayList?songId=${id}`;
+        console.log(url2);
+        axios.get(url2)
+            .then((response) => {
+                console.log(response);
+                if (sessionStorage.getItem('isAdded') === 'N') {
+                    sessionStorage.setItem('index', 0);
+                    sessionStorage.setItem('isAdded', 'Y');
+                    parent.songFrame.location.reload();
+                }
+                // document.location.reload();
+            // alert('재생 목록에 추가되었습니다');
+                showAlert('재생 목록에 추가되었습니다', 2000);
+            })
+            .catch((error) => { console.log(error); });
+    }
+    
+    function showAlert(message, duration) {
+        // 알림 표시 로직 구현
+        alert(message);
+    }
+    
 	// 음원 듣기 기능
 	const listenBtn = document.querySelectorAll('#listenBtn');
 	if (addCPList !== null) {
@@ -141,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		function listenAlbum(event) {
 			const albumId = event.target.getAttribute('data-id');
 			// console.log(id); // 정상작동: 1
-			const url1 = `../api/album?albumId=${albumId}`;
+			const url1 = `/Rest/api/album?albumId=${albumId}`;
 			axios.
 				get(url1).
 				then((response) => {
@@ -150,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					let listSong = response.data;
 					console.log(listSong);
 					let songId2 = listSong[0].songId;
-					let url2 = `../song/listen?songId=${songId2}`
+					let url2 = `/Rest/song/listen?songId=${songId2}`
 					console.log(url2);
 					// 첫 곡은 바로듣기 메서드를 호출, 그 이후는 재생목록에 추가 메서드를 호출
 					// 바로듣기 레스트컨트롤러 호출 일단 바로듣기 버튼 복붙해서 씀.s
@@ -164,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
 							// 두번째 곡 이후부터는 재생목록에 추가.
 							for (let i = 1; i < listSong.length; i++) {
 								let id3 = listSong[i].songId;
-								let url3 = `../song/addCurrentPlayList?songId=${id3}`
+								let url3 = `/Rest/song/addCurrentPlayList?songId=${id3}`
 								console.log(url3);
 								axios.
 									get(url3).
@@ -196,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		function addCPListAlbum(event) {
 			const albumId = event.target.getAttribute('data-id');
 			// console.log(id); // 정상작동: 1
-			let url = `../api/album?albumId=${albumId}`;
+			let url = `/Rest/api/album?albumId=${albumId}`;
 			axios.
 				get(url).
 				then((response) => {
@@ -208,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					// 앨범의 모든 곡을 다음 재생 목록에 추가.
 					for (let i = 0; i < listSong.length; i++) {
 						let id = listSong[i].songId;
-						url = `../song/addCurrentPlayList?songId=${id}`
+						url = `/Rest/song/addCurrentPlayList?songId=${id}`
 						console.log(url);
 						axios.
 							get(url).
@@ -292,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	function getCPList() {
-		const url = "../api/playList/cPList";
+		const url = "/Rest/api/playList/cPList";
 		// Ajax 요청을 보냄.
 		axios
 			.get(url)

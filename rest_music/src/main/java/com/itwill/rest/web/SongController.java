@@ -142,7 +142,7 @@ public class SongController {
     @GetMapping("/api/songs")
     @ResponseBody
     public List<SongChartDto> getSongs(@RequestParam int page) {
-        int pageSize = 10; // 페이지당 불러올 노래 개수
+        int pageSize = 30; // 페이지당 불러올 노래 개수
         return songService.getSongs(page, pageSize);
     }
 	

@@ -218,6 +218,11 @@
         </c:if>
     </main>
 
+    <footer>
+        <!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
+        <%@ include file="../fragments/footer.jspf" %>
+    </footer>
+
 
     <style>
     .popup {
@@ -280,7 +285,8 @@
     <!-- 내가 만드는 js 라이브러리 -->
     <c:url var="list_js" value="/js/list.js" />
     <script src="${list_js}"></script>
-    
+    <c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
+    <script src="${addCurrentPlayList}"></script>
     <script>
 	const refresh = '${refresh}'; 
     // 리다이렉트 할 때 재생페이지를 새로고침하기위한 코드

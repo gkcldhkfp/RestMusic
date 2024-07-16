@@ -16,7 +16,8 @@
 						/* left: 20px; */
 						margin-left: 20px;
 					}
-
+					onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline'; this.style.color='blue';" 
+					onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none'; this.style.color='black';"
 					a,
 					p {
 						text-decoration-line: none;
@@ -26,6 +27,7 @@
 					a:hover {
 						text-decoration: underline;
 						font-weight: bold;
+						color: blue;
 					}
 
 					table {
@@ -41,7 +43,7 @@
 					}
 
 					.submenu {
-						width: 7%;
+						width: 8%;
 					}
 
 					#content {
@@ -115,7 +117,7 @@
 									</table>
 									<div id="like">
 										<button id="btnLike" title="앨범 좋아요" class="btn fs-3"">♡</button>
-										<button id="btnListenAlbum" title="앨범 재생" class="btn intro ms-1" style="background-image: url('../images/icon/play.png'); 
+										<button id = "btnListenAlbum" title="앨범 재생" class="btn intro ms-1" style="background-image: url('../images/icon/play.png'); 
                                 width: 45px; height: 45px; background-size: cover; background-repeat: no-repeat;"
 											data-id="${album.albumId}"></button>
 										<button id="btnAddCPListAlbum" title="앨범을 재생목록에 추가" class="btn intro ms-3" style="background-image: url('../images/icon/playList.png'); 
@@ -135,8 +137,8 @@
 									<th class="submenu">#</th>
 									<th class="submenu"></th>
 									<th style="width: 30%;">음원</th>
-									<th style="width: 28%;">아티스트</th>
-									<th class="submenu">좋아요</th>
+									<th style="width: 30%;">아티스트</th>
+									<!-- <th class="submenu">좋아요</th> -->
 									<th class="submenu">듣기</th>
 									<th class="submenu">재생목록</th>
 									<th class="submenu">리스트</th>
@@ -166,18 +168,17 @@
 														<c:param name="artistId" value="${artistId[status.index]}" />
 													</c:url>
 													<span class="text-center" style="cursor: pointer;" onclick="location.href='${artistPage}'"
-														onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
-														onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">${singer}</span>
+														onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';  this.style.color='blue';"
+														onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';  this.style.color='black';">${singer}</span>
 												</c:forEach>
 
 											</td>
 
 
 
-											<td id="countLike" data-id="${s.songId}">
+											<!-- <td id="countLike" data-id="${s.songId}">
 												<img id="btnLike" height="30px" width="30px" src="../images/icon/likeOn.png" />${s.likesCount}
-												<!-- TODO: axios로 DB insert 해야됨 -->
-											</td>
+											</td> -->
 											<td>
 												<button id="listenBtn" data-id="${s.songId}" title="재생" class="btn"
 													style="background-image: url('../images/icon/play.png'); width: 45px; height: 45px; background-size: cover; background-repeat: no-repeat;"></button>

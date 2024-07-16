@@ -4,12 +4,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itwill.rest.repository.PurchaseDao;
+import com.itwill.rest.service.PurchaseService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @RestController
@@ -17,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class PurUsersController {
 	
-	private final PurchaseDao service;
+	private final PurchaseService service;
 	
 	@GetMapping("/success/{loginUserId}")
 	public ResponseEntity<Integer> PurchaseSuccess (@PathVariable Integer loginUserId) {
@@ -26,5 +28,14 @@ public class PurUsersController {
 		
 		return ResponseEntity.ok(result);
 	}
+
+	@GetMapping("/isPurUser")	
+	public ResponseEntity<Boolean> isPurchaseUser(@RequestParam(value="id") String id) {
+		log.debug("isPurchaseUser()");
+		boolean result = service.isPurchaseUser(Integer.parseInt(id));
+		log.debug("result = {}", result);
+		return ResponseEntity.ok(result);		
+	}
+	
 	
 }
