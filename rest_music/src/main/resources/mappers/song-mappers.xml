@@ -137,7 +137,7 @@
                 AND CONTAINS(s.title, #{searchKeyword}, 1) > 0
               </when>
               <when test='category.equals("s")'>
-                   AND (CONTAINS(s.title, #{keyword}, 1) > 0
+                   AND (CONTAINS(s.title, '㉾', 1) > 0
                 OR s.song_id IN (
                   SELECT DISTINCT ar2.song_id
                   FROM artist_roles ar2
