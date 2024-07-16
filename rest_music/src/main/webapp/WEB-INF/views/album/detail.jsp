@@ -148,7 +148,7 @@
 										<tr>
 											<td>${status.index + 1}</td>
 											<td>
-												<c:if test="${s.titleSong != null}">
+												<c:if test="${fn:contains(album.title, s.title)}">
 													<span class="fw-bold">Title</span>
 												</c:if>
 											</td>
