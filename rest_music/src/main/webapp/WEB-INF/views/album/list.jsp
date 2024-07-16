@@ -57,10 +57,8 @@
                                 <!-- 앨범 표지 부분 -->
                                 <div class="col-md-6">
                                     <a href="../detail?albumId=${a.albumId}">
-                                        <img
-                                        src="../images/albumcover/${a.albumImage}"
-                                        class="img-fluid rounded"
-                                        alt="${a.albumName}">
+                                    <c:url var="albumImage" value="/images/albumcover/${a.albumImage}" />
+                                        <img src="${albumImage}" class="img-fluid rounded" alt="${a.albumName}">
                                     </a>
                                 </div>
                                 <!-- 앨범 정보 부분 -->
