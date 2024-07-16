@@ -160,7 +160,7 @@
 				<div id="progress" class="progress-bar bg-success " role="progressbar" style="width: 1%" aria-valuemin="0"
 					aria-valuemax="100">
 				</div>
-				<div id="minute1" class="progress-bar bg-success" role="progressbar" style="width: 30%; opacity : 0;"
+				<div id="minute1" class="progress-bar bg-success" role="progressbar" style="width: 0%; opacity : 0;"
 					aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
 			<div>
