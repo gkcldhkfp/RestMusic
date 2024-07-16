@@ -132,15 +132,53 @@ document.addEventListener("DOMContentLoaded", function() {
     // 듣기 버튼 클릭 이벤트
     floatingButtonGroup.querySelector('.play-selected').addEventListener('click', function() {
         const selectedSongs = Array.from(document.querySelectorAll('.songCheckbox:checked')).map(checkbox => checkbox.dataset.songId);
+        
         if (selectedSongs.length > 0) {
-            const firstSongId = selectedSongs[0];
-            const playBtn = document.querySelector(`.play-btn[data-song-id="${firstSongId}"]`);
-            if (playBtn) {
-                playBtn.click();
+            // 첫 번째 곡 재생 (재생목록에 추가하지 않음)
+            playSelectedSong(selectedSongs[0]);
+    
+            // 나머지 곡들만 재생목록에 추가 (알림 표시 없이)
+            if (selectedSongs.length > 1) {
+                addAllToPlaylist(selectedSongs.slice(1), true);  // 주석: skipAlert를 true로 설정하여 "재생 목록에 추가되었습니다" 알림을 숨김
+            }
+    
+            // 알림 메시지 표시
+            if (selectedSongs.length === 1) {
+                showAlert('선택한 음원을 재생합니다.', 2000, false);  // 주석: skipAlert를 false로 설정하여 알림을 표시
+            } else {
+                showAlert('선택한 곡들을 재생합니다.', 2000, false);  // 주석: skipAlert를 false로 설정하여 알림을 표시
             }
         }
     });
-
+    
+    // 선택된 곡을 재생하는 함수
+    function playSelectedSong(songId) {
+        const url = `/Rest/song/listen?songId=${songId}`;
+        axios.get(url)
+            .then((response) => {
+                console.log("첫 번째 곡 재생 성공");
+                sessionStorage.setItem('index', 0);
+                sessionStorage.setItem('isAdded', 'Y');
+                parent.songFrame.location.reload();
+            })
+            .catch((error) => console.log(error));
+    }
+    
+    // 재생목록에 곡을 추가하는 함수
+    function addToPlaylist(songId) {
+        const url = `/Rest/song/addCurrentPlayList?songId=${songId}`;
+        axios.get(url)
+            .then((response) => {
+                console.log(`곡 ${songId}를 재생목록에 추가했습니다.`);
+                if (sessionStorage.getItem('isAdded') === 'N') {
+                    sessionStorage.setItem('index', 0);
+                    sessionStorage.setItem('isAdded', 'Y');
+                    parent.songFrame.location.reload();
+                }
+            })
+            .catch((error) => console.log(error));
+    }
+    
     // 재생목록에 추가 버튼 클릭 이벤트
     floatingButtonGroup.querySelector('.add-to-playlist').addEventListener('click', function() {
         const selectedSongs = Array.from(document.querySelectorAll('.songCheckbox:checked')).map(checkbox => checkbox.dataset.songId);
@@ -150,11 +188,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (anyInPlaylist) {
                     // 재생목록에 있는 노래가 하나라도 있으면 한 번만 확인
                     if (confirm('이미 재생목록에 있는 곡이 포함되어 있습니다. 그래도 추가하시겠습니까?')) {
-                        addAllToPlaylist(selectedSongs);
+                        addAllToPlaylist(selectedSongs, false);  // 주석: skipAlert를 false로 설정하여 "재생 목록에 추가되었습니다" 알림을 표시
                     }
                 } else {
                     // 모든 노래가 재생목록에 없으면 바로 추가
-                    addAllToPlaylist(selectedSongs);
+                    addAllToPlaylist(selectedSongs, false);  // 주석: skipAlert를 false로 설정하여 "재생 목록에 추가되었습니다" 알림을 표시
                 }
             });
         }
@@ -169,17 +207,101 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     
     // 모든 선택된 노래를 재생목록에 추가하는 함수
-    function addAllToPlaylist(songIds) {
+    function addAllToPlaylist(songIds, skipAlert = false) {
         songIds.forEach(songId => {
             const addToPlaylistBtn = document.querySelector(`#addCPList[data-id="${songId}"]`);
             if (addToPlaylistBtn) {
                 // addCurrentPlayList.js의 컨펌 창을 무시하기 위해 커스텀 이벤트 사용
-                const customEvent = new CustomEvent('customAddToPlaylist', { detail: { skipConfirm: true } });
+                const customEvent = new CustomEvent('customAddToPlaylist', { 
+                    detail: { 
+                        skipConfirm: true,
+                        skipAlert: skipAlert  // 주석: skipAlert를 전달하여 "재생 목록에 추가되었습니다" 알림을 제어
+                    } 
+                });
                 addToPlaylistBtn.dispatchEvent(customEvent);
             }
         });
     }
-
+    
+    // 재생목록에 추가하는 함수
+    function addCurrentPlayList(songId, showAlertIndividually) {
+        const url = `/Rest/song/addCurrentPlayList?songId=${songId}`;
+        axios.get(url)
+            .then(response => {
+                console.log(response);
+                if (sessionStorage.getItem('isAdded') === 'N') {
+                    sessionStorage.setItem('index', 0);
+                    sessionStorage.setItem('isAdded', 'Y');
+                    parent.songFrame.location.reload();
+                }
+                if (showAlertIndividually) {
+                    showAlert('재생 목록에 추가되었습니다', 2000, false);  // 주석: skipAlert를 false로 설정하여 "재생 목록에 추가되었습니다" 알림을 표시
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+    
+    // 알림 표시 함수 (기존 addCurrentPlayList의 알림 스타일 사용)
+    function showAlert(message, duration, skipAlert) {
+        // 주석: skipAlert가 true이면 알림을 표시하지 않음
+        if (skipAlert) {
+            return;
+        }
+    
+        // 기존 알림창이 있는지 확인
+        if (document.querySelector('.custom-alert')) {
+            // 기존 알림창이 있으면 새 알림을 표시하지 않음
+            return;
+        }
+    
+        // 알림창 생성
+        const alertBox = document.createElement('div');
+        alertBox.textContent = message;
+        alertBox.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        `;
+    
+        document.body.appendChild(alertBox);
+    
+        // Fade in
+        setTimeout(() => {
+            alertBox.style.opacity = '1';
+        }, 10);
+    
+        // Fade out and remove
+        setTimeout(() => {
+            alertBox.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(alertBox);
+            }, 500);
+        }, duration);
+    }
+    
+    // 초기 설정
+    if (!sessionStorage.getItem('isAdded')) {
+        sessionStorage.setItem('isAdded', 'N');
+    }
+    
+    // `refresh` 변수가 정의되지 않은 경우 오류를 방지하기 위해 수정 필요
+    if (typeof refresh !== 'undefined' && refresh === 'Y') {
+        console.log(refresh);
+        refresh = 'N';
+        parent.songFrame.location.reload();
+    }
+    
     // 담기 버튼 클릭 이벤트
     floatingButtonGroup.querySelector('.add-to-my-list').addEventListener('click', function() {
         const selectedSongs = Array.from(document.querySelectorAll('.songCheckbox:checked')).map(checkbox => checkbox.dataset.songId);
