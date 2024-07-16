@@ -27,7 +27,12 @@ public class HomeController {
 	// 의존성 주입.
 	private final SongService songService;
 	private final AlbumService albumService;
-  @GetMapping("/")
+	@GetMapping("/")
+	public String frameset() {
+		return "frameset";
+	}
+	
+  @GetMapping("/home")
   public String home(Model model, HttpSession session) {
     log.debug("home()");
     

@@ -152,7 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 	// 앨범 듣기 기능
-	const btnListenAlbum = document.querySelector('#btnListenAlbum');
+	const btnListenAlbums = document.querySelectorAll('#btnListenAlbum'); // 앨범페이지에 버튼 여러개라 반복문처리
+	for(let btnListenAlbum of btnListenAlbums){
 	if (btnListenAlbum !== null) {
 		btnListenAlbum.addEventListener('click', listenAlbum);
 		function listenAlbum(event) {
@@ -204,9 +205,11 @@ document.addEventListener('DOMContentLoaded', () => {
 				catch((error) => console.log(error));
 		}
 	}
+	}
 
 	// 앨범을 다음 곡으로 추가 기능
-	const btnAddCPListAlbum = document.querySelector('#btnAddCPListAlbum');
+	const btnAddCPListAlbums = document.querySelectorAll('#btnAddCPListAlbum'); // 앨범페이지에 버튼 여러개라 반복문처리
+	for(let btnAddCPListAlbum of btnAddCPListAlbums){
 	if (btnAddCPListAlbum !== null) {
 		btnAddCPListAlbum.addEventListener('click', addCPListAlbum)
 
@@ -247,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		}
 	}
+	}
 	// 아래는 다른 페이지에서도 사용하는 함수
 
 	let isModalOpen = false;
@@ -277,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		listEmptyBtn.addEventListener('click', listEmpty);
 		function listEmpty() {
 
-			const url = `../song/empty`
+			const url = `${window.location.origin}/Rest/song/empty`;
 			axios.
 				get(url).
 				then((response) => {

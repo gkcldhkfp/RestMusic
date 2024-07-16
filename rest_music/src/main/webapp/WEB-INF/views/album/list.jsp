@@ -20,12 +20,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- jQuery 라이브러리 불러옴 -->
     
-    <link href="../css/albumList.css" rel="stylesheet" />
+    <link href="../../css/albumList.css" rel="stylesheet" />
     <!-- css 불러옴 -->
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Font Awesome 불러옴 -->
-    <link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
+    <link href="../../css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
 </head>
 
 <body>
@@ -37,10 +37,9 @@
     </header>
     
     <main class="container mt-3">
-        <div class="btn-group btn-group-lg mb-4" role="group"
-            aria-label="Basic example">
-            <button type="button" class="btn btn-primary" id="btnNewest">최신앨범</button>
-            <button type="button" class="btn btn-primary" id="btnPopular">인기앨범</button>
+        <div class="container d-flex justify-content-start mb-3 button_rbox" >
+            <button type="button" class="btn btn-sort me-2 sort-btn" id="btnNewest">최신앨범</button>
+            <button type="button" class="btn btn-sort me-2 sort-btn" id="btnPopular">인기앨범</button>
         </div>
 
 
@@ -64,24 +63,31 @@
                                 <!-- 앨범 정보 부분 -->
                                 <div class="col-md-6">
                                     <div class="card-body">
-                                        <a href="../detail?albumId=${a.albumId}">
-                                            <p class="card-text fw-bold">${a.albumName}</p>
-                                        </a>
-                                        <c:forEach items="${fn:split(a.artistName, ',')}" var="artistName" varStatus="statusName">
-                                            <c:set var="artistId" value="${fn:split(a.artistId  , ',')[statusName.index]}" />
-                                            <c:url var="artistPage" value="/artist/songs">
-                                                <c:param name="artistId" value="${artistId.trim()}" />
-                                            </c:url>
-                                            <a href="${artistPage}">
-                                                <small style="color: gray;">${artistName.trim()}</small>
+                                        <div style="height: 100px;">
+                                            <a href="../detail?albumId=${a.albumId}">
+                                                <p class="card-text fw-bold">${a.albumName}</p>
                                             </a>
-                                            <c:if test="${!statusName.last}"><span style="margin-right: 5px;">, </span></c:if>
-                                        </c:forEach>
-                                        <br/>
+                                            <c:forEach items="${fn:split(a.artistName, ',')}" var="artistName" varStatus="statusName">
+                                                <c:set var="artistId" value="${fn:split(a.artistId  , ',')[statusName.index]}" />
+                                                <c:url var="artistPage" value="/artist/songs">
+                                                    <c:param name="artistId" value="${artistId.trim()}" />
+                                                </c:url>
+                                                <a href="${artistPage}">
+                                                    <small style="color: gray;">${artistName.trim()}</small>
+                                                </a>
+                                                <c:if test="${!statusName.last}"><span style="margin-right: 5px;">, </span></c:if>
+                                            </c:forEach>
+                                        </div>
                                         <div style="color: gray;">
                                         <small class="card-text text-muted fw-bold">${a.albumType}</small>
                                         <small> | </small>
                                         <small id="rDate" class="card-text fw-bold">${a.albumReleaseDate}</small>
+                                        <br />
+                                            <i class="fas fa-heart ${a.likesCount != null && a.likesCount > 0 ? 'liked' : ''} heart-icon"
+                                                data-song-id="${a.songId}"
+                                                data-id="${loginUserId}">
+                                            </i>
+                                            <span class="likes-count">${a.likesCount != null ? a.likesCount : 0}</span>
                                         </div>
                                         <%-- <p class="card-text">좋아요:
                                             ${a.likesCount}</p> --%>
@@ -93,19 +99,19 @@
     
                                         <c:url var="songPath" value="/songs/${a.songPath}" />
                                         <c:url var="play" value="/images/icon/play.png" />
-                                        <button style="background-image: url('${play}'); 
+                                        <button id = "btnListenAlbum" style="background-image: url('${play}'); 
                                         width: 30px; height: 30px; background-size: cover; background-repeat: no-repeat;"
-                                        data-songId="${a.songId}" data-id="${a.songId}" class="playButton btn" id="listenBtn"></button>
+                                        data-songId="${a.songId}" data-id="${a.albumId}" class="playButton btn"></button>
     
                                         <c:url var="playlistImage" value="/images/icon/playList.png" />
-                                        <button data-id="${s.songId}" id="addCPList" title="재생목록에 추가" class="btn"
+                                        <button id = "btnAddCPListAlbum" data-id="${a.albumId}" title="재생목록에 추가" class="btn mx-2"
                                         style="background-image: url('${playlistImage}'); 
                                         width: 39px; height: 39px; background-size: cover; background-repeat: no-repeat;"></button>
     
                                         <c:url var="myPlayListImage" value="/images/icon/myPlayList.png" />
-                                        <button style="background-image: url('${myPlayListImage}'); 
+                                        <button id = "btnListenAlbum" style="background-image: url('${myPlayListImage}'); 
                                         width: 30px; height: 30px; background-size: cover; background-repeat: no-repeat;"
-                                        data-songId="${s.songId}" class="addPlayList btn"></button>
+                                        data-songId="${a.songId}" data-id="${a.albumId}" class="addPlayList btn d-none"></button>
                                         </div>
                                     </div>
                                 </div>
