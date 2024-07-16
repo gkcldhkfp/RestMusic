@@ -160,7 +160,7 @@
 				<div id="progress" class="progress-bar bg-success " role="progressbar" style="width: 1%" aria-valuemin="0"
 					aria-valuemax="100">
 				</div>
-				<div id="minute1" class="progress-bar bg-success" role="progressbar" style="width: 30%; opacity : 0;"
+				<div id="minute1" class="progress-bar bg-success" role="progressbar" style="width: 0%; opacity : 0;"
 					aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
 			<div>
@@ -189,6 +189,8 @@
 
 				// 여기에 추가적인 자바스크립트 코드 작성
 				// 예를 들어, cPListObj를 이용하여 원하는 동적 처리를 할 수 있음
+
+				let refresh = '${refresh}';
 			</script>
 			<script src="../js/playerPage.js"></script>
 

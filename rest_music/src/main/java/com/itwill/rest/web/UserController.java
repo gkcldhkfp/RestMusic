@@ -157,6 +157,7 @@ public class UserController {
         // 로그인 성공 시 세션에 로그인 사용자 아이디를 저장
         session.setAttribute("SESSION_ATTR_USER", user.getUserId());
         session.setAttribute("loginUserId", user.getId());
+        session.setAttribute("refresh", "Y");
         
         // 로그인 성공 후 이동할 타겟 페이지
         String targetPage = (target.equals("")) ? "/" : target;
@@ -168,6 +169,8 @@ public class UserController {
         log.debug("singOut()");
         
         session.removeAttribute("SESSION_ATTR_USER");
+        session.removeAttribute("loginUserId");
+        session.setAttribute("refresh", "Y");
         // session.invalidate();
         
         return "redirect:/user/signin";

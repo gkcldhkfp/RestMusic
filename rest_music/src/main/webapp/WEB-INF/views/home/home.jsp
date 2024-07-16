@@ -362,9 +362,10 @@ h3 {
                 
                 </script>
             <script>
-                const refresh = '${refresh}';
+                let refresh = '${refresh}';
                 // 리다이렉트 시 재생페이지를 새로고침하기 위한 코드
             </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

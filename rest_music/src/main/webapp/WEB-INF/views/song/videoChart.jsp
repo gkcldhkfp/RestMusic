@@ -110,7 +110,7 @@
         const singerName = '${ album.artistName }';
         const albumId = ${ album.albumId };
         const id = '${loginUserId}'; //id
-        const refresh = '${refresh}';
+        let refresh = '${refresh}';
         // 리다이렉트 시 재생페이지를 새로고침하기 위한 코드
     </script>
 

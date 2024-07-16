@@ -32,6 +32,9 @@
 				crossorigin="anonymous"></script>
 			<c:url var="currentPlayList" value="/js/currentPlayList.js" />
 			<script src="${currentPlayList}"></script>
+			<script>
+				let refresh = '${refresh}';
+			</script>
 
 
 		</body>

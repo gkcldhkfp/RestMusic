@@ -66,7 +66,7 @@ public class AlbumListController {
         model.addAttribute("albumList", list);
         model.addAttribute("loginUserId", id); // 필요하다면 모델에 추가
 
-        session.setAttribute("listType", "list2");
+//        session.setAttribute("listType", "list2");
         return "/album/list";
     }
     
@@ -98,7 +98,7 @@ public class AlbumListController {
         model.addAttribute("albumList", list);
         model.addAttribute("loginUserId", id); // 필요하다면 모델에 추가
 
-        session.setAttribute("listType", "list3");
+//        session.setAttribute("listType", "list3");
         return "/album/list";
     }
     

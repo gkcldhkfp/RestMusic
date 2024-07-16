@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if(refresh ==='Y') {
         console.log(refresh);
+				refresh = "N";
         parent.songFrame.location.reload();
     }
     
@@ -350,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				li.textContent = data[i].title;
 				if (i == index) { // 현재 재생중인 곡인 지 검사
 					// 볼드체로 변경
-					li.classList.add('fw-bold');
+					li.classList.add('text-primary');
 				}
 				ul.appendChild(li);
 				console.log(li);
@@ -360,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			document.querySelector('#listEmptyBtn').style.display = 'none';
 			let li = document.createElement('li');
 			li.className = 'list-group-item';
-			li.classList.add('fw-bold');
+			li.classList.add('text-primary');
 			li.textContent = '현재 재생목록이 없습니다.';
 			ul.appendChild(li);
 		}
