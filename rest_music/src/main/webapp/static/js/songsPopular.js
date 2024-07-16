@@ -335,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log(id);
     
             if (id === 0) { // 로그인하지 않은 경우
-                // 로그인 모달창 대신 컨펌창 사용
+                
                 if (confirm('로그인이 필요합니다. 로그인 하시겠습니까?')) {
                     const currentPath = location.pathname.replace('/Rest', '');
                     location.href = '../user/signin?target=' + encodeURIComponent(currentPath);
@@ -354,7 +354,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.querySelectorAll('.songCheckbox:checked, #selectAllCheckbox:checked').forEach(checkbox => {
                     checkbox.checked = false;
                 });
-    
             }
     
             // 모든 곡 추가 후 실행
@@ -377,22 +376,19 @@ document.addEventListener("DOMContentLoaded", function() {
     
                         const listElement = document.createElement('div');
                         listElement.classList.add('playlist-item', 'd-flex', 'align-items-center', 'mb-2');
+                        
                         listElement.innerHTML = `
-                            <div class="form-check">
-                                <input class="form-check-input playlist-checkbox" type="checkbox"
-                                    value="${list.plistId}" id="playlist-${list.plistId}" data-playlist-id="${list.plistId}">
-                            </div>
                             <div class="playlist-button-container">
-                                <button class="playList btn btn-outline-success w-100" data-id="${list.plistId}">
+                                <button class="playlist-btn btn btn-outline-success w-100" data-id="${list.plistId}">
                                     <div class="d-flex align-items-center">
                                         <div class="playlist-image">
                                             <img src="${albumImageSrc}" alt="Album cover" class="rounded">
                                         </div>
-                                        <div class="playlist-name"> ${list.plistName} </div>
+                                        <div class="playlist-name">${list.plistName}</div>
                                     </div>
                                 </button>
                             </div>
-                          `;
+                        `;
                         playListsContainer.appendChild(listElement);
                     });
     
@@ -405,6 +401,13 @@ document.addEventListener("DOMContentLoaded", function() {
     
                     const selectPlayListModal = new bootstrap.Modal(document.getElementById('selectPlayList'));
                     selectPlayListModal.show();
+    
+                    // 플레이리스트 버튼 클릭 이벤트
+                    document.querySelectorAll('.playlist-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            this.classList.toggle('selected');
+                        });
+                    });
                 }
             })
             .catch(error => {
@@ -414,8 +417,9 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // 곡 추가 함수
     function addSongToPlaylists() {
-        const selectedPlaylists = document.querySelectorAll('#playLists .playlist-checkbox:checked');
-        const selectedPlaylistIds = Array.from(selectedPlaylists).map(checkbox => checkbox.dataset.playlistId);
+        // 선택된 버튼 사용
+        const selectedPlaylists = document.querySelectorAll('#playLists .playlist-btn.selected');
+        const selectedPlaylistIds = Array.from(selectedPlaylists).map(btn => btn.dataset.id);
     
         // hidden input에서 songIds를 가져옴
         const songIdsJson = document.getElementById('selectedSongIds').value;
@@ -458,81 +462,52 @@ document.addEventListener("DOMContentLoaded", function() {
         Promise.all(promises).then(() => {
             const addedPlaylists = selectedPlaylistIds.filter(plistId => alreadyAdded[plistId]);
             if (addedPlaylists.length > 0) {
-                // 변경된 부분: alert를 confirm으로 바꾸고 사용자가 확인을 누르면 곡을 추가
+                // 사용자가 확인을 누르면 곡을 추가
                 if (confirm('선택한 플레이리스트에 이미 추가된 곡입니다. 그래도 추가하시겠습니까?')) {
-                    // 곡이 이미 추가된 경우에도 추가 요청 보내기
-                    const addPromises = selectedPlaylistIds.flatMap(plistId => {
-                        return songIds.map(songId => {
-                            return axios.post(`../addSongToPlayList`, {
-                                plistId: parseInt(plistId),
-                                songId: parseInt(songId)
-                            });
-                        });
-                    });
-    
-                    Promise.all(addPromises).then(responses => {
-                        const allSuccessful = responses.every(response => response && response.status === 200);
-                        if (allSuccessful) {
-                            alert('선택한 플레이리스트에 곡이 추가되었습니다.');
-                            const selectPlayListModal = bootstrap.Modal.getInstance(document.getElementById('selectPlayList'));
-                            selectPlayListModal.hide();
-    
-                            // 체크박스 해제 및 플로팅 버튼 숨기기
-                            document.querySelectorAll('.songCheckbox:checked, #selectAllCheckbox:checked').forEach(checkbox => {
-                                checkbox.checked = false;
-                            });
-                            floatingButtonGroup.classList.add('d-none');
-    
-                            // 모달 배경을 어둡게 하지 않도록 설정
-                            const modalBackdrop = document.querySelector('.modal-backdrop');
-                            if (modalBackdrop) {
-                                modalBackdrop.style.opacity = '0';
-                            }
-                        }
-                    }).catch(error => {
-                        console.error('플레이리스트에 곡 추가 중 오류가 발생했습니다:', error);
-                        alert('플레이리스트에 곡을 추가하는 중 오류가 발생했습니다.');
-                    });
+                    addSongsToSelectedPlaylists(selectedPlaylistIds, songIds);
                 } else {
                     const selectPlayListModal = bootstrap.Modal.getInstance(document.getElementById('selectPlayList'));
                     selectPlayListModal.hide();
-                    return;
                 }
             } else {
-                // 곡이 추가되지 않은 플레이리스트에 추가
-                const addPromises = selectedPlaylistIds.flatMap(plistId => {
-                    return songIds.map(songId => {
-                        return axios.post(`../addSongToPlayList`, {
-                            plistId: parseInt(plistId),
-                            songId: parseInt(songId)
-                        });
-                    });
-                });
-    
-                Promise.all(addPromises).then(responses => {
-                    const allSuccessful = responses.every(response => response && response.status === 200);
-                    if (allSuccessful) {
-                        alert('선택한 플레이리스트에 곡이 추가되었습니다.');
-                        const selectPlayListModal = bootstrap.Modal.getInstance(document.getElementById('selectPlayList'));
-                        selectPlayListModal.hide();
-    
-                        // 체크박스 해제 및 플로팅 버튼 숨기기
-                        document.querySelectorAll('.songCheckbox:checked, #selectAllCheckbox:checked').forEach(checkbox => {
-                            checkbox.checked = false;
-                        });
-                        floatingButtonGroup.classList.add('d-none');
-    
-                        // 모달 배경을 어둡게 하지 않도록 설정
-                        const modalBackdrop = document.querySelector('.modal-backdrop');
-                        if (modalBackdrop) {
-                            modalBackdrop.style.opacity = '0';
-                        }
-                    }
-                }).catch(error => {
-                    console.error('플레이리스트에 곡 추가 중 오류가 발생했습니다:', error);
-                    alert('플레이리스트에 곡을 추가하는 중 오류가 발생했습니다.');
-                });
+                addSongsToSelectedPlaylists(selectedPlaylistIds, songIds);
             }
+        });
+    }
+    
+    // 선택된 플레이리스트에 곡 추가
+    function addSongsToSelectedPlaylists(selectedPlaylistIds, songIds) {
+        const addPromises = selectedPlaylistIds.flatMap(plistId => {
+            return songIds.map(songId => {
+                return axios.post(`../addSongToPlayList`, {
+                    plistId: parseInt(plistId),
+                    songId: parseInt(songId)
+                });
+            });
+        });
+    
+        Promise.all(addPromises).then(responses => {
+            const allSuccessful = responses.every(response => response && response.status === 200);
+            if (allSuccessful) {
+                alert('선택한 플레이리스트에 곡이 추가되었습니다.');
+                const selectPlayListModal = bootstrap.Modal.getInstance(document.getElementById('selectPlayList'));
+                selectPlayListModal.hide();
+    
+                // 체크박스 해제 및 플로팅 버튼 숨기기
+                document.querySelectorAll('.songCheckbox:checked, #selectAllCheckbox:checked').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                floatingButtonGroup.classList.add('d-none');
+    
+                // 모달 배경을 어둡게 하지 않도록 설정
+                const modalBackdrop = document.querySelector('.modal-backdrop');
+                if (modalBackdrop) {
+                    modalBackdrop.style.opacity = '0';
+                }
+            }
+        }).catch(error => {
+            console.error('플레이리스트에 곡 추가 중 오류가 발생했습니다:', error);
+            alert('플레이리스트에 곡을 추가하는 중 오류가 발생했습니다.');
         });
     }
     
@@ -547,7 +522,6 @@ document.addEventListener("DOMContentLoaded", function() {
             const id = parseInt(this.dataset.id);
             const songId = this.dataset.songId;  // 버튼에서 songId를 가져옴
             if (id === 0) { // 로그인하지 않은 경우
-                // 로그인 모달창 대신 컨펌창으로 변경
                 if (confirm('로그인이 필요합니다. 로그인 하시겠습니까?')) {
                     const currentPath = location.pathname.replace('/Rest', '');
                     location.href = '../user/signin?target=' + encodeURIComponent(currentPath);
