@@ -125,8 +125,8 @@
     
                 <!-- 로그인 했을때 -->
                 <c:if test="${not empty sessionScope.SESSION_ATTR_USER}">
-                    <div style="font-size: 0.8rem">
-                        <c:out value="${sessionScope.SESSION_ATTR_USER}" /> 님 환영합니다🌼 &nbsp;
+                    <div class="ms-2" style="font-size: 0.8rem">
+                        <c:out value="${sessionScope.SESSION_ATTR_USER}" /> 님 <br/> 환영합니다🌼 &nbsp;
                     </div>
                     <c:url var="signOutPage" value="/user/signout" />
                     <a style="font-size: 0.8rem" class="me-3 link-style" href="${signOutPage}">로그아웃</a>
