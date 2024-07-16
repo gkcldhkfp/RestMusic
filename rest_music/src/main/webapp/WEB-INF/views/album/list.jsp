@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
 
 <!DOCTYPE html>
 <html>
@@ -48,7 +49,6 @@
         <c:set var="listType" value="${sessionScope.listType}" />
 
         <!-- 리스트 1 기본 정렬 -->
-        <c:if test="${listType == 'list1'}">
             <div class="row">
                 <c:forEach var="a" items="${albumList}">
                     <div class="col-md-4 mb-4">
@@ -69,30 +69,45 @@
                                         <a href="../detail?albumId=${a.albumId}">
                                             <p class="card-text fw-bold">${a.albumName}</p>
                                         </a>
-                                        <p class="card-text">Album
-                                            ID: ${a.albumId}</p>
-                                        <small
-                                            class="card-text text-muted fw-bold">${a.albumType}</small>
+                                        <c:forEach items="${fn:split(a.artistName, ',')}" var="artistName" varStatus="statusName">
+                                            <c:set var="artistId" value="${fn:split(a.artistId  , ',')[statusName.index]}" />
+                                            <c:url var="artistPage" value="/artist/songs">
+                                                <c:param name="artistId" value="${artistId.trim()}" />
+                                            </c:url>
+                                            <a href="${artistPage}">
+                                                <small style="color: gray;">${artistName.trim()}</small>
+                                            </a>
+                                            <c:if test="${!statusName.last}"><span style="margin-right: 5px;">, </span></c:if>
+                                        </c:forEach>
+                                        <br/>
+                                        <div style="color: gray;">
+                                        <small class="card-text text-muted fw-bold">${a.albumType}</small>
+                                        <small> | </small>
                                         <small id="rDate" class="card-text fw-bold">${a.albumReleaseDate}</small>
-                                        <p class="card-text">좋아요:
-                                            ${a.likesCount}</p>
+                                        </div>
+                                        <%-- <p class="card-text">좋아요:
+                                            ${a.likesCount}</p> --%>
                                             
-                                        <div>
-                                            <button class="btn btn-primary btn-sm" id="btnLikes" data-id="${a.albumId}">
+                                        <div style="vertical-align: middle;">
+                                            <%-- <button class="btn btn-primary btn-sm" id="btnLikes" data-id="${a.albumId}">
                                                 <i class="fas fa-heart"></i>
-                                            </button>
+                                            </button> --%>
     
-                                            <button class="btn btn-primary btn-sm" id="btnListenAlbum">
-                                                <i class="fas fa-play"></i>
-                                            </button>
+                                        <c:url var="songPath" value="/songs/${a.songPath}" />
+                                        <c:url var="play" value="/images/icon/play.png" />
+                                        <button style="background-image: url('${play}'); 
+                                        width: 30px; height: 30px; background-size: cover; background-repeat: no-repeat;"
+                                        data-songId="${a.songId}" data-id="${a.songId}" class="playButton btn" id="listenBtn"></button>
     
-                                            <button class="btn btn-primary btn-sm" id="btnAdd">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
+                                        <c:url var="playlistImage" value="/images/icon/playList.png" />
+                                        <button data-id="${s.songId}" id="addCPList" title="재생목록에 추가" class="btn"
+                                        style="background-image: url('${playlistImage}'); 
+                                        width: 39px; height: 39px; background-size: cover; background-repeat: no-repeat;"></button>
     
-                                            <button class="btn btn-primary btn-sm" id="btnAddPl">
-                                                <i class="fas fa-list"></i>
-                                            </button>
+                                        <c:url var="myPlayListImage" value="/images/icon/myPlayList.png" />
+                                        <button style="background-image: url('${myPlayListImage}'); 
+                                        width: 30px; height: 30px; background-size: cover; background-repeat: no-repeat;"
+                                        data-songId="${s.songId}" class="addPlayList btn"></button>
                                         </div>
                                     </div>
                                 </div>
@@ -101,121 +116,6 @@
                     </div>
                 </c:forEach>
             </div>
-        </c:if>
-
-        <!-- 리스트 2 최신 순 -->
-        <c:if test="${listType == 'list2'}">
-            <div class="row">
-                <c:forEach var="a" items="${albumList}">
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0">
-                            <div class="row g-0">
-                                <!-- 앨범 표지 부분 -->
-                                <div class="col-md-6">
-                                    <a href="../detail?albumId=${a.albumId}">
-                                        <img
-                                        src="../../images/albumcover/${a.albumImage}"
-                                        class="img-fluid rounded"
-                                        alt="${a.albumName}">
-                                    </a>
-                                </div>
-                                <!-- 앨범 정보 부분 -->
-                                <div class="col-md-6">
-                                    <div class="card-body">
-                                    <a href="../detail?albumId=${a.albumId}">
-                                            <p class="card-text fw-bold">${a.albumName}</p>
-                                        </a>
-                                        <!-- 
-                                        <p class="card-text">Album
-                                            ID: ${a.albumId}</p>
-                                         -->
-                                        <small
-                                            class="card-text text-muted fw-bold">${a.albumType} <br/></small>
-                                        <small id="rDate" class="card-text fw-bold">${a.albumReleaseDate}</small>
-                                        <p class="card-text">좋아요:
-                                            ${a.likesCount}</p>
-
-                                        <button
-                                            class="btn btn-primary btn-sm"
-                                            id="btnLikes"
-                                            data-id="${a.albumId}">좋아요</button>
-
-                                        <button
-                                            class="btn btn-primary btn-sm"
-                                            id="btnListenAlbum">듣기</button>
-
-                                        <button
-                                            class="btn btn-primary btn-sm"
-                                            id="btnAdd">담기</button>
-
-                                        <button
-                                            class="btn btn-primary btn-sm"
-                                            id="btnAddPl">플리담기</button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </c:if>
-
-        <!-- 리스트 3 좋아요 순 -->
-        <c:if test="${listType == 'list3'}">
-            <div class="row">
-                <c:forEach var="a" items="${albumList}">
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0">
-                            <div class="row g-0">
-                                <!-- 앨범 표지 부분 -->
-                                <div class="col-md-6">
-                                    <a href="../detail?albumId=${a.albumId}">
-                                        <img
-                                        src="../../images/albumcover/${a.albumImage}"
-                                        class="img-fluid rounded"
-                                        alt="${a.albumName}">
-                                    </a>
-                                </div>
-                                <!-- 앨범 정보 부분 -->
-                                <div class="col-md-6">
-                                    <div class="card-body">
-                                    <a href="../detail?albumId=${a.albumId}">
-                                            <p class="card-text fw-bold">${a.albumName}</p>
-                                        </a>
-                                        <p class="card-text">Album
-                                            ID: ${a.albumId}</p>
-                                        <small
-                                            class="card-text text-muted fw-bold">${a.albumType}</small>
-                                        <small id="rDate" class="card-text fw-bold">${a.albumReleaseDate}</small>
-                                        <p class="card-text">좋아요:
-                                            ${a.likesCount}</p>
-
-                                        <button
-                                            class="btn btn-primary btn-sm"
-                                            id="btnLikes"
-                                            data-id="${a.albumId}">좋아요</button>
-
-                                        <button
-                                            class="btn btn-primary btn-sm"
-                                            id="btnListenAlbum">듣기</button>
-
-                                        <button
-                                            class="btn btn-primary btn-sm"
-                                            id="btnAdd">담기</button>
-
-                                        <button
-                                            class="btn btn-primary btn-sm"
-                                            id="btnAddPl">플리담기</button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </c:if>
     </main>
 
     <footer>
@@ -237,11 +137,10 @@
 
     a {
         text-decoration: none; /* 밑줄 제거 */
-        color: #555555; /* 링크 색상 변경 (연한 검정) */
     }
 
     a:hover {
-        color: #000000; /* 마우스를 올렸을 때 색상 변경 (진한 검정)*/
+        color: #0000ff; /* 마우스를 올렸을 때 색상 변경 (진한 검정)*/
     }
 
     .shadow-box {
