@@ -12,7 +12,7 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
-<link href="./css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
+<link href="../../css/common.css" rel="stylesheet" /> <!-- 공통 CSS 파일 포함 -->
 <title>Rest</title>
 <style>
    #resultTable tr{
@@ -108,11 +108,11 @@
                                 </td>
                                     
                                 <td style="width: 60%; "><span
-                                    class="fs-4" style="cursor: pointer;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" 
+                                    class="fs-5" style="cursor: pointer;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" 
                                     onclick="location.href='${songDetailsPage}'">${r.title}</span> <br />
                                     
                                     
-                                    <br /> <span style="cursor: pointer;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" 
+                                    <br /> <span style="color:gray; cursor: pointer;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='gray';" 
                                     onclick="location.href='${albumDetailPage}'" >${r.albumName}</span></td>
                                     
                                     <td>
@@ -125,6 +125,7 @@
                                         </c:url>
                                         <span class="text-center fw-bold" style="cursor: pointer;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" 
                                         onclick="location.href='${artistPage}'">${singer}</span>
+                                        <c:if test="${!status.last}">,&nbsp; </c:if>
                                         </c:forEach>
                                     </td>
                                 <td style="text-align: center;"><button
