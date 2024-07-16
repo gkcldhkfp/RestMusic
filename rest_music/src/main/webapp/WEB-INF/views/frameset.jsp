@@ -5,7 +5,7 @@
 	<title>Rest</title>
 </head>
 <frameset rows="*,110px">
-	<frame src="./album/detail?albumId=1" name="mainFrame" id="mainFrame"/>
+	<frame src="./home" name="mainFrame" id="mainFrame"/>
 	<frame src="./player/playerPage" name="songFrame" id="songFrame" noresize/>
 </frameset>
 <noframes>

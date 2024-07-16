@@ -12,9 +12,7 @@
 
     <!-- 최신 날짜 순으로 정렬. -->
     <select id="selectOrderByDate" resultType="Album">
-    
-    SELECT 
-            
+        SELECT 
             a.album_id, 
             a.album_type, 
             a.album_name, 
@@ -25,17 +23,22 @@
             LISTAGG(DISTINCT gc.genre_name, ', ') WITHIN GROUP (ORDER BY gc.genre_name) AS genre_name,
             LISTAGG(DISTINCT art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_name,
             LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_id) AS artist_id,
-            count(al.album_id) as likes_count
+            COUNT(DISTINCT al.id) AS likes_count
+            
         FROM 
             albums a
             JOIN songs s ON a.album_id = s.album_id
-            JOIN title_songs ts ON ts.song_id = s.song_id
+            JOIN title_songs ts ON ts.album_id = a.album_id
             JOIN song_genre sg ON s.song_id = sg.song_id
             JOIN genre_code gc ON sg.genre_id = gc.genre_id
             JOIN artist_roles artr ON s.song_id = artr.song_id
             JOIN artists art ON artr.artist_id = art.artist_id
             JOIN role_code rc ON artr.role_id = rc.role_id
-            LEFT join album_likes al on a.album_id = al.album_id
+            LEFT JOIN (
+                SELECT DISTINCT album_id, id
+                FROM album_likes
+            ) al ON a.album_id = al.album_id
+        
         WHERE 
             rc.role_id = 10
         GROUP BY 
@@ -44,13 +47,15 @@
             a.album_name, 
             a.album_release_date, 
             a.album_image
-        ORDER BY a.album_release_date DESC
+        
+        ORDER BY 
+            a.album_release_date DESC
     </select>
 
 
     <!-- 좋아요 높은 순으로 정렬. join 사용 -->
     <select id="selectOrderByLikes" resultType="Album">
-        select
+        SELECT
             a.album_id, 
             a.album_type, 
             a.album_name, 
@@ -61,7 +66,8 @@
             LISTAGG(DISTINCT gc.genre_name, ', ') WITHIN GROUP (ORDER BY gc.genre_name) AS genre_name,
             LISTAGG(DISTINCT art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_name,
             LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_id) AS artist_id,
-            count(al.album_id) as likes_count
+            COUNT(DISTINCT al.id) as likes_count
+            
         FROM 
             albums a
             JOIN songs s ON a.album_id = s.album_id
@@ -71,7 +77,11 @@
             JOIN artist_roles artr ON s.song_id = artr.song_id
             JOIN artists art ON artr.artist_id = art.artist_id
             JOIN role_code rc ON artr.role_id = rc.role_id
-            LEFT join album_likes al on a.album_id = al.album_id
+            LEFT JOIN (
+                SELECT DISTINCT album_id, id
+                FROM album_likes
+            ) al ON a.album_id = al.album_id
+        
         WHERE 
             rc.role_id = 10
         GROUP BY 
@@ -80,6 +90,7 @@
             a.album_name, 
             a.album_release_date, 
             a.album_image
+        
         ORDER BY likes_count DESC
         
     <!--

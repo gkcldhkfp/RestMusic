@@ -25,10 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SongPlayerController {
 	private final AlbumSongsService albumSongsService;
 
-	@GetMapping("/frameset")
-	public void frameset() {
-
-	}
+	
 
 	@GetMapping("player/playerPage")
 	public void playerPage(
