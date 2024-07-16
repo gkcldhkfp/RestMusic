@@ -49,6 +49,6 @@ public class HomeController {
     // 최신 음악 리스트 가져오기
     model.addAttribute("albumList", albumList);
     
-    return "home";
+    return "home/home";
   }
 }

@@ -174,7 +174,7 @@ h3 {
         
         <div class="container-fluid">
             <c:set var="pageTitle" value="Rest" scope="page" />
-            <%@ include file="./fragments/header.jspf"%>
+            <%@ include file="../fragments/header.jspf"%>
         </div>
     </header>
 
@@ -308,6 +308,10 @@ h3 {
         </div>    
     </main>
 
+    <footer>
+        <!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
+        <%@ include file="../fragments/footer.jspf" %>
+    </footer>
 
     <script>
                     let slideIndex = 0;
