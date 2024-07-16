@@ -175,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
 					total.innerHTML = '1:00';
 					// TODO: 나중에 조건을 결제한 아이디로 바꾸어야함.
 					// 1분 비율 계산
-					console.log("실행되면 안됨");
 					var minRatio = 60 / audio.duration * 100;
 					// 1분 위치를 고정시키기 위해 현재 재생 비율을 뺌
 					var minBar = minRatio - ratio;
