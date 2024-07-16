@@ -71,8 +71,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
    
     /*--------------------------------------------------------*/
+    // 현재 페이지의 URL 가져오기
+    const currentURL = window.location.pathname; // 예: "/Rest/album/list/newest"
+    const segments = currentURL.split('/'); // URL을 '/' 기준으로 나눔
+    const lastSegment = segments.pop(); // 배열에서 마지막 요소를 제거하고 반환
+    console.log(lastSegment); // 출력: "newest"
     
-    
+    if (lastSegment === 'newest') {
+        const btnNew = document.querySelector('#btnNewest');
+        btnNew.classList.add('active');
+    }
+    if (lastSegment === 'popular') {
+        const btnPopular = document.querySelector('#btnPopular');
+        btnPopular.classList.add('active');
+    }
 
 
 
