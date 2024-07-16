@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const selectedCountDisplay = floatingButtonGroup.querySelector('.selected-count');
     const deselectAllButton = floatingButtonGroup.querySelector('.deselect-all');
     const selectAllCheckbox = document.getElementById('selectAllCheckbox');
-
+    
     // 버튼 그룹 업데이트 함수
     function updateButtonGroup() {
         const checkedBoxes = document.querySelectorAll('.songCheckbox:checked');
@@ -105,12 +105,12 @@ document.addEventListener("DOMContentLoaded", function() {
             floatingButtonGroup.classList.add('d-none');
         }
     }
-
+    
     // 개별 체크박스 이벤트 리스너
     songCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', updateButtonGroup);
     });
-
+    
     // 선택 해제 버튼 이벤트 리스너
     deselectAllButton.addEventListener('click', function() {
         songCheckboxes.forEach(checkbox => {
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function() {
         selectAllCheckbox.checked = false; // 전체 선택 체크박스 해제
         updateButtonGroup();
     });
-
+    
     // 전체 선택 체크박스 이벤트 리스너
     selectAllCheckbox.addEventListener('change', function() {
         const isChecked = selectAllCheckbox.checked;
@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch((error) => console.log(error));
     }
     
-    // 재생목록에 추가 버튼 클릭 이벤트
+    // 재생목록에 추가 버튼 클릭 이벤트 (플로팅 버튼)
     floatingButtonGroup.querySelector('.add-to-playlist').addEventListener('click', function() {
         const selectedSongs = Array.from(document.querySelectorAll('.songCheckbox:checked')).map(checkbox => checkbox.dataset.songId);
         if (selectedSongs.length > 0) {
@@ -191,13 +191,13 @@ document.addEventListener("DOMContentLoaded", function() {
         )).then(() => true).catch(() => false);
     }
     
-    // 모든 선택된 노래를 재생목록에 추가하는 함수
+    // 모든 선택된 노래를 재생목록에 추가하는 함수 (플로팅 버튼용)
     function addAllToPlaylist(songIds, skipAlert = false) {
         let addedCount = 0;
         const totalSongs = songIds.length;
     
         songIds.forEach((songId, index) => {
-            checkAndAddToPlaylist(songId, true, () => {
+            checkAndAddToPlaylistFloating(songId, true, () => {
                 addedCount++;
                 if (addedCount === totalSongs && !skipAlert) {
                     showAlert('재생 목록에 추가되었습니다', 2000);
@@ -206,16 +206,17 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
     
-    function checkAndAddToPlaylist(id, skipConfirm, callback) {
+    // 플로팅 버튼용 재생목록 추가 함수
+    function checkAndAddToPlaylistFloating(id, skipConfirm, callback) {
         const url1 = `../song/getCPList?songId=${id}`;
         axios.get(url1)
             .then((response) => {
                 if (!response.data || skipConfirm) {
-                    addCurrentPlayList(id, skipConfirm, callback);
+                    addCurrentPlayListFloating(id, skipConfirm, callback);
                 } else {
                     let result = confirm('이미 재생목록에 있는 곡입니다. 그래도 추가하시겠습니까?');
                     if (result) {
-                        addCurrentPlayList(id, skipConfirm, callback);
+                        addCurrentPlayListFloating(id, skipConfirm, callback);
                     } else if (callback) {
                         callback();
                     }
@@ -224,7 +225,8 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch((error) => { console.log(error); });
     }
     
-    function addCurrentPlayList(id, skipAlert, callback) {
+    // 플로팅 버튼용 재생목록에 곡을 추가하는 함수
+    function addCurrentPlayListFloating(id, skipAlert, callback) {
         const url2 = `../song/addCurrentPlayList?songId=${id}`;
         console.log(url2);
         axios.get(url2)
@@ -245,6 +247,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch((error) => { console.log(error); });
     }
     
+    // 알림 메시지를 표시하는 함수
     function showAlert(message, duration) {
         // 기존 알림창이 있는지 확인
         if (document.querySelector('.custom-alert')) {
@@ -304,25 +307,57 @@ document.addEventListener("DOMContentLoaded", function() {
         parent.songFrame.location.reload();
     }
     
-    // 음원 다음 곡으로 재생 기능
-    const addCPList = document.querySelectorAll('#addCPList');
-    if (addCPList !== null) {
-        for (let a of addCPList) {
-            console.log(a);
-            a.addEventListener('click', addToCPList);
-            // (차트에서 여러 곡 재생목록에 담기 위해 사용)
-            a.addEventListener('customAddToPlaylist', customAddToCPList);
+    // 테이블의 재생목록 추가 버튼 이벤트 리스너 설정
+    document.addEventListener('DOMContentLoaded', function() {
+        const addCPList = document.querySelectorAll('#addCPList');
+        if (addCPList !== null) {
+            for (let a of addCPList) {
+                a.removeEventListener('click', addToCPList); // 기존 이벤트 리스너 제거
+                a.addEventListener('click', addToCPListNew); // 새로운 이벤트 리스너 추가
+            }
         }
+    });
+    
+    // 테이블의 재생목록 추가 함수 (새 버전)
+    function addToCPListNew(event) {
+        event.preventDefault(); // 이벤트의 기본 동작을 막습니다.
+        event.stopPropagation(); // 이벤트 버블링을 막습니다.
+        const id = event.target.getAttribute('data-id');
+        checkAndAddToPlaylistTable(id);
     }
     
-    function addToCPList(event) {
-        const id = event.target.getAttribute('data-id');
-        checkAndAddToPlaylist(id, false);
+    // 테이블용 재생목록 추가 함수
+    function checkAndAddToPlaylistTable(id) {
+        const url1 = `../song/getCPList?songId=${id}`;
+        axios.get(url1)
+            .then((response) => {
+                if (!response.data) {
+                    addCurrentPlayListTable(id);
+                } else {
+                    let result = confirm('이미 재생목록에 있는 곡입니다. 그래도 추가하시겠습니까?');
+                    if (result) {
+                        addCurrentPlayListTable(id);
+                    }
+                }
+            })
+            .catch((error) => { console.log(error); });
     }
     
-    function customAddToCPList(event) {
-        const id = event.target.getAttribute('data-id');
-        checkAndAddToPlaylist(id, true);
+    // 테이블용 재생목록에 곡을 추가하는 함수
+    function addCurrentPlayListTable(id) {
+        const url2 = `../song/addCurrentPlayList?songId=${id}`;
+        console.log(url2);
+        axios.get(url2)
+            .then((response) => {
+                console.log(response);
+                if (sessionStorage.getItem('isAdded') === 'N') {
+                    sessionStorage.setItem('index', 0);
+                    sessionStorage.setItem('isAdded', 'Y');
+                    parent.songFrame.location.reload();
+                }
+                showAlert('재생 목록에 추가되었습니다', 2000);
+            })
+            .catch((error) => { console.log(error); });
     }
 
 
