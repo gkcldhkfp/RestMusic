@@ -189,6 +189,8 @@
 
 				// 여기에 추가적인 자바스크립트 코드 작성
 				// 예를 들어, cPListObj를 이용하여 원하는 동적 처리를 할 수 있음
+
+				let refresh = '${refresh}';
 			</script>
 			<script src="../js/playerPage.js"></script>
 

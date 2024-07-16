@@ -129,7 +129,7 @@
             <c:url var="sign_in_js" value="/js/signin.js" />
             <script src="${sign_in_js}"></script>
             <script>
-                const refresh = '${refresh}'; // 새로고침해줭
+                let refresh = '${refresh}'; // 새로고침해줭
                 const id = '${loginUserId}'; //id
             </script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

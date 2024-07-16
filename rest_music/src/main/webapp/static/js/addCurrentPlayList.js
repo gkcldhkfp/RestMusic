@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if(refresh ==='Y') {
         console.log(refresh);
+				refresh = "N";
         parent.songFrame.location.reload();
     }
     

@@ -288,7 +288,7 @@
     <c:url var="addCurrentPlayList" value="/js/addCurrentPlayList.js" />
     <script src="${addCurrentPlayList}"></script>
     <script>
-	const refresh = '${refresh}'; 
+	let refresh = '${refresh}';
     // 리다이렉트 할 때 재생페이지를 새로고침하기위한 코드
 
     $(document).ready(function(){
