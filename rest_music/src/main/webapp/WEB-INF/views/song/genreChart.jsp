@@ -271,25 +271,6 @@
            </div>
         </div>
     </div>
-        
-    <!-- 로그인 모달 -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">로그인 페이지로 이동</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    로그인이 필요합니다. 로그인 하시겠습니까?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="loginCancelButton">취소</button>
-                    <button type="button" class="btn btn-primary" id="loginConfirmButton">확인</button>
-                </div>
-            </div>
-        </div>
-    </div>
     
     <footer>
         <!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->

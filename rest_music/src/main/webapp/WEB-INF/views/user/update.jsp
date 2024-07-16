@@ -84,11 +84,11 @@
         justify-content: center;
         margin-top: 1rem;
     }
-    .btn-change-profile, .btn-delete-profile {
+    .btn-change-profile, .btn-delete-profile !important {
         flex: 1;
         max-width: 260px; /* 최대 너비 설정 */
     }
-    .btn-delete-profile {
+    .btn-delete-profile !important{
         margin-left: 0.5rem; /* 버튼 사이 간격 */
     }
     .btn-submit, .btn-deactivate, .btn-cancel {
