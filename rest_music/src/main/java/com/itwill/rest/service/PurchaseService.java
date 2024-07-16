@@ -21,4 +21,14 @@ public class PurchaseService {
 		return result;
 	}
 
+	public boolean isPurchaseUser (Integer id) {
+		log.debug("isPurchaseUser()");
+		int result = dao.isPurchaseUser(id);
+		if (result >= 1) {
+			return true; // 결제한 유저
+		} else {
+			return false; // 결제유저 아님.
+		}
+	}
+
 }
