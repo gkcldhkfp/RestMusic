@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 알림 표시 로직 구현
         alert(message);
     }
+    
 	// 음원 듣기 기능
 	const listenBtn = document.querySelectorAll('#listenBtn');
 	if (addCPList !== null) {
