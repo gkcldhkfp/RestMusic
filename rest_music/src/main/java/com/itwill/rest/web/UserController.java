@@ -160,7 +160,7 @@ public class UserController {
         session.setAttribute("refresh", "Y");
         
         // 로그인 성공 후 이동할 타겟 페이지
-        String targetPage = (target.equals("")) ? "/" : target;
+        String targetPage = (target.equals("")) ? "/home" : target;
         return "redirect:" + targetPage;
     }
     
