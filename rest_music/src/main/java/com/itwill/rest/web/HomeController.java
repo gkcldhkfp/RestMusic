@@ -14,6 +14,8 @@ import com.itwill.rest.service.AlbumService;
 import com.itwill.rest.service.AlbumSongsService;
 import com.itwill.rest.service.SongService;
 
+import jakarta.mail.Session;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +28,7 @@ public class HomeController {
 	private final SongService songService;
 	private final AlbumService albumService;
   @GetMapping("/")
-  public String home(Model model) {
+  public String home(Model model, HttpSession session) {
     log.debug("home()");
     
     // TODO: 좋아요순으로 정렬된 리스트를 가져오는 메서드를 호출.
@@ -39,7 +41,11 @@ public class HomeController {
     // 리스트 중에 10개만 사용하도록 설정
     
     // 최신 앨범을 불러오는 서비스 메서드 호출
-    List<Album> albumList = albumService.selectOrderByDate().stream().limit(10).toList();;
+    Integer id = (Integer) session.getAttribute("loginUserId");
+    log.debug("Session loginUserId: {}", id);
+    id = (id == null) ? 0 : id;
+    
+    List<Album> albumList = albumService.selectOrderByDate(id).stream().limit(10).toList();;
     // 최신 음악 리스트 가져오기
     model.addAttribute("albumList", albumList);
     

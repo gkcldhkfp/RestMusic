@@ -29,38 +29,76 @@ public class AlbumListController {
     
     
 
-    @GetMapping("/list")
-    public String list(Model model, HttpSession session) {
-        log.debug("albumservice({})", albumService);
+//    @GetMapping("/list")
+//    public String list(Model model, HttpSession session) {
+//        log.debug("albumservice({})", albumService);
+//
+//        // 서비스 메서드 호출
+//        List<Album> list = albumService.selectAllByAlbumId();
+//        log.debug("list={}", list);
+//        model.addAttribute("albumList", list);
+//        session.setAttribute("listType", "list1");
+//        return "/album/list";
+//    }
 
-        // 서비스 메서드 호출
-        List<Album> list = albumService.selectAllByAlbumId();
-        log.debug("list={}", list);
-        model.addAttribute("albumList", list);
-        session.setAttribute("listType", "list1");
-        return "/album/list";
-    }
-
+//    @GetMapping("/list/newest")
+//    public String listDate(Model model, HttpSession session) {
+//        log.debug("albumservice({})", albumService);
+//
+//        List<Album> list = albumService.selectOrderByDate();
+//        log.debug("list={}", list);
+//        model.addAttribute("albumList", list);
+//        session.setAttribute("listType", "list2");
+//        return "/album/list";
+//    }
+    
     @GetMapping("/list/newest")
     public String listDate(Model model, HttpSession session) {
         log.debug("albumservice({})", albumService);
 
-        List<Album> list = albumService.selectOrderByDate();
+        Integer id = (Integer) session.getAttribute("loginUserId");
+        log.debug("Session loginUserId: {}", id);
+        id = (id == null) ? 0 : id;
+
+        List<Album> list = albumService.selectOrderByDate(id);
         log.debug("list={}", list);
+        
         model.addAttribute("albumList", list);
+        model.addAttribute("loginUserId", id); // 필요하다면 모델에 추가
+
         session.setAttribute("listType", "list2");
         return "/album/list";
     }
+    
+    
 
+//    @GetMapping("/list/popular")
+//    public String listLikes(Model model, HttpSession session) {
+//        log.debug("albumservice({})", albumService);
+//
+//        List<Album> list = albumService.selectOrderByLikes();
+//        log.debug("list={}", list);
+//        model.addAttribute("albumList", list);
+//        session.setAttribute("listType", "list3");
+//
+//        return "/album/list";
+//    }
+    
     @GetMapping("/list/popular")
     public String listLikes(Model model, HttpSession session) {
         log.debug("albumservice({})", albumService);
 
-        List<Album> list = albumService.selectOrderByLikes();
-        log.debug("list={}", list);
-        model.addAttribute("albumList", list);
-        session.setAttribute("listType", "list3");
+        Integer id = (Integer) session.getAttribute("loginUserId");
+        log.debug("Session loginUserId: {}", id);
+        id = (id == null) ? 0 : id;
 
+        List<Album> list = albumService.selectOrderByLikes(id);
+        log.debug("list={}", list);
+        
+        model.addAttribute("albumList", list);
+        model.addAttribute("loginUserId", id); // 필요하다면 모델에 추가
+
+        session.setAttribute("listType", "list3");
         return "/album/list";
     }
     
