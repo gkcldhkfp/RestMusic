@@ -175,6 +175,14 @@ public class UserController {
         
         return "redirect:/user/signin";
     }
+    @GetMapping("removeRefresh")
+    @ResponseBody
+    public ResponseEntity<Integer> removeRefresh(HttpSession session) {
+    	
+    	session.removeAttribute("refresh");
+    	
+    	return ResponseEntity.ok(1);
+    }
     
     // 아이디 찾기 (화면)
     @GetMapping("/findUserId")

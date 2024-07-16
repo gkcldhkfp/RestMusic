@@ -9,7 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if(refresh ==='Y') {
         console.log(refresh);
-				refresh = "N";
+		/*refresh = "N";*/
+		const uri21 =`${window.location.origin}/Rest/user/removeRefresh`
+		axios.get(uri21).
+		then((response) => {
+            console.log(response)
+        })
+        .catch((error) => {
+            console.log(error)
+        });
         parent.songFrame.location.reload();
     }
     
