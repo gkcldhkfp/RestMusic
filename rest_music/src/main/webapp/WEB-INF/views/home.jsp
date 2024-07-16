@@ -298,17 +298,31 @@ h3 {
                     <div class="card border-0">
                         <p style="display: none;">${status.index + 1}</p>
                         <img src="./images/albumcover/${album.albumImage}" alt="Album cover">
-                        <small>${album.albumType}</small>
-                        <small>${album.genreName}</small>
                         <c:url var="albumPage" value="/album/detail?albumId=${album.albumId}" />
                         <a href="${albumPage}">
-                            <small>${album.albumName}</small>
+                            <small class="fs-5">${album.albumName}</small>
                         </a>
-                        <small>${album.artistName}</small>
-                        <c:url var="songPage" value="/song/detail?songId=${album.songId}" />
+                        <div class="artist-container" style="margin-top: 5px; display: flex; flex-wrap: wrap;">
+                            <c:forEach items="${fn:split(album.artistName, ',')}" var="artistName" varStatus="statusName">
+                                <c:set var="artistId" value="${fn:split(album.artistId  , ',')[statusName.index]}" />
+                                <c:url var="artistPage" value="/artist/songs">
+                                    <c:param name="artistId" value="${artistId.trim()}" />
+                                </c:url>
+                                <a href="${artistPage}">
+                                    <small style="color: gray;">${artistName.trim()}</small>
+                                </a>
+                                <c:if test="${!statusName.last}"><span style="margin-right: 5px;">, </span></c:if>
+                            </c:forEach>
+                        </div>
+                        <div style="justify-content: space-between; align-items: center; color: gray;">
+                            <small>${album.albumType}</small>
+                            <small> | </small>
+                            <small>${fn:substring(album.albumReleaseDate, 0, 10)}</small>
+                        </div>
+                        <%-- <c:url var="songPage" value="/song/detail?songId=${album.songId}" />
                         <a href="${songPage}">
                             <small>${album.title}</small>
-                        </a>
+                        </a> --%>
                     </div>
                 </c:forEach>
             </div>
