@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	const nextBtn = document.querySelector('#nextBtn');
 	const stopBtn = document.querySelector('#stopBtn');
 
+	// 결제 
+	let isPurUser = false;
+
 	// 인덱스 변경 감지 함수를 위한 객체 선언.
 	let obj = {};
 
@@ -42,12 +45,24 @@ document.addEventListener('DOMContentLoaded', () => {
 		configurable: true
 	});
 
-	// songFrame의 버튼으로 mainFrame의 모달을 활성화 하기 위한 코드.
-	const showModalButton = document.querySelector('#showModalButton');
-	showModalButton.addEventListener('click', () => {
-		console.log('mainframe의 메서드 호출');
-		parent.frames['mainFrame'].showModal();
-	});
+	// 결제 회원인지 판별하기 위한 Ajax요청 호출
+	if (id !== '') {
+		const urlForPur = `/Rest/purchase/isPurUser?id=${id}`;
+		axios
+			.get(urlForPur)
+			.then((response) => {
+				console.log(response.data);
+				isPurUser = response.data
+			}).
+			catch((error) => { console.log(error); });
+		}
+		// songFrame의 버튼으로 mainFrame의 모달을 활성화 하기 위한 코드.
+		const showModalButton = document.querySelector('#showModalButton');
+		showModalButton.addEventListener('click', () => {
+			console.log('mainframe의 메서드 호출');
+			parent.frames['mainFrame'].showModal();
+		});
+
 
 	// ! JSON을 리스트로 만드는 코드는 playerPage.jsp의 아래부분에 선언함.
 	console.log('자바스크립트');
@@ -131,6 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+
 			prevBtn.addEventListener('click', previous);
 			nextBtn.addEventListener('click', next);
 			stopBtn.addEventListener('click', stop);
@@ -154,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				var ratio = audio.currentTime / audio.duration * 100;
 				progress.style.width = ratio + '%';
 				progress.setAttribute('aria-valuenow', ratio);
-				if (id === '') {
+				if (id === '' || isPurUser === false) {
 					total.innerHTML = '1:00';
 					// TODO: 나중에 조건을 결제한 아이디로 바꾸어야함.
 					// 1분 비율 계산
@@ -210,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				audio.currentTime = currentTime; // 재생 위치 설정
 				// 1분 비율 계산
 				minRatio = 60 / audio.duration * 100;
-				if (id === '' && audio.currentTime > 60) {
+				if ((id === '' || isPurUser === false) && audio.currentTime > 60) {
 					console.log('60초 넘어가면 실행되어야함');
 					// 1분의 위치를 넘었는 지 검사 
 					// 정지 메서드 호출
@@ -219,18 +236,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
 					// 로그인 권고창 띄움
 					// 일단 알러트
-					needToPaid();
+					if (id === '') {
+						// 로그인하지 않은 경우
+						needToSignIn();
+					} else if (isPurUser === false) {
+						needToPaid();
+					}
+
 					return;
 				}
 				// 프로그래스 바 업데이트
 				progress.style.width = percentage + '%';
 				progress.setAttribute('aria-valuenow', percentage);
 			});
+
+			function needToSignIn() {
+				// const currentUrl = window.location.href;
+				if (confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?')) {
+					parent.mainFrame.location.href = "/Rest/user/signin";
+					// window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
+				}
+			}
 			function needToPaid() {
 				// const currentUrl = window.location.href;
-				if(confirm('결제가 필요합니다. 결제 페이지로 이동하시겠습니까?')){
-    				parent.mainFrame.location.href = "/Rest/purchase";
-    				// window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
+				if (confirm('결제가 필요합니다. 결제 페이지로 이동하시겠습니까?')) {
+					parent.mainFrame.location.href = "/Rest/purchase";
+					// window.location.href = `/Rest/user/signin?target=${encodeURIComponent(currentUrl)}`;
 				}
 			}
 

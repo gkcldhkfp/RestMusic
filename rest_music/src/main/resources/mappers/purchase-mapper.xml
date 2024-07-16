@@ -7,5 +7,9 @@
     <insert id="PurchaseSuccess">
         insert into pur_users (id, EXPIRATION_DATE) values (#{userId}, systimestamp)
     </insert>
+
+    <select id = "isPurchaseUser" resultType="Integer">
+      select count(EXPIRATION_DATE) from pur_users where id = #{id}
+    </select>
   
   </mapper>

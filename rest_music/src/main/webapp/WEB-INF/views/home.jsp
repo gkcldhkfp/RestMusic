@@ -308,6 +308,10 @@ h3 {
         </div>    
     </main>
 
+    <footer>
+        <!-- 모달 요소들을 footer로 사용. 모든 페이지에 사용되기 때문 -->
+        <%@ include file="./fragments/footer.jspf" %>
+    </footer>
 
     <script>
                     let slideIndex = 0;

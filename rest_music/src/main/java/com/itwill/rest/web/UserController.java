@@ -168,7 +168,7 @@ public class UserController {
         log.debug("singOut()");
         
         session.removeAttribute("SESSION_ATTR_USER");
-        session.invalidate();
+        // session.invalidate();
         
         return "redirect:/user/signin";
     }

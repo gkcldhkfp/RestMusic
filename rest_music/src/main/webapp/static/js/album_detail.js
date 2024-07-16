@@ -139,13 +139,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		if (i === 0) {
 			genreHtml += `<span class='text-center' style='cursor: pointer;' onclick="location.href='${genrePage}'"
-			onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
-  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">${trimmedName}</span>`;
+			onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline'; this.style.color='blue';" 
+  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none'; this.style.color='black';">${trimmedName}</span>`;
 		} else {
 			// 이후 링크들은 쉼표와 함께 추가
 			genreHtml += `, <span class='text-center' style='cursor: pointer;' onclick="location.href='${genrePage}'"
-			onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
-  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">${trimmedName}</span>`;
+			onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline'; this.style.color='blue';" 
+  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none'; this.style.color='black';">${trimmedName}</span>`;
 		}
 	}
 	genreSpace.innerHTML = genreHtml;
@@ -164,13 +164,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		if (i === 0) {
 			titleSongHtml += `<span class='text-center' style='cursor: pointer;' onclick="location.href='${songPage}'"
-			onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
-  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">${trimmedName}</span>`;
+			onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline'; this.style.color='blue';" 
+  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none'; this.style.color='black';">${trimmedName}</span>`;
 		} else {
 			// 이후 링크들은 쉼표와 함께 추가
 			titleSongHtml += `, <span class='text-center' style='cursor: pointer;' onclick="location.href='${songPage}'"
-			onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
-  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">${trimmedName}</span>`;
+			onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline'; this.style.color='blue';" 
+  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none'; this.style.color='black';">${trimmedName}</span>`;
 		}
 	}
 	titleSongSpace.innerHTML = titleSongHtml;
@@ -194,16 +194,16 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (i === 0) {
 				linksHtml += `<span class='text-center' style='cursor: pointer;' 
 					onclick="location.href='${artistPage}'"
-					onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
-					onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">
+					onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline'; this.style.color='blue';" 
+  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none'; this.style.color='black';">
     ${trimmedName}
 					</span>`;
 								} else {
 									// 이후 링크들은 쉼표와 함께 추가
 									linksHtml += `, <span class='text-center' style='cursor: pointer;' 
 						onclick="location.href='${artistPage}'"
-						onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline';"
-						onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none';">
+						onmouseover="this.style.fontWeight='bold'; this.style.textDecoration='underline'; this.style.color='blue';" 
+  		onmouseout="this.style.fontWeight='normal'; this.style.textDecoration='none'; this.style.color='black';">
 							${trimmedName}
 					</span>`;
 			}
