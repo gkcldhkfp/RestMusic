@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class Album {
 	private String songId;
 	private Integer albumId;
+	private Integer id; // 회원 번호
 	private String title;
 	private String songPath;
 	private String lyrics;
