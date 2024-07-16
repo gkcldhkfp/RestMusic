@@ -170,9 +170,9 @@
                                             <c:param name="artistId" value="${artistId.trim()}" />
                                         </c:url>
                                         <a href="${artistPage}"
-                                           style="color: gray; text-decoration: none;"
-                                           onmouseover="this.style.color='blue';"
-                                           onmouseout="this.style.color='gray';">
+                                            style="color: gray; text-decoration: none;"
+                                            onmouseover="this.style.color='#007bff';"
+                                            onmouseout="this.style.color='gray';">
                                             ${artistName.trim()}
                                         </a>
                                         <c:if test="${!statusName.last}">, </c:if>
@@ -183,8 +183,10 @@
                               <c:url var="albumDetailUrl" value="/album/detail">
                                     <c:param name="albumId" value="${song.albumId}" />
                                 </c:url>
-                                <a href="${albumDetailUrl}" class="album-link">
-                                    <span class="album-name">${song.albumName}</span>
+                                <a href="${albumDetailUrl}" style="color: gray; text-decoration: none;"
+                                            onmouseover="this.style.color='#007bff';"
+                                            onmouseout="this.style.color='gray';" class="album-link">
+                                <span class="album-name">${song.albumName}</span>
                                 </a>
                             </td>
                            <td>
@@ -254,14 +256,13 @@
     
     <!-- 플레이리스트 모달 -->
     <div class="modal fade" id="selectPlayList" tabindex="-1" aria-labelledby="selectPlayListLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+       <div class="modal-dialog modal-lg">
            <div class="modal-content">
                <div class="modal-header">
                    <h5 class="modal-title" id="selectPlayListLabel">플레이리스트 선택</h5>
                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                   <!-- 플레이리스트 체크박스 목록이 여기에 동적으로 추가됩니다 -->
                    <div id="playLists" class="playlist-container"></div>
                </div>
                <div class="modal-footer">
@@ -269,7 +270,7 @@
                    <button type="button" id="btnAddSong" class="btn btn-primary">곡 추가</button>
                </div>
            </div>
-        </div>
+       </div>
     </div>
     
     <footer>
