@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (result === 'deactivated') {
                 alert("해당 계정으로 30일 동안 로그인할 수 없습니다.");  // 계정 비활성화 기간 알림
             } else if (result === 'f') {
-                alert("아이디 또는 비밀번호가 일치하지 않습니다.");  // 아이디/비밀번호 불일치 알림
+                /*alert("아이디 또는 비밀번호가 일치하지 않습니다."); */ // 아이디/비밀번호 불일치 알림
             }
         }
     }

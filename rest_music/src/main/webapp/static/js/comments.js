@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             htmlStr += `
             <div class="card card-body my-1">
                 <div style="font-size: 0.825rem;">
-                    <span>${comment.cid}</span>
+                    <span class="d-none">${comment.cid}</span>
                     <span class="fw-bold">${comment.nickname}</span>
                     <span class="text-secondary">${modifiedTime}</span>
                 </div>
