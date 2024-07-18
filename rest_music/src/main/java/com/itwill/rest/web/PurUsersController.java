@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.rest.service.PurchaseService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,10 +23,10 @@ public class PurUsersController {
 	private final PurchaseService service;
 	
 	@GetMapping("/success/{loginUserId}")
-	public ResponseEntity<Integer> PurchaseSuccess (@PathVariable Integer loginUserId) {
+	public ResponseEntity<Integer> PurchaseSuccess (@PathVariable Integer loginUserId, HttpSession session) {
 		log.debug("controller ({})",loginUserId);
 		int result = service.PurchaseSuccess(loginUserId);
-		
+		session.setAttribute("refresh", "Y");
 		return ResponseEntity.ok(result);
 	}
 

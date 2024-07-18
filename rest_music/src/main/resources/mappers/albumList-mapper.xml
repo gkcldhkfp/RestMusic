@@ -22,7 +22,7 @@
             LISTAGG(DISTINCT s.title, ', ') WITHIN GROUP (ORDER BY s.title) AS title,
             LISTAGG(DISTINCT gc.genre_name, ', ') WITHIN GROUP (ORDER BY gc.genre_name) AS genre_name,
             LISTAGG(DISTINCT art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_name,
-            LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_id) AS artist_id,
+            LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_id,
             COUNT(DISTINCT al.id) AS likes_count
             
         FROM 
@@ -65,7 +65,7 @@
             LISTAGG(DISTINCT s.title, ', ') WITHIN GROUP (ORDER BY s.title) AS title,
             LISTAGG(DISTINCT gc.genre_name, ', ') WITHIN GROUP (ORDER BY gc.genre_name) AS genre_name,
             LISTAGG(DISTINCT art.artist_name, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_name,
-            LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_id) AS artist_id,
+            LISTAGG(DISTINCT art.artist_id, ', ') WITHIN GROUP (ORDER BY art.artist_name) AS artist_id,
             COUNT(DISTINCT al.id) as likes_count
             
         FROM 

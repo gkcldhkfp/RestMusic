@@ -50,9 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
                  axios.get((`./purchase/success/${loginUserId}`))
                     .then((response) => {
                        console.log(response);
+                       alert('결제가 성공적으로 완료되었습니다');
                        })
                     .catch((error) => {
-                        console.log(error);
+                        console.log(error); 
                     })
                 //axios.post('/api/payment/complete', {
                 //    imp_uid: rsp.imp_uid,
